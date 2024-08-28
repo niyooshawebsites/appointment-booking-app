@@ -40,7 +40,7 @@ const AppointmentForm = () => {
     setCustDetails((prevDetails) => {
       return {
         ...prevDetails,
-        [service]: e.target.value,
+        ename: e.target.value,
         [date]: e.target.value,
         [time]: e.target.value,
         [firstName]: e.target.value,
@@ -81,14 +81,11 @@ const AppointmentForm = () => {
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
-                  <option value="" disabled selected>
-                    Select a service
-                  </option>
-                  <option value="">Option 1</option>
-                  <option value="">Option 2</option>
-                  <option value="">Option 3</option>
-                  <option value="">Option 4</option>
-                  <option value="">Option 5</option>
+                  <option value="Option 1">Option 1</option>
+                  <option value="Option 2">Option 2</option>
+                  <option value="Option 3">Option 3</option>
+                  <option value="Option 4">Option 4</option>
+                  <option value="Option 5">Option 5</option>
                 </select>
               </div>
             </div>
@@ -100,7 +97,7 @@ const AppointmentForm = () => {
                   name="date"
                   type="date"
                   min={currentDate}
-                  autoComplete={true}
+                  autoComplete="on"
                   value={custDetails.date}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
@@ -117,7 +114,7 @@ const AppointmentForm = () => {
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
-                  <option value="" disabled selected>
+                  <option value="" disabled>
                     Select Time Slot
                   </option>
                   <option value="">10 AM</option>
@@ -142,7 +139,7 @@ const AppointmentForm = () => {
                   id="firstName"
                   name="firstName"
                   type="text"
-                  autoComplete={true}
+                  autoComplete="on"
                   value={custDetails.firstName}
                   onChange={handleChange}
                   placeholder="First name"
@@ -157,7 +154,7 @@ const AppointmentForm = () => {
                   id="lastName"
                   name="lastName"
                   type="text"
-                  autoComplete={true}
+                  autoComplete="on"
                   value={custDetails.lastName}
                   onChange={handleChange}
                   placeholder="Last name"
@@ -172,7 +169,7 @@ const AppointmentForm = () => {
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete={true}
+                  autoComplete="on"
                   value={custDetails.email}
                   onChange={handleChange}
                   placeholder="Email"
@@ -190,7 +187,7 @@ const AppointmentForm = () => {
                   type="number"
                   minLength={10}
                   maxLength={10}
-                  autoComplete={true}
+                  autoComplete="on"
                   value={custDetails.contactNo}
                   onChange={handleChange}
                   placeholder="Contact number"
@@ -206,7 +203,7 @@ const AppointmentForm = () => {
                   name="age"
                   type="number"
                   min={1}
-                  autoComplete={true}
+                  autoComplete="on"
                   value={custDetails.age}
                   onChange={handleChange}
                   placeholder="Age"
@@ -224,9 +221,6 @@ const AppointmentForm = () => {
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
-                  <option value="" disabled selected>
-                    Select Gender
-                  </option>
                   <option value="">Male</option>
                   <option value="">Female</option>
                   <option value="">Others</option>
@@ -240,7 +234,7 @@ const AppointmentForm = () => {
                   id="address"
                   name="address"
                   type="text"
-                  autoComplete={true}
+                  autoComplete="on"
                   value={custDetails.address}
                   onChange={handleChange}
                   placeholder="Address"
@@ -255,7 +249,7 @@ const AppointmentForm = () => {
                   id="city"
                   name="city"
                   type="text"
-                  autoComplete={true}
+                  autoComplete="on"
                   value={custDetails.city}
                   onChange={handleChange}
                   placeholder="City"
@@ -270,7 +264,7 @@ const AppointmentForm = () => {
                   id="state"
                   name="state"
                   type="text"
-                  autoComplete={true}
+                  autoComplete="on"
                   value={custDetails.state}
                   onChange={handleChange}
                   placeholder="State"
@@ -287,7 +281,7 @@ const AppointmentForm = () => {
                   type="number"
                   minLength={6}
                   maxLength={6}
-                  autoComplete={true}
+                  autoComplete="on"
                   value={custDetails.pinCode}
                   onChange={handleChange}
                   placeholder="Pin code"
