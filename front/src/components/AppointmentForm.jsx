@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const AppointmentForm = () => {
   const [custDetails, setCustDetails] = useState(() => {
@@ -20,53 +21,48 @@ const AppointmentForm = () => {
     };
   });
 
+  const [payOnline, setPayOnline] = useState(false);
+
   const handleChange = (e) => {
-    const {
-      service,
-      date,
-      time,
-      firstName,
-      lastName,
-      email,
-      contactNo,
-      age,
-      gender,
-      address,
-      city,
-      state,
-      pinCode,
-      paymentMethod,
-    } = e.target;
+    const { name, value } = e.target;
     setCustDetails((prevDetails) => {
       return {
         ...prevDetails,
-        ename: e.target.value,
-        [date]: e.target.value,
-        [time]: e.target.value,
-        [firstName]: e.target.value,
-        [lastName]: e.target.value,
-        [email]: e.target.value,
-        [contactNo]: e.target.value,
-        [age]: e.target.value,
-        [gender]: e.target.value,
-        [address]: e.target.value,
-        [city]: e.target.value,
-        [state]: e.target.value,
-        [pinCode]: e.target.value,
-        [paymentMethod]: e.target.value,
+        [name]: value,
       };
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    toast("Appointment booked successfully!");
     console.log(custDetails);
+    setCustDetails((prevDetails) => {
+      return {
+        ...prevDetails,
+        service: "",
+        date: "",
+        time: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        contactNo: "",
+        age: "",
+        gender: "",
+        address: "",
+        city: "",
+        state: "",
+        pinCode: "",
+        paymentMethod: "",
+      };
+    });
   };
 
   const currentDate = new Date().toISOString().split("T")[0];
   return (
     <form className="w-9/12 mx-auto" onSubmit={handleSubmit}>
       <div className="space-y-12">
+        <h1 className="text-center text-4xl mt-5">Book Appointment</h1>
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Appintment Details
@@ -81,6 +77,7 @@ const AppointmentForm = () => {
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
+                  <option value="No slection">Select service</option>
                   <option value="Option 1">Option 1</option>
                   <option value="Option 2">Option 2</option>
                   <option value="Option 3">Option 3</option>
@@ -114,14 +111,12 @@ const AppointmentForm = () => {
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
-                  <option value="" disabled>
-                    Select Time Slot
-                  </option>
-                  <option value="">10 AM</option>
-                  <option value="">11 AM</option>
-                  <option value="">12 PM</option>
-                  <option value="">01 PM</option>
-                  <option value="">02 PM</option>
+                  <option value="No slection">Select time slot</option>
+                  <option value="10 AM">10 AM</option>
+                  <option value="11 AM">11 AM</option>
+                  <option value="12 AM">12 AM</option>
+                  <option value="01 PM">01 PM</option>
+                  <option value="02 PM">02 PM</option>
                 </select>
               </div>
             </div>
@@ -221,9 +216,10 @@ const AppointmentForm = () => {
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
-                  <option value="">Male</option>
-                  <option value="">Female</option>
-                  <option value="">Others</option>
+                  <option value="No selection">Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Others">Others</option>
                 </select>
               </div>
             </div>
@@ -293,42 +289,32 @@ const AppointmentForm = () => {
         </div>
 
         <div className="border-b border-gray-900/10 pb-12">
-          <div className="mt-10 space-y-10">
-            <fieldset value={custDetails.paymentMethod} onChange={handleChange}>
-              <legend className="text-sm font-semibold leading-6 text-gray-900">
-                Payment options
-              </legend>
-              <div className="mt-6 space-y-6">
-                <div className="flex items-center gap-x-3">
-                  <input
-                    id="push-everything"
-                    name="push-notifications"
-                    type="radio"
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                  <label
-                    htmlFor="push-everything"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+          <h2 className="text-base font-semibold leading-7 text-gray-900">
+            Payment Details
+          </h2>
+          <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="col-span-full">
+              <div className="mt-2">
+                <select
+                  name="paymentMethod"
+                  id="paymentMethod"
+                  value={custDetails.paymentMethod}
+                  onChange={handleChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                >
+                  <option value="No slection">Select payment method</option>
+                  <option
+                    value="Pay locally"
+                    onClick={() => setPayOnline(false)}
                   >
                     Pay locally
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-3">
-                  <input
-                    id="push-email"
-                    name="push-notifications"
-                    type="radio"
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                  <label
-                    htmlFor="push-email"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
+                  </option>
+                  <option value="Pay online" onClick={() => setPayOnline(true)}>
                     Pay online
-                  </label>
-                </div>
+                  </option>
+                </select>
               </div>
-            </fieldset>
+            </div>
           </div>
         </div>
       </div>
@@ -340,12 +326,21 @@ const AppointmentForm = () => {
         >
           Cancel
         </button>
-        <button
-          type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Book Appointment
-        </button>
+        {payOnline ? (
+          <button
+            type="submit"
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Pay & Book Appointment
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Book Appointment
+          </button>
+        )}
       </div>
     </form>
   );
