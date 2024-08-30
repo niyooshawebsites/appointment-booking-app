@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const encryptPassword = require("../utils/encryptPassword");
 
-export const registerController = async (req, res) => {
+const registerController = async (req, res) => {
   const { username, email, password } = req.body;
   try {
     // check for all the details:
@@ -54,3 +54,5 @@ export const registerController = async (req, res) => {
     console.log(err?.message);
   }
 };
+
+module.exports = { registerController };

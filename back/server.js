@@ -2,15 +2,15 @@ const express = require("express");
 const colors = require("colors");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const morgan = require("moragan");
+const morgan = require("morgan");
 const connection = require("./config/db");
 const routes = require("./routes/routes");
 const app = express();
-const BASE_URL = process.env.API_BASE_URL;
 
-// .env configuration
+// configuration
 dotenv.config({ path: "../.env" });
 const PORT = process.env.PORT || 8080;
+const BASE_URL = `http://localhost:${PORT}${process.env.API_VERSION}`;
 
 // start the connection
 connection();
