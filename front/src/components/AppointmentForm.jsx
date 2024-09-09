@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const AppointmentForm = () => {
   const [custDetails, setCustDetails] = useState(() => {
@@ -33,8 +34,9 @@ const AppointmentForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async function (e) {
     e.preventDefault();
+    await axios.post("http://localhost:8000/api/v1/register");
     toast("Appointment booked successfully!");
     console.log(custDetails);
     setCustDetails((prevDetails) => {
