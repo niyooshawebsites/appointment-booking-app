@@ -159,13 +159,17 @@ const appointmnentController = async (req, res) => {
     }
 
     if (!result) {
-      return res.status(201).json({
+      return res.status(500).json({
         success: false,
         msg: "Appointment booking failed. Please try again",
       });
     }
   } catch (err) {
-    console.log(err);
+    console.error("Error occurred:", err);
+    res.status(500).json({
+      success: false,
+      msg: "Internal Server Error",
+    });
   }
 };
 

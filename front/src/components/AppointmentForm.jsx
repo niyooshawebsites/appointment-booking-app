@@ -26,6 +26,7 @@ const AppointmentForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setCustDetails((prevDetails) => {
       return {
         ...prevDetails,
@@ -36,9 +37,18 @@ const AppointmentForm = () => {
 
   const handleSubmit = async function (e) {
     e.preventDefault();
-    await axios.post("http://localhost:8000/api/v1/register");
-    toast("Appointment booked successfully!");
     console.log(custDetails);
+    await axios
+      .post("http://localhost:8000/api/v1/book-appointment", custDetails)
+      .then((res) => {
+        console.log(res);
+        toast("Appointment booked successfully!");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast("Appointment booking failed!");
+      });
+
     setCustDetails((prevDetails) => {
       return {
         ...prevDetails,
@@ -77,6 +87,7 @@ const AppointmentForm = () => {
                   id="service"
                   value={custDetails.service}
                   onChange={handleChange}
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
                   <option value="No slection">Select service</option>
@@ -140,6 +151,7 @@ const AppointmentForm = () => {
                   value={custDetails.firstName}
                   onChange={handleChange}
                   placeholder="First name"
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -155,6 +167,7 @@ const AppointmentForm = () => {
                   value={custDetails.lastName}
                   onChange={handleChange}
                   placeholder="Last name"
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -188,6 +201,7 @@ const AppointmentForm = () => {
                   value={custDetails.contactNo}
                   onChange={handleChange}
                   placeholder="Contact number"
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -204,6 +218,7 @@ const AppointmentForm = () => {
                   value={custDetails.age}
                   onChange={handleChange}
                   placeholder="Age"
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -216,6 +231,7 @@ const AppointmentForm = () => {
                   id="gender"
                   value={custDetails.gender}
                   onChange={handleChange}
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
                   <option value="No selection">Select gender</option>
@@ -236,6 +252,7 @@ const AppointmentForm = () => {
                   value={custDetails.address}
                   onChange={handleChange}
                   placeholder="Address"
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -251,6 +268,7 @@ const AppointmentForm = () => {
                   value={custDetails.city}
                   onChange={handleChange}
                   placeholder="City"
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -266,6 +284,7 @@ const AppointmentForm = () => {
                   value={custDetails.state}
                   onChange={handleChange}
                   placeholder="State"
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -283,6 +302,7 @@ const AppointmentForm = () => {
                   value={custDetails.pinCode}
                   onChange={handleChange}
                   placeholder="Pin code"
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -302,6 +322,7 @@ const AppointmentForm = () => {
                   id="paymentMethod"
                   value={custDetails.paymentMethod}
                   onChange={handleChange}
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
                   <option value="No slection">Select payment method</option>
