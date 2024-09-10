@@ -10,7 +10,6 @@ const app = express();
 // configuration
 dotenv.config({ path: "../.env" });
 const PORT = process.env.PORT || 8080;
-const BASE_URL = `http://localhost:${PORT}${process.env.API_VERSION}`;
 
 // start the connection
 connection();
@@ -25,7 +24,7 @@ app.use(morgan());
 app.use(express.json());
 
 // routes
-app.use(BASE_URL, apiRoutes);
+app.use(process.env.API_VERSION, apiRoutes);
 
 app.listen(PORT, () =>
   console.log(`${colors.bgMagenta(`The app is running on port ${PORT}`)}`)
