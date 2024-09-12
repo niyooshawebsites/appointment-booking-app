@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const [loginDetails, setLoginDetails] = useState(() => {
@@ -24,7 +25,14 @@ const LoginForm = () => {
 
     await axios
       .post("http://localhost:8000/api/v1/login", loginDetails)
-      .then((res) => console.log(res).catch((err) => console.log(err)));
+      .then((res) => {
+        console.log(res);
+        toast("Login successful!");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast("Login failed!");
+      });
 
     setLoginDetails(() => {
       return {

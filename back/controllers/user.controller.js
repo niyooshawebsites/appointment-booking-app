@@ -91,8 +91,8 @@ const loginController = async (req, res) => {
     if (registeredUser) {
       // check for the password
       const passwordMatch = await decryptPassword(
-        registeredUser.password,
-        password
+        password,
+        registeredUser.password
       );
 
       // password mismatch
@@ -107,6 +107,7 @@ const loginController = async (req, res) => {
       const authToken = await generateAuthToken({
         username: registeredUser.username,
         email: registeredUser.email,
+        role: registeredUser.role,
       });
 
       return res.status(200).json({

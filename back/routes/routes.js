@@ -7,6 +7,8 @@ const {
   bookAppointmnentController,
   getAllAppointmentsController,
 } = require("../controllers/appointment.controller");
+const isAdmin = require("../middlewares/isAdmin.middleware");
+const requrieLogin = require("../middlewares/requireLogin.middleware");
 
 // register route
 router.post("/register", registerController);
@@ -18,6 +20,11 @@ router.post("/login", loginController);
 router.post("/book-appointment", bookAppointmnentController);
 
 // fetch all appointments route
-router.get("/get-all-appointments", getAllAppointmentsController);
+router.get(
+  "/get-all-appointments",
+  requrieLogin,
+  isAdmin,
+  getAllAppointmentsController
+);
 
 module.exports = router;
