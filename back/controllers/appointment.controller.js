@@ -1,6 +1,6 @@
 const Appointment = require("../models/appointment.model");
 
-const appointmnentController = async (req, res) => {
+const bookAppointmnentController = async (req, res) => {
   try {
     const {
       service,
@@ -166,11 +166,43 @@ const appointmnentController = async (req, res) => {
     }
   } catch (err) {
     console.error("Error occurred:", err);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       msg: "Internal Server Error",
     });
   }
 };
 
-module.exports = appointmnentController;
+const getAllAppointmentsController = async (req, res) => {
+  try {
+    const appAppointments = await Appointment.find()
+      .limit(10)
+      .sort({ date: -1, time: -1 });
+
+    // fetching successful
+    if (appAppointments) {
+      return res.status(200).json({
+        success: true,
+        msg: "Appointments fetched successfully",
+        data: appAppointments,
+      });
+    }
+
+    // fetching unsuccessful
+    if (appAppointments) {
+      return res.status(409).json({
+        success: false,
+        msg: "Appointments fetching falied",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+module.exports = { bookAppointmnentController, getAllAppointmentsController };

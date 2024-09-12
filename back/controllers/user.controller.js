@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
-const encryptPassword = require("../utils/encryptPassword");
+const { encryptPassword, decryptPassword } = require("../utils/password");
+const generateAuthToken = require("../utils/authToken");
 
 const registerController = async (req, res) => {
   const { username, email, password } = req.body;
@@ -42,7 +43,7 @@ const registerController = async (req, res) => {
       const newUser = await new User({
         username,
         email,
-        password: encryptPassword(password),
+        password: await encryptPassword(password),
       }).save();
       res.status(201).json({
         success: true,
@@ -55,4 +56,68 @@ const registerController = async (req, res) => {
   }
 };
 
-module.exports = { registerController };
+const loginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // if email does not exisit
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        msg: "Email is required!",
+      });
+    }
+
+    // if password does not exist
+    if (!password) {
+      return res.status(400).json({
+        success: false,
+        msg: "Password is required!",
+      });
+    }
+
+    // check for registered user
+    const registeredUser = await User.findOne({ email });
+
+    // registered user not found
+    if (!registeredUser) {
+      return res.status(404).json({
+        success: false,
+        msg: "Invalid credetails!",
+      });
+    }
+
+    // registered user is found
+    if (registeredUser) {
+      // check for the password
+      const passwordMatch = await decryptPassword(
+        registeredUser.password,
+        password
+      );
+
+      // password mismatch
+      if (!passwordMatch) {
+        return res.status(409).json({
+          success: false,
+          msg: "Invalid credentials!",
+        });
+      }
+
+      // password match
+      const authToken = await generateAuthToken({
+        username: registeredUser.username,
+        email: registeredUser.email,
+      });
+
+      return res.status(200).json({
+        success: true,
+        msg: "Login successful!",
+        authToken,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { registerController, loginController };

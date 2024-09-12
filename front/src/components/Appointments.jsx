@@ -1,6 +1,21 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Appointments = () => {
+  const [allApppointments, setAllAppointments] = useState(() => []);
+
+  const fetchAllAppointments = async () => {
+    await axios
+      .get("http://localhost:8000/api/v1/get-all-appointments")
+      .then((res) => setAllAppointments(res.data.data))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchAllAppointments();
+  }, []);
+
   return (
     <div className="mx-auto">
       <input
@@ -26,34 +41,32 @@ const Appointments = () => {
           </tr>
         </thead>
         <tbody>
-          <tr className="border-b border-gray-200">
-            <td className="py-2 px-4 text-gray-700">John Doe</td>
-            <td className="py-2 px-4 text-gray-700">28</td>
-            <td className="py-2 px-4 text-gray-700">Consulting</td>
-            <td className="py-2 px-4 text-gray-700">2024-08-30</td>
-            <td className="py-2 px-4 text-gray-700">10:00 AM</td>
-            <td className="py-2 px-4 text-gray-700">Male</td>
-            <td className="py-2 px-4 text-gray-700">$150.00</td>
-            <td className="py-2 px-4 text-gray-700">
-              <Link to="/more-details" className="text-blue-500">
-                Details
-              </Link>
-            </td>
-          </tr>
-          <tr className="border-b border-gray-200">
-            <td className="py-2 px-4 text-gray-700">Jane Smith</td>
-            <td className="py-2 px-4 text-gray-700">32</td>
-            <td className="py-2 px-4 text-gray-700">Therapy</td>
-            <td className="py-2 px-4 text-gray-700">2024-08-31</td>
-            <td className="py-2 px-4 text-gray-700">2:00 PM</td>
-            <td className="py-2 px-4 text-gray-700">Female</td>
-            <td className="py-2 px-4 text-gray-700">$200.00</td>
-            <td className="py-2 px-4 text-gray-700">
-              <Link to="/more-details" className="text-blue-500">
-                Details
-              </Link>
-            </td>
-          </tr>
+          {allApppointments.map((appointment) => {
+            return (
+              <tr className="border-b border-gray-200" key={appointment._id}>
+                <td className="py-2 px-4 text-gray-700">
+                  {appointment.firstName}
+                </td>
+                <td className="py-2 px-4 text-gray-700">{appointment.age}</td>
+                <td className="py-2 px-4 text-gray-700">
+                  {appointment.service}
+                </td>
+                <td className="py-2 px-4 text-gray-700">{appointment.date}</td>
+                <td className="py-2 px-4 text-gray-700">{appointment.time}</td>
+                <td className="py-2 px-4 text-gray-700">
+                  {appointment.gender}
+                </td>
+                <td className="py-2 px-4 text-gray-700">
+                  {appointment.paymentMethod}
+                </td>
+                <td className="py-2 px-4 text-gray-700">
+                  <Link to="/more-details" className="text-blue-500">
+                    Details
+                  </Link>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

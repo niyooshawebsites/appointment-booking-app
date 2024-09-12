@@ -85,6 +85,24 @@ const Header = () => {
                 >
                   Contact
                 </NavLink>
+                <NavLink
+                  to="/register"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  Register
+                </NavLink>
+                <NavLink
+                  to="/login"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  Login
+                </NavLink>
+                <NavLink
+                  to="/contact"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  logout
+                </NavLink>
               </div>
             </div>
           </div>
