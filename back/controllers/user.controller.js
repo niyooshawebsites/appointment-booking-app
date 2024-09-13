@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const { encryptPassword, decryptPassword } = require("../utils/password");
 const generateAuthToken = require("../utils/authToken");
+const { sendverificationEmail } = require("../utils/mail");
 
 const registerController = async (req, res) => {
   const { username, email, password } = req.body;
@@ -34,7 +35,7 @@ const registerController = async (req, res) => {
     if (existingUser) {
       return res.status(409).json({
         success: false,
-        msg: "Registration failed. User already exists",
+        msg: "Registration failed. User already exists. Please login.",
       });
     }
 
@@ -45,9 +46,28 @@ const registerController = async (req, res) => {
         email,
         password: await encryptPassword(password),
       }).save();
+
+      // generate verification token
+      const verficationToken = await generateAuthToken(
+        {
+          email: newUser.email,
+        },
+        2 * 24 * 60 * 60
+      );
+
+      // generate the email verification link
+      const verficationURI = `http://localhost:5173/verify-eamil?token=${verficationToken}`;
+
+      // Send the verfication link to customer email account
+      sendverificationEmail(
+        newUser.email,
+        "ABS email verfication",
+        `${verficationURI}`
+      );
+
       res.status(201).json({
         success: true,
-        msg: "Regisration successful",
+        msg: "Regisration done. Please verify your email to login",
         newUser,
       });
     }
@@ -104,11 +124,14 @@ const loginController = async (req, res) => {
       }
 
       // password match
-      const authToken = await generateAuthToken({
-        username: registeredUser.username,
-        email: registeredUser.email,
-        role: registeredUser.role,
-      });
+      const authToken = await generateAuthToken(
+        {
+          username: registeredUser.username,
+          email: registeredUser.email,
+          role: registeredUser.role,
+        },
+        24 * 60 * 60
+      );
 
       return res.status(200).json({
         success: true,
@@ -118,6 +141,18 @@ const loginController = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+  }
+};
+
+const userVerficationController = async (req, res) => {
+  const token = req.params;
+
+  // if token not found
+  if (!token) {
+    res.status(404).json({
+      success: false,
+      msg: "No or invalid token. Verication failed!",
+    });
   }
 };
 
