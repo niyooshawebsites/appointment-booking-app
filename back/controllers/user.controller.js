@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const { encryptPassword, decryptPassword } = require("../utils/password");
 const generateAuthToken = require("../utils/authToken");
-const { sendverificationEmail } = require("../utils/mail");
+const { sendverificationEmail, verifyEmail } = require("../utils/mail");
 
 const registerController = async (req, res) => {
   const { username, email, password } = req.body;
@@ -56,7 +56,7 @@ const registerController = async (req, res) => {
       );
 
       // generate the email verification link
-      const verficationURI = `http://localhost:5173/verify-eamil?token=${verficationToken}`;
+      const verficationURI = `http://localhost:5173/verify-email?token=${verficationToken}`;
 
       // Send the verfication link to customer email account
       sendverificationEmail(
@@ -123,6 +123,14 @@ const loginController = async (req, res) => {
         });
       }
 
+      // if user is verified
+      if (registeredUser.isVerified === false) {
+        return res.status(403).json({
+          success: false,
+          msg: "Email verification pending",
+        });
+      }
+
       // password match
       const authToken = await generateAuthToken(
         {
@@ -145,15 +153,42 @@ const loginController = async (req, res) => {
 };
 
 const userVerficationController = async (req, res) => {
-  const token = req.params;
+  const { token } = req.params;
 
   // if token not found
   if (!token) {
-    res.status(404).json({
+    return res.status(404).json({
       success: false,
       msg: "No or invalid token. Verication failed!",
     });
   }
+
+  // if token is there
+  const result = await verifyEmail(token);
+
+  // if verification failed
+  if (!result) {
+    return res.status(403).json({
+      success: false,
+      msg: "Invalid token!!! Verification failed",
+    });
+  }
+
+  // if verification successful, update the isVerified flag
+  await User.findOneAndUpdate(
+    { email: result.email },
+    { isVerfied: true },
+    { new: true }
+  );
+
+  return res.status(200).json({
+    success: true,
+    msg: "Email successfully verified!",
+  });
 };
 
-module.exports = { registerController, loginController };
+module.exports = {
+  registerController,
+  loginController,
+  userVerficationController,
+};

@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   registerController,
   loginController,
+  userVerficationController,
 } = require("../controllers/user.controller");
 const {
   bookAppointmnentController,
@@ -15,6 +16,9 @@ router.post("/register", registerController);
 
 // login route
 router.post("/login", loginController);
+
+// verfiy email route
+router.put("/verify-email/:token", userVerficationController);
 
 // book appointment route
 router.post("/book-appointment", bookAppointmnentController);

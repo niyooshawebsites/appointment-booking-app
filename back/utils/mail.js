@@ -32,7 +32,7 @@ const verifyEmail = async (verificationToken) => {
     process.env.JWT_SECRET
   );
 
-  return userDetails ? true : false;
+  return userDetails ? userDetails : false;
 };
 
 module.exports = { sendverificationEmail, verifyEmail };
