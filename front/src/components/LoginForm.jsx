@@ -28,7 +28,9 @@ const LoginForm = () => {
     e.preventDefault();
 
     await axios
-      .post("http://localhost:8000/api/v1/login", loginDetails)
+      .post("http://localhost:8000/api/v1/login", loginDetails, {
+        withCredentials: true,
+      })
       .then((res) => {
         dispatch(
           userSliceActions.login({

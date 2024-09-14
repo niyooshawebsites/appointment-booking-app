@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const requrieLogin = async (req, res, next) => {
-  const token = req?.headers["authorization"];
+  const token = req.cookie.authToken;
 
   if (token) {
     const user = await jwt.verify(token, process.env.JWT_SECRET);
