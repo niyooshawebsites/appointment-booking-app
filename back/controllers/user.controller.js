@@ -138,13 +138,14 @@ const loginController = async (req, res) => {
           email: registeredUser.email,
           role: registeredUser.role,
         },
-        24 * 60 * 60
+        "1d"
       );
 
       // setting the cookie
       res.cookie("authToken", authToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
+        maxAge: 3600000 * 24,
       });
 
       return res.status(200).json({

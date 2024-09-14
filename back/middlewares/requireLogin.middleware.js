@@ -4,16 +4,16 @@ const requrieLogin = async (req, res, next) => {
   const token = req.cookie.authToken;
 
   if (token) {
-    const user = await jwt.verify(token, process.env.JWT_SECRET);
-    if (user) {
+    await jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        return res.status(409).json({
+          success: false,
+          msg: "Token Error!",
+        });
+      }
+      req.user = user;
       return next();
-    }
-    if (!user) {
-      return res.status(409).json({
-        success: false,
-        msg: "Invalid token. Unauthorized access!",
-      });
-    }
+    });
   }
 
   if (!token) {
