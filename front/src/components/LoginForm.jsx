@@ -1,8 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { userSliceActions } from "../store/slices/UserSlice";
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+
   const [loginDetails, setLoginDetails] = useState(() => {
     return {
       email: "",
@@ -15,7 +19,7 @@ const LoginForm = () => {
     setLoginDetails((prevDetails) => {
       return {
         ...prevDetails,
-        [name]: value,
+        [name]: value.trim(),
       };
     });
   };
@@ -26,6 +30,11 @@ const LoginForm = () => {
     await axios
       .post("http://localhost:8000/api/v1/login", loginDetails)
       .then((res) => {
+        dispatch(
+          userSliceActions.login({
+            email: loginDetails.email,
+          })
+        );
         console.log(res);
         toast("Login successful!");
       })

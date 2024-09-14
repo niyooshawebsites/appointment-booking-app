@@ -6,20 +6,24 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import VeriryEmail from "./pages/VeriryEmail";
+import GlobalStore from "./store/GlobalStore";
+import { Provider } from "react-redux";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Appointment />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/verify-email" element={<VeriryEmail />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={GlobalStore}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Appointment />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/verify-email" element={<VeriryEmail />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 };
 
