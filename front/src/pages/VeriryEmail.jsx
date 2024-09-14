@@ -6,7 +6,8 @@ import axios from "axios";
 import Layout from "../components/Layout";
 
 const VeriryEmail = () => {
-  const [outCome, setOutCome] = useState("");
+  const [outCome, setOutCome] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const emailVerificationToken = searchParams.get("token");
 
@@ -18,6 +19,7 @@ const VeriryEmail = () => {
         )
         .then((res) => {
           setOutCome(res.data.success);
+          setLoading(false);
         })
         .catch((err) => console.log(err));
     };
@@ -26,7 +28,7 @@ const VeriryEmail = () => {
 
   return (
     <Layout>
-      <EmailVerificationMsg outCome={outCome} />
+      <EmailVerificationMsg outCome={outCome} loading={loading} />
     </Layout>
   );
 };

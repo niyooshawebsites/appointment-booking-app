@@ -177,7 +177,7 @@ const userVerficationController = async (req, res) => {
   // if verification successful, update the isVerified flag
   await User.findOneAndUpdate(
     { email: result.email },
-    { isVerfied: true },
+    { isVerified: true },
     { new: true }
   );
 
