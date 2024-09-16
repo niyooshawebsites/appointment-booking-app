@@ -22,6 +22,22 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    name: {
+      type: Boolean,
+      default: false,
+    },
+    businessName: {
+      type: Boolean,
+      default: false,
+    },
+    officeNo: {
+      type: Boolean,
+      default: false,
+    },
+    buildingNo: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

@@ -4,6 +4,7 @@ const {
   loginController,
   userVerficationController,
   checkAuthController,
+  logoutController,
 } = require("../controllers/user.controller");
 const {
   bookAppointmnentController,
@@ -34,5 +35,8 @@ router.get(
 
 // check authentication
 router.get("/check-auth", requrieLogin, checkAuthController);
+
+// logout controller
+router.post("/logout", logoutController);
 
 module.exports = router;

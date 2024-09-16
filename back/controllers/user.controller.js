@@ -143,9 +143,10 @@ const loginController = async (req, res) => {
 
       // setting the cookie
       res.cookie("authToken", authToken, {
-        httpOnly: true,
+        httpOnly: process.env.COOKIE_HTTPONLY,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 3600000 * 24,
+        maxAge: 24 * 60 * 60 * 1000, // 1 day expirty,
+        path: "/",
       });
 
       return res.status(200).json({
@@ -200,9 +201,18 @@ const checkAuthController = async (req, res) => {
   });
 };
 
+const logoutController = async (req, res) => {
+  res.clearCookie("authToken", {
+    httpOnly: process.env.COOKIE_HTTPONLY,
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+  });
+};
+
 module.exports = {
   registerController,
   loginController,
   userVerficationController,
   checkAuthController,
+  logoutController,
 };
