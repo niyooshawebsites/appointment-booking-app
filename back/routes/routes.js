@@ -3,6 +3,7 @@ const {
   registerController,
   loginController,
   userVerficationController,
+  checkAuthController,
 } = require("../controllers/user.controller");
 const {
   bookAppointmnentController,
@@ -30,5 +31,8 @@ router.get(
   isAdmin,
   getAllAppointmentsController
 );
+
+// check authentication
+router.get("/check-auth", requrieLogin, checkAuthController);
 
 module.exports = router;

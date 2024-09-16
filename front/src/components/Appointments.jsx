@@ -7,7 +7,9 @@ const Appointments = () => {
 
   const fetchAllAppointments = async () => {
     await axios
-      .get("http://localhost:8000/api/v1/get-all-appointments")
+      .get("http://localhost:8000/api/v1/get-all-appointments", {
+        withCredentials: true,
+      })
       .then((res) => setAllAppointments(res.data.data))
       .catch((err) => console.log(err));
   };

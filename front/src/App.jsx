@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import VeriryEmail from "./pages/VeriryEmail";
 import GlobalStore from "./store/GlobalStore";
 import { Provider } from "react-redux";
+import ProtectedContent from "./components/ProtectedContent";
 
 const App = () => {
   return (
@@ -17,10 +18,12 @@ const App = () => {
           <Route path="/" element={<Appointment />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify-email" element={<VeriryEmail />} />
+          <Route element={<ProtectedContent />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </Provider>

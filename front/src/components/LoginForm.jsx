@@ -3,9 +3,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { userSliceActions } from "../store/slices/UserSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [loginDetails, setLoginDetails] = useState(() => {
     return {
@@ -37,11 +39,16 @@ const LoginForm = () => {
             email: loginDetails.email,
           })
         );
-        console.log(res);
+
+        dispatch(
+          userSliceActions.authentication({
+            authenticated: res.data.success,
+          })
+        );
         toast("Login successful!");
+        navigate("/dashboard");
       })
       .catch((err) => {
-        console.log(err);
         toast("Login failed!");
       });
 
