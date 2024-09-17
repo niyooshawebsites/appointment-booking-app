@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ContactForm = () => {
   const [contactDetails, setContactDetails] = useState(() => {
@@ -7,7 +8,7 @@ const ContactForm = () => {
       name: "",
       businessName: "",
       gst: "",
-      contact: "",
+      contact: 0,
       office: "",
       floor: "",
       building: "",
@@ -15,7 +16,7 @@ const ContactForm = () => {
       locality: "",
       district: "",
       state: "",
-      pinCode: "",
+      pinCode: 0,
     };
   });
 
@@ -36,8 +37,14 @@ const ContactForm = () => {
         { contactDetails },
         { withCredentials: true }
       )
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log(res);
+        toast("Contact details updated successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast("Error updating details");
+      });
   };
   return (
     <div className="w-4/12 mx-auto">
@@ -53,6 +60,7 @@ const ContactForm = () => {
             type="text"
             autoComplete="on"
             placeholder="Name"
+            value={contactDetails.name}
             onChange={handleChange}
             required
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
@@ -65,6 +73,7 @@ const ContactForm = () => {
             type="text"
             autoComplete="on"
             placeholder="Business Name"
+            value={contactDetails.businessName}
             onChange={handleChange}
             required
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
@@ -77,6 +86,7 @@ const ContactForm = () => {
             type="number"
             autoComplete="on"
             placeholder="Contact number"
+            value={contactDetails.contact}
             onChange={handleChange}
             minLength={10}
             maxLength={10}
@@ -91,6 +101,7 @@ const ContactForm = () => {
             type="text"
             autoComplete="on"
             placeholder="GST number"
+            value={contactDetails.gst}
             onChange={handleChange}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
           />
@@ -102,6 +113,7 @@ const ContactForm = () => {
             type="text"
             autoComplete="on"
             placeholder="Office Number"
+            value={contactDetails.office}
             onChange={handleChange}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
           />
@@ -113,6 +125,7 @@ const ContactForm = () => {
             type="text"
             autoComplete="on"
             placeholder="Floor number"
+            value={contactDetails.floor}
             onChange={handleChange}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
           />
@@ -124,6 +137,7 @@ const ContactForm = () => {
             type="text"
             autoComplete="on"
             placeholder="Building number or name"
+            value={contactDetails.building}
             onChange={handleChange}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
           />
@@ -135,6 +149,7 @@ const ContactForm = () => {
             type="text"
             autoComplete="on"
             placeholder="Street number or name"
+            value={contactDetails.street}
             onChange={handleChange}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
           />
@@ -146,6 +161,7 @@ const ContactForm = () => {
             type="text"
             autoComplete="on"
             placeholder="Locality"
+            value={contactDetails.locality}
             onChange={handleChange}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
           />
@@ -157,6 +173,7 @@ const ContactForm = () => {
             type="text"
             autoComplete="on"
             placeholder="District"
+            value={contactDetails.district}
             onChange={handleChange}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
           />
@@ -168,6 +185,7 @@ const ContactForm = () => {
             type="text"
             autoComplete="on"
             placeholder="State"
+            value={contactDetails.state}
             onChange={handleChange}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
           />
@@ -181,6 +199,7 @@ const ContactForm = () => {
             placeholder="Pincode"
             minLength={6}
             maxLength={6}
+            value={contactDetails.pinCode}
             onChange={handleChange}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
           />

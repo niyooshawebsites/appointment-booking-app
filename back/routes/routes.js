@@ -42,7 +42,12 @@ router.get("/check-auth", requrieLogin, checkAuthController);
 router.post("/logout", logoutController);
 
 // update contact details route
-router.patch("/update-contact-details", updateContactDetailsController);
+router.patch(
+  "/update-contact-details",
+  requrieLogin,
+  isAdmin,
+  updateContactDetailsController
+);
 
 // update about details route
 router.patch("/update-about-details", updateAboutDetailsController);

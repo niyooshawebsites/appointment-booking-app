@@ -15,7 +15,7 @@ const requrieLogin = async (req, res, next) => {
           });
         }
         req.user = user;
-        return next();
+        next();
       });
     }
   } catch (err) {

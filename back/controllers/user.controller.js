@@ -281,35 +281,39 @@ const updateContactDetailsController = async (req, res) => {
 };
 
 const updateAboutDetailsController = async (req, res) => {
-  // getting data from body
-  const { about } = req.body;
+  try {
+    // getting data from body
+    const { about } = req.body;
 
-  // if detail is not available
-  if (!about) {
-    return res.status(400).json({
+    // if detail is not available
+    if (!about) {
+      return res.status(400).json({
+        success: true,
+        msg: "Please provide about details",
+      });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email: req.user.email },
+      { about },
+      { new: true }
+    );
+
+    // if not updated
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        msg: "user not found",
+      });
+    }
+
+    return res.status(200).json({
       success: true,
-      msg: "Please provide about details",
+      msg: "About details updated successfully",
     });
+  } catch (err) {
+    console.log(err);
   }
-
-  const updatedUser = await User.findOneAndUpdate(
-    { email: req.user.email },
-    { about },
-    { new: true }
-  );
-
-  // if not updated
-  if (!updatedUser) {
-    return res.status(404).json({
-      success: false,
-      msg: "user not found",
-    });
-  }
-
-  return res.status(200).json({
-    success: true,
-    msg: "About details updated successfully",
-  });
 };
 
 module.exports = {

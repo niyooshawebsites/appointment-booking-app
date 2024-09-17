@@ -26,7 +26,6 @@ const RegisterForm = () => {
     await axios
       .post("http://localhost:8000/api/v1/register", registrationDetails)
       .then((res) => {
-        console.log(res.data.data);
         toast("Registration successful!");
       })
       .catch((err) => {

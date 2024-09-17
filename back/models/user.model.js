@@ -28,23 +28,19 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       default: "",
-      required: true,
     },
     businessName: {
       type: String,
       default: "",
-      required: true,
     },
     gst: {
       type: String,
       default: "",
       unique: true,
-      required: true,
     },
     contact: {
       type: Number,
       default: 0,
-      required: true,
       unique: true,
     },
     office: {
@@ -77,12 +73,11 @@ const userSchema = new mongoose.Schema(
     },
     pinCode: {
       type: Number,
-      default: "",
+      default: 0,
     },
     about: {
       type: String,
       default: "",
-      required: true,
     },
   },
   {
