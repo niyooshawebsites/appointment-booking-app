@@ -209,10 +209,115 @@ const logoutController = async (req, res) => {
   });
 };
 
+const updateContactDetailsController = async (req, res) => {
+  // get all the details from body
+  const {
+    name,
+    businessName,
+    gst,
+    contact,
+    office,
+    floor,
+    building,
+    street,
+    locality,
+    district,
+    state,
+    pinCode,
+  } = req.body;
+
+  // if all the details are not provided
+  if (
+    !name ||
+    !businessName ||
+    !gst ||
+    !contact ||
+    !office ||
+    !floor ||
+    !building ||
+    !street ||
+    !locality ||
+    !district ||
+    !state ||
+    !pinCode
+  ) {
+    return res.status(400).json({
+      success: false,
+      msg: "Please provide all the details!",
+    });
+  }
+
+  // find the user using email
+  const updatedUser = await User.findOneAndUpdate(
+    { email: req.user.email },
+    {
+      name,
+      businessName,
+      gst,
+      contact,
+      office,
+      floor,
+      building,
+      street,
+      locality,
+      district,
+      state,
+      pinCode,
+    },
+    { new: true }
+  );
+
+  if (!updatedUser) {
+    return res.status(404).json({
+      success: false,
+      msg: "User not found",
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    msg: "Contact details updation successful",
+  });
+};
+
+const updateAboutDetailsController = async (req, res) => {
+  // getting data from body
+  const { about } = req.body;
+
+  // if detail is not available
+  if (!about) {
+    return res.status(400).json({
+      success: true,
+      msg: "Please provide about details",
+    });
+  }
+
+  const updatedUser = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { about },
+    { new: true }
+  );
+
+  // if not updated
+  if (!updatedUser) {
+    return res.status(404).json({
+      success: false,
+      msg: "user not found",
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    msg: "About details updated successfully",
+  });
+};
+
 module.exports = {
   registerController,
   loginController,
   userVerficationController,
   checkAuthController,
   logoutController,
+  updateContactDetailsController,
+  updateAboutDetailsController,
 };

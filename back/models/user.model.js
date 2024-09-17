@@ -5,10 +5,12 @@ const userSchema = new mongoose.Schema(
     username: {
       type: String,
       required: true,
+      unique: true,
     },
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -16,6 +18,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: Number,
+      rquired: true,
       default: 0,
     },
     isVerified: {
@@ -23,20 +26,63 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     name: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "",
+      required: true,
     },
     businessName: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "",
+      required: true,
     },
-    officeNo: {
-      type: Boolean,
-      default: false,
+    gst: {
+      type: String,
+      default: "",
+      unique: true,
+      required: true,
     },
-    buildingNo: {
-      type: Boolean,
-      default: false,
+    contact: {
+      type: Number,
+      default: 0,
+      required: true,
+      unique: true,
+    },
+    office: {
+      type: String,
+      default: "",
+    },
+    floor: {
+      type: String,
+      default: "",
+    },
+    building: {
+      type: String,
+      default: "",
+    },
+    street: {
+      type: String,
+      default: "",
+    },
+    locality: {
+      type: String,
+      default: "",
+    },
+    district: {
+      type: String,
+      default: "",
+    },
+    state: {
+      type: String,
+      default: "",
+    },
+    pinCode: {
+      type: Number,
+      default: "",
+    },
+    about: {
+      type: String,
+      default: "",
+      required: true,
     },
   },
   {

@@ -11,8 +11,8 @@ const AboutForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios
-      .put(
-        "http://localhost:8000/api/v1/update-userdetails",
+      .patch(
+        "http://localhost:8000/api/v1/update-about-details",
         { about },
         { withCredentials: true }
       )

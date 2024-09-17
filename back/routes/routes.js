@@ -5,6 +5,8 @@ const {
   userVerficationController,
   checkAuthController,
   logoutController,
+  updateContactDetailsController,
+  updateAboutDetailsController,
 } = require("../controllers/user.controller");
 const {
   bookAppointmnentController,
@@ -36,7 +38,13 @@ router.get(
 // check authentication
 router.get("/check-auth", requrieLogin, checkAuthController);
 
-// logout controller
+// logout route
 router.post("/logout", logoutController);
+
+// update contact details route
+router.patch("/update-contact-details", updateContactDetailsController);
+
+// update about details route
+router.patch("/update-about-details", updateAboutDetailsController);
 
 module.exports = router;
