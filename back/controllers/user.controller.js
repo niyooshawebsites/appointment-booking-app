@@ -226,6 +226,8 @@ const updateContactDetailsController = async (req, res) => {
     pinCode,
   } = req.body;
 
+  console.log(req.body);
+
   // if all the details are not provided
   if (
     !name ||
