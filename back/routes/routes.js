@@ -50,6 +50,11 @@ router.patch(
 );
 
 // update about details route
-router.patch("/update-about-details", updateAboutDetailsController);
+router.patch(
+  "/update-about-details",
+  requrieLogin,
+  isAdmin,
+  updateAboutDetailsController
+);
 
 module.exports = router;

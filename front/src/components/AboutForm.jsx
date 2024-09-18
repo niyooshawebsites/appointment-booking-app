@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import {
   ClassicEditor,
@@ -29,12 +30,23 @@ const AboutForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(about);
     await axios
-      .patch("http://localhost:8000/api/v1/update-about-details", about, {
-        withCredentials: true,
+      .patch(
+        "http://localhost:8000/api/v1/update-about-details",
+        { about },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        toast("Updation successful");
       })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        toast("Updation failed");
+      });
   };
 
   return (

@@ -155,43 +155,47 @@ const loginController = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log(err?.message);
   }
 };
 
 const userVerficationController = async (req, res) => {
-  const { token } = req.params;
+  try {
+    const { token } = req.params;
 
-  // if token not found
-  if (!token) {
-    return res.status(404).json({
-      success: false,
-      msg: "No or invalid token. Verication failed!",
+    // if token not found
+    if (!token) {
+      return res.status(404).json({
+        success: false,
+        msg: "No or invalid token. Verication failed!",
+      });
+    }
+
+    // if token is there
+    const result = await verifyEmail(token);
+
+    // if verification failed
+    if (!result) {
+      return res.status(403).json({
+        success: false,
+        msg: "Invalid token!!! Verification failed",
+      });
+    }
+
+    // if verification successful, update the isVerified flag
+    await User.findOneAndUpdate(
+      { email: result.email },
+      { isVerified: true },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      success: true,
+      msg: "Email successfully verified!",
     });
+  } catch (err) {
+    console.log(err?.message);
   }
-
-  // if token is there
-  const result = await verifyEmail(token);
-
-  // if verification failed
-  if (!result) {
-    return res.status(403).json({
-      success: false,
-      msg: "Invalid token!!! Verification failed",
-    });
-  }
-
-  // if verification successful, update the isVerified flag
-  await User.findOneAndUpdate(
-    { email: result.email },
-    { isVerified: true },
-    { new: true }
-  );
-
-  return res.status(200).json({
-    success: true,
-    msg: "Email successfully verified!",
-  });
 };
 
 const checkAuthController = async (req, res) => {
@@ -202,57 +206,21 @@ const checkAuthController = async (req, res) => {
 };
 
 const logoutController = async (req, res) => {
-  res.clearCookie("authToken", {
-    httpOnly: process.env.COOKIE_HTTPONLY,
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-  });
+  try {
+    return res.clearCookie("authToken", {
+      httpOnly: process.env.COOKIE_HTTPONLY,
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+    });
+  } catch (err) {
+    console.log(err?.message);
+  }
 };
 
 const updateContactDetailsController = async (req, res) => {
-  // get all the details from body
-  const {
-    name,
-    businessName,
-    gst,
-    contact,
-    office,
-    floor,
-    building,
-    street,
-    locality,
-    district,
-    state,
-    pinCode,
-  } = req.body;
-
-  console.log(req.body);
-
-  // if all the details are not provided
-  if (
-    !name ||
-    !businessName ||
-    !gst ||
-    !contact ||
-    !office ||
-    !floor ||
-    !building ||
-    !street ||
-    !locality ||
-    !district ||
-    !state ||
-    !pinCode
-  ) {
-    return res.status(400).json({
-      success: false,
-      msg: "Please provide all the details!",
-    });
-  }
-
-  // find the user using email
-  const updatedUser = await User.findOneAndUpdate(
-    { email: req.user.email },
-    {
+  try {
+    // get all the details from body
+    const {
       name,
       businessName,
       gst,
@@ -265,21 +233,65 @@ const updateContactDetailsController = async (req, res) => {
       district,
       state,
       pinCode,
-    },
-    { new: true }
-  );
+    } = req.body;
 
-  if (!updatedUser) {
-    return res.status(404).json({
-      success: false,
-      msg: "User not found",
+    console.log(req.body);
+
+    // if all the details are not provided
+    if (
+      !name ||
+      !businessName ||
+      !gst ||
+      !contact ||
+      !office ||
+      !floor ||
+      !building ||
+      !street ||
+      !locality ||
+      !district ||
+      !state ||
+      !pinCode
+    ) {
+      return res.status(400).json({
+        success: false,
+        msg: "Please provide all the details!",
+      });
+    }
+
+    // find the user using email
+    const updatedUser = await User.findOneAndUpdate(
+      { email: req.user.email },
+      {
+        name,
+        businessName,
+        gst,
+        contact,
+        office,
+        floor,
+        building,
+        street,
+        locality,
+        district,
+        state,
+        pinCode,
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        msg: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Contact details updation successful",
     });
+  } catch (err) {
+    console.log(err?.message);
   }
-
-  return res.status(200).json({
-    success: true,
-    msg: "Contact details updation successful",
-  });
 };
 
 const updateAboutDetailsController = async (req, res) => {
@@ -287,10 +299,12 @@ const updateAboutDetailsController = async (req, res) => {
     // getting data from body
     const { about } = req.body;
 
+    console.log(about);
+
     // if detail is not available
     if (!about) {
       return res.status(400).json({
-        success: true,
+        success: false,
         msg: "Please provide about details",
       });
     }
@@ -315,6 +329,14 @@ const updateAboutDetailsController = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+const aboutDetailsController = async (req, res) => {
+  try {
+    const user = await User.findOne();
+  } catch (err) {
+    console.log(err?.message);
   }
 };
 
