@@ -11,7 +11,7 @@ const LoginForm = () => {
 
   const [loginDetails, setLoginDetails] = useState(() => {
     return {
-      email: "",
+      username: "",
       password: "",
     };
   });
@@ -36,7 +36,7 @@ const LoginForm = () => {
       .then((res) => {
         dispatch(
           userSliceActions.login({
-            email: loginDetails.email,
+            username: loginDetails.username,
           })
         );
 
@@ -54,7 +54,7 @@ const LoginForm = () => {
 
     setLoginDetails(() => {
       return {
-        email: "",
+        username: "",
         password: "",
       };
     });
@@ -67,16 +67,16 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="email"
+              htmlFor="username"
               className="block text-sm font-medium text-gray-700"
             >
-              Email
+              Username
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              value={loginDetails.email}
+              type="text"
+              id="username"
+              name="username"
+              value={loginDetails.username}
               onChange={handleChange}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"

@@ -1,27 +1,13 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userSliceActions } from "../store/slices/UserSlice";
-import Cookies from "js-cookie";
 import axios from "axios";
 
 const Header = () => {
-  const { email } = useSelector((state) => state.user_Slice);
+  const { username } = useSelector((state) => state.user_Slice);
   const { authenticated } = useSelector((state) => state.user_Slice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // only for development purpose
-  // const logout = () => {
-  //   Cookies.remove("authToken");
-
-  //   dispatch(
-  //     userSliceActions.authentication({
-  //       authenticated: false,
-  //     })
-  //   );
-
-  //   navigate("/login");
-  // };
 
   const logout = async () => {
     await axios

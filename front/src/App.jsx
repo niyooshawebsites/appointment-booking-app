@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Appointment from "./pages/Home";
+import Appointment from "./pages/Appointment";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
@@ -15,14 +15,14 @@ const App = () => {
     <Provider store={GlobalStore}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Appointment />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/:username" element={<Appointment />} />
+          <Route path="/:username/about" element={<About />} />
+          <Route path="/:username/contact" element={<Contact />} />
+          <Route path="/:username/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify-email" element={<VeriryEmail />} />
           <Route element={<ProtectedContent />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/:username/dashboard" element={<Dashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>

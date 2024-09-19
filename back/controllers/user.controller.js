@@ -78,13 +78,13 @@ const registerController = async (req, res) => {
 
 const loginController = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     // if email does not exisit
-    if (!email) {
+    if (!username) {
       return res.status(400).json({
         success: false,
-        msg: "Email is required!",
+        msg: "Username is required!",
       });
     }
 
@@ -97,7 +97,7 @@ const loginController = async (req, res) => {
     }
 
     // check for registered user
-    const registeredUser = await User.findOne({ email });
+    const registeredUser = await User.findOne({ username });
 
     // registered user not found
     if (!registeredUser) {
