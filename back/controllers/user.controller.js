@@ -346,9 +346,30 @@ const getAboutDetailsController = async (req, res) => {
 
     if (user) {
       return res.status(200).json({
-        success: false,
+        success: true,
         msg: "user found successfully",
         about: user.about,
+      });
+    }
+  } catch (err) {
+    console.log(err?.message);
+  }
+};
+
+const checkUserController = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+      });
+    }
+
+    if (user) {
+      return res.status(200).json({
+        success: true,
       });
     }
   } catch (err) {
@@ -365,4 +386,5 @@ module.exports = {
   updateContactDetailsController,
   updateAboutDetailsController,
   getAboutDetailsController,
+  checkUserController,
 };

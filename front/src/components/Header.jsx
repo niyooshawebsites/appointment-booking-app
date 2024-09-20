@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Header = () => {
   const path = window.location.pathname;
-  const user = path.split("/")[1];
+  const user = path.split("/")[1] || "abs";
 
   const { username } = useSelector((state) => state.user_Slice);
   const { authenticated } = useSelector((state) => state.user_Slice);
@@ -28,7 +28,7 @@ const Header = () => {
       })
     );
 
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -104,13 +104,17 @@ const Header = () => {
                   </NavLink>
                 ) : (
                   <>
-                    <NavLink
-                      to={`/${user}`}
-                      className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                      aria-current="page"
-                    >
-                      Book Appointment
-                    </NavLink>
+                    {user !== "abs" ? (
+                      <NavLink
+                        to={`/${user}`}
+                        className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                        aria-current="page"
+                      >
+                        Book Appointment
+                      </NavLink>
+                    ) : (
+                      ""
+                    )}
                     <NavLink
                       to={`/${user}/about`}
                       className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"

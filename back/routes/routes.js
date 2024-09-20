@@ -1,4 +1,5 @@
 const router = require("express").Router();
+
 const {
   registerController,
   loginController,
@@ -8,6 +9,7 @@ const {
   updateContactDetailsController,
   updateAboutDetailsController,
   getAboutDetailsController,
+  checkUserController,
 } = require("../controllers/user.controller");
 
 const {
@@ -62,5 +64,8 @@ router.patch(
 
 // get about details route
 router.get("/about/:username", getAboutDetailsController);
+
+// check user route
+router.get("/checkUser/:username", checkUserController);
 
 module.exports = router;
