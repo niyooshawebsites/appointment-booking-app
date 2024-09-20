@@ -332,9 +332,25 @@ const updateAboutDetailsController = async (req, res) => {
   }
 };
 
-const aboutDetailsController = async (req, res) => {
+const getAboutDetailsController = async (req, res) => {
   try {
-    const user = await User.findOne();
+    const { username } = req.params;
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "No user found",
+      });
+    }
+
+    if (user) {
+      return res.status(200).json({
+        success: false,
+        msg: "user found successfully",
+        about: user.about,
+      });
+    }
   } catch (err) {
     console.log(err?.message);
   }
@@ -348,4 +364,5 @@ module.exports = {
   logoutController,
   updateContactDetailsController,
   updateAboutDetailsController,
+  getAboutDetailsController,
 };

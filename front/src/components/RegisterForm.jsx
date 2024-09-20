@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const RegisterForm = () => {
   const [registrationDetails, setRegistrationDetails] = useState(() => {
@@ -105,6 +106,12 @@ const RegisterForm = () => {
             Register
           </button>
         </form>
+        <p className="text-center text-gray-500 mt-5">
+          Already have an account?{" "}
+          <Link to="/" className="text-blue-500">
+            Please login!
+          </Link>
+        </p>
       </div>
     </div>
   );

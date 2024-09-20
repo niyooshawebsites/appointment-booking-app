@@ -1,9 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { userSliceActions } from "../store/slices/UserSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -106,6 +107,12 @@ const LoginForm = () => {
             Log In
           </button>
         </form>
+        <p className="text-center text-gray-500 mt-5">
+          Don't have an account?{" "}
+          <Link to="/register" className="text-blue-500">
+            Register here!
+          </Link>
+        </p>
       </div>
     </div>
   );

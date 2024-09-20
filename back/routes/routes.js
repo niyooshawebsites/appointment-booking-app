@@ -7,11 +7,14 @@ const {
   logoutController,
   updateContactDetailsController,
   updateAboutDetailsController,
+  getAboutDetailsController,
 } = require("../controllers/user.controller");
+
 const {
   bookAppointmnentController,
   getAllAppointmentsController,
 } = require("../controllers/appointment.controller");
+
 const isAdmin = require("../middlewares/isAdmin.middleware");
 const requrieLogin = require("../middlewares/requireLogin.middleware");
 
@@ -56,5 +59,8 @@ router.patch(
   isAdmin,
   updateAboutDetailsController
 );
+
+// get about details route
+router.get("/about", getAboutDetailsController);
 
 module.exports = router;

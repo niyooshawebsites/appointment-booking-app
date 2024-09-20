@@ -6,10 +6,13 @@ import axios from "axios";
 const About = () => {
   const [about, setAbout] = useState("");
 
+  const path = window.location.pathname;
+  const username = path.split("/")[1];
+
   useEffect(() => {
     const getAboutData = async () => {
       await axios
-        .get("http://localhost:8000/api/v1/about")
+        .get(`http://localhost:8000/api/v1/about/:${username}`)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     };
