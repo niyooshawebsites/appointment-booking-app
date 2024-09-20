@@ -61,6 +61,6 @@ router.patch(
 );
 
 // get about details route
-router.get("/about", getAboutDetailsController);
+router.get("/about/:username", getAboutDetailsController);
 
 module.exports = router;
