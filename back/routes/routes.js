@@ -14,6 +14,11 @@ const {
 } = require("../controllers/user.controller");
 
 const {
+  updateServiceController,
+  deleteServiceController,
+} = require("../controllers/service.controller");
+
+const {
   bookAppointmnentController,
   getAllAppointmentsController,
 } = require("../controllers/appointment.controller");
@@ -29,6 +34,17 @@ router.post("/login", loginController);
 
 // verfiy email route
 router.put("/verify-email/:token", userVerficationController);
+
+// udpate service route
+router.patch("/update-service", requrieLogin, isAdmin, updateServiceController);
+
+// delete service route
+router.delete(
+  "/delete-service:id",
+  requrieLogin,
+  isAdmin,
+  deleteServiceController
+);
 
 // book appointment route
 router.post("/book-appointment", bookAppointmnentController);
@@ -66,7 +82,7 @@ router.patch(
 // get about details route
 router.get("/about/:username", getAboutDetailsController);
 
-router.get("/contact/:username", getContactDetailsController)
+router.get("/contact/:username", getContactDetailsController);
 
 // check user route
 router.get("/checkUser/:username", checkUserController);
