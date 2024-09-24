@@ -4,6 +4,11 @@ import axios from "axios";
 
 const Appointments = () => {
   const [allApppointments, setAllAppointments] = useState(() => []);
+  const [searchAppointments, setSearchAppointments] = useState(() => ""); 
+
+  const filterAppointments = (e) => {
+    setSearchAppointments(e.target.value);
+  };
 
   const fetchAllAppointments = async () => {
     await axios
@@ -25,6 +30,8 @@ const Appointments = () => {
         name="firstName"
         type="text"
         autoComplete="on"
+        value={searchAppointments}
+        onKeyUp={filterAppointments}
         placeholder="Search Appointments..."
         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 mt-5"
       />
@@ -43,7 +50,7 @@ const Appointments = () => {
           </tr>
         </thead>
         <tbody>
-          {allApppointments.map((appointment) => {
+          {allApppointments.filter(appointment => appointment.firstName.toLowerCase().includes(searchAppointments)).map((appointment) => {
             return (
               <tr className="border-b border-gray-200" key={appointment._id}>
                 <td className="py-2 px-4 text-gray-700">

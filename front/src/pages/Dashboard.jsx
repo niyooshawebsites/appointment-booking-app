@@ -8,6 +8,7 @@ import ContactForm from "../components/ContactForm";
 
 const Dashboard = () => {
   const [showAppointments, setShowAppointments] = useState(true);
+  const [showServices, setShowServices] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [showContact, setShowContact] = useState(false);
@@ -18,6 +19,24 @@ const Dashboard = () => {
         <div className="w-full h-screen flex">
           <Sidebar
             setShowAppointments={setShowAppointments}
+            setShowServices={setShowServices}
+            setShowProfile={setShowProfile}
+            setShowAbout={setShowAbout}
+            showContact={setShowContact}
+          />
+          <Appointments />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (showServices) {
+    return (
+      <Layout>
+        <div className="w-full h-screen flex">
+          <Sidebar
+            setShowAppointments={setShowAppointments}
+            setShowServices={setShowServices}
             setShowProfile={setShowProfile}
             setShowAbout={setShowAbout}
             showContact={setShowContact}
@@ -34,6 +53,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex">
           <Sidebar
             setShowAppointments={setShowAppointments}
+            setShowServices={setShowServices}
             setShowProfile={setShowProfile}
             setShowAbout={setShowAbout}
             showContact={setShowContact}
@@ -50,6 +70,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex">
           <Sidebar
             setShowAppointments={setShowAppointments}
+            setShowServices={setShowServices}
             setShowProfile={setShowProfile}
             setShowAbout={setShowAbout}
             showContact={setShowContact}
@@ -66,6 +87,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex">
           <Sidebar
             setShowAppointments={setShowAppointments}
+            setShowServices={setShowServices}
             setShowProfile={setShowProfile}
             setShowAbout={setShowAbout}
             showContact={setShowContact}

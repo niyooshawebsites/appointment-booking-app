@@ -72,7 +72,11 @@ const registerController = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err?.message);
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err
+    })
   }
 };
 
@@ -155,7 +159,11 @@ const loginController = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err?.message);
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err
+    })
   }
 };
 
@@ -194,7 +202,11 @@ const userVerficationController = async (req, res) => {
       msg: "Email successfully verified!",
     });
   } catch (err) {
-    console.log(err?.message);
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err
+    })
   }
 };
 
@@ -213,7 +225,11 @@ const logoutController = async (req, res) => {
       path: "/",
     });
   } catch (err) {
-    console.log(err?.message);
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err
+    })
   }
 };
 
@@ -290,7 +306,11 @@ const updateContactDetailsController = async (req, res) => {
       msg: "Contact details updation successful",
     });
   } catch (err) {
-    console.log(err?.message);
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err
+    })
   }
 };
 
@@ -328,7 +348,11 @@ const updateAboutDetailsController = async (req, res) => {
       msg: "About details updated successfully",
     });
   } catch (err) {
-    console.log(err);
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err
+    })
   }
 };
 
@@ -352,9 +376,55 @@ const getAboutDetailsController = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err?.message);
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err
+    })
   }
 };
+
+const getContactDetailsController = async (req, res) => {
+  try{
+    const {username} = req.params;
+    const user = await User.findOne({username});
+
+    // if user not found
+    if(!user){
+      return res.status(404).json({
+        success: false,
+        msg: "user not found"
+      })
+    }
+
+    if(user){
+      return res.staus(200).json({
+        success: true,
+        msg: "User found successfully",
+        contact: {
+          name: user.name,
+          businessName: user.businessName,
+          gst: user.gst,
+          contact: user.contact,
+          office: user.office,
+          floor: user.floor,
+          building: user.building,
+          street: user.street,
+          locality: user.locality,
+          district: user.district,
+          state: user.state,
+          pinCode: user.pinCode,
+        }
+      })
+    }
+  }catch(err){
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err
+    })
+  }
+}
 
 const checkUserController = async (req, res) => {
   try {
@@ -373,7 +443,11 @@ const checkUserController = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err?.message);
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err
+    })
   }
 };
 
@@ -386,5 +460,6 @@ module.exports = {
   updateContactDetailsController,
   updateAboutDetailsController,
   getAboutDetailsController,
+  checkUserController,
   checkUserController,
 };
