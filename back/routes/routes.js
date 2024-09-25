@@ -9,7 +9,7 @@ const {
   updateContactDetailsController,
   updateAboutDetailsController,
   getAboutDetailsController,
-  checkUserController,
+  getContactDetailsController,
   checkUserController,
 } = require("../controllers/user.controller");
 
@@ -86,6 +86,7 @@ router.patch(
 // get about details route
 router.get("/about/:username", getAboutDetailsController);
 
+// get contact us details route
 router.get("/contact/:username", getContactDetailsController);
 
 // check user route

@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 const AppointmentForm = ({ serviceProvider }) => {
-  const [allServices, setAllServices] = useState([]);
+  const { services } = useSelector((state) => state.service_Provider_Slice);
+
+  // const [allServices, setAllServices] = useState([]);
 
   const [custDetails, setCustDetails] = useState(() => {
     return {
@@ -75,16 +78,16 @@ const AppointmentForm = ({ serviceProvider }) => {
 
   const currentDate = new Date().toISOString().split("T")[0];
 
-  const fetchAllServices = async () => {
-    await axios
-      .get("http://localhost:8000/api/v1/get-services")
-      .then((res) => setAllServices(res.data.services))
-      .catch((err) => console.log(err));
-  };
+  // const fetchAllServices = async () => {
+  //   await axios
+  //     .get("http://localhost:8000/api/v1/get-services")
+  //     .then((res) => setAllServices(res.data.services))
+  //     .catch((err) => console.log(err));
+  // };
 
-  useEffect(() => {
-    fetchAllServices();
-  }, []);
+  // useEffect(() => {
+  //   fetchAllServices();
+  // }, []);
 
   return (
     <form className="w-9/12 mx-auto" onSubmit={handleSubmit}>
@@ -106,7 +109,7 @@ const AppointmentForm = ({ serviceProvider }) => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
                   <option value="No slection">Select service</option>
-                  {allServices.map((service) => {
+                  {services.map((service) => {
                     return (
                       <option
                         value={service.serviceName}

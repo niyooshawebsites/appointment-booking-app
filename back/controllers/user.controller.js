@@ -440,6 +440,24 @@ const checkUserController = async (req, res) => {
     if (user) {
       return res.status(200).json({
         success: true,
+        email: user.email,
+        contactNo: user.contact,
+        about: user.about,
+        services: user.services,
+        contact: {
+          businessName: user.businessName,
+          gst: user.gst,
+          email: user.email,
+          contact: user.contact,
+          office: user.office,
+          floor: user.floor,
+          building: user.building,
+          street: user.street,
+          locality: user.locality,
+          district: user.district,
+          state: user.state,
+          pinCode: user.pinCode,
+        },
       });
     }
   } catch (err) {
@@ -460,6 +478,7 @@ module.exports = {
   updateContactDetailsController,
   updateAboutDetailsController,
   getAboutDetailsController,
+  getContactDetailsController,
   checkUserController,
   checkUserController,
 };

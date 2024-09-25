@@ -1,24 +1,29 @@
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 const About = () => {
-  const [about, setAbout] = useState("");
+  const { username, about } = useSelector(
+    (state) => state.service_Provider_Slice
+  );
 
-  const path = window.location.pathname;
-  const username = path.split("/")[1] || "abs";
+  // const [about, setAbout] = useState("");
 
-  useEffect(() => {
-    const getAboutData = async () => {
-      await axios
-        .get(`http://localhost:8000/api/v1/about/${username}`)
-        .then((res) => setAbout(res.data.about))
-        .catch((err) => console.log(err));
-    };
+  // const path = window.location.pathname;
+  // const username = path.split("/")[1] || "abs";
 
-    getAboutData();
-  }, []);
+  // useEffect(() => {
+  //   const getAboutData = async () => {
+  //     await axios
+  //       .get(`http://localhost:8000/api/v1/about/${username}`)
+  //       .then((res) => setAbout(res.data.about))
+  //       .catch((err) => console.log(err));
+  //   };
+
+  //   getAboutData();
+  // }, []);
 
   return (
     <Layout>

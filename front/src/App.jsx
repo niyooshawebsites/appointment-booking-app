@@ -10,12 +10,14 @@ import Register from "./pages/Register";
 import VeriryEmail from "./pages/VeriryEmail";
 import NotFound from "./pages/NotFound";
 import GlobalStore from "./store/GlobalStore";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
+import { serviceProviderSliceActons } from "./store/slices/ServiceProviderSlice";
 import ProtectedContent from "./components/ProtectedContent";
 import axios from "axios";
 
 const App = () => {
   const [serviceProvider, setServiceProvider] = useState(null);
+  const dispatch = useDispatch();
 
   // getting the username from url
   const path = window.location.pathname;
@@ -25,8 +27,18 @@ const App = () => {
     await axios
       .get(`http://localhost:8000/api/v1/checkUser/${username}`)
       .then((res) => {
-        console.log(res);
         setServiceProvider(res.data.success);
+        dispatch(
+          serviceProviderSliceActons.serviceProviderDetails({
+            username: serviceProvider.username,
+            businessName: serviceProvider.businessName,
+            about: serviceProvider.about,
+            email: serviceProvider.email,
+            contactNo: serviceProvider.contactNo,
+            services: serviceProvider.services,
+            contact: serviceProvider.contact,
+          })
+        );
       })
       .catch((err) => console.log(err));
   };
