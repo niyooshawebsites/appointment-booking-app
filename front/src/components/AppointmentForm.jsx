@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const AppointmentForm = () => {
+const AppointmentForm = ({ serviceProvider }) => {
+  const [allServices, setAllServices] = useState([]);
+
   const [custDetails, setCustDetails] = useState(() => {
     return {
       service: "",
@@ -19,6 +21,7 @@ const AppointmentForm = () => {
       state: "",
       pinCode: "",
       paymentMethod: "",
+      serviceProvider,
     };
   });
 
@@ -71,6 +74,18 @@ const AppointmentForm = () => {
   };
 
   const currentDate = new Date().toISOString().split("T")[0];
+
+  const fetchAllServices = async () => {
+    await axios
+      .get("http://localhost:8000/api/v1/get-services")
+      .then((res) => setAllServices(res.data.services))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchAllServices();
+  }, []);
+
   return (
     <form className="w-9/12 mx-auto" onSubmit={handleSubmit}>
       <div className="space-y-12">
@@ -91,11 +106,16 @@ const AppointmentForm = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 >
                   <option value="No slection">Select service</option>
-                  <option value="Option 1">Option 1</option>
-                  <option value="Option 2">Option 2</option>
-                  <option value="Option 3">Option 3</option>
-                  <option value="Option 4">Option 4</option>
-                  <option value="Option 5">Option 5</option>
+                  {allServices.map((service) => {
+                    return (
+                      <option
+                        value={service.serviceName}
+                        key={service.serviceId}
+                      >
+                        {`${service.serviceName} - Rs${service.fee}`}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
             </div>

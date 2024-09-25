@@ -65,7 +65,7 @@ const registerController = async (req, res) => {
         `${verficationURI}`
       );
 
-      res.status(201).json({
+      return res.status(201).json({
         success: true,
         msg: "Regisration done. Please verify your email to login",
         newUser,
@@ -75,8 +75,8 @@ const registerController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err
-    })
+      err,
+    });
   }
 };
 
@@ -162,8 +162,8 @@ const loginController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err
-    })
+      err,
+    });
   }
 };
 
@@ -205,8 +205,8 @@ const userVerficationController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err
-    })
+      err,
+    });
   }
 };
 
@@ -228,8 +228,8 @@ const logoutController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err
-    })
+      err,
+    });
   }
 };
 
@@ -309,8 +309,8 @@ const updateContactDetailsController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err
-    })
+      err,
+    });
   }
 };
 
@@ -351,8 +351,8 @@ const updateAboutDetailsController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err
-    })
+      err,
+    });
   }
 };
 
@@ -379,25 +379,25 @@ const getAboutDetailsController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err
-    })
+      err,
+    });
   }
 };
 
 const getContactDetailsController = async (req, res) => {
-  try{
-    const {username} = req.params;
-    const user = await User.findOne({username});
+  try {
+    const { username } = req.params;
+    const user = await User.findOne({ username });
 
     // if user not found
-    if(!user){
+    if (!user) {
       return res.status(404).json({
         success: false,
-        msg: "user not found"
-      })
+        msg: "user not found",
+      });
     }
 
-    if(user){
+    if (user) {
       return res.staus(200).json({
         success: true,
         msg: "User found successfully",
@@ -414,17 +414,17 @@ const getContactDetailsController = async (req, res) => {
           district: user.district,
           state: user.state,
           pinCode: user.pinCode,
-        }
-      })
+        },
+      });
     }
-  }catch(err){
+  } catch (err) {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err
-    })
+      err,
+    });
   }
-}
+};
 
 const checkUserController = async (req, res) => {
   try {
@@ -446,8 +446,8 @@ const checkUserController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err
-    })
+      err,
+    });
   }
 };
 

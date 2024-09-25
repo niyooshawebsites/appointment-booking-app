@@ -15,7 +15,7 @@ import ProtectedContent from "./components/ProtectedContent";
 import axios from "axios";
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  const [serviceProvider, setServiceProvider] = useState(null);
 
   // getting the username from url
   const path = window.location.pathname;
@@ -26,7 +26,7 @@ const App = () => {
       .get(`http://localhost:8000/api/v1/checkUser/${username}`)
       .then((res) => {
         console.log(res);
-        setUser(res.data.success);
+        setServiceProvider(res.data.success);
       })
       .catch((err) => console.log(err));
   };
@@ -42,15 +42,21 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route
             path={`/${username}`}
-            element={user ? <Appointment /> : <NotFound />}
+            element={
+              serviceProvider ? (
+                <Appointment serviceProvider={serviceProvider} />
+              ) : (
+                <NotFound />
+              )
+            }
           />
           <Route
             path={`/${username}/about`}
-            element={user ? <About /> : <NotFound />}
+            element={serviceProvider ? <About /> : <NotFound />}
           />
           <Route
             path={`/${username}/contact`}
-            element={user ? <Contact /> : <NotFound />}
+            element={serviceProvider ? <Contact /> : <NotFound />}
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

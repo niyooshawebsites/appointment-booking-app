@@ -14,7 +14,7 @@ const sendverificationEmail = (email, subject, text) => {
 
   // setting the email options
   const mailOptions = {
-    from: "info@abs.com",
+    from: process.env.ADMIN_EMAIL,
     to: email,
     subject,
     html: `Please verfiy your email via this link: <a href="${text}" target="_blank">Verify email</a>`,
@@ -35,4 +35,47 @@ const verifyEmail = async (verificationToken) => {
   return userDetails ? userDetails : false;
 };
 
-module.exports = { sendverificationEmail, verifyEmail };
+const appointmentConfirmationEmail = async (
+  email,
+  subject,
+  name,
+  serviceProvider,
+  service,
+  date,
+  time
+) => {
+  // creating the transporter
+  const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
+    },
+  });
+
+  // setting the email options
+  const mailOptions = {
+    from: process.env.ADMIN_EMAIL,
+    to: email,
+    subject,
+    html: `Hello Mr./Miss. ${name}. 
+    <br> 
+    Your appointment with ${serviceProvider} for ${service} on ${date} at ${time} is confirmed. 
+    <br> 
+    Thaks and regards,
+    ${serviceProvider}
+    `,
+  };
+
+  // trigger the email
+  transporter.sendMail(mailOptions, (err, info) => {
+    err ? console.log(err) : console.log(`Email sent: ${info.response}`);
+  });
+};
+
+module.exports = {
+  sendverificationEmail,
+  verifyEmail,
+  appointmentConfirmationEmail,
+};

@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import Layout from "../components/Layout";
 import AboutForm from "../components/AboutForm";
 import ContactForm from "../components/ContactForm";
+import ServiceForm from "../components/ServiceForm";
 
 const Dashboard = () => {
   const [showAppointments, setShowAppointments] = useState(true);
@@ -41,7 +42,7 @@ const Dashboard = () => {
             setShowAbout={setShowAbout}
             showContact={setShowContact}
           />
-          <Appointments />
+          <ServiceForm />
         </div>
       </Layout>
     );

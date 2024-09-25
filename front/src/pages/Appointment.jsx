@@ -1,10 +1,10 @@
 import Layout from "../components/Layout";
 import AppointmentForm from "../components/AppointmentForm";
 
-const Appointment = () => {
+const Appointment = ({ serviceProvider }) => {
   return (
     <Layout>
-      <AppointmentForm />
+      <AppointmentForm serviceProvider={serviceProvider} />
     </Layout>
   );
 };

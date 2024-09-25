@@ -2,13 +2,13 @@ const User = require("../models/user.model");
 
 const updateServiceController = async (req, res) => {
   try {
-    const { serviceId, service, fee } = req.body;
+    const { serviceId, serviceName, fee } = req.body;
 
     // if service is not provided
-    if (!service) {
+    if (!serviceName) {
       return res.status(400).json({
         success: false,
-        msg: "Service is required",
+        msg: "Service name is required",
       });
     }
 
@@ -31,7 +31,7 @@ const updateServiceController = async (req, res) => {
 
     const updatedUser = await User.findOneAndUpdate(
       { email: req.user.email },
-      { serviceId, service, fee },
+      { serviceId, serviceName, fee },
       { new: true }
     );
 
@@ -71,4 +71,32 @@ const deleteServiceController = async (req, res) => {
   }
 };
 
-module.exports = { updateServiceController, deleteServiceController };
+const getAllServicesController = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.user.email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "No user found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "user and services found",
+      services: user.services,
+    });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+module.exports = {
+  updateServiceController,
+  deleteServiceController,
+  getAllServicesController,
+};

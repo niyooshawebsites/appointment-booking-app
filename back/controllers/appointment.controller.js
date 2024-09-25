@@ -1,4 +1,5 @@
 const Appointment = require("../models/appointment.model");
+const appointmentConfirmationEmail = require("../utils/mail");
 
 const bookAppointmnentController = async (req, res) => {
   try {
@@ -17,6 +18,7 @@ const bookAppointmnentController = async (req, res) => {
       state,
       pinCode,
       paymentMethod,
+      serviceProvider,
     } = req.body;
 
     // if service is not selected
@@ -131,6 +133,14 @@ const bookAppointmnentController = async (req, res) => {
       });
     }
 
+    // if Service provider is not selected
+    if (!serviceProvider) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Service provider is missing",
+      });
+    }
+
     // if all the information is provided
     const existingCustomer = new Appointment({
       service,
@@ -151,19 +161,29 @@ const bookAppointmnentController = async (req, res) => {
 
     const result = await existingCustomer.save();
 
-    if (result) {
-      return res.status(201).json({
-        success: true,
-        msg: "Appointment booked successfully",
-      });
-    }
-
     if (!result) {
       return res.status(500).json({
         success: false,
         msg: "Appointment booking failed. Please try again",
       });
     }
+
+    const fullName = `${firstName} ${lastName}`;
+
+    appointmentConfirmationEmail(
+      email,
+      "Appointment confirmed",
+      fullName,
+      serviceProvider,
+      service,
+      date,
+      time
+    );
+
+    return res.status(201).json({
+      success: true,
+      msg: "Appointment booked successfully",
+    });
   } catch (err) {
     console.error("Error occurred:", err);
     return res.status(500).json({

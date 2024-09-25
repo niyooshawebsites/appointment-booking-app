@@ -16,6 +16,7 @@ const {
 const {
   updateServiceController,
   deleteServiceController,
+  getAllServicesController,
 } = require("../controllers/service.controller");
 
 const {
@@ -45,6 +46,9 @@ router.delete(
   isAdmin,
   deleteServiceController
 );
+
+// get all services routes
+router.get("/get-services", getAllServicesController);
 
 // book appointment route
 router.post("/book-appointment", bookAppointmnentController);
