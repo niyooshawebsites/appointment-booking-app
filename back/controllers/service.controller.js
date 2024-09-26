@@ -2,10 +2,10 @@ const User = require("../models/user.model");
 
 const updateServiceController = async (req, res) => {
   try {
-    const { services } = req.body;
+    const { currentService } = req.body;
 
     // if service is not provided
-    if (!services) {
+    if (!currentService) {
       return res.status(400).json({
         success: false,
         msg: "Service is required",
@@ -23,7 +23,7 @@ const updateServiceController = async (req, res) => {
 
     const updatedUser = await User.findOneAndUpdate(
       { email: req.user.email },
-      { services },
+      { services: req.user.services.push(currentService) },
       { new: true }
     );
 

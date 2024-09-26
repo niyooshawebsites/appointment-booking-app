@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const ServiceForm = () => {
   const { username } = useSelector((state) => state.user_Slice);
-  const [services, setServices] = useState(() => []);
+
   const [currentService, setCurrentService] = useState(() => {
     return {
       serviceId: "",
@@ -30,16 +30,11 @@ const ServiceForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setServices((prevServices) => [...prevServices, currentService]);
 
     await axios
-      .patch(
-        "http://localhost:8000/api/v1/update-service",
-        { services },
-        {
-          withCredentials: true,
-        }
-      )
+      .patch("http://localhost:8000/api/v1/update-service", currentService, {
+        withCredentials: true,
+      })
       .then((res) => {
         console.log(res);
         toast("Service created successfully");
