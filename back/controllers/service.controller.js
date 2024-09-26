@@ -2,13 +2,27 @@ const User = require("../models/user.model");
 
 const updateServiceController = async (req, res) => {
   try {
-    const { currentService } = req.body;
+    const { serviceId, serviceName, fee } = req.body;
 
     // if service is not provided
-    if (!currentService) {
+    if (!serviceId) {
       return res.status(400).json({
         success: false,
-        msg: "Service is required",
+        msg: "Service ID is required",
+      });
+    }
+
+    if (!serviceName) {
+      return res.status(400).json({
+        success: false,
+        msg: "Service name is required",
+      });
+    }
+
+    if (!fee) {
+      return res.status(400).json({
+        success: false,
+        msg: "Fee is required",
       });
     }
 
@@ -23,7 +37,7 @@ const updateServiceController = async (req, res) => {
 
     const updatedUser = await User.findOneAndUpdate(
       { email: req.user.email },
-      { services: req.user.services.push(currentService) },
+      { services: [...user.services, { serviceId, serviceName, fee }] },
       { new: true }
     );
 
@@ -42,14 +56,17 @@ const updateServiceController = async (req, res) => {
 const deleteServiceController = async (req, res) => {
   try {
     const { id } = req.params;
-
     const user = await User.findOne({ email: req.user.email });
+
     const userServices = user.services.filter(
-      (service) => service.serviceId !== id
+      (service) => service.serviceId != id
     );
 
-    user.services = userServices;
-    await user.save();
+    await User.findOneAndUpdate(
+      { email: req.user.email },
+      { services: userServices },
+      { new: true }
+    );
 
     return res.status(200).json({
       success: true,

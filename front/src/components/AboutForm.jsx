@@ -38,11 +38,18 @@ const AboutForm = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
-            <textarea value={about} onChange={handleChange} rows={8}></textarea>
+            <textarea
+              id="message"
+              className="block w-full p-2 border border-gray-300 rounded-md  focus:border-gray-200"
+              placeholder="Write your about us here..."
+              value={about}
+              onChange={handleChange}
+              rows={8}
+            ></textarea>
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
           >
             Update details
           </button>

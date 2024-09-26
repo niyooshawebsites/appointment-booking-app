@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const ServiceForm = () => {
   const { username } = useSelector((state) => state.user_Slice);
-
+  const [serivceDeleted, setServiceDeleted] = useState(false);
   const [currentService, setCurrentService] = useState(() => {
     return {
       serviceId: "",
@@ -55,11 +55,15 @@ const ServiceForm = () => {
 
   const handleDelete = async (id) => {
     await axios
-      .delete(`http://locahost:8000/api/v1/delete-service/${id}`, {
-        withCredentials: true,
-      })
+      .patch(
+        `http://localhost:8000/api/v1/delete-service/${id}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
-        console.log(res);
+        setServiceDeleted((prevState) => !prevState);
         toast("Service deleted successfully");
       })
       .catch((err) => {
@@ -77,7 +81,7 @@ const ServiceForm = () => {
 
   useEffect(() => {
     fetchAllServices();
-  }, []);
+  }, [currentService, serivceDeleted]);
 
   return (
     <div className="max-w-2xl mx-auto p-4">
@@ -108,7 +112,7 @@ const ServiceForm = () => {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+          className="w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition-colors"
         >
           Add Service
         </button>

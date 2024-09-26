@@ -40,8 +40,8 @@ router.put("/verify-email/:token", userVerficationController);
 router.patch("/update-service", requrieLogin, isAdmin, updateServiceController);
 
 // delete service route
-router.delete(
-  "/delete-service:id",
+router.patch(
+  "/delete-service/:id",
   requrieLogin,
   isAdmin,
   deleteServiceController
