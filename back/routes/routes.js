@@ -48,7 +48,7 @@ router.delete(
 );
 
 // get all services routes
-router.get("/get-services", getAllServicesController);
+router.get("/get-services/:username", getAllServicesController);
 
 // book appointment route
 router.post("/book-appointment", bookAppointmnentController);

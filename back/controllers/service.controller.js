@@ -2,21 +2,13 @@ const User = require("../models/user.model");
 
 const updateServiceController = async (req, res) => {
   try {
-    const { serviceId, serviceName, fee } = req.body;
+    const { services } = req.body;
 
     // if service is not provided
-    if (!serviceName) {
+    if (!services) {
       return res.status(400).json({
         success: false,
-        msg: "Service name is required",
-      });
-    }
-
-    // if fee is not provided
-    if (!fee) {
-      return res.status(400).json({
-        success: false,
-        msg: "Fee is required",
+        msg: "Service is required",
       });
     }
 
@@ -31,7 +23,7 @@ const updateServiceController = async (req, res) => {
 
     const updatedUser = await User.findOneAndUpdate(
       { email: req.user.email },
-      { serviceId, serviceName, fee },
+      { services },
       { new: true }
     );
 
@@ -73,7 +65,8 @@ const deleteServiceController = async (req, res) => {
 
 const getAllServicesController = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.user.email });
+    const { username } = req.params;
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(404).json({

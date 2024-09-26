@@ -2,35 +2,44 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
+import { useSelector } from "react-redux";
 
 const ServiceForm = () => {
-  const [services, setServices] = useState(() => [
-    {
+  const { username } = useSelector((state) => state.user_Slice);
+  const [services, setServices] = useState(() => []);
+  const [currentService, setCurrentService] = useState(() => {
+    return {
       serviceId: "",
       serviceName: "",
       fee: "",
-    },
-  ]);
+    };
+  });
 
   const [allServices, setAllServices] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setServices((prevState) => [
-      {
+    setCurrentService((prevState) => {
+      return {
+        ...prevState,
         serviceId: uuidv4(),
-        [name]: value.trim(),
-      },
-      ...prevState,
-    ]);
+        [name]: value,
+      };
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setServices((prevServices) => [...prevServices, currentService]);
+
     await axios
-      .patch("http://localhost:8000/api/v1/update-service", services[0], {
-        withCredentials: true,
-      })
+      .patch(
+        "http://localhost:8000/api/v1/update-service",
+        { services },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         console.log(res);
         toast("Service created successfully");
@@ -39,6 +48,14 @@ const ServiceForm = () => {
         console.log(err);
         toast("Service creation failed");
       });
+
+    setCurrentService(() => {
+      return {
+        serviceId: "",
+        serviceName: "",
+        fee: "",
+      };
+    });
   };
 
   const handleDelete = async (id) => {
@@ -58,7 +75,7 @@ const ServiceForm = () => {
 
   const fetchAllServices = async () => {
     await axios
-      .get("http://localhost:8000/api/v1/get-services")
+      .get(`http://localhost:8000/api/v1/get-services/${username}`)
       .then((res) => setAllServices(res.data.services))
       .catch((err) => console.log(err));
   };
@@ -78,7 +95,7 @@ const ServiceForm = () => {
           <input
             type="text"
             name="serviceName"
-            value={services[0].serviceName}
+            value={currentService.serviceName}
             onChange={handleChange}
             placeholder="Service Name"
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -87,7 +104,7 @@ const ServiceForm = () => {
           <input
             type="number"
             name="fee"
-            value={services[0].fee}
+            value={currentService.fee}
             onChange={handleChange}
             placeholder="Fee"
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -97,7 +114,9 @@ const ServiceForm = () => {
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
-        ></button>
+        >
+          Add Service
+        </button>
       </form>
 
       {/* Table Section */}
@@ -106,7 +125,7 @@ const ServiceForm = () => {
           <tr className="bg-gray-200 text-left text-sm uppercase font-semibold">
             <th className="py-3 px-4">#</th>
             <th className="py-3 px-4">Service</th>
-            <th className="py-3 px-4">Charges</th>
+            <th className="py-3 px-4">Fee</th>
             <th className="py-3 px-4">Action</th>
           </tr>
         </thead>
