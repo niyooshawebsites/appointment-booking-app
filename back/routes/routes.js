@@ -55,7 +55,7 @@ router.post("/book-appointment", bookAppointmnentController);
 
 // fetch all appointments route
 router.get(
-  "/get-all-appointments",
+  "/get-all-appointments/:username",
   requrieLogin,
   isAdmin,
   getAllAppointmentsController

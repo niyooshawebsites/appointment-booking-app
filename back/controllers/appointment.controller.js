@@ -195,8 +195,8 @@ const bookAppointmnentController = async (req, res) => {
 
 const getAllAppointmentsController = async (req, res) => {
   try {
-    console.log(req.user.email);
-    const appAppointments = await Appointment.find()
+    const { username } = req.body;
+    const appAppointments = await Appointment.find({ username })
       .limit(10)
       .sort({ date: -1, time: -1 });
 

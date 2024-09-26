@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -7,40 +5,8 @@ const Footer = () => {
   const { businessName, about, email, contactNo, services, contact } =
     useSelector((state) => state.service_Provider_Slice);
 
-  // getting the username from the url
-  // const path = window.location.pathname;
-  // const username = path.split("/")[1] || "abs";
-
-  // const [footerDetails, setFooterDetails] = useState(() => {
-  //   return {
-  //     about: "",
-  //     services: [],
-  //     contact: {},
-  //   };
-  // });
-
-  // const fetchFooterDetails = async () => {
-  //   await axios
-  //     .get(`http://localhost:8000/api/v1//checkUser/${username}`)
-  //     .then((res) =>
-  //       setFooterDetails((prevDetails) => {
-  //         return {
-  //           ...prevDetails,
-  //           about: res.data.about,
-  //           services: res.data.services,
-  //           contact: res.data.contact,
-  //         };
-  //       })
-  //     )
-  //     .catch((err) => console.log(err));
-  // };
-
-  // useEffect(() => {
-  //   fetchFooterDetails();
-  // }, []);
-
   return (
-    <footer className="bg-gray-800 text-white py-8">
+    <footer className="bg-gray-800 text-white py-8 mt-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap justify-between">
           <div className="w-full sm:w-1/3 mb-6 sm:mb-0">

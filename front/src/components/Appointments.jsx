@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Appointments = () => {
+  const { username } = useSelector((state) => state.user_Slice);
   const [allApppointments, setAllAppointments] = useState(() => []);
   const [searchAppointments, setSearchAppointments] = useState(() => "");
 
   const filterAppointments = (e) => {
-    setSearchAppointments(() => {
-      e.target.value.toLowerCase();
-    });
+    setSearchAppointments(() => e.target.value.toLowerCase());
   };
 
   const fetchAllAppointments = async () => {
     await axios
-      .get("http://localhost:8000/api/v1/get-all-appointments", {
+      .get(`http://localhost:8000/api/v1/get-all-appointments/${username}`, {
         withCredentials: true,
       })
       .then((res) => setAllAppointments(res.data.data))
@@ -34,7 +34,7 @@ const Appointments = () => {
         autoComplete="on"
         value={searchAppointments}
         onChange={filterAppointments}
-        placeholder="Search Appointments using first name..."
+        placeholder="Search Appointments using first name or service..."
         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 mt-5"
       />
 
@@ -54,8 +54,12 @@ const Appointments = () => {
         </thead>
         <tbody>
           {allApppointments
-            .filter((appointment) =>
-              appointment.firstName.toLowerCase().includes(searchAppointments)
+            .filter(
+              (appointment) =>
+                appointment.firstName
+                  .toLowerCase()
+                  .includes(searchAppointments) ||
+                appointment.service.toLowerCase().includes(searchAppointments)
             )
             .map((appointment, index) => {
               return (
