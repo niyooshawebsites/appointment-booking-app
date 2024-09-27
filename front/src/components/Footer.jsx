@@ -1,9 +1,23 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   const { businessName, about, email, contactNo, services, contact } =
     useSelector((state) => state.service_Provider_Slice);
+
+  // getting the username from url
+  const path = window.location.pathname;
+  let username = path.split("/")[1];
+  if (
+    username == "register" ||
+    username == "login" ||
+    username == "about" ||
+    username == "contact" ||
+    username == ""
+  ) {
+    username = "abs";
+  }
 
   return (
     <footer className="bg-gray-800 text-white py-8">
@@ -11,35 +25,41 @@ const Footer = () => {
         <div className="flex flex-wrap justify-between">
           <div className="w-full sm:w-1/3 mb-6 sm:mb-0">
             <h3 className="text-lg font-semibold mb-4">About Us</h3>
-            <p className="mb-4">{about}</p>
-            <div className="flex space-x-4">
+            <p className="text-gray-400 mb-4">
+              {about.substring(0, 100) + "..."}
+            </p>{" "}
+            <Link to={username == "abs" ? "/about" : `/${username}/about`}>
+              {" "}
+              More
+            </Link>
+            <div className="flex space-x-4 mt-4">
               <Link
                 to="https://facebook.com"
                 target="_blank"
-                className="text-gray-400 hover:text-white"
+                className="text-gray-400 hover:text-white text-xl"
               >
-                <i className="fab fa-facebook fa-lg"></i>
+                <FaFacebook />
               </Link>
               <Link
                 to="https://twitter.com"
                 target="_blank"
-                className="text-gray-400 hover:text-white"
+                className="text-gray-400 hover:text-white text-xl"
               >
-                <i className="fab fa-twitter fa-lg"></i>
+                <FaTwitter />
               </Link>
               <Link
                 to="https://instagram.com"
                 target="_blank"
-                className="text-gray-400 hover:text-white"
+                className="text-gray-400 hover:text-white text-xl"
               >
-                <i className="fab fa-instagram fa-lg"></i>
+                <FaInstagram />
               </Link>
               <Link
                 to="https://linkedin.com"
                 target="_blank"
-                className="text-gray-400 hover:text-white"
+                className="text-gray-400 hover:text-white text-xl"
               >
-                <i className="fab fa-linkedin fa-lg"></i>
+                <FaLinkedin />
               </Link>
             </div>
           </div>

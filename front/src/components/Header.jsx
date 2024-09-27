@@ -1,11 +1,20 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userSliceActions } from "../store/slices/UserSlice";
 import axios from "axios";
 
 const Header = () => {
   const path = window.location.pathname;
-  const user = path.split("/")[1] || "abs";
+  let user = path.split("/")[1];
+  if (
+    user == "register" ||
+    user == "login" ||
+    user == "about" ||
+    user == "contact" ||
+    user == ""
+  ) {
+    user = "abs";
+  }
 
   const { username } = useSelector((state) => state.user_Slice);
   const { authenticated } = useSelector((state) => state.user_Slice);
@@ -13,22 +22,27 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const logout = async () => {
-    await axios
-      .post(
-        "http://localhost:8000/api/v1/logout",
-        {},
-        { withCredentials: true }
-      )
-      .then(console.log("Logout successfully"))
-      .catch((err) => console.log(err));
-
-    dispatch(
-      userSliceActions.authentication({
-        authenticated: false,
-      })
-    );
-
-    navigate("/");
+    try {
+      await axios
+        .post(
+          "http://localhost:8000/api/v1/logout",
+          {},
+          { withCredentials: true }
+        )
+        .then(() => {
+          console.log("Logout successfully");
+          dispatch(
+            userSliceActions.authentication({
+              authenticated: false,
+            })
+          );
+          navigate("/");
+          console.log("Logout successfully");
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -87,58 +101,80 @@ const Header = () => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-between">
             <div className="flex flex-shrink-0 items-center">
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
-              />
+              <Link to={user !== "abs" ? `/${user}` : "/"}>
+                <img
+                  className="h-8 w-auto"
+                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                  alt="Your Company"
+                />
+              </Link>
             </div>
             <div className="hidden sm:ml-6 sm:block ml-auto">
               <div className="flex space-x-4 ">
                 {authenticated ? (
-                  <NavLink
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    onClick={logout}
-                  >
-                    logout
-                  </NavLink>
+                  <>
+                    <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300">
+                      Hello, {username}
+                    </NavLink>
+                    <NavLink
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                      onClick={logout}
+                    >
+                      logout
+                    </NavLink>
+                  </>
                 ) : (
                   <>
                     {user !== "abs" ? (
-                      <NavLink
-                        to={`/${user}`}
-                        className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                        aria-current="page"
-                      >
-                        Book Appointment
-                      </NavLink>
+                      <>
+                        <NavLink
+                          to={`/${user}`}
+                          className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                          aria-current="page"
+                        >
+                          Book Appointment
+                        </NavLink>
+                        <NavLink
+                          to={`/${user}/about`}
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        >
+                          About
+                        </NavLink>
+                        <NavLink
+                          to={`/${user}/contact`}
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        >
+                          Contact
+                        </NavLink>
+                      </>
                     ) : (
-                      ""
+                      <>
+                        <NavLink
+                          to={`/about`}
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        >
+                          About
+                        </NavLink>
+                        <NavLink
+                          to={`/contact`}
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        >
+                          Contact
+                        </NavLink>
+                        <NavLink
+                          to="/register"
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        >
+                          Register
+                        </NavLink>
+                        <NavLink
+                          to="/login"
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        >
+                          Login
+                        </NavLink>
+                      </>
                     )}
-                    <NavLink
-                      to={`/${user}/about`}
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    >
-                      About
-                    </NavLink>
-                    <NavLink
-                      to={`/${user}/contact`}
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    >
-                      Contact
-                    </NavLink>
-                    <NavLink
-                      to="/register"
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    >
-                      Register
-                    </NavLink>
-                    <NavLink
-                      to="/login"
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    >
-                      Login
-                    </NavLink>
                   </>
                 )}
               </div>
@@ -151,45 +187,69 @@ const Header = () => {
       <div className="sm:hidden" id="mobile-menu">
         <div className="space-y-1 px-2 pb-3 pt-2">
           {authenticated ? (
-            <NavLink
-              className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              onClick={logout}
-            >
-              logout
-            </NavLink>
+            <>
+              <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300">
+                Hello, {username}
+              </NavLink>
+              <NavLink
+                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                onClick={logout}
+              >
+                logout
+              </NavLink>
+            </>
           ) : (
             <>
-              <NavLink
-                to={`/${user}`}
-                className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                aria-current="page"
-              >
-                Book Appointment
-              </NavLink>
-              <NavLink
-                to={`/${user}/about`}
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                About
-              </NavLink>
-              <NavLink
-                to={`/${user}/contact`}
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                Contact
-              </NavLink>
-              <NavLink
-                to="/register"
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                Register
-              </NavLink>
-              <NavLink
-                to="/login"
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                Login
-              </NavLink>
+              {user !== "abs" ? (
+                <>
+                  <NavLink
+                    to={`/${user}`}
+                    className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                    aria-current="page"
+                  >
+                    Book Appointment
+                  </NavLink>
+                  <NavLink
+                    to={`/${user}/about`}
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    About
+                  </NavLink>
+                  <NavLink
+                    to={`/${user}/contact`}
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    Contact
+                  </NavLink>
+                </>
+              ) : (
+                <>
+                  <NavLink
+                    to={`/about`}
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    About
+                  </NavLink>
+                  <NavLink
+                    to={`/contact`}
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    Contact
+                  </NavLink>
+                  <NavLink
+                    to="/register"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    Register
+                  </NavLink>
+                  <NavLink
+                    to="/login"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    Login
+                  </NavLink>
+                </>
+              )}
             </>
           )}
         </div>

@@ -219,10 +219,15 @@ const checkAuthController = async (req, res) => {
 
 const logoutController = async (req, res) => {
   try {
-    return res.clearCookie("authToken", {
+    res.clearCookie("authToken", {
       httpOnly: process.env.COOKIE_HTTPONLY,
       secure: process.env.NODE_ENV === "production",
       path: "/",
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Logout successful",
     });
   } catch (err) {
     return res.status(500).json({

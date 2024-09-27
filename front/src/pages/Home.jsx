@@ -16,7 +16,6 @@ const Home = () => {
     await axios
       .get(`http://localhost:8000/api/v1/checkUser/${username}`)
       .then((res) => {
-        console.log(res);
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
