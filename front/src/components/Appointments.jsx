@@ -3,7 +3,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const Appointments = () => {
+const Appointments = ({
+  setShowAppointments,
+  setShowServices,
+  setShowProfile,
+  setShowAbout,
+  showContact,
+  setshowAppointmentDetails,
+}) => {
   const { username } = useSelector((state) => state.user_Slice);
   const [allApppointments, setAllAppointments] = useState(() => []);
   const [searchAppointments, setSearchAppointments] = useState(() => "");
@@ -85,7 +92,17 @@ const Appointments = () => {
                     {appointment.paymentMethod}
                   </td>
                   <td className="py-2 px-4 text-gray-700">
-                    <Link to="/more-details" className="text-blue-500">
+                    <Link
+                      onClick={() => {
+                        setShowAppointments(false);
+                        setShowServices(false);
+                        setShowProfile(false);
+                        setShowAbout(false);
+                        showContact(false);
+                        setshowAppointmentDetails(true);
+                      }}
+                      className="text-blue-500"
+                    >
                       Details
                     </Link>
                   </td>

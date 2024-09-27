@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 const Sidebar = ({
   setShowAppointments,
+  setshowAppointmentDetails,
   setShowServices,
   setShowProfile,
   setShowAbout,
@@ -14,6 +15,7 @@ const Sidebar = ({
           className="block py-2 px-4 hover:bg-gray-700 rounded link"
           onClick={() => {
             setShowAppointments(true);
+            setshowAppointmentDetails(false);
             setShowServices(false);
             setShowProfile(false);
             setShowAbout(false);
@@ -26,6 +28,7 @@ const Sidebar = ({
           className="block py-2 px-4 hover:bg-gray-700 rounded link"
           onClick={() => {
             setShowAppointments(false);
+            setshowAppointmentDetails(false);
             setShowServices(true);
             setShowProfile(false);
             setShowAbout(false);
@@ -38,6 +41,7 @@ const Sidebar = ({
           className="block py-2 px-4 hover:bg-gray-700 rounded link"
           onClick={() => {
             setShowAppointments(false);
+            setshowAppointmentDetails(false);
             setShowServices(false);
             setShowProfile(false);
             setShowAbout(true);
@@ -50,6 +54,7 @@ const Sidebar = ({
           className="block py-2 px-4 hover:bg-gray-700 rounded link"
           onClick={() => {
             setShowAppointments(false);
+            setshowAppointmentDetails(false);
             setShowServices(false);
             setShowProfile(false);
             setShowAbout(false);
@@ -62,6 +67,7 @@ const Sidebar = ({
           className="block py-2 px-4 hover:bg-gray-700 rounded link"
           onClick={() => {
             setShowAppointments(false);
+            setshowAppointmentDetails(false);
             setShowServices(false);
             setShowAbout(false);
             showContact(false);

@@ -6,7 +6,7 @@ const Footer = () => {
     useSelector((state) => state.service_Provider_Slice);
 
   return (
-    <footer className="bg-gray-800 text-white py-8 mt-10">
+    <footer className="bg-gray-800 text-white py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap justify-between">
           <div className="w-full sm:w-1/3 mb-6 sm:mb-0">
@@ -77,7 +77,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="bg-gray-900 py-4">
+      <div className="bg-gray-900 py-4 mt-8">
         <p className="text-center text-gray-400 text-sm">
           &copy; 2024 Niyoosha Websites LLP. All rights reserved.
         </p>

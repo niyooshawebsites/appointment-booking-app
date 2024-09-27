@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const ServiceForm = () => {
   const { username } = useSelector((state) => state.user_Slice);
@@ -136,12 +137,12 @@ const ServiceForm = () => {
               <td className="py-3 px-4">{service.serviceName}</td>
               <td className="py-3 px-4">${service.fee}</td>
               <td className="py-3 px-4 space-x-2">
-                <button
-                  className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition-colors"
+                <Link
+                  className="text-red-500 px-3 py-1 rounded-md hover:text-red-600 transition-colors"
                   onClick={() => handleDelete(service.serviceId)}
                 >
                   Delete
-                </button>
+                </Link>
               </td>
             </tr>
           ))}

@@ -226,4 +226,10 @@ const getAllAppointmentsController = async (req, res) => {
   }
 };
 
-module.exports = { bookAppointmnentController, getAllAppointmentsController };
+const getApponitmentController = async (req, res) => {};
+
+module.exports = {
+  bookAppointmnentController,
+  getAllAppointmentsController,
+  getApponitmentController,
+};
