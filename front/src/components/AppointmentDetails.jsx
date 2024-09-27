@@ -1,4 +1,22 @@
+import { useSelector } from "react-redux";
+
 const AppointmentDetails = () => {
+  const {
+    service,
+    date,
+    time,
+    firstName,
+    lastName,
+    email,
+    contactNo,
+    age,
+    gender,
+    address,
+    city,
+    state,
+    pinCode,
+    paymentMethod,
+  } = useSelector((state) => state.appointment_Slice);
   return (
     <div className="w-8/12 mx-auto">
       <div className="space-y-1">
@@ -12,6 +30,7 @@ const AppointmentDetails = () => {
                 <label>Service</label>
                 <input
                   type="text"
+                  value={service}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -23,6 +42,7 @@ const AppointmentDetails = () => {
                 <label>Date</label>
                 <input
                   type="text"
+                  value={date}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -34,6 +54,7 @@ const AppointmentDetails = () => {
                 <label>Time</label>
                 <input
                   type="text"
+                  value={time}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -53,6 +74,7 @@ const AppointmentDetails = () => {
                 <label>First Name</label>
                 <input
                   type="text"
+                  value={firstName}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -64,6 +86,7 @@ const AppointmentDetails = () => {
                 <label>Last Name</label>
                 <input
                   type="text"
+                  value={lastName}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -75,6 +98,7 @@ const AppointmentDetails = () => {
                 <label>Email</label>
                 <input
                   type="text"
+                  value={email}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                   required
@@ -87,6 +111,7 @@ const AppointmentDetails = () => {
                 <label>Contact Number</label>
                 <input
                   type="text"
+                  value={contactNo}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -98,6 +123,7 @@ const AppointmentDetails = () => {
                 <label>Age</label>
                 <input
                   type="text"
+                  value={age}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -109,6 +135,7 @@ const AppointmentDetails = () => {
                 <label>Gender</label>
                 <input
                   type="text"
+                  value={gender}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -120,6 +147,7 @@ const AppointmentDetails = () => {
                 <label>City</label>
                 <input
                   type="text"
+                  value={city}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -131,6 +159,7 @@ const AppointmentDetails = () => {
                 <label>State</label>
                 <input
                   type="text"
+                  value={state}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -142,6 +171,7 @@ const AppointmentDetails = () => {
                 <label>Pin Code</label>
                 <input
                   type="text"
+                  value={pinCode}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -153,6 +183,7 @@ const AppointmentDetails = () => {
                 <label>Address</label>
                 <input
                   type="text"
+                  value={address}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -170,6 +201,7 @@ const AppointmentDetails = () => {
               <div className="mt-2">
                 <input
                   type="text"
+                  value={paymentMethod}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />

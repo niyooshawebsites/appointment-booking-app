@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 
 const Appointments = ({
   setShowAppointments,
@@ -14,6 +15,7 @@ const Appointments = ({
   const { username } = useSelector((state) => state.user_Slice);
   const [allApppointments, setAllAppointments] = useState(() => []);
   const [searchAppointments, setSearchAppointments] = useState(() => "");
+  const dispatch = useDispatch();
 
   const filterAppointments = (e) => {
     setSearchAppointments(() => e.target.value.toLowerCase());
@@ -100,6 +102,24 @@ const Appointments = ({
                         setShowAbout(false);
                         showContact(false);
                         setshowAppointmentDetails(true);
+                        dispatch(
+                          appointmentSliceActions.appointmentDetails({
+                            service: appointment.service,
+                            date: appointment.date,
+                            time: appointment.time,
+                            firstName: appointment.firstName,
+                            lastName: appointment.lastName,
+                            email: appointment.email,
+                            contactNo: appointment.contactNo,
+                            age: appointment.age,
+                            gender: appointment.gender,
+                            address: appointment.address,
+                            city: appointment.city,
+                            state: appointment.state,
+                            pinCode: appointment.pinCode,
+                            paymentMethod: appointment.paymentMethod,
+                          })
+                        );
                       }}
                       className="text-blue-500"
                     >

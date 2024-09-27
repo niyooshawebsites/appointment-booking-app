@@ -78,17 +78,6 @@ const AppointmentForm = ({ serviceProvider }) => {
 
   const currentDate = new Date().toISOString().split("T")[0];
 
-  // const fetchAllServices = async () => {
-  //   await axios
-  //     .get("http://localhost:8000/api/v1/get-services")
-  //     .then((res) => setAllServices(res.data.services))
-  //     .catch((err) => console.log(err));
-  // };
-
-  // useEffect(() => {
-  //   fetchAllServices();
-  // }, []);
-
   return (
     <form className="w-9/12 mx-auto" onSubmit={handleSubmit}>
       <div className="space-y-12">
