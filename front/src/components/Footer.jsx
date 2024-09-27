@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+} from "react-icons/fa";
 
 const Footer = () => {
   const { businessName, about, email, contactNo, services, contact } =
@@ -60,6 +66,13 @@ const Footer = () => {
                 className="text-gray-400 hover:text-white text-xl"
               >
                 <FaLinkedin />
+              </Link>
+              <Link
+                to="https://youtube.com"
+                target="_blank"
+                className="text-gray-400 hover:text-white text-xl"
+              >
+                <FaYoutube />
               </Link>
             </div>
           </div>
