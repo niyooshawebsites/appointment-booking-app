@@ -74,8 +74,11 @@ const appointmentConfirmationEmail = async (
   });
 };
 
+const forgotPasswordEmail = async () => {};
+
 module.exports = {
   sendverificationEmail,
   verifyEmail,
   appointmentConfirmationEmail,
+  forgotPasswordEmail,
 };
