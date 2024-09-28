@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -43,16 +43,13 @@ const AppointmentForm = ({ serviceProvider }) => {
 
   const handleSubmit = async function (e) {
     e.preventDefault();
-    console.log(custDetails);
     await axios
       .post("http://localhost:8000/api/v1/book-appointment", custDetails)
       .then((res) => {
-        console.log(res);
-        toast("Appointment booked successfully!");
+        toast.success("Appointment booked successfully!");
       })
       .catch((err) => {
-        console.log(err);
-        toast("Appointment booking failed!");
+        toast.error("Appointment booking failed!");
       });
 
     setCustDetails((prevDetails) => {

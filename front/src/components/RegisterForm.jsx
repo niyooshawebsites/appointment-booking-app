@@ -2,8 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const RegisterForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const [registrationDetails, setRegistrationDetails] = useState(() => {
     return {
       username: "",
@@ -27,11 +31,11 @@ const RegisterForm = () => {
     await axios
       .post("http://localhost:8000/api/v1/register", registrationDetails)
       .then((res) => {
-        toast("Registration successful!");
+        toast.success("Registration successful!");
       })
       .catch((err) => {
         console.log(err);
-        toast("Registration successful!");
+        toast.error("Registration successful!");
       });
 
     setRegistrationDetails(() => {
@@ -41,6 +45,10 @@ const RegisterForm = () => {
         password: "",
       };
     });
+  };
+
+  const togglePassword = () => {
+    setShowPassword((prevState) => !prevState);
   };
 
   return (
@@ -82,23 +90,35 @@ const RegisterForm = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={registrationDetails.password}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            />
+
+          <div className="mb-6 ">
+            <div className="flex flex-col">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <div className="flex items-center">
+                <div className="w-11/12">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={registrationDetails.password}
+                    onChange={handleChange}
+                    required
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="w-1/12 flex justify-center items-center text-gray-400">
+                  <Link onClick={togglePassword} className="text-2xl">
+                    {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
+
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"

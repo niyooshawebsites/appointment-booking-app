@@ -40,7 +40,7 @@ const ContactForm = () => {
       )
       .then((res) => {
         console.log(res);
-        toast("Contact details updated successfully");
+        toast.success("Contact details updated successfully");
         setContactDetails(() => {
           return {
             name: "",
@@ -60,7 +60,7 @@ const ContactForm = () => {
       })
       .catch((err) => {
         console.log(err);
-        toast("Error updating details");
+        toast.error("Error updating details");
       });
   };
   return (

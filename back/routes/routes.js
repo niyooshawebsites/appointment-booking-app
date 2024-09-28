@@ -12,6 +12,7 @@ const {
   getContactDetailsController,
   checkUserController,
   updateSocialProfilesController,
+  updatePasswordController,
 } = require("../controllers/user.controller");
 
 const {
@@ -90,6 +91,14 @@ router.patch(
   requrieLogin,
   isAdmin,
   updateSocialProfilesController
+);
+
+// udpate password route
+router.patch(
+  "/update-password",
+  requrieLogin,
+  isAdmin,
+  updatePasswordController
 );
 
 // get about details route

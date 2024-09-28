@@ -5,10 +5,13 @@ import { toast } from "react-toastify";
 import { userSliceActions } from "../store/slices/UserSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const [loginDetails, setLoginDetails] = useState(() => {
     return {
@@ -46,11 +49,12 @@ const LoginForm = () => {
             authenticated: res.data.success,
           })
         );
-        toast("Login successful!");
+        toast.success("Login successful!");
         navigate("/dashboard");
       })
       .catch((err) => {
-        toast("Login failed!");
+        console.log(err);
+        toast.error("Login failed!");
       });
 
     setLoginDetails(() => {
@@ -59,6 +63,10 @@ const LoginForm = () => {
         password: "",
       };
     });
+  };
+
+  const togglePassword = () => {
+    setShowPassword((prevState) => !prevState);
   };
 
   return (
@@ -75,7 +83,6 @@ const LoginForm = () => {
             </label>
             <input
               type="text"
-              id="username"
               name="username"
               value={loginDetails.username}
               onChange={handleChange}
@@ -83,22 +90,32 @@ const LoginForm = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={loginDetails.password}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            />
+          <div className="mb-6 ">
+            <div className="flex flex-col">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <div className="flex items-center">
+                <div className="w-11/12">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={loginDetails.password}
+                    onChange={handleChange}
+                    required
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="w-1/12 flex justify-center items-center text-gray-400">
+                  <Link onClick={togglePassword} className="text-2xl">
+                    {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
           <button
             type="submit"

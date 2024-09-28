@@ -23,12 +23,12 @@ const AboutForm = () => {
       )
       .then((res) => {
         console.log(res);
-        toast("About details updated successfully");
+        toast.success("About details updated successfully");
         setAbout("");
       })
       .catch((err) => {
         console.log(err);
-        toast("About details updation failed");
+        toast.error("About details updation failed");
       });
   };
 
@@ -49,7 +49,7 @@ const AboutForm = () => {
               placeholder="Write your about us here..."
               value={about}
               onChange={handleChange}
-              rows={10}
+              rows={15}
             ></textarea>
           </div>
           <button

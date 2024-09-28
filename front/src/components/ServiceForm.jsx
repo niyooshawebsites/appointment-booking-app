@@ -38,11 +38,11 @@ const ServiceForm = () => {
       })
       .then((res) => {
         console.log(res);
-        toast("Service created successfully");
+        toast.success("Service created successfully");
       })
       .catch((err) => {
         console.log(err);
-        toast("Service creation failed");
+        toast.error("Service creation failed");
       });
 
     setCurrentService(() => {
@@ -65,11 +65,11 @@ const ServiceForm = () => {
       )
       .then((res) => {
         setServiceDeleted((prevState) => !prevState);
-        toast("Service deleted successfully");
+        toast.success("Service deleted successfully");
       })
       .catch((err) => {
         console.log(err);
-        toast("Service deletetion failed");
+        toast.error("Service deletetion failed");
       });
   };
 
@@ -85,7 +85,8 @@ const ServiceForm = () => {
   }, [currentService, serivceDeleted]);
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
+    <div className="w-8/12  mx-auto p-4">
+      <h2 className="mt-10 mb-4 text-center text-2xl">Service Details</h2>
       {/* Form Section */}
       <form
         className="bg-white shadow-md rounded-lg p-6 mb-6"
@@ -110,13 +111,13 @@ const ServiceForm = () => {
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
+          <button
+            type="submit"
+            className="w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition-colors"
+          >
+            Add Service
+          </button>
         </div>
-        <button
-          type="submit"
-          className="w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition-colors"
-        >
-          Add Service
-        </button>
       </form>
 
       {/* Table Section */}

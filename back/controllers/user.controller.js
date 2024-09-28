@@ -402,6 +402,49 @@ const updateSocialProfilesController = async (req, res) => {
   }
 };
 
+const updatePasswordController = async (req, res) => {
+  try {
+    const { newPassword } = req.body;
+
+    if (!newPassword) {
+      return res.status(400).json({
+        success: false,
+        msg: "New password is required",
+      });
+    }
+
+    const user = await User.findOne({ username: req.user.username });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "No user found",
+      });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      {
+        username: req.user.username,
+      },
+      {
+        password: newPassword,
+      },
+      { new: true }
+    );
+
+    return res.status(201).json({
+      success: true,
+      msg: "Password updation successful",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err,
+    });
+  }
+};
+
 const getAboutDetailsController = async (req, res) => {
   try {
     const { username } = req.params;
@@ -535,4 +578,5 @@ module.exports = {
   checkUserController,
   checkUserController,
   updateSocialProfilesController,
+  updatePasswordController,
 };

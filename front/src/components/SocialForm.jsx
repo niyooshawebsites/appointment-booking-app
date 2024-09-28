@@ -50,7 +50,9 @@ const SocialForm = () => {
   return (
     <form className="w-full p-3 mt-1 rounded-md" onSubmit={onSubmitHandler}>
       <div className="mt-4">
-        <label htmlFor="facebook">Facebook URL</label>
+        <label htmlFor="facebook" className="text-gray-400">
+          Facebook URL
+        </label>
         <input
           name="facebookUrl"
           type="text"
@@ -62,7 +64,9 @@ const SocialForm = () => {
         />
       </div>
       <div className="mt-4">
-        <label htmlFor="facebook">X URL</label>
+        <label htmlFor="xUrl" className="text-gray-400">
+          X URL
+        </label>
         <input
           name="xUrl"
           type="text"
@@ -74,7 +78,9 @@ const SocialForm = () => {
         />
       </div>
       <div className="mt-4">
-        <label htmlFor="facebook">Instagram URL</label>
+        <label htmlFor="instagramUrl" className="text-gray-400">
+          Instagram URL
+        </label>
         <input
           name="instagramUrl"
           type="text"
@@ -86,7 +92,9 @@ const SocialForm = () => {
         />
       </div>
       <div className="mt-4">
-        <label htmlFor="facebook">LinkedIn URL</label>
+        <label htmlFor="linkedInUrl" className="text-gray-400">
+          LinkedIn URL
+        </label>
         <input
           name="linkedInUrl"
           type="text"
@@ -98,7 +106,9 @@ const SocialForm = () => {
         />
       </div>
       <div className="mt-4">
-        <label htmlFor="facebook">Youtube URL</label>
+        <label htmlFor="youtubeUrl" className="text-gray-400">
+          Youtube URL
+        </label>
         <input
           name="youtubeUrl"
           type="text"
