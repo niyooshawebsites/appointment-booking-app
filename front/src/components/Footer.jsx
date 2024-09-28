@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {
-  FaFacebook,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedin,
-  FaYoutube,
-} from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
-  const { businessName, about, email, contactNo, services, contact } =
-    useSelector((state) => state.service_Provider_Slice);
+  const {
+    businessName,
+    about,
+    email,
+    contactNo,
+    services,
+    contact,
+    socialProfiles,
+  } = useSelector((state) => state.service_Provider_Slice);
 
   // getting the username from url
   const path = window.location.pathname;
@@ -40,35 +42,35 @@ const Footer = () => {
             </Link>
             <div className="flex space-x-4 mt-4">
               <Link
-                to="https://facebook.com"
+                to={socialProfiles.facebookUrl}
                 target="_blank"
                 className="text-gray-400 hover:text-white text-xl"
               >
                 <FaFacebook />
               </Link>
               <Link
-                to="https://twitter.com"
+                to={socialProfiles.xUrl}
                 target="_blank"
                 className="text-gray-400 hover:text-white text-xl"
               >
-                <FaTwitter />
+                <FaXTwitter />
               </Link>
               <Link
-                to="https://instagram.com"
+                to={socialProfiles.instagramUrl}
                 target="_blank"
                 className="text-gray-400 hover:text-white text-xl"
               >
                 <FaInstagram />
               </Link>
               <Link
-                to="https://linkedin.com"
+                to={socialProfiles.linkedInUrl}
                 target="_blank"
                 className="text-gray-400 hover:text-white text-xl"
               >
                 <FaLinkedin />
               </Link>
               <Link
-                to="https://youtube.com"
+                to={socialProfiles.youtubeUrl}
                 target="_blank"
                 className="text-gray-400 hover:text-white text-xl"
               >

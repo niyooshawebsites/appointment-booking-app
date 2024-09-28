@@ -1,34 +1,32 @@
+import { useState } from "react";
+
 const Profile = () => {
+  const [newPassword, setNewPassword] = useState("");
+  const [newConfirmPassword, setNewConfirmPassword] = useState("");
+
+  const handleChange = (e) => {};
+
   return (
     <div className="w-4/12 mx-auto">
-      <form action="" className="w-full bg-gray-100 p-3 mt-12 rounded-md ">
+      <h2 className="mt-10 mb-4 text-center text-2xl">Update Profile</h2>
+      <form action="" className="w-full p-3 mt-2 rounded-md ">
         <div className="mt-4">
           <input
-            id="username"
-            name="username"
-            type="text"
-            autoComplete="on"
-            placeholder="username"
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-          />
-        </div>
-        <div className="mt-4">
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="on"
-            placeholder="Email"
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-          />
-        </div>
-        <div className="mt-4">
-          <input
-            id="password"
-            name="password"
+            name="newPassword"
             type="password"
             autoComplete="on"
-            placeholder="Password"
+            value={newPassword}
+            placeholder="New Password"
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+          />
+        </div>
+        <div className="mt-4">
+          <input
+            name="confirmNewPassword"
+            type="password"
+            autoComplete="on"
+            value={newConfirmPassword}
+            placeholder="Confirm New Password"
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
           />
         </div>

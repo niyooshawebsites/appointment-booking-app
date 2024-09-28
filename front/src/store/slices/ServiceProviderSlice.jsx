@@ -10,6 +10,7 @@ const serviceProviderSlice = createSlice({
     contactNo: "",
     services: [],
     contact: {},
+    socialProfiles: {},
   },
   reducers: {
     serviceProviderDetails: (state, action) => {
@@ -20,6 +21,7 @@ const serviceProviderSlice = createSlice({
       state.contactNo = action.payload.contactNo;
       state.services = action.payload.services;
       state.contact = action.payload.contact;
+      state.socialProfiles = action.payload.socialProfiles;
     },
   },
 });

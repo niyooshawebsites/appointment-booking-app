@@ -25,6 +25,7 @@ const Appointment = ({ serviceProvider }) => {
             contactNo: res.data.contactNo,
             services: res.data.services,
             contact: res.data.contact,
+            socialProfiles: res.data.socialProfiles,
           })
         );
       })

@@ -11,6 +11,7 @@ const {
   getAboutDetailsController,
   getContactDetailsController,
   checkUserController,
+  updateSocialProfilesController,
 } = require("../controllers/user.controller");
 
 const {
@@ -81,6 +82,14 @@ router.patch(
   requrieLogin,
   isAdmin,
   updateAboutDetailsController
+);
+
+// update social media routes
+router.patch(
+  "/update-social-profiles",
+  requrieLogin,
+  isAdmin,
+  updateSocialProfilesController
 );
 
 // get about details route

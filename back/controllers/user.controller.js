@@ -361,6 +361,47 @@ const updateAboutDetailsController = async (req, res) => {
   }
 };
 
+const updateSocialProfilesController = async (req, res) => {
+  try {
+    const { facebookUrl, xUrl, instagramUrl, linkedInUrl, youtubeUrl } =
+      req.body;
+
+    const user = await User.findOne({ username: req.user.username });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "User not found",
+      });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { username: req.user.username },
+      {
+        socialProfiles: {
+          facebookUrl,
+          xUrl,
+          instagramUrl,
+          linkedInUrl,
+          youtubeUrl,
+        },
+      },
+      { new: true }
+    );
+
+    return res.status(201).json({
+      success: true,
+      msg: "Service updated successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err,
+    });
+  }
+};
+
 const getAboutDetailsController = async (req, res) => {
   try {
     const { username } = req.params;
@@ -463,6 +504,13 @@ const checkUserController = async (req, res) => {
           state: user.state,
           pinCode: user.pinCode,
         },
+        socialProfiles: {
+          facebookUrl: user.socialProfiles.facebookUrl,
+          xUrl: user.socialProfiles.xUrl,
+          instagramUrl: user.socialProfiles.instagramUrl,
+          linkedInUrl: user.socialProfiles.linkedInUrl,
+          youtubeUrl: user.socialProfiles.youtubeUrl,
+        },
       });
     }
   } catch (err) {
@@ -486,4 +534,5 @@ module.exports = {
   getContactDetailsController,
   checkUserController,
   checkUserController,
+  updateSocialProfilesController,
 };

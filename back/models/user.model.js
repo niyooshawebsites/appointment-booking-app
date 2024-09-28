@@ -85,6 +85,28 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    socialProfiles: {
+      facebookUrl: {
+        type: String,
+        default: "https://facebook.com",
+      },
+      xUrl: {
+        type: String,
+        default: "https://x.com",
+      },
+      instagramUrl: {
+        type: String,
+        default: "https://instagram.com",
+      },
+      linkedInUrl: {
+        type: String,
+        default: "https://linkedin.com",
+      },
+      youtubeUrl: {
+        type: String,
+        default: "https://youtube.com",
+      },
+    },
   },
   {
     timestamps: true,
