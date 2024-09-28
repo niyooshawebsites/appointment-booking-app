@@ -125,6 +125,11 @@ const LoginForm = () => {
           </button>
         </form>
         <p className="text-center text-gray-500 mt-5">
+          <Link to="/forgot-password" className="text-red-400">
+            Forgot password ?
+          </Link>
+        </p>
+        <p className="text-center text-gray-500 mt-5">
           Don't have an account?{" "}
           <Link to="/register" className="text-blue-500">
             Register here!

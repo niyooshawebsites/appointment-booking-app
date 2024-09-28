@@ -8,6 +8,8 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import VeriryEmail from "./pages/VeriryEmail";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 import GlobalStore from "./store/GlobalStore";
 import { Provider } from "react-redux";
@@ -85,6 +87,8 @@ const App = () => {
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify-email" element={<VeriryEmail />} />
           <Route element={<ProtectedContent />}>
             <Route path="/dashboard" element={<Dashboard />} />
