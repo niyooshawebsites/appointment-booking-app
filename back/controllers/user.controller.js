@@ -252,10 +252,11 @@ const resetPasswordController = async (req, res) => {
       success: true,
       msg: "Password reset successful",
     });
-  } catch {
+  } catch (err) {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err,
     });
   }
 };
@@ -565,10 +566,11 @@ const forgotPasswordController = async (req, res) => {
       success: true,
       msg: "Reset password email sent",
     });
-  } catch {
+  } catch (err) {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err,
     });
   }
 };
@@ -667,6 +669,32 @@ const checkUserController = async (req, res) => {
   }
 };
 
+// get all users controller...
+const getAllUsersController = async (req, res) => {
+  try {
+    const users = await User.find();
+
+    if (!users) {
+      return res.status(404).json({
+        success: false,
+        msg: "No users found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "All users found",
+      users,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err,
+    });
+  }
+};
+
 module.exports = {
   registerController,
   loginController,
@@ -683,4 +711,5 @@ module.exports = {
   updatePasswordController,
   forgotPasswordController,
   resetPasswordController,
+  getAllUsersController,
 };

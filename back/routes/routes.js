@@ -15,6 +15,7 @@ const {
   updatePasswordController,
   forgotPasswordController,
   resetPasswordController,
+  getAllUsersController,
 } = require("../controllers/user.controller");
 
 const {
@@ -117,5 +118,8 @@ router.get("/checkUser/:username", checkUserController);
 
 // forgot-password-route
 router.get("/reset-password/:email", forgotPasswordController);
+
+// get all users route
+router.get("/get-all-users", getAllUsersController);
 
 module.exports = router;

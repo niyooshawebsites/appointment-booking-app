@@ -11,6 +11,37 @@ const Sidebar = ({
     <div className="w-2/12 bg-gray-800 text-white h-full p-4">
       <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
       <ul>
+        {/* -------------------------------------------------------- */}
+
+        <li
+          className="block py-2 px-4 hover:bg-gray-700 rounded link"
+          onClick={() => {
+            setShowAppointments(false);
+            setshowAppointmentDetails(false);
+            setShowServices(false);
+            setShowAbout(false);
+            showContact(false);
+            setShowProfile(true);
+          }}
+        >
+          Users
+        </li>
+        <li
+          className="block py-2 px-4 hover:bg-gray-700 rounded link"
+          onClick={() => {
+            setShowAppointments(false);
+            setshowAppointmentDetails(false);
+            setShowServices(false);
+            setShowAbout(false);
+            showContact(false);
+            setShowProfile(true);
+          }}
+        >
+          Highlights
+        </li>
+
+        {/* -------------------------------------------------------- */}
+
         <li
           className="block py-2 px-4 hover:bg-gray-700 rounded link"
           onClick={() => {
