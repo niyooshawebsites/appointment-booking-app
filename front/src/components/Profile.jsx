@@ -42,7 +42,6 @@ const Profile = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        console.log("Password updated successfully");
         toast.success("Password updated successfully");
         setNewPassword("");
         setNewConfirmPassword("");
@@ -74,7 +73,10 @@ const Profile = () => {
 
             {/* 1/12 Column */}
             <div className="w-1/12 p-2">
-              <Link onClick={toggleNewPassword} className="text-2xl">
+              <Link
+                onClick={toggleNewPassword}
+                className="text-2xl text-gray-400"
+              >
                 {showNewPassword ? <FaRegEyeSlash /> : <FaRegEye />}
               </Link>
             </div>
@@ -97,7 +99,10 @@ const Profile = () => {
 
             {/* 1/12 Column */}
             <div className="w-1/12 p-2">
-              <Link onClick={toggleNewConfirmPassword} className="text-2xl">
+              <Link
+                onClick={toggleNewConfirmPassword}
+                className="text-2xl text-gray-400"
+              >
                 {showNewConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}
               </Link>
             </div>

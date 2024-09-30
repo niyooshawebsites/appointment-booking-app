@@ -478,12 +478,12 @@ const updatePasswordController = async (req, res) => {
       });
     }
 
-    const updatedUser = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       {
         username: req.user.username,
       },
       {
-        password: newPassword,
+        password: await encryptPassword(newPassword),
       },
       { new: true }
     );
