@@ -2,22 +2,19 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const UsersInfo = () => {
-  const [usersDetails, setUsersDetails] = useState(() => {
-    return {
-      name: "",
-      businessName: "",
-      username: "",
-      email: "",
-      contact: "",
-      DOJ: "",
-      Action: "",
-    };
-  });
+  const [usersDetails, setUsersDetails] = useState(() => []);
 
   const getUsersDetails = async () => {
-    await axios.get("http://localhost:8000/api/v1/get-all-users", {
-      withCredentials: true,
-    });
+    try {
+      await axios
+        .get("http://localhost:8000/api/v1/get-all-users", {
+          withCredentials: true,
+        })
+        .then((res) => setUsersDetails(res.data.users))
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => getUsersDetails(), []);
