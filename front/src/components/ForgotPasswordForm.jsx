@@ -20,7 +20,7 @@ const ForgotPasswordForm = () => {
           setEmail("");
         })
         .catch((err) => {
-          toast.error("User not found");
+          toast.error("Email not found!");
           setEmail("");
         });
     } catch (err) {

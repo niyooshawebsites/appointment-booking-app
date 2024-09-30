@@ -217,6 +217,49 @@ const userVerficationController = async (req, res) => {
   }
 };
 
+// reset password controller...
+const resetPasswordController = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { newPassword } = req.body;
+
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        msg: "No token found",
+      });
+    }
+
+    // if token is there
+    const result = await verifyEmail(token);
+
+    // if verification failed
+    if (!result) {
+      return res.status(403).json({
+        success: false,
+        msg: "Invalid token!!! Verification failed",
+      });
+    }
+
+    // if verification successful, update the password
+    await User.findOneAndUpdate(
+      { email: result.email },
+      { password: await encryptPassword(newPassword) },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      success: true,
+      msg: "Password reset successful",
+    });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
 // check auth controller...
 const checkAuthController = async (req, res) => {
   return res.status(200).json({
@@ -639,4 +682,5 @@ module.exports = {
   updateSocialProfilesController,
   updatePasswordController,
   forgotPasswordController,
+  resetPasswordController,
 };

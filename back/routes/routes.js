@@ -14,6 +14,7 @@ const {
   updateSocialProfilesController,
   updatePasswordController,
   forgotPasswordController,
+  resetPasswordController,
 } = require("../controllers/user.controller");
 
 const {
@@ -101,6 +102,9 @@ router.patch(
   isAdmin,
   updatePasswordController
 );
+
+// reset password route
+router.patch("/reset-password/:token", resetPasswordController);
 
 // get about details route
 router.get("/about/:username", getAboutDetailsController);

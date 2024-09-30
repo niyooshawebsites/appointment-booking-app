@@ -1,12 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const ResetPasswordForm = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const params = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const emailVerificationToken = searchParams.get("token");
 
   const handleChangeNewPassword = (e) => {
     setNewPassword(e.target.value);
@@ -19,7 +21,25 @@ const ResetPasswordForm = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      axios.get(`http://localhost:8000/api/v1/reset-password/$`);
+      if (newPassword !== confirmNewPassword) {
+        return toast.error("Password mismatch!");
+      }
+
+      await axios
+        .patch(
+          `http://localhost:8000/api/v1/reset-password/${emailVerificationToken}`,
+          {
+            newPassword,
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          toast.success("Password reset successful");
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Password reset failed");
+        });
     } catch (err) {
       console.log(err);
       toast.error("Error resetting password. Try again");
@@ -27,7 +47,7 @@ const ResetPasswordForm = () => {
   };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="mb-4">
         <label className="block text-gray-700" htmlFor="email">
           New Password
