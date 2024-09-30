@@ -1,8 +1,13 @@
 const User = require("../models/user.model");
 const { encryptPassword, decryptPassword } = require("../utils/password");
 const generateAuthToken = require("../utils/authToken");
-const { sendverificationEmail, verifyEmail } = require("../utils/mail");
+const {
+  sendverificationEmail,
+  verifyEmail,
+  forgotPasswordEmail,
+} = require("../utils/mail");
 
+// register controller...
 const registerController = async (req, res) => {
   const { username, email, password } = req.body;
   try {
@@ -59,7 +64,7 @@ const registerController = async (req, res) => {
       const verficationURI = `http://localhost:5173/verify-email?token=${verficationToken}`;
 
       // Send the verfication link to customer email account
-      sendverificationEmail(
+      await sendverificationEmail(
         newUser.email,
         "ABS email verfication",
         `${verficationURI}`
@@ -68,7 +73,7 @@ const registerController = async (req, res) => {
       return res.status(201).json({
         success: true,
         msg: "Regisration done. Please verify your email to login",
-        newUser,
+        newUser: newUser.email,
       });
     }
   } catch (err) {
@@ -80,6 +85,7 @@ const registerController = async (req, res) => {
   }
 };
 
+// login controller...
 const loginController = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -167,6 +173,7 @@ const loginController = async (req, res) => {
   }
 };
 
+// user verfication controller...
 const userVerficationController = async (req, res) => {
   try {
     const { token } = req.params;
@@ -210,6 +217,7 @@ const userVerficationController = async (req, res) => {
   }
 };
 
+// check auth controller...
 const checkAuthController = async (req, res) => {
   return res.status(200).json({
     success: true,
@@ -217,6 +225,7 @@ const checkAuthController = async (req, res) => {
   });
 };
 
+// logout controller...
 const logoutController = async (req, res) => {
   try {
     res.clearCookie("authToken", {
@@ -238,6 +247,7 @@ const logoutController = async (req, res) => {
   }
 };
 
+// update contact details controller...
 const updateContactDetailsController = async (req, res) => {
   try {
     // get all the details from body
@@ -319,6 +329,7 @@ const updateContactDetailsController = async (req, res) => {
   }
 };
 
+// update about details controller...
 const updateAboutDetailsController = async (req, res) => {
   try {
     // getting data from body
@@ -361,6 +372,7 @@ const updateAboutDetailsController = async (req, res) => {
   }
 };
 
+// update social media controller...
 const updateSocialProfilesController = async (req, res) => {
   try {
     const { facebookUrl, xUrl, instagramUrl, linkedInUrl, youtubeUrl } =
@@ -402,6 +414,7 @@ const updateSocialProfilesController = async (req, res) => {
   }
 };
 
+// udpate password controller...
 const updatePasswordController = async (req, res) => {
   try {
     const { newPassword } = req.body;
@@ -445,6 +458,7 @@ const updatePasswordController = async (req, res) => {
   }
 };
 
+// GET about details controller...
 const getAboutDetailsController = async (req, res) => {
   try {
     const { username } = req.params;
@@ -473,6 +487,50 @@ const getAboutDetailsController = async (req, res) => {
   }
 };
 
+// forgot password controller....
+const forgotPasswordController = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser) {
+      return res.status(404).json({
+        success: false,
+        msg: "User not found",
+      });
+    }
+
+    // generate verification token
+    const verficationToken = await generateAuthToken(
+      {
+        email: existingUser.email,
+      },
+      1 * 24 * 60 * 60
+    );
+
+    // generate the password reset link
+    const resetPassordURI = `http://localhost:5173/reset-password?token=${verficationToken}`;
+
+    await forgotPasswordEmail(
+      existingUser.email,
+      "ABS Reset Password",
+      `${resetPassordURI}`
+    );
+
+    return res.status(200).json({
+      success: true,
+      msg: "Reset password email sent",
+    });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// GET contact details controller...
 const getContactDetailsController = async (req, res) => {
   try {
     const { username } = req.params;
@@ -515,6 +573,7 @@ const getContactDetailsController = async (req, res) => {
   }
 };
 
+// check user controller...
 const checkUserController = async (req, res) => {
   try {
     const { username } = req.params;
@@ -579,4 +638,5 @@ module.exports = {
   checkUserController,
   updateSocialProfilesController,
   updatePasswordController,
+  forgotPasswordController,
 };

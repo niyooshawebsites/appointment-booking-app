@@ -22,6 +22,9 @@ const Footer = () => {
     username == "login" ||
     username == "about" ||
     username == "contact" ||
+    username == "verify-email" ||
+    username == "forgot-password" ||
+    username == "reset-password" ||
     username == ""
   ) {
     username = "abs";

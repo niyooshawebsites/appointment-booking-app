@@ -17,7 +17,14 @@ const sendverificationEmail = (email, subject, text) => {
     from: process.env.ADMIN_EMAIL,
     to: email,
     subject,
-    html: `Please verfiy your email via this link: <a href="${text}" target="_blank">Verify email</a>`,
+    html: `
+    Hello there,
+    <br> 
+    Please click the link to verify your email: <a href="${text}" target="_blank">Verify email</a>
+    <br> 
+    Thaks and regards,
+    Team - ABS
+    `,
   };
 
   // triggering the mail
@@ -65,6 +72,7 @@ const appointmentConfirmationEmail = async (
     <br> 
     Thaks and regards,
     ${serviceProvider}
+    Team - ABS
     `,
   };
 
@@ -74,7 +82,34 @@ const appointmentConfirmationEmail = async (
   });
 };
 
-const forgotPasswordEmail = async () => {};
+const forgotPasswordEmail = async (email, subject, text) => {
+  const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.ADMIN_EMAIL,
+    to: email,
+    subject,
+    html: `
+    Hello there,
+    <br> 
+    Please click the link to reset your passoword: <a href="${text}" target="_blank">Reset Password</a>
+    <br> 
+    Thaks and regards,
+    Team - ABS
+    `,
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    err ? console.log(err) : console.log(`Email sent: ${info.response}`);
+  });
+};
 
 module.exports = {
   sendverificationEmail,

@@ -13,6 +13,7 @@ const {
   checkUserController,
   updateSocialProfilesController,
   updatePasswordController,
+  forgotPasswordController,
 } = require("../controllers/user.controller");
 
 const {
@@ -109,5 +110,8 @@ router.get("/contact/:username", getContactDetailsController);
 
 // check user route
 router.get("/checkUser/:username", checkUserController);
+
+// forgot-password-route
+router.get("/reset-password/:email", forgotPasswordController);
 
 module.exports = router;

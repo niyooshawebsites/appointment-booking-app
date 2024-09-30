@@ -1,4 +1,31 @@
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+
 const ResetPasswordForm = () => {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const params = useParams();
+
+  const handleChangeNewPassword = (e) => {
+    setNewPassword(e.target.value);
+  };
+
+  const handleChangeConfirmNewPassword = (e) => {
+    setConfirmNewPassword(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      axios.get(`http://localhost:8000/api/v1/reset-password/$`);
+    } catch (err) {
+      console.log(err);
+      toast.error("Error resetting password. Try again");
+    }
+  };
+
   return (
     <form>
       <div className="mb-4">
@@ -7,6 +34,8 @@ const ResetPasswordForm = () => {
         </label>
         <input
           type="password"
+          value={newPassword}
+          onChange={handleChangeNewPassword}
           className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
           placeholder="New password"
           required
@@ -19,6 +48,8 @@ const ResetPasswordForm = () => {
         </label>
         <input
           type="password"
+          onChange={handleChangeConfirmNewPassword}
+          value={confirmNewPassword}
           className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
           placeholder="Cofirm new password"
           required

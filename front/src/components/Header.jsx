@@ -11,6 +11,9 @@ const Header = () => {
     user == "login" ||
     user == "about" ||
     user == "contact" ||
+    user == "verify-email" ||
+    user == "forgot-password" ||
+    user == "reset-password" ||
     user == ""
   ) {
     user = "abs";
