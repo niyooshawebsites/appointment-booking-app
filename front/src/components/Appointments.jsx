@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 
 const Appointments = ({
+  setShowHighlights,
+  setShowAllUsers,
   setShowAppointments,
   setShowServices,
   setShowProfile,
@@ -96,7 +98,9 @@ const Appointments = ({
                   <td className="py-2 px-4 text-gray-700">
                     <Link
                       onClick={() => {
-                        setShowAppointments(false);
+                        setShowHighlights(false),
+                          setShowAllUsers(false),
+                          setShowAppointments(false);
                         setShowServices(false);
                         setShowProfile(false);
                         setShowAbout(false);

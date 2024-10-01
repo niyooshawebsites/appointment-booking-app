@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import moment from "moment";
 
 const UsersInfo = () => {
   const [usersDetails, setUsersDetails] = useState(() => []);
+  const [userDeleted, setUserDeleted] = useState(false);
+  const [searchUser, setSearchUser] = useState(() => "");
 
   const getUsersDetails = async () => {
     try {
@@ -21,19 +25,46 @@ const UsersInfo = () => {
     }
   };
 
-  const handleDelete = async (id) => {};
+  const handleDelete = async (id) => {
+    try {
+      await axios
+        .delete(`http://localhost:8000/api/v1/delete-user/${id}`, {
+          withCredentials: true,
+        })
+        .then(() => {
+          toast.success("User deleted successfully");
+          setUserDeleted((prevState) => !prevState);
+        })
+        .catch(toast.error("Deleation failed"));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const filterUsers = (e) => {
+    setSearchUser(() => e.target.value);
+  };
 
   useEffect(() => {
     getUsersDetails();
-  }, []);
+  }, [userDeleted]);
 
   return (
     <div className="mx-auto">
-      <table className="w-8/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
+      <input
+        type="text"
+        autoComplete="on"
+        value={searchUser}
+        onChange={filterUsers}
+        placeholder="Search user using business name or email..."
+        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 mt-5"
+      />
+
+      <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
         <thead className="bg-gray-200 border-b border-gray-300">
           <tr>
             <th className="py-2 px-4 text-left text-gray-600">#</th>
-            <th className="py-2 px-4 text-left text-gray-600">Name</th>
+            <th className="py-2 px-4 text-left text-gray-600">Username</th>
             <th className="py-2 px-4 text-left text-gray-600">B Name</th>
             <th className="py-2 px-4 text-left text-gray-600">Email</th>
             <th className="py-2 px-4 text-left text-gray-600">Contact</th>
@@ -42,26 +73,36 @@ const UsersInfo = () => {
           </tr>
         </thead>
         <tbody>
-          {usersDetails.map((user, index) => {
-            return (
-              <tr key={user._id}>
-                <td className="py-2 px-4 text-gray-700">{index + 1}</td>
-                <td className="py-2 px-4 text-gray-700">{user.name}</td>
-                <td className="py-2 px-4 text-gray-700">{user.businessName}</td>
-                <td className="py-2 px-4 text-gray-700">{user.email}</td>
-                <td className="py-2 px-4 text-gray-700">{user.contact}</td>
-                <td className="py-2 px-4 text-gray-700">{user.createdAt}</td>
-                <td className="py-2 px-4 text-gray-700">
-                  <Link
-                    onClick={() => handleDelete(user._id)}
-                    className="text-red/500"
-                  >
-                    Delete
-                  </Link>
-                </td>
-              </tr>
-            );
-          })}
+          {usersDetails
+            .filter(
+              (user) =>
+                user.email.toLowerCase().includes(searchUser) ||
+                user.businessName.toLowerCase().includes(searchUser)
+            )
+            .map((user, index) => {
+              return (
+                <tr key={user._id}>
+                  <td className="py-2 px-4 text-gray-700">{index + 1}</td>
+                  <td className="py-2 px-4 text-gray-700">{user.username}</td>
+                  <td className="py-2 px-4 text-gray-700">
+                    {user.businessName}
+                  </td>
+                  <td className="py-2 px-4 text-gray-700">{user.email}</td>
+                  <td className="py-2 px-4 text-gray-700">{user.contact}</td>
+                  <td className="py-2 px-4 text-gray-700">
+                    {moment(user.createdAt).format("DD-MM-YYYY")}
+                  </td>
+                  <td className="py-2 px-4 text-gray-700">
+                    <Link
+                      onClick={() => handleDelete(user._id)}
+                      className="text-red-500"
+                    >
+                      Delete
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

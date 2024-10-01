@@ -31,11 +31,11 @@ const RegisterForm = () => {
     await axios
       .post("http://localhost:8000/api/v1/register", registrationDetails)
       .then((res) => {
-        toast.success("Regisration done. Please verify your email to login");
+        toast.success(res.data.msg);
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Registration failed!");
+        toast.error("Nono no");
       });
 
     setRegistrationDetails(() => {

@@ -72,7 +72,7 @@ const registerController = async (req, res) => {
 
       return res.status(201).json({
         success: true,
-        msg: "Regisration done. Please verify your email to login",
+        msg: "Please verify your email to login",
         newUser: newUser.email,
       });
     }
@@ -677,9 +677,11 @@ const checkUserController = async (req, res) => {
 const getAllUsersController = async (req, res) => {
   try {
     // find all users whose username is not equal to abs
-    const users = await User.find({ username: { $ne: "abs" } }).select(
-      "-password -username -about -building -district -floor -gst -isAdmin -isVerified -locality -office -role -services -state -street -updatedAt -pincode"
-    );
+    const users = await User.find({ username: { $ne: "abs" } })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -isVerified -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .limit(10);
 
     if (!users) {
       return res.status(404).json({
@@ -703,7 +705,61 @@ const getAllUsersController = async (req, res) => {
 };
 
 // delete user controller
-const deleteUserController = async (req, res) => {};
+const deleteUserController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        msg: "No ID provided",
+      });
+    }
+
+    const result = await User.findByIdAndDelete(id);
+
+    if (!result) {
+      return res.status(501).json({
+        success: false,
+        msg: "Deletion failed. Please try again",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "User deleted successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get users by date controller
+const getUsersByDateController = async (req, res) => {
+  try {
+    const todayDate = moment(Date.now()).format("DD-MM-YYYY");
+
+    const users = await User.find({});
+
+    const todayUsers = users.filter(
+      (user) => moment(user.createdAt).format("DD-MM-YYYY") == todayDate
+    );
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's users found successfully",
+      users: todayUsers,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
 
 module.exports = {
   registerController,
@@ -722,4 +778,6 @@ module.exports = {
   forgotPasswordController,
   resetPasswordController,
   getAllUsersController,
+  deleteUserController,
+  getUsersByDateController,
 };

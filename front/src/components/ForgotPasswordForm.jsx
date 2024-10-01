@@ -52,12 +52,6 @@ const ForgotPasswordForm = () => {
       </form>
 
       <p className="text-center text-gray-500 mt-5">
-        <Link to="/reset-password" className="text-blue-400">
-          Reset password
-        </Link>
-      </p>
-
-      <p className="text-center text-gray-500 mt-5">
         <Link to="/" className="text-blue-400">
           Go back to home
         </Link>

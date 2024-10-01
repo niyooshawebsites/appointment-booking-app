@@ -33,14 +33,12 @@ const Header = () => {
           { withCredentials: true }
         )
         .then(() => {
-          console.log("Logout successfully");
           dispatch(
             userSliceActions.captureLoginUserDetails({
               authenticated: false,
             })
           );
           navigate("/");
-          console.log("Logout successfully");
         })
         .catch((err) => console.log(err));
     } catch (err) {

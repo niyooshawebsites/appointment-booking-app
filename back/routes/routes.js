@@ -16,6 +16,8 @@ const {
   forgotPasswordController,
   resetPasswordController,
   getAllUsersController,
+  deleteUserController,
+  getUsersByDateController,
 } = require("../controllers/user.controller");
 
 const {
@@ -27,6 +29,7 @@ const {
 const {
   bookAppointmnentController,
   getAllAppointmentsController,
+  getTodayAppointmentsByUsernameController,
 } = require("../controllers/appointment.controller");
 
 const isServiceProvider = require("../middlewares/isServiceProvider.middleware");
@@ -127,5 +130,17 @@ router.get("/reset-password/:email", forgotPasswordController);
 
 // get all users route
 router.get("/get-all-users", auth, isAdmin, getAllUsersController);
+
+// delete user route
+router.delete("/delete-user/:id", auth, isAdmin, deleteUserController);
+
+// today's appointment by username
+router.get(
+  "/get-today-appointments-by-username/:username",
+  getTodayAppointmentsByUsernameController
+);
+
+// today's users
+router.get("/get-today-users", getUsersByDateController);
 
 module.exports = router;

@@ -34,7 +34,16 @@ const Dashboard = () => {
             setShowAbout={setShowAbout}
             showContact={setShowContact}
           />
-          <Highlights />
+          <Highlights
+            setShowHighlights={setShowHighlights}
+            setShowAllUsers={setShowAllUsers}
+            setShowAppointments={setShowAppointments}
+            setshowAppointmentDetails={setshowAppointmentDetails}
+            setShowServices={setShowServices}
+            setShowProfile={setShowProfile}
+            setShowAbout={setShowAbout}
+            showContact={setShowContact}
+          />
         </div>
       </Layout>
     );
@@ -74,7 +83,16 @@ const Dashboard = () => {
             setShowAbout={setShowAbout}
             showContact={setShowContact}
           />
-          <Appointments />
+          <Appointments
+            setShowHighlights={setShowHighlights}
+            setShowAllUsers={setShowAllUsers}
+            setShowAppointments={setShowAppointments}
+            setshowAppointmentDetails={setshowAppointmentDetails}
+            setShowServices={setShowServices}
+            setShowProfile={setShowProfile}
+            setShowAbout={setShowAbout}
+            showContact={setShowContact}
+          />
         </div>
       </Layout>
     );
