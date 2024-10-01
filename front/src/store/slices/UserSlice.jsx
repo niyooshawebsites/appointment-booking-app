@@ -5,13 +5,15 @@ const userSlice = createSlice({
   initialState: {
     username: null,
     authenticated: false,
+    role: null,
+    isAdmin: false,
   },
   reducers: {
-    login: (state, action) => {
+    captureLoginUserDetails: (state, action) => {
       state.username = action.payload.username;
-    },
-    authentication: (state, action) => {
       state.authenticated = action.payload.authenticated;
+      state.role = action.payload.role;
+      state.isAdmin = action.payload.isAdmin;
     },
   },
 });

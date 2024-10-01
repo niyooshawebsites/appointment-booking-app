@@ -147,6 +147,7 @@ const loginController = async (req, res) => {
           username: registeredUser.username,
           email: registeredUser.email,
           role: registeredUser.role,
+          isAdmin: registeredUser.isAdmin,
         },
         "1d"
       );
@@ -162,6 +163,9 @@ const loginController = async (req, res) => {
       return res.status(200).json({
         success: true,
         msg: "Login successful!",
+        username: registeredUser.username,
+        role: registeredUser.role,
+        isAdmin: registeredUser.isAdmin,
       });
     }
   } catch (err) {
@@ -173,7 +177,7 @@ const loginController = async (req, res) => {
   }
 };
 
-// user verfication controller...
+// user verfication after signup controller...
 const userVerficationController = async (req, res) => {
   try {
     const { token } = req.params;
@@ -672,7 +676,10 @@ const checkUserController = async (req, res) => {
 // get all users controller...
 const getAllUsersController = async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+    // find all users whose username is not equal to abs
+    const users = await User.find({ username: { $ne: "abs" } }).select(
+      "-password -username -about -building -district -floor -gst -isAdmin -isVerified -locality -office -role -services -state -street -updatedAt -pincode"
+    );
 
     if (!users) {
       return res.status(404).json({
@@ -687,13 +694,16 @@ const getAllUsersController = async (req, res) => {
       users,
     });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       msg: "Internal server error",
       err,
     });
   }
 };
+
+// delete user controller
+const deleteUserController = async (req, res) => {};
 
 module.exports = {
   registerController,

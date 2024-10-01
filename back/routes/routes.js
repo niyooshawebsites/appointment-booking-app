@@ -29,8 +29,9 @@ const {
   getAllAppointmentsController,
 } = require("../controllers/appointment.controller");
 
+const isServiceProvider = require("../middlewares/isServiceProvider.middleware");
+const auth = require("../middlewares/auth.middleware");
 const isAdmin = require("../middlewares/isAdmin.middleware");
-const requrieLogin = require("../middlewares/requireLogin.middleware");
 
 // register route
 router.post("/register", registerController);
@@ -42,13 +43,18 @@ router.post("/login", loginController);
 router.put("/verify-email/:token", userVerficationController);
 
 // udpate service route
-router.patch("/update-service", requrieLogin, isAdmin, updateServiceController);
+router.patch(
+  "/update-service",
+  auth,
+  isServiceProvider,
+  updateServiceController
+);
 
 // delete service route
 router.patch(
   "/delete-service/:id",
-  requrieLogin,
-  isAdmin,
+  auth,
+  isServiceProvider,
   deleteServiceController
 );
 
@@ -61,13 +67,13 @@ router.post("/book-appointment", bookAppointmnentController);
 // fetch all appointments route
 router.get(
   "/get-all-appointments/:username",
-  requrieLogin,
-  isAdmin,
+  auth,
+  isServiceProvider,
   getAllAppointmentsController
 );
 
 // check authentication
-router.get("/check-auth", requrieLogin, checkAuthController);
+router.get("/check-auth", auth, checkAuthController);
 
 // logout route
 router.post("/logout", logoutController);
@@ -75,32 +81,32 @@ router.post("/logout", logoutController);
 // update contact details route
 router.patch(
   "/update-contact-details",
-  requrieLogin,
-  isAdmin,
+  auth,
+  isServiceProvider,
   updateContactDetailsController
 );
 
 // update about details route
 router.patch(
   "/update-about-details",
-  requrieLogin,
-  isAdmin,
+  auth,
+  isServiceProvider,
   updateAboutDetailsController
 );
 
 // update social media routes
 router.patch(
   "/update-social-profiles",
-  requrieLogin,
-  isAdmin,
+  auth,
+  isServiceProvider,
   updateSocialProfilesController
 );
 
 // udpate password route
 router.patch(
   "/update-password",
-  requrieLogin,
-  isAdmin,
+  auth,
+  isServiceProvider,
   updatePasswordController
 );
 
@@ -120,6 +126,6 @@ router.get("/checkUser/:username", checkUserController);
 router.get("/reset-password/:email", forgotPasswordController);
 
 // get all users route
-router.get("/get-all-users", getAllUsersController);
+router.get("/get-all-users", auth, isAdmin, getAllUsersController);
 
 module.exports = router;

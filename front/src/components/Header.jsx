@@ -35,7 +35,7 @@ const Header = () => {
         .then(() => {
           console.log("Logout successfully");
           dispatch(
-            userSliceActions.authentication({
+            userSliceActions.captureLoginUserDetails({
               authenticated: false,
             })
           );
