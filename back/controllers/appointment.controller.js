@@ -230,28 +230,33 @@ const getAllAppointmentsController = async (req, res) => {
 const getTodayAppointmentsByUsernameController = async (req, res) => {
   try {
     const { username } = req.params;
-    const todayDate = moment(Date.now()).format("DD-MM-YYYY");
 
-    const appointmentsByUsername = await Appointment.populate("user").find({
+    // getting todays start time using moment js
+    const startOfDay = moment().startOf("day").toDate();
+
+    // getting todays end time using moment js
+    const endOfDay = moment().endOf("day").toDate();
+
+    // querying on the basis of two things, username and createdAt
+    const appointments = await Appointment.populate("user").find({
       username,
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
     });
 
-    if (!appointmentsByUsername) {
+    if (!appointments) {
       return res.status(404).json({
         success: false,
-        msg: "There are no appointments",
+        msg: "No appointments for today",
       });
     }
 
-    const todayAppointmentsByUsername = appointmentsByUsername.filter(
-      (appointment) =>
-        moment(appointment.createdAt).format("DD-MM-YYYY") == todayDate
-    );
-
     return res.status(200).json({
       success: true,
-      msg: "Appointments found successfully",
-      appointments: todayAppointmentsByUsername,
+      msg: "Today's appointments found successfully",
+      appointments,
     });
   } catch (err) {
     return res.status(500).json({

@@ -740,13 +740,26 @@ const deleteUserController = async (req, res) => {
 // get users by date controller
 const getUsersByDateController = async (req, res) => {
   try {
-    const todayDate = moment(Date.now()).format("DD-MM-YYYY");
+    // getting todays start time using moment js
+    const startOfDay = moment().startOf("day").toDate();
 
-    const users = await User.find({});
+    // getting todays end time using moment js
+    const endOfDay = moment().endOf("day").toDate();
 
-    const todayUsers = users.filter(
-      (user) => moment(user.createdAt).format("DD-MM-YYYY") == todayDate
-    );
+    // querying on the basis of createdAt
+    const users = await User.find({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    });
+
+    if (!users) {
+      return res.status(404).json({
+        success: false,
+        msg: "No users registered today",
+      });
+    }
 
     return res.status(200).json({
       success: true,
