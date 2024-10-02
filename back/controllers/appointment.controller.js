@@ -232,10 +232,10 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
     const { username } = req.params;
 
     // getting todays start time using moment js
-    const startOfDay = moment().startOf("day").toDate();
+    const startOfDay = moment().startOf("day").toDate().toISOString();
 
     // getting todays end time using moment js
-    const endOfDay = moment().endOf("day").toDate();
+    const endOfDay = moment().endOf("day").toDate().toISOString();
 
     // querying on the basis of two things, username and createdAt
     const appointments = await Appointment.populate("user").find({

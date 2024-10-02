@@ -100,7 +100,7 @@ const ContactForm = () => {
               <input
                 id="contact"
                 name="contact"
-                type="number"
+                type="text"
                 autoComplete="on"
                 placeholder="Contact number"
                 value={contactDetails.contact}

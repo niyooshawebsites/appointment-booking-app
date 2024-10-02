@@ -88,6 +88,7 @@ const Highlights = ({
                 <th className="py-2 px-4 text-left text-gray-600">Email</th>
                 <th className="py-2 px-4 text-left text-gray-600">Contact</th>
                 <th className="py-2 px-4 text-left text-gray-600">DOJ</th>
+                <th className="py-2 px-4 text-left text-gray-600">Verified</th>
               </tr>
             </thead>
             <tbody>
@@ -105,14 +106,21 @@ const Highlights = ({
                         {user.username}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
-                        {user.businessName}
+                        {user.businessName ? user.businessName : "N/A"}
                       </td>
                       <td className="py-2 px-4 text-gray-700">{user.email}</td>
                       <td className="py-2 px-4 text-gray-700">
-                        {user.contact}
+                        {user.contact.length > 10 ? "N/A" : user.contact}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
                         {moment(user.createdAt).format("DD-MM-YYYY")}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {user.isVerified ? (
+                          <span className="text-green-500">Yes</span>
+                        ) : (
+                          <span className="text-red-500">No</span>
+                        )}
                       </td>
                     </tr>
                   );

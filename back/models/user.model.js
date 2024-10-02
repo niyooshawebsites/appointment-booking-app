@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
 
 const userSchema = new mongoose.Schema(
   {
@@ -41,13 +42,19 @@ const userSchema = new mongoose.Schema(
     },
     gst: {
       type: String,
-      default: "",
+      default: function () {
+        return uuidv4(); // Function to generate a new UUID for each user
+      },
       unique: true,
+      sparse: true,
     },
     contact: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: function () {
+        return uuidv4(); // Function to generate a new 10 digit number for each user
+      },
       unique: true,
+      sparse: true,
     },
     office: {
       type: String,

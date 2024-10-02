@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const moment = require("moment");
 const { encryptPassword, decryptPassword } = require("../utils/password");
 const generateAuthToken = require("../utils/authToken");
 const {
@@ -740,11 +741,12 @@ const deleteUserController = async (req, res) => {
 // get users by date controller
 const getUsersByDateController = async (req, res) => {
   try {
+    console.log("starting...................................");
     // getting todays start time using moment js
-    const startOfDay = moment().startOf("day").toDate();
+    const startOfDay = moment().startOf("day").toDate().toISOString();
 
     // getting todays end time using moment js
-    const endOfDay = moment().endOf("day").toDate();
+    const endOfDay = moment().endOf("day").toDate().toISOString();
 
     // querying on the basis of createdAt
     const users = await User.find({
@@ -752,7 +754,7 @@ const getUsersByDateController = async (req, res) => {
         $gte: startOfDay,
         $lte: endOfDay,
       },
-    });
+    }).select("-password");
 
     if (!users) {
       return res.status(404).json({
@@ -764,7 +766,7 @@ const getUsersByDateController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Today's users found successfully",
-      users: todayUsers,
+      users,
     });
   } catch (err) {
     return res.status(500).json({
