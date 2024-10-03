@@ -680,7 +680,7 @@ const getAllUsersController = async (req, res) => {
     // find all users whose username is not equal to abs
     const users = await User.find({ username: { $ne: "abs" } })
       .select(
-        "-password -about -building -district -floor -gst -isAdmin -isVerified -locality -office -role -services -state -street -updatedAt -pincode"
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
       )
       .limit(10);
 
@@ -701,6 +701,56 @@ const getAllUsersController = async (req, res) => {
       success: false,
       msg: "Internal server error",
       err,
+    });
+  }
+};
+
+// get all verified users controller...
+const getAllVerifiedUsersController = async (req, res) => {
+  try {
+    const users = await User.find({ isVerified: true });
+
+    if (!users) {
+      return res.status(404).json({
+        success: true,
+        msg: "No verified users",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Verified users fetched successfully",
+      users,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get all unverified users controller...
+const getAllUnverifiedUsersController = async (req, res) => {
+  try {
+    const users = await User.find({ isVerified: false });
+
+    if (!users) {
+      return res.status(404).json({
+        success: true,
+        msg: "No unverified users",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Unverified users fetched successfully",
+      users,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
     });
   }
 };
@@ -794,6 +844,7 @@ const getTotalUsersCountController = async (req, res) => {
   }
 };
 
+// get total verified users count controller
 const getTotalVerifiedUsersCountController = async (req, res) => {
   try {
     const totalVerifiedUsersCount = await User.countDocuments({
@@ -813,6 +864,7 @@ const getTotalVerifiedUsersCountController = async (req, res) => {
   }
 };
 
+// get total unverified users count controller
 const getTotalUnverifiedUsersCountController = async (req, res) => {
   try {
     const totalUnverifiedUsersCount = await User.countDocuments({
@@ -946,4 +998,6 @@ module.exports = {
   getTodayTotalUsersCountController,
   getTodayTotalVerifiedUsersCountController,
   getTodayTotalUnverifiedUsersCountController,
+  getAllVerifiedUsersController,
+  getAllUnverifiedUsersController,
 };

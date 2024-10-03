@@ -24,6 +24,8 @@ const {
   getTodayTotalUsersCountController,
   getTodayTotalVerifiedUsersCountController,
   getTodayTotalUnverifiedUsersCountController,
+  getAllVerifiedUsersController,
+  getAllUnverifiedUsersController,
 } = require("../controllers/user.controller");
 
 const {
@@ -139,6 +141,22 @@ router.get("/reset-password/:email", forgotPasswordController);
 // get all users route
 router.get("/get-all-users", auth, isAdmin, getAllUsersController);
 
+// get all verified users route
+router.get(
+  "/get-all-verified-users",
+  auth,
+  isAdmin,
+  getAllVerifiedUsersController
+);
+
+// get all unverified users route
+router.get(
+  "/get-all-unverified-users",
+  auth,
+  isAdmin,
+  getAllUnverifiedUsersController
+);
+
 // delete user route
 router.delete("/delete-user/:id", auth, isAdmin, deleteUserController);
 
@@ -186,8 +204,6 @@ router.get(
   "/get-today-total-unverified-users-count",
   getTodayTotalUnverifiedUsersCountController
 );
-
-// getTodayTotalAppointmentsCountController
 
 // get today's total appointments count route
 router.get(

@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
+import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 const Highlights = () => {
@@ -13,6 +16,8 @@ const Highlights = () => {
     useState(0);
   const [todayTotalNumOfAppointments, setTodayTotalNumOfApponintments] =
     useState(0);
+
+  const dispatch = useDispatch();
 
   const getTotalNumOfUsers = async () => {
     await axios
@@ -117,6 +122,105 @@ const Highlights = () => {
     getTodayTotalNumOfApponintments();
   }, []);
 
+  const getAndPassAllUsers = async () => {
+    try {
+      await axios
+        .get("http://localhost:8000/api/v1/get-all-users", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res.data.users);
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+
+          dispatch(
+            dashboardOptionsSliceActions.toggleDashboardOptions({
+              showHighlights: false,
+              showAllUsers: true,
+              showAppointments: false,
+              showServices: false,
+              showProfile: false,
+              showAbout: false,
+              showContact: false,
+              showAppointmentDetails: false,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getAndPassAllVerifiedUsers = async () => {
+    try {
+      await axios
+        .get("http://localhost:8000/api/v1/get-all-verified-users", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res.data.users);
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+
+          dispatch(
+            dashboardOptionsSliceActions.toggleDashboardOptions({
+              showHighlights: false,
+              showAllUsers: true,
+              showAppointments: false,
+              showServices: false,
+              showProfile: false,
+              showAbout: false,
+              showContact: false,
+              showAppointmentDetails: false,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getAndPassAllUnverifiedUsers = async () => {
+    try {
+      await axios
+        .get("http://localhost:8000/api/v1/get-all-unverified-users", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res.data.users);
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+
+          dispatch(
+            dashboardOptionsSliceActions.toggleDashboardOptions({
+              showHighlights: false,
+              showAllUsers: true,
+              showAppointments: false,
+              showServices: false,
+              showProfile: false,
+              showAbout: false,
+              showContact: false,
+              showAppointmentDetails: false,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div className="flex space-x-8 p-8 mx-auto w-6/12">
@@ -140,7 +244,10 @@ const Highlights = () => {
                     : totalNumOfUsers}
                 </td>
                 <td className="py-2 px-4 border-b">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                  <button
+                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                    onClick={() => getAndPassAllUsers()}
+                  >
                     View
                   </button>
                 </td>
@@ -153,7 +260,10 @@ const Highlights = () => {
                     : totalNumOfVerifiedUsers}
                 </td>
                 <td className="py-2 px-4 border-b">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                  <button
+                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                    onClick={() => getAndPassAllVerifiedUsers()}
+                  >
                     View
                   </button>
                 </td>
@@ -166,7 +276,10 @@ const Highlights = () => {
                     : totalNumOfUnverifiedUsers}
                 </td>
                 <td className="py-2 px-4 border-b">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                  <button
+                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                    onClick={() => getAndPassAllUnverifiedUsers()}
+                  >
                     View
                   </button>
                 </td>

@@ -1,29 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import moment from "moment";
+import { useSelector, useDispatch } from "react-redux";
+import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 
 const UsersInfo = () => {
-  const [usersDetails, setUsersDetails] = useState(() => []);
-  const [userDeleted, setUserDeleted] = useState(false);
+  const { allUsers } = useSelector((state) => state.users_Data_Slice);
   const [searchUser, setSearchUser] = useState(() => "");
-
-  const getUsersDetails = async () => {
-    try {
-      await axios
-        .get("http://localhost:8000/api/v1/get-all-users", {
-          withCredentials: true,
-        })
-        .then((res) => {
-          console.log(res.data.users);
-          setUsersDetails(res.data.users);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const dispatch = useDispatch();
 
   const handleDelete = async (id) => {
     try {
@@ -44,10 +30,6 @@ const UsersInfo = () => {
   const filterUsers = (e) => {
     setSearchUser(() => e.target.value);
   };
-
-  useEffect(() => {
-    getUsersDetails();
-  }, [userDeleted]);
 
   return (
     <div className="mx-auto">
@@ -74,7 +56,7 @@ const UsersInfo = () => {
           </tr>
         </thead>
         <tbody>
-          {usersDetails
+          {allUsers
             .filter(
               (user) =>
                 user.email.toLowerCase().includes(searchUser) ||
@@ -104,7 +86,12 @@ const UsersInfo = () => {
                   </td>
                   <td className="py-2 px-4 text-gray-700">
                     <Link
-                      onClick={() => handleDelete(user._id)}
+                      onClick={() => {
+                        handleDelete(user._id);
+                        dispatch(usersDataSliceActions.getUsersData({
+                          allUsers:
+                        }))
+                      }}
                       className="text-red-500"
                     >
                       Delete
