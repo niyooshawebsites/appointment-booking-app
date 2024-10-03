@@ -1,6 +1,7 @@
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userSliceActions } from "../store/slices/UserSlice";
+import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import axios from "axios";
 
 const Header = () => {
@@ -39,6 +40,18 @@ const Header = () => {
             })
           );
           navigate("/");
+          dispatch(
+            dashboardOptionsSliceActions.toggleDashboardOptions({
+              showHighlights: true,
+              showAllUsers: false,
+              showAppointments: false,
+              showServices: false,
+              showProfile: false,
+              showAbout: false,
+              showContact: false,
+              showAppointmentDetails: false,
+            })
+          );
         })
         .catch((err) => console.log(err));
     } catch (err) {

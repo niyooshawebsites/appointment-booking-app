@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 const Highlights = () => {
@@ -16,7 +16,7 @@ const Highlights = () => {
     useState(0);
   const [todayTotalNumOfAppointments, setTodayTotalNumOfApponintments] =
     useState(0);
-
+  const { role, isAdmin } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
 
   const getTotalNumOfUsers = async () => {
@@ -223,152 +223,156 @@ const Highlights = () => {
 
   return (
     <>
-      <div className="flex space-x-8 p-8 mx-auto w-6/12">
-        {/* Column 1 */}
-        <div className="w-1/2">
-          <h2 className="text-xl font-bold mb-4">Total</h2>
-          <table className="min-w-full bg-white border border-gray-200 shadow-md">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 bg-gray-100 border-b">Users</th>
-                <th className="py-2 px-4 bg-gray-100 border-b">Data</th>
-                <th className="py-2 px-4 bg-gray-100 border-b">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b">Total</td>
-                <td className="py-2 px-4 border-b">
-                  {totalNumOfUsers < 10
-                    ? `0${totalNumOfUsers}`
-                    : totalNumOfUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    onClick={() => getAndPassAllUsers()}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Verified</td>
-                <td className="py-2 px-4 border-b">
-                  {totalNumOfVerifiedUsers < 10
-                    ? `0${totalNumOfVerifiedUsers}`
-                    : totalNumOfVerifiedUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    onClick={() => getAndPassAllVerifiedUsers()}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Unverified</td>
-                <td className="py-2 px-4 border-b">
-                  {totalNumOfUnverifiedUsers < 10
-                    ? `0${totalNumOfUnverifiedUsers}`
-                    : totalNumOfUnverifiedUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    onClick={() => getAndPassAllUnverifiedUsers()}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Appointments</td>
-                <td className="py-2 px-4 border-b">
-                  {totalNumOfAppointments < 10
-                    ? `0${totalNumOfAppointments}`
-                    : totalNumOfAppointments}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
-                    View
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      {role == 1 && isAdmin ? (
+        <div className="flex space-x-8 p-8 mx-auto w-6/12">
+          {/* Column 1 */}
+          <div className="w-1/2">
+            <h2 className="text-xl font-bold mb-4">Total</h2>
+            <table className="min-w-full bg-white border border-gray-200 shadow-md">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 bg-gray-100 border-b">Users</th>
+                  <th className="py-2 px-4 bg-gray-100 border-b">Data</th>
+                  <th className="py-2 px-4 bg-gray-100 border-b">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-2 px-4 border-b">Total</td>
+                  <td className="py-2 px-4 border-b">
+                    {totalNumOfUsers < 10
+                      ? `0${totalNumOfUsers}`
+                      : totalNumOfUsers}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <button
+                      className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                      onClick={() => getAndPassAllUsers()}
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 border-b">Verified</td>
+                  <td className="py-2 px-4 border-b">
+                    {totalNumOfVerifiedUsers < 10
+                      ? `0${totalNumOfVerifiedUsers}`
+                      : totalNumOfVerifiedUsers}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <button
+                      className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                      onClick={() => getAndPassAllVerifiedUsers()}
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 border-b">Unverified</td>
+                  <td className="py-2 px-4 border-b">
+                    {totalNumOfUnverifiedUsers < 10
+                      ? `0${totalNumOfUnverifiedUsers}`
+                      : totalNumOfUnverifiedUsers}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <button
+                      className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                      onClick={() => getAndPassAllUnverifiedUsers()}
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 border-b">Appointments</td>
+                  <td className="py-2 px-4 border-b">
+                    {totalNumOfAppointments < 10
+                      ? `0${totalNumOfAppointments}`
+                      : totalNumOfAppointments}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                      View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        {/* Column 2 */}
-        <div className="w-1/2">
-          <h2 className="text-xl font-bold mb-4">Today</h2>
-          <table className="min-w-full bg-white border border-gray-200 shadow-md">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 bg-gray-100 border-b">Users</th>
-                <th className="py-2 px-4 bg-gray-100 border-b">Data</th>
-                <th className="py-2 px-4 bg-gray-100 border-b">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b">Total</td>
-                <td className="py-2 px-4 border-b">
-                  {todayTotalNumOfUsers < 10
-                    ? `0${todayTotalNumOfUsers}`
-                    : todayTotalNumOfUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Verified</td>
-                <td className="py-2 px-4 border-b">
-                  {todayTotalNumOfVerifiedUsers < 10
-                    ? `0${todayTotalNumOfVerifiedUsers}`
-                    : todayTotalNumOfVerifiedUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Unverified</td>
-                <td className="py-2 px-4 border-b">
-                  {todayTotalNumOfUnverifiedUsers < 10
-                    ? `0${todayTotalNumOfUnverifiedUsers}`
-                    : todayTotalNumOfUnverifiedUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Appointments</td>
-                <td className="py-2 px-4 border-b">
-                  {todayTotalNumOfAppointments < 10
-                    ? `0${todayTotalNumOfAppointments}`
-                    : todayTotalNumOfAppointments}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
-                    View
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          {/* Column 2 */}
+          <div className="w-1/2">
+            <h2 className="text-xl font-bold mb-4">Today</h2>
+            <table className="min-w-full bg-white border border-gray-200 shadow-md">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 bg-gray-100 border-b">Users</th>
+                  <th className="py-2 px-4 bg-gray-100 border-b">Data</th>
+                  <th className="py-2 px-4 bg-gray-100 border-b">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-2 px-4 border-b">Total</td>
+                  <td className="py-2 px-4 border-b">
+                    {todayTotalNumOfUsers < 10
+                      ? `0${todayTotalNumOfUsers}`
+                      : todayTotalNumOfUsers}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                      View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 border-b">Verified</td>
+                  <td className="py-2 px-4 border-b">
+                    {todayTotalNumOfVerifiedUsers < 10
+                      ? `0${todayTotalNumOfVerifiedUsers}`
+                      : todayTotalNumOfVerifiedUsers}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                      View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 border-b">Unverified</td>
+                  <td className="py-2 px-4 border-b">
+                    {todayTotalNumOfUnverifiedUsers < 10
+                      ? `0${todayTotalNumOfUnverifiedUsers}`
+                      : todayTotalNumOfUnverifiedUsers}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                      View
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-4 border-b">Appointments</td>
+                  <td className="py-2 px-4 border-b">
+                    {todayTotalNumOfAppointments < 10
+                      ? `0${todayTotalNumOfAppointments}`
+                      : todayTotalNumOfAppointments}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                      View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      ) : (
+        <h1>You are not admin</h1>
+      )}
     </>
   );
 };
