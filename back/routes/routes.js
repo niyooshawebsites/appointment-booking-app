@@ -18,6 +18,12 @@ const {
   getAllUsersController,
   deleteUserController,
   getUsersByDateController,
+  getTotalUsersCountController,
+  getTotalVerifiedUsersCountController,
+  getTotalUnverifiedUsersCountController,
+  getTodayTotalUsersCountController,
+  getTodayTotalVerifiedUsersCountController,
+  getTodayTotalUnverifiedUsersCountController,
 } = require("../controllers/user.controller");
 
 const {
@@ -30,6 +36,8 @@ const {
   bookAppointmnentController,
   getAllAppointmentsController,
   getTodayAppointmentsByUsernameController,
+  getTotalAppointmentsCountController,
+  getTodayTotalAppointmentsCountController,
 } = require("../controllers/appointment.controller");
 
 const isServiceProvider = require("../middlewares/isServiceProvider.middleware");
@@ -142,5 +150,49 @@ router.get(
 
 // today's users
 router.get("/get-today-users", getUsersByDateController);
+
+// get total users count route
+router.get("/get-total-users-count", getTotalUsersCountController);
+
+// get total verified users count route
+router.get(
+  "/get-total-verified-users-count",
+  getTotalVerifiedUsersCountController
+);
+
+// get total unverfied users count route
+router.get(
+  "/get-total-unverified-users-count",
+  getTotalUnverifiedUsersCountController
+);
+
+// get total appointments count route
+router.get(
+  "/get-total-appointments-count",
+  getTotalAppointmentsCountController
+);
+
+// get today total users count route
+router.get("/get-today-total-users-count", getTodayTotalUsersCountController);
+
+// get today total verified users count route
+router.get(
+  "/get-today-total-verified-users-count",
+  getTodayTotalVerifiedUsersCountController
+);
+
+// get today total unverified users count route
+router.get(
+  "/get-today-total-unverified-users-count",
+  getTodayTotalUnverifiedUsersCountController
+);
+
+// getTodayTotalAppointmentsCountController
+
+// get today's total appointments count route
+router.get(
+  "/get-today-total-appointments-count",
+  getTodayTotalAppointmentsCountController
+);
 
 module.exports = router;

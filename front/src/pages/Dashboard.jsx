@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Appointments from "../components/Appointments";
 import AppointmentDetails from "../components/AppointmentDetails";
 import Profile from "../components/Profile";
@@ -9,41 +8,26 @@ import ContactForm from "../components/ContactForm";
 import ServiceForm from "../components/ServiceForm";
 import Highlights from "../components/Highlights";
 import UsersInfo from "../components/UsersInfo";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
-  const [showHighlights, setShowHighlights] = useState(true);
-  const [showAllUsers, setShowAllUsers] = useState(false);
-  const [showAppointments, setShowAppointments] = useState(false);
-  const [showServices, setShowServices] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
-  const [showAbout, setShowAbout] = useState(false);
-  const [showContact, setShowContact] = useState(false);
-  const [showAppointmentDetails, setshowAppointmentDetails] = useState(false);
+  const {
+    showHighlights,
+    showAllUsers,
+    showAppointments,
+    showServices,
+    showProfile,
+    showAbout,
+    showContact,
+    showAppointmentDetails,
+  } = useSelector((state) => state.dashboard_Options_Slice);
 
   if (showHighlights) {
     return (
       <Layout>
         <div className="w-full h-screen flex">
-          <Sidebar
-            setShowHighlights={setShowHighlights}
-            setShowAllUsers={setShowAllUsers}
-            setShowAppointments={setShowAppointments}
-            setshowAppointmentDetails={setshowAppointmentDetails}
-            setShowServices={setShowServices}
-            setShowProfile={setShowProfile}
-            setShowAbout={setShowAbout}
-            showContact={setShowContact}
-          />
-          <Highlights
-            setShowHighlights={setShowHighlights}
-            setShowAllUsers={setShowAllUsers}
-            setShowAppointments={setShowAppointments}
-            setshowAppointmentDetails={setshowAppointmentDetails}
-            setShowServices={setShowServices}
-            setShowProfile={setShowProfile}
-            setShowAbout={setShowAbout}
-            showContact={setShowContact}
-          />
+          <Sidebar />
+          <Highlights />
         </div>
       </Layout>
     );
@@ -53,16 +37,7 @@ const Dashboard = () => {
     return (
       <Layout>
         <div className="w-full h-screen flex">
-          <Sidebar
-            setShowHighlights={setShowHighlights}
-            setShowAllUsers={setShowAllUsers}
-            setShowAppointments={setShowAppointments}
-            setshowAppointmentDetails={setshowAppointmentDetails}
-            setShowServices={setShowServices}
-            setShowProfile={setShowProfile}
-            setShowAbout={setShowAbout}
-            showContact={setShowContact}
-          />
+          <Sidebar />
           <UsersInfo />
         </div>
       </Layout>
@@ -73,26 +48,8 @@ const Dashboard = () => {
     return (
       <Layout>
         <div className="w-full h-screen flex">
-          <Sidebar
-            setShowHighlights={setShowHighlights}
-            setShowAllUsers={setShowAllUsers}
-            setShowAppointments={setShowAppointments}
-            setshowAppointmentDetails={setshowAppointmentDetails}
-            setShowServices={setShowServices}
-            setShowProfile={setShowProfile}
-            setShowAbout={setShowAbout}
-            showContact={setShowContact}
-          />
-          <Appointments
-            setShowHighlights={setShowHighlights}
-            setShowAllUsers={setShowAllUsers}
-            setShowAppointments={setShowAppointments}
-            setshowAppointmentDetails={setshowAppointmentDetails}
-            setShowServices={setShowServices}
-            setShowProfile={setShowProfile}
-            setShowAbout={setShowAbout}
-            showContact={setShowContact}
-          />
+          <Sidebar />
+          <Appointments />
         </div>
       </Layout>
     );
@@ -102,16 +59,7 @@ const Dashboard = () => {
     return (
       <Layout>
         <div className="w-full h-screen flex">
-          <Sidebar
-            setShowHighlights={setShowHighlights}
-            setShowAllUsers={setShowAllUsers}
-            setShowAppointments={setShowAppointments}
-            setshowAppointmentDetails={setshowAppointmentDetails}
-            setShowServices={setShowServices}
-            setShowProfile={setShowProfile}
-            setShowAbout={setShowAbout}
-            showContact={setShowContact}
-          />
+          <Sidebar />
           <AppointmentDetails />
         </div>
       </Layout>
@@ -122,16 +70,7 @@ const Dashboard = () => {
     return (
       <Layout>
         <div className="w-full h-screen flex">
-          <Sidebar
-            setShowHighlights={setShowHighlights}
-            setShowAllUsers={setShowAllUsers}
-            setShowAppointments={setShowAppointments}
-            setshowAppointmentDetails={setshowAppointmentDetails}
-            setShowServices={setShowServices}
-            setShowProfile={setShowProfile}
-            setShowAbout={setShowAbout}
-            showContact={setShowContact}
-          />
+          <Sidebar />
           <ServiceForm />
         </div>
       </Layout>
@@ -142,16 +81,7 @@ const Dashboard = () => {
     return (
       <Layout>
         <div className="w-full h-screen flex">
-          <Sidebar
-            setShowHighlights={setShowHighlights}
-            setShowAllUsers={setShowAllUsers}
-            setShowAppointments={setShowAppointments}
-            setshowAppointmentDetails={setshowAppointmentDetails}
-            setShowServices={setShowServices}
-            setShowProfile={setShowProfile}
-            setShowAbout={setShowAbout}
-            showContact={setShowContact}
-          />
+          <Sidebar />
           <Profile />
         </div>
       </Layout>
@@ -162,16 +92,7 @@ const Dashboard = () => {
     return (
       <Layout>
         <div className="w-full h-screen flex">
-          <Sidebar
-            setShowHighlights={setShowHighlights}
-            setShowAllUsers={setShowAllUsers}
-            setShowAppointments={setShowAppointments}
-            setshowAppointmentDetails={setshowAppointmentDetails}
-            setShowServices={setShowServices}
-            setShowProfile={setShowProfile}
-            setShowAbout={setShowAbout}
-            showContact={setShowContact}
-          />
+          <Sidebar />
           <AboutForm />
         </div>
       </Layout>
@@ -182,16 +103,7 @@ const Dashboard = () => {
     return (
       <Layout>
         <div className="w-full h-screen flex">
-          <Sidebar
-            setShowHighlights={setShowHighlights}
-            setShowAllUsers={setShowAllUsers}
-            setShowAppointments={setShowAppointments}
-            setshowAppointmentDetails={setshowAppointmentDetails}
-            setShowServices={setShowServices}
-            setShowProfile={setShowProfile}
-            setShowAbout={setShowAbout}
-            showContact={setShowContact}
-          />
+          <Sidebar />
           <ContactForm />
         </div>
       </Layout>

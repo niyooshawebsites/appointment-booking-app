@@ -2,6 +2,7 @@ const Appointment = require("../models/appointment.model");
 const appointmentConfirmationEmail = require("../utils/mail");
 const moment = require("moment");
 
+// book appointment controller
 const bookAppointmnentController = async (req, res) => {
   try {
     const {
@@ -194,6 +195,7 @@ const bookAppointmnentController = async (req, res) => {
   }
 };
 
+// get all Apponitments controller
 const getAllAppointmentsController = async (req, res) => {
   try {
     const { username } = req.body;
@@ -227,23 +229,18 @@ const getAllAppointmentsController = async (req, res) => {
   }
 };
 
+// get today's appointment filter by username
 const getTodayAppointmentsByUsernameController = async (req, res) => {
   try {
     const { username } = req.params;
 
-    // getting todays start time using moment js
-    const startOfDay = moment().startOf("day").toDate().toISOString();
-
-    // getting todays end time using moment js
-    const endOfDay = moment().endOf("day").toDate().toISOString();
+    // getting today's date
+    const todayDate = moment(Date.now()).format("DD-MM-YYYY");
 
     // querying on the basis of two things, username and createdAt
     const appointments = await Appointment.populate("user").find({
       username,
-      createdAt: {
-        $gte: startOfDay,
-        $lte: endOfDay,
-      },
+      date: todayDate,
     });
 
     if (!appointments) {
@@ -266,8 +263,56 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
   }
 };
 
+// get total appointments count
+const getTotalAppointmentsCountController = async (req, res) => {
+  try {
+    const totalAppointmentsCount = await Appointment.countDocuments();
+    return res.status(200).json({
+      success: true,
+      msg: "Total number of appointments counted successfully",
+      totalAppointmentsCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get today's total appointments count
+const getTodayTotalAppointmentsCountController = async (req, res) => {
+  try {
+    // start of the day
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // end of the day
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    const todayTotalAppointmentsCount = await Appointment.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's Total number of appointments counted successfully",
+      todayTotalAppointmentsCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   bookAppointmnentController,
   getAllAppointmentsController,
   getTodayAppointmentsByUsernameController,
+  getTotalAppointmentsCountController,
+  getTodayTotalAppointmentsCountController,
 };

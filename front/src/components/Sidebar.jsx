@@ -1,69 +1,87 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 
 /* eslint-disable react/prop-types */
-const Sidebar = ({
-  setShowHighlights,
-  setShowAllUsers,
-  setShowAppointments,
-  setshowAppointmentDetails,
-  setShowServices,
-  setShowProfile,
-  setShowAbout,
-  showContact,
-}) => {
+const Sidebar = () => {
+  // const {
+  //   showHighlights,
+  //   showAllUsers,
+  //   showAppointments,
+  //   showServices,
+  //   showProfile,
+  //   showAbout,
+  //   showContact,
+  //   showAppointmentDetails,
+  // } = useSelector((state) => state.dashboard_Options_Slice);
+
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
+  const dispatch = useDispatch();
 
   return (
     <div className="w-2/12 bg-gray-800 text-white h-full p-4">
       <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
       <ul>
-        {/* -------------------------------------------------------- */}
+        {/*  Show highlights for  admins and users* */}
 
         <li
           className="block py-2 px-4 hover:bg-gray-700 rounded link"
           onClick={() => {
-            setShowHighlights(true);
-            setShowAllUsers(false);
-            setShowAppointments(false);
-            setshowAppointmentDetails(false);
-            setShowServices(false);
-            setShowAbout(false);
-            showContact(false);
-            setShowProfile(false);
+            dispatch(
+              dashboardOptionsSliceActions.toggleDashboardOptions({
+                showHighlights: true,
+                showAllUsers: false,
+                showAppointments: false,
+                showServices: false,
+                showProfile: false,
+                showAbout: false,
+                showContact: false,
+                showAppointmentDetails: false,
+              })
+            );
           }}
         >
           Highlights
         </li>
 
         {role == 1 && isAdmin == true ? (
+          // show only for admin
           <li
             className="block py-2 px-4 hover:bg-gray-700 rounded link"
             onClick={() => {
-              setShowHighlights(false);
-              setShowAllUsers(true);
-              setShowAppointments(false);
-              setshowAppointmentDetails(false);
-              setShowServices(false);
-              setShowAbout(false);
-              showContact(false);
-              setShowProfile(false);
+              dispatch(
+                dashboardOptionsSliceActions.toggleDashboardOptions({
+                  showHighlights: false,
+                  showAllUsers: true,
+                  showAppointments: false,
+                  showServices: false,
+                  showProfile: false,
+                  showAbout: false,
+                  showContact: false,
+                  showAppointmentDetails: false,
+                })
+              );
             }}
           >
             Users
           </li>
         ) : (
+          // show only for users
           <>
             <li
               className="block py-2 px-4 hover:bg-gray-700 rounded link"
               onClick={() => {
-                setShowHighlights(false);
-                setShowAllUsers(false);
-                setShowAppointments(true);
-                setshowAppointmentDetails(false);
-                setShowServices(false);
-                setShowProfile(false);
-                setShowAbout(false);
-                showContact(false);
+                dispatch(
+                  dashboardOptionsSliceActions.toggleDashboardOptions({
+                    showHighlights: false,
+                    showAllUsers: false,
+                    showAppointments: true,
+                    showServices: false,
+                    showProfile: false,
+                    showAbout: false,
+                    showContact: false,
+                    showAppointmentDetails: false,
+                  })
+                );
               }}
             >
               Appointments
@@ -71,14 +89,18 @@ const Sidebar = ({
             <li
               className="block py-2 px-4 hover:bg-gray-700 rounded link"
               onClick={() => {
-                setShowHighlights(false);
-                setShowAllUsers(false);
-                setShowAppointments(false);
-                setshowAppointmentDetails(false);
-                setShowServices(true);
-                setShowProfile(false);
-                setShowAbout(false);
-                showContact(false);
+                dispatch(
+                  dashboardOptionsSliceActions.toggleDashboardOptions({
+                    showHighlights: false,
+                    showAllUsers: false,
+                    showAppointments: false,
+                    showServices: true,
+                    showProfile: false,
+                    showAbout: false,
+                    showContact: false,
+                    showAppointmentDetails: false,
+                  })
+                );
               }}
             >
               Services
@@ -86,14 +108,18 @@ const Sidebar = ({
             <li
               className="block py-2 px-4 hover:bg-gray-700 rounded link"
               onClick={() => {
-                setShowHighlights(false);
-                setShowAllUsers(false);
-                setShowAppointments(false);
-                setshowAppointmentDetails(false);
-                setShowServices(false);
-                setShowProfile(false);
-                setShowAbout(true);
-                showContact(false);
+                dispatch(
+                  dashboardOptionsSliceActions.toggleDashboardOptions({
+                    showHighlights: false,
+                    showAllUsers: false,
+                    showAppointments: false,
+                    showServices: false,
+                    showProfile: false,
+                    showAbout: true,
+                    showContact: false,
+                    showAppointmentDetails: false,
+                  })
+                );
               }}
             >
               About
@@ -101,14 +127,18 @@ const Sidebar = ({
             <li
               className="block py-2 px-4 hover:bg-gray-700 rounded link"
               onClick={() => {
-                setShowHighlights(false);
-                setShowAllUsers(false);
-                setShowAppointments(false);
-                setshowAppointmentDetails(false);
-                setShowServices(false);
-                setShowProfile(false);
-                setShowAbout(false);
-                showContact(true);
+                dispatch(
+                  dashboardOptionsSliceActions.toggleDashboardOptions({
+                    showHighlights: false,
+                    showAllUsers: false,
+                    showAppointments: false,
+                    showServices: false,
+                    showProfile: false,
+                    showAbout: false,
+                    showContact: true,
+                    showAppointmentDetails: false,
+                  })
+                );
               }}
             >
               Contact
@@ -116,17 +146,23 @@ const Sidebar = ({
           </>
         )}
 
+        {/* Show profile for  admins and users*/}
+
         <li
           className="block py-2 px-4 hover:bg-gray-700 rounded link"
           onClick={() => {
-            setShowHighlights(false);
-            setShowAllUsers(false);
-            setShowAppointments(false);
-            setshowAppointmentDetails(false);
-            setShowServices(false);
-            setShowAbout(false);
-            showContact(false);
-            setShowProfile(true);
+            dispatch(
+              dashboardOptionsSliceActions.toggleDashboardOptions({
+                showHighlights: false,
+                showAllUsers: false,
+                showAppointments: false,
+                showServices: false,
+                showProfile: true,
+                showAbout: false,
+                showContact: false,
+                showAppointmentDetails: false,
+              })
+            );
           }}
         >
           Profile

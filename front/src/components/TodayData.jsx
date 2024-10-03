@@ -4,17 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
+import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 
-const TodayData = ({
-  setShowHighlights,
-  setShowAllUsers,
-  setShowAppointments,
-  setShowServices,
-  setShowProfile,
-  setShowAbout,
-  showContact,
-  setshowAppointmentDetails,
-}) => {
+const TodayData = () => {
   const { username, role, isAdmin } = useSelector((state) => state.user_Slice);
   const [usersDetails, setUsersDetails] = useState(() => []);
   const [searchUser, setSearchUser] = useState(() => "");
@@ -197,14 +189,21 @@ const TodayData = ({
                       <td className="py-2 px-4 text-gray-700">
                         <Link
                           onClick={() => {
-                            setShowHighlights(false);
-                            setShowAllUsers(false);
-                            setShowAppointments(false);
-                            setShowServices(false);
-                            setShowProfile(false);
-                            setShowAbout(false);
-                            showContact(false);
-                            setshowAppointmentDetails(true);
+                            dispatch(
+                              dashboardOptionsSliceActions.toggleDashboardOptions(
+                                {
+                                  showHighlights: false,
+                                  showAllUsers: false,
+                                  showAppointments: false,
+                                  showServices: false,
+                                  showProfile: false,
+                                  showAbout: false,
+                                  showContact: false,
+                                  showAppointmentDetails: true,
+                                }
+                              )
+                            );
+
                             dispatch(
                               appointmentSliceActions.appointmentDetails({
                                 service: appointment.service,

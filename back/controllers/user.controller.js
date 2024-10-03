@@ -776,6 +776,151 @@ const getUsersByDateController = async (req, res) => {
   }
 };
 
+// get total users count controller
+const getTotalUsersCountController = async (req, res) => {
+  try {
+    const totalUsersCount = await User.countDocuments();
+
+    return res.status(200).json({
+      success: true,
+      msg: "Total number of users found",
+      totalUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+const getTotalVerifiedUsersCountController = async (req, res) => {
+  try {
+    const totalVerifiedUsersCount = await User.countDocuments({
+      isVerified: true,
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Successfully counted the verified users",
+      totalVerifiedUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+const getTotalUnverifiedUsersCountController = async (req, res) => {
+  try {
+    const totalUnverifiedUsersCount = await User.countDocuments({
+      isVerified: false,
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Successfully counted the verified users",
+      totalUnverifiedUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get today's total users count controller
+const getTodayTotalUsersCountController = async (req, res) => {
+  try {
+    // start of the day
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // end of the day
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    const todayTotalUsersCount = await User.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Total number of users found for today",
+      todayTotalUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get today's total verifed users count controller
+const getTodayTotalVerifiedUsersCountController = async (req, res) => {
+  try {
+    // start of the day
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // end of the day
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    const todayTotalVerifiedUsersCount = await User.countDocuments({
+      isVerified: true,
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Total number of verified users found for today",
+      todayTotalVerifiedUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get today's total verifed users count controller
+const getTodayTotalUnverifiedUsersCountController = async (req, res) => {
+  try {
+    // start of the day
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // end of the day
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    const todayTotalUnverifiedUsersCount = await User.countDocuments({
+      isVerified: false,
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Total number of unverified users found for today",
+      todayTotalUnverifiedUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   registerController,
   loginController,
@@ -795,4 +940,10 @@ module.exports = {
   getAllUsersController,
   deleteUserController,
   getUsersByDateController,
+  getTotalUsersCountController,
+  getTotalVerifiedUsersCountController,
+  getTotalUnverifiedUsersCountController,
+  getTodayTotalUsersCountController,
+  getTodayTotalVerifiedUsersCountController,
+  getTodayTotalUnverifiedUsersCountController,
 };

@@ -3,17 +3,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
+import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 
-const Appointments = ({
-  setShowHighlights,
-  setShowAllUsers,
-  setShowAppointments,
-  setShowServices,
-  setShowProfile,
-  setShowAbout,
-  showContact,
-  setshowAppointmentDetails,
-}) => {
+const Appointments = () => {
   const { username } = useSelector((state) => state.user_Slice);
   const [allApppointments, setAllAppointments] = useState(() => []);
   const [searchAppointments, setSearchAppointments] = useState(() => "");
@@ -98,14 +90,19 @@ const Appointments = ({
                   <td className="py-2 px-4 text-gray-700">
                     <Link
                       onClick={() => {
-                        setShowHighlights(false),
-                          setShowAllUsers(false),
-                          setShowAppointments(false);
-                        setShowServices(false);
-                        setShowProfile(false);
-                        setShowAbout(false);
-                        showContact(false);
-                        setshowAppointmentDetails(true);
+                        dispatch(
+                          dashboardOptionsSliceActions.toggleDashboardOptions({
+                            showHighlights: false,
+                            showAllUsers: false,
+                            showAppointments: false,
+                            showServices: false,
+                            showProfile: false,
+                            showAbout: false,
+                            showContact: false,
+                            showAppointmentDetails: true,
+                          })
+                        );
+
                         dispatch(
                           appointmentSliceActions.appointmentDetails({
                             service: appointment.service,
