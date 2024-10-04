@@ -40,6 +40,8 @@ const {
   getTodayAppointmentsByUsernameController,
   getTotalAppointmentsCountController,
   getTodayTotalAppointmentsCountController,
+  getTodayAppointmentsCountByUsernameController,
+  getTotalAppointmentsCountByUsernameController,
 } = require("../controllers/appointment.controller");
 
 const isServiceProvider = require("../middlewares/isServiceProvider.middleware");
@@ -188,6 +190,20 @@ router.get(
 router.get(
   "/get-total-appointments-count",
   getTotalAppointmentsCountController
+);
+
+// getTotalAppointmentsCountByUsernameController
+
+// get total appointments count - filter by username route
+router.get(
+  "/fetch-total-appointments-count/:username",
+  getTotalAppointmentsCountByUsernameController
+);
+
+// get today's appointments count - filter by username route
+router.get(
+  "/today-appointments-count/:username",
+  getTodayAppointmentsCountByUsernameController
 );
 
 // get today total users count route

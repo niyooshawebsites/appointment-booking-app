@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const AppointmentForm = ({ serviceProvider }) => {
+  const path = window.location.pathname;
+  let username = path.split("/")[1];
+
   const { services } = useSelector((state) => state.service_Provider_Slice);
-
-  // const [allServices, setAllServices] = useState([]);
-
   const [custDetails, setCustDetails] = useState(() => {
     return {
       service: "",
@@ -25,6 +25,7 @@ const AppointmentForm = ({ serviceProvider }) => {
       pinCode: "",
       paymentMethod: "",
       serviceProvider,
+      spUsername: username,
     };
   });
 
@@ -44,7 +45,7 @@ const AppointmentForm = ({ serviceProvider }) => {
   const handleSubmit = async function (e) {
     e.preventDefault();
     await axios
-      .post("http://localhost:8000/api/v1/book-appointment", custDetails)
+      .post(`http://localhost:8000/api/v1/book-appointment`, custDetails)
       .then((res) => {
         toast.success("Appointment booked successfully!");
       })

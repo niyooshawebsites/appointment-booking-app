@@ -44,6 +44,7 @@ const LoginForm = () => {
             authenticated: res.data.success,
             role: res.data.role,
             isAdmin: res.data.isAdmin,
+            userId: res.data._id,
           })
         );
         toast.success("Login successful!");

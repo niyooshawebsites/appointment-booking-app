@@ -7,6 +7,7 @@ const userSlice = createSlice({
     authenticated: false,
     role: null,
     isAdmin: false,
+    userId: null,
   },
   reducers: {
     captureLoginUserDetails: (state, action) => {
@@ -14,6 +15,7 @@ const userSlice = createSlice({
       state.authenticated = action.payload.authenticated;
       state.role = action.payload.role;
       state.isAdmin = action.payload.isAdmin;
+      state.userId = action.payload.userId;
     },
   },
 });

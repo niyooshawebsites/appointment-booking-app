@@ -146,9 +146,9 @@ const loginController = async (req, res) => {
       const authToken = await generateAuthToken(
         {
           username: registeredUser.username,
-          email: registeredUser.email,
           role: registeredUser.role,
           isAdmin: registeredUser.isAdmin,
+          userId: registeredUser._id,
         },
         "1d"
       );

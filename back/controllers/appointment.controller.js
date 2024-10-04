@@ -1,4 +1,5 @@
 const Appointment = require("../models/appointment.model");
+const User = require("../models/user.model");
 const appointmentConfirmationEmail = require("../utils/mail");
 const moment = require("moment");
 
@@ -21,6 +22,7 @@ const bookAppointmnentController = async (req, res) => {
       pinCode,
       paymentMethod,
       serviceProvider,
+      spUsername,
     } = req.body;
 
     // if service is not selected
@@ -143,6 +145,15 @@ const bookAppointmnentController = async (req, res) => {
       });
     }
 
+    const user = await User.findOne({ username: spUsername });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: `No service provider with the username ${spUsername} found`,
+      });
+    }
+
     // if all the information is provided
     const existingCustomer = new Appointment({
       service,
@@ -159,6 +170,7 @@ const bookAppointmnentController = async (req, res) => {
       state,
       pinCode,
       paymentMethod,
+      user: user._id,
     });
 
     const result = await existingCustomer.save();
@@ -172,7 +184,7 @@ const bookAppointmnentController = async (req, res) => {
 
     const fullName = `${firstName} ${lastName}`;
 
-    appointmentConfirmationEmail(
+    await appointmentConfirmationEmail(
       email,
       "Appointment confirmed",
       fullName,
@@ -229,7 +241,7 @@ const getAllAppointmentsController = async (req, res) => {
   }
 };
 
-// get today's appointment filter by username
+// get today's appointments filter by username
 const getTodayAppointmentsByUsernameController = async (req, res) => {
   try {
     const { username } = req.params;
@@ -237,14 +249,17 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
     // getting today's date
     const todayDate = moment(Date.now()).format("DD-MM-YYYY");
 
-    // querying on the basis of two things, username and createdAt
-    const appointments = await Appointment.populate("user").find({
-      username,
+    const filteredAppointments = await Appointment.find({
       date: todayDate,
-    });
+    }).populate("User");
+
+    // Filter appointments by username
+    const appointments = filteredAppointments.filter(
+      (appointment) => appointment.user.username === username
+    );
 
     if (!appointments) {
-      return res.status(404).json({
+      return res.status(204).json({
         success: false,
         msg: "No appointments for today",
       });
@@ -254,6 +269,72 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
       success: true,
       msg: "Today's appointments found successfully",
       appointments,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get total appointments count filter by username
+const getTotalAppointmentsCountByUsernameController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const filteredappointments = await Appointment.countDocuments({
+      user: userId,
+    });
+
+    const totalAppointments = filteredappointments.length;
+
+    if (totalAppointments === 0) {
+      return res.status(204).json({
+        success: false,
+        msg: "No appointmentsfound",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's appointments found successfully",
+      appointments: totalAppointments,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get today's appointment count filter by username
+const getTodayAppointmentsCountByUsernameController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // getting today's date
+    const todayDate = moment(Date.now()).format("YYYY-MM-DD");
+
+    const filteredAppointments = await Appointment.countDocuments({
+      user: userId,
+      date: todayDate,
+    });
+
+    const totalAppointments = filteredAppointments.length;
+
+    if (!filteredAppointments) {
+      return res.status(404).json({
+        success: false,
+        msg: "No appointments for today",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's appointments found successfully",
+      appointments: totalAppointments,
     });
   } catch (err) {
     return res.status(500).json({
@@ -315,4 +396,6 @@ module.exports = {
   getTodayAppointmentsByUsernameController,
   getTotalAppointmentsCountController,
   getTodayTotalAppointmentsCountController,
+  getTodayAppointmentsCountByUsernameController,
+  getTotalAppointmentsCountByUsernameController,
 };

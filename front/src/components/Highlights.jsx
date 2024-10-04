@@ -16,9 +16,20 @@ const Highlights = () => {
     useState(0);
   const [todayTotalNumOfAppointments, setTodayTotalNumOfApponintments] =
     useState(0);
-  const { role, isAdmin } = useSelector((state) => state.user_Slice);
+  const [
+    todayAppointmentCountsByUsername,
+    setTodayAppointmentCountsByUsername,
+  ] = useState(0);
+  const [
+    totalAppointmentsCountFilterByUsername,
+    setTotalAppointmentsCountFilterByUsername,
+  ] = useState(0);
+  const { username, userId, role, isAdmin } = useSelector(
+    (state) => state.user_Slice
+  );
   const dispatch = useDispatch();
 
+  // ADMIN API.....
   const getTotalNumOfUsers = async () => {
     await axios
       .get("http://localhost:8000/api/v1/get-total-users-count", {
@@ -110,17 +121,6 @@ const Highlights = () => {
       )
       .catch((err) => console.log(err));
   };
-
-  useEffect(() => {
-    getTotalNumOfUsers();
-    getTotalNumOfVerifiedUsers();
-    getTotalNumOfUnverifiedUsers();
-    getTotalNumOfAppointments();
-    getTodayTotalNumOfUsers();
-    getTodayTotalNumOfVerifiedUsers();
-    getTodayTotalNumOfUnverifiedUsers();
-    getTodayTotalNumOfApponintments();
-  }, []);
 
   const getAndPassAllUsers = async () => {
     try {
@@ -220,6 +220,50 @@ const Highlights = () => {
       console.log(err);
     }
   };
+
+  // USER API...
+
+  const getTodayAppointmentsCountFilterByUsername = async () => {
+    await axios
+      .get(`http://localhost:8000/api/v1/today-appointments-count/${userId}`, {
+        withCredentials: true,
+      })
+      .then((res) => setTodayAppointmentCountsByUsername(res.data.appointments))
+      .catch((err) => console.log(err));
+  };
+
+  const getTotalAppointmentsCountFilterByUsername = async () => {
+    await axios
+      .get(
+        `http://localhost:8000/api/v1/fetch-total-appointments-count/${userId}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) =>
+        setTotalAppointmentsCountFilterByUsername(res.data.appointments)
+      )
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    // Check if the user is an admin
+    if (role === 1 && isAdmin) {
+      // Admin specific function calls
+      getTotalNumOfUsers();
+      getTotalNumOfVerifiedUsers();
+      getTotalNumOfUnverifiedUsers();
+      getTotalNumOfAppointments();
+      getTodayTotalNumOfUsers();
+      getTodayTotalNumOfVerifiedUsers();
+      getTodayTotalNumOfUnverifiedUsers();
+      getTodayTotalNumOfApponintments();
+    } else {
+      // User specific function calls
+      getTodayAppointmentsCountFilterByUsername();
+      getTotalAppointmentsCountFilterByUsername();
+    }
+  }, []);
 
   return (
     <>
@@ -371,7 +415,69 @@ const Highlights = () => {
           </div>
         </div>
       ) : (
-        <h1>You are not admin</h1>
+        <div className="flex space-x-8 p-8 mx-auto w-6/12">
+          {/* Column 1 */}
+          <div className="w-1/2">
+            <h2 className="text-xl font-bold mb-4">Total</h2>
+            <table className="min-w-full bg-white border border-gray-200 shadow-md">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 bg-gray-100 border-b">
+                    Appointments
+                  </th>
+                  <th className="py-2 px-4 bg-gray-100 border-b">Data</th>
+                  <th className="py-2 px-4 bg-gray-100 border-b">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-2 px-4 border-b">Total</td>
+                  <td className="py-2 px-4 border-b">
+                    {totalAppointmentsCountFilterByUsername < 10
+                      ? `0${totalAppointmentsCountFilterByUsername}`
+                      : totalAppointmentsCountFilterByUsername}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                      View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Column 2 */}
+          <div className="w-1/2">
+            <h2 className="text-xl font-bold mb-4">Today</h2>
+            <table className="min-w-full bg-white border border-gray-200 shadow-md">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 bg-gray-100 border-b">
+                    Appointments
+                  </th>
+                  <th className="py-2 px-4 bg-gray-100 border-b">Data</th>
+                  <th className="py-2 px-4 bg-gray-100 border-b">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-2 px-4 border-b">Total</td>
+                  <td className="py-2 px-4 border-b">
+                    {todayAppointmentCountsByUsername < 10
+                      ? `0${todayAppointmentCountsByUsername}`
+                      : todayAppointmentCountsByUsername}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                      View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
     </>
   );
