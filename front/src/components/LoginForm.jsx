@@ -38,13 +38,14 @@ const LoginForm = () => {
         withCredentials: true,
       })
       .then((res) => {
+        console.log(res);
         dispatch(
           userSliceActions.captureLoginUserDetails({
             username: res.data.username,
             authenticated: res.data.success,
             role: res.data.role,
             isAdmin: res.data.isAdmin,
-            userId: res.data._id,
+            userId: res.data.userId,
           })
         );
         toast.success("Login successful!");

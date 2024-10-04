@@ -232,7 +232,6 @@ const getAllAppointmentsController = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
@@ -283,23 +282,23 @@ const getTotalAppointmentsCountByUsernameController = async (req, res) => {
   try {
     const { userId } = req.params;
 
+    console.log(userId);
+
     const filteredappointments = await Appointment.countDocuments({
       user: userId,
     });
 
-    const totalAppointments = filteredappointments.length;
-
     if (totalAppointments === 0) {
       return res.status(204).json({
         success: false,
-        msg: "No appointmentsfound",
+        msg: "No appointments found",
       });
     }
 
     return res.status(200).json({
       success: true,
       msg: "Today's appointments found successfully",
-      appointments: totalAppointments,
+      appointments: filteredappointments.length,
     });
   } catch (err) {
     return res.status(500).json({

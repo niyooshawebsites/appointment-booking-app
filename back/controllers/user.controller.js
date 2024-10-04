@@ -148,7 +148,6 @@ const loginController = async (req, res) => {
           username: registeredUser.username,
           role: registeredUser.role,
           isAdmin: registeredUser.isAdmin,
-          userId: registeredUser._id,
         },
         "1d"
       );
@@ -167,6 +166,7 @@ const loginController = async (req, res) => {
         username: registeredUser.username,
         role: registeredUser.role,
         isAdmin: registeredUser.isAdmin,
+        userId: registeredUser._id,
       });
     }
   } catch (err) {

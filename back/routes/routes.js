@@ -196,13 +196,13 @@ router.get(
 
 // get total appointments count - filter by username route
 router.get(
-  "/fetch-total-appointments-count/:username",
+  "/fetch-total-appointments-count/:userId",
   getTotalAppointmentsCountByUsernameController
 );
 
 // get today's appointments count - filter by username route
 router.get(
-  "/today-appointments-count/:username",
+  "/today-appointments-count/:userId",
   getTodayAppointmentsCountByUsernameController
 );
 

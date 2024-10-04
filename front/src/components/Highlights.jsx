@@ -24,6 +24,7 @@ const Highlights = () => {
     totalAppointmentsCountFilterByUsername,
     setTotalAppointmentsCountFilterByUsername,
   ] = useState(0);
+
   const { username, userId, role, isAdmin } = useSelector(
     (state) => state.user_Slice
   );
@@ -248,7 +249,7 @@ const Highlights = () => {
 
   useEffect(() => {
     // Check if the user is an admin
-    if (role === 1 && isAdmin) {
+    if (role === 1 && isAdmin === true) {
       // Admin specific function calls
       getTotalNumOfUsers();
       getTotalNumOfVerifiedUsers();
