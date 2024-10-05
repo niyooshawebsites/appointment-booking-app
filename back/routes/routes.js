@@ -166,7 +166,7 @@ router.delete("/delete-user/:id", auth, isAdmin, deleteUserController);
 
 // today's appointment by username route
 router.get(
-  "/get-today-appointments-by-username/:username",
+  "/get-today-appointments-by-username/:userId",
   getTodayAppointmentsByUsernameController
 );
 

@@ -356,6 +356,43 @@ const Highlights = () => {
       .catch((err) => console.log(err));
   };
 
+  // get-today-appointments-by-username
+  const getTodaysAppointments = async () => {
+    try {
+      await axios
+        .get(
+          `http://localhost:8000/api/v1/get-today-appointments-by-username/${userId}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          console.log(res.data.users);
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+
+          dispatch(
+            dashboardOptionsSliceActions.toggleDashboardOptions({
+              showHighlights: false,
+              showAllUsers: false,
+              showAppointments: true,
+              showServices: false,
+              showProfile: false,
+              showAbout: false,
+              showContact: false,
+              showAppointmentDetails: false,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     // Check if the user is an admin
     if (role === 1 && isAdmin === true) {
@@ -557,7 +594,23 @@ const Highlights = () => {
                       : totalAppointmentsCountFilterByUsername}
                   </td>
                   <td className="py-2 px-4 border-b">
-                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                    <button
+                      className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                      onClick={() => {
+                        dispatch(
+                          dashboardOptionsSliceActions.toggleDashboardOptions({
+                            showHighlights: false,
+                            showAllUsers: false,
+                            showAppointments: true,
+                            showServices: false,
+                            showProfile: false,
+                            showAbout: false,
+                            showContact: false,
+                            showAppointmentDetails: false,
+                          })
+                        );
+                      }}
+                    >
                       View
                     </button>
                   </td>
@@ -588,7 +641,10 @@ const Highlights = () => {
                       : todayAppointmentCountsByUsername}
                   </td>
                   <td className="py-2 px-4 border-b">
-                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                    <button
+                      className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                      onClick={() => getTodaysAppointments()}
+                    >
                       View
                     </button>
                   </td>

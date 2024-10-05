@@ -244,7 +244,7 @@ const getAllAppointmentsController = async (req, res) => {
 // get today's appointments filter by username
 const getTodayAppointmentsByUsernameController = async (req, res) => {
   try {
-    const { username } = req.params;
+    const { userId } = req.params;
 
     // getting today's date
     const todayDate = moment(Date.now()).format("DD-MM-YYYY");
@@ -255,7 +255,7 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
 
     // Filter appointments by username
     const appointments = filteredAppointments.filter(
-      (appointment) => appointment.user.username === username
+      (appointment) => appointment.user._id === userId
     );
 
     if (!appointments) {
