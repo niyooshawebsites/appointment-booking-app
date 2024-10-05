@@ -23,6 +23,7 @@ const sendverificationEmail = (email, subject, text) => {
     Please click the link to verify your email: <a href="${text}" target="_blank">Verify email</a>
     <br> 
     Thaks and regards,
+    <br>
     Team - ABS
     `,
   };
@@ -71,7 +72,9 @@ const appointmentConfirmationEmail = async (
     Your appointment with ${serviceProvider} for ${service} on ${date} at ${time} is confirmed. 
     <br> 
     Thaks and regards,
+    <br>
     ${serviceProvider}
+    <br>
     Team - ABS
     `,
   };
@@ -102,6 +105,7 @@ const forgotPasswordEmail = async (email, subject, text) => {
     Please click the link to reset your passoword: <a href="${text}" target="_blank">Reset Password</a>
     <br> 
     Thaks and regards,
+    <br>
     Team - ABS
     `,
   };

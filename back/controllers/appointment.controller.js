@@ -1,6 +1,6 @@
 const Appointment = require("../models/appointment.model");
 const User = require("../models/user.model");
-const appointmentConfirmationEmail = require("../utils/mail");
+const { appointmentConfirmationEmail } = require("../utils/mail");
 const moment = require("moment");
 
 // book appointment controller
@@ -148,8 +148,6 @@ const bookAppointmnentController = async (req, res) => {
 
     const user = await User.findOne({ username });
 
-    console.log(user._id);
-
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -187,17 +185,15 @@ const bookAppointmnentController = async (req, res) => {
 
     const fullName = `${firstName} ${lastName}`;
 
-    console.log(fullName);
-
-    // await appointmentConfirmationEmail(
-    //   email,
-    //   "Appointment confirmed",
-    //   fullName,
-    //   user.businessName,
-    //   service,
-    //   date,
-    //   time
-    // );
+    await appointmentConfirmationEmail(
+      email,
+      "Appointment confirmed",
+      fullName,
+      user.businessName,
+      service,
+      date,
+      time
+    );
 
     return res.status(201).json({
       success: true,
