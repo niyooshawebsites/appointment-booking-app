@@ -3,17 +3,6 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 
 /* eslint-disable react/prop-types */
 const Sidebar = () => {
-  // const {
-  //   showHighlights,
-  //   showAllUsers,
-  //   showAppointments,
-  //   showServices,
-  //   showProfile,
-  //   showAbout,
-  //   showContact,
-  //   showAppointmentDetails,
-  // } = useSelector((state) => state.dashboard_Options_Slice);
-
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
 
@@ -22,7 +11,6 @@ const Sidebar = () => {
       <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
       <ul>
         {/*  Show highlights for  admins and users* */}
-
         <li
           className="block py-2 px-4 hover:bg-gray-700 rounded link"
           onClick={() => {
@@ -42,7 +30,6 @@ const Sidebar = () => {
         >
           Highlights
         </li>
-
         {role == 1 && isAdmin == true ? (
           // show only for admin
           <li
@@ -145,9 +132,7 @@ const Sidebar = () => {
             </li>
           </>
         )}
-
         {/* Show profile for  admins and users*/}
-
         <li
           className="block py-2 px-4 hover:bg-gray-700 rounded link"
           onClick={() => {

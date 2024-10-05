@@ -29,6 +29,8 @@ const Highlights = () => {
   const dispatch = useDispatch();
 
   // ADMIN APIS.....
+
+  // get total number....
   const getTotalNumOfUsers = async () => {
     await axios
       .get(`http://localhost:8000/api/v1/get-total-users-count/${userId}`, {
@@ -77,56 +79,7 @@ const Highlights = () => {
       .catch((err) => console.log(err));
   };
 
-  const getTodayTotalNumOfUsers = async () => {
-    await axios
-      .get("http://localhost:8000/api/v1/get-today-total-users-count", {
-        withCredentials: true,
-      })
-      .then((res) => setTodayTotalNumOfUsers(res.data.todayTotalUsersCount))
-      .catch((err) => console.log(err));
-  };
-
-  const getTodayTotalNumOfVerifiedUsers = async () => {
-    await axios
-      .get(
-        "http://localhost:8000/api/v1/get-today-total-verified-users-count",
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) =>
-        setTodayTotalNumOfVerifiedUsers(res.data.todayTotalVerifiedUsersCount)
-      )
-      .catch((err) => console.log(err));
-  };
-
-  const getTodayTotalNumOfUnverifiedUsers = async () => {
-    await axios
-      .get(
-        "http://localhost:8000/api/v1/get-today-total-unverified-users-count",
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) =>
-        setTodayTotalNumOfUnverifiedUsers(
-          res.data.todayTotalUnverifiedUsersCount
-        )
-      )
-      .catch((err) => console.log(err));
-  };
-
-  const getTodayTotalNumOfApponintments = async () => {
-    await axios
-      .get("http://localhost:8000/api/v1/get-today-total-appointments-count", {
-        withCredentials: true,
-      })
-      .then((res) =>
-        setTodayTotalNumOfApponintments(res.data.todayTotalAppointmentsCount)
-      )
-      .catch((err) => console.log(err));
-  };
-
+  // pass total number...
   const getAndPassAllUsers = async () => {
     try {
       await axios
@@ -163,7 +116,7 @@ const Highlights = () => {
   const getAndPassAllVerifiedUsers = async () => {
     try {
       await axios
-        .get("http://localhost:8000/api/v1/get-all-verified-users", {
+        .get(`http://localhost:8000/api/v1/get-all-verified-users/${userId}`, {
           withCredentials: true,
         })
         .then((res) => {
@@ -226,8 +179,160 @@ const Highlights = () => {
     }
   };
 
-  // USER APIS...
+  // get today total number...
+  const getTodayTotalNumOfUsers = async () => {
+    await axios
+      .get("http://localhost:8000/api/v1/get-today-total-users-count", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setTodayTotalNumOfUsers(res.data.todayTotalUsersCount);
+      })
+      .catch((err) => console.log(err));
+  };
 
+  const getTodayTotalNumOfVerifiedUsers = async () => {
+    await axios
+      .get(
+        "http://localhost:8000/api/v1/get-today-total-verified-users-count",
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) =>
+        setTodayTotalNumOfVerifiedUsers(res.data.todayTotalVerifiedUsersCount)
+      )
+      .catch((err) => console.log(err));
+  };
+
+  const getTodayTotalNumOfUnverifiedUsers = async () => {
+    await axios
+      .get(
+        "http://localhost:8000/api/v1/get-today-total-unverified-users-count",
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) =>
+        setTodayTotalNumOfUnverifiedUsers(
+          res.data.todayTotalUnverifiedUsersCount
+        )
+      )
+      .catch((err) => console.log(err));
+  };
+
+  const getTodayTotalNumOfApponintments = async () => {
+    await axios
+      .get("http://localhost:8000/api/v1/get-today-total-appointments-count", {
+        withCredentials: true,
+      })
+      .then((res) =>
+        setTodayTotalNumOfApponintments(res.data.todayTotalAppointmentsCount)
+      )
+      .catch((err) => console.log(err));
+  };
+
+  // pass today number...
+  const getAndPassTodayUsers = async () => {
+    try {
+      await axios
+        .get("http://localhost:8000/api/v1/get-today-users", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res.data.users);
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+
+          dispatch(
+            dashboardOptionsSliceActions.toggleDashboardOptions({
+              showHighlights: false,
+              showAllUsers: true,
+              showAppointments: false,
+              showServices: false,
+              showProfile: false,
+              showAbout: false,
+              showContact: false,
+              showAppointmentDetails: false,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getAndPassTodayVerifiedUsers = async () => {
+    try {
+      await axios
+        .get("http://localhost:8000/api/v1/get-today-verified-users", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res.data.users);
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+
+          dispatch(
+            dashboardOptionsSliceActions.toggleDashboardOptions({
+              showHighlights: false,
+              showAllUsers: true,
+              showAppointments: false,
+              showServices: false,
+              showProfile: false,
+              showAbout: false,
+              showContact: false,
+              showAppointmentDetails: false,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getAndPassTodayUnverifiedUsers = async () => {
+    try {
+      await axios
+        .get("http://localhost:8000/api/v1/get-today-unverified-users", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res.data.users);
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+
+          dispatch(
+            dashboardOptionsSliceActions.toggleDashboardOptions({
+              showHighlights: false,
+              showAllUsers: true,
+              showAppointments: false,
+              showServices: false,
+              showProfile: false,
+              showAbout: false,
+              showContact: false,
+              showAppointmentDetails: false,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // USER APIS...
   const getTodayAppointmentsCountFilterByUsername = async () => {
     await axios
       .get(`http://localhost:8000/api/v1/today-appointments-count/${userId}`, {
@@ -371,7 +476,10 @@ const Highlights = () => {
                       : todayTotalNumOfUsers}
                   </td>
                   <td className="py-2 px-4 border-b">
-                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                    <button
+                      className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                      onClick={() => getAndPassTodayUsers()}
+                    >
                       View
                     </button>
                   </td>
@@ -384,7 +492,10 @@ const Highlights = () => {
                       : todayTotalNumOfVerifiedUsers}
                   </td>
                   <td className="py-2 px-4 border-b">
-                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                    <button
+                      className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                      onClick={() => getAndPassTodayVerifiedUsers()}
+                    >
                       View
                     </button>
                   </td>
@@ -397,7 +508,10 @@ const Highlights = () => {
                       : todayTotalNumOfUnverifiedUsers}
                   </td>
                   <td className="py-2 px-4 border-b">
-                    <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                    <button
+                      className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                      onClick={() => getAndPassTodayUnverifiedUsers()}
+                    >
                       View
                     </button>
                   </td>

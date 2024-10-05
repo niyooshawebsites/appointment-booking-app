@@ -707,8 +707,9 @@ const getAllUsersController = async (req, res) => {
 
 // get all verified users controller...
 const getAllVerifiedUsersController = async (req, res) => {
+  const { userId } = req.params;
   try {
-    const users = await User.find({ isVerified: true });
+    const users = await User.find({ isVerified: true, _id: { $ne: userId } });
 
     if (!users) {
       return res.status(404).json({
@@ -791,7 +792,6 @@ const deleteUserController = async (req, res) => {
 // get users by date controller
 const getUsersByDateController = async (req, res) => {
   try {
-    console.log("starting...................................");
     // getting todays start time using moment js
     const startOfDay = moment().startOf("day").toDate().toISOString();
 
@@ -804,6 +804,82 @@ const getUsersByDateController = async (req, res) => {
         $gte: startOfDay,
         $lte: endOfDay,
       },
+    }).select("-password");
+
+    if (!users) {
+      return res.status(404).json({
+        success: false,
+        msg: "No users registered today",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's users found successfully",
+      users,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get today's verified users controller
+const getTodayVerifiedUsersController = async (req, res) => {
+  try {
+    // getting todays start time using moment js
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // getting todays end time using moment js
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    // querying on the basis of createdAt
+    const users = await User.find({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      isVerified: true,
+    }).select("-password");
+
+    if (!users) {
+      return res.status(404).json({
+        success: false,
+        msg: "No users registered today",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's users found successfully",
+      users,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get today's unverified users controller
+const getTodayUnverifiedUsersController = async (req, res) => {
+  try {
+    // getting todays start time using moment js
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // getting todays end time using moment js
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    // querying on the basis of createdAt
+    const users = await User.find({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      isVerified: false,
     }).select("-password");
 
     if (!users) {
@@ -1010,4 +1086,6 @@ module.exports = {
   getTodayTotalUnverifiedUsersCountController,
   getAllVerifiedUsersController,
   getAllUnverifiedUsersController,
+  getTodayVerifiedUsersController,
+  getTodayUnverifiedUsersController,
 };
