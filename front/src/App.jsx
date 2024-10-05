@@ -22,6 +22,7 @@ const App = () => {
   // getting the username from url
   const path = window.location.pathname;
   let username = path.split("/")[1];
+
   if (
     username == "register" ||
     username == "login" ||

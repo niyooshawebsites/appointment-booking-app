@@ -828,8 +828,12 @@ const getUsersByDateController = async (req, res) => {
 
 // get total users count controller
 const getTotalUsersCountController = async (req, res) => {
+  const { userId } = req.params;
+
   try {
-    const totalUsersCount = await User.countDocuments();
+    const totalUsersCount = await User.countDocuments({
+      _id: { $ne: userId },
+    });
 
     return res.status(200).json({
       success: true,
@@ -847,8 +851,11 @@ const getTotalUsersCountController = async (req, res) => {
 // get total verified users count controller
 const getTotalVerifiedUsersCountController = async (req, res) => {
   try {
+    const { userId } = req.params;
+
     const totalVerifiedUsersCount = await User.countDocuments({
       isVerified: true,
+      _id: { $ne: userId },
     });
 
     return res.status(200).json({
@@ -867,8 +874,11 @@ const getTotalVerifiedUsersCountController = async (req, res) => {
 // get total unverified users count controller
 const getTotalUnverifiedUsersCountController = async (req, res) => {
   try {
+    const { userId } = req.params;
+
     const totalUnverifiedUsersCount = await User.countDocuments({
       isVerified: false,
+      _id: { $ne: userId },
     });
 
     return res.status(200).json({

@@ -8,6 +8,7 @@ const AppointmentForm = ({ serviceProvider }) => {
   let username = path.split("/")[1];
 
   const { services } = useSelector((state) => state.service_Provider_Slice);
+
   const [custDetails, setCustDetails] = useState(() => {
     return {
       service: "",
@@ -25,7 +26,6 @@ const AppointmentForm = ({ serviceProvider }) => {
       pinCode: "",
       paymentMethod: "",
       serviceProvider,
-      spUsername: username,
     };
   });
 
@@ -45,7 +45,10 @@ const AppointmentForm = ({ serviceProvider }) => {
   const handleSubmit = async function (e) {
     e.preventDefault();
     await axios
-      .post(`http://localhost:8000/api/v1/book-appointment`, custDetails)
+      .post(
+        `http://localhost:8000/api/v1/book-appointment/${username}`,
+        custDetails
+      )
       .then((res) => {
         toast.success("Appointment booked successfully!");
       })
@@ -70,6 +73,7 @@ const AppointmentForm = ({ serviceProvider }) => {
         state: "",
         pinCode: "",
         paymentMethod: "",
+        spUsername: username || "",
       };
     });
   };

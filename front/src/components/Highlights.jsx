@@ -25,15 +25,13 @@ const Highlights = () => {
     setTotalAppointmentsCountFilterByUsername,
   ] = useState(0);
 
-  const { username, userId, role, isAdmin } = useSelector(
-    (state) => state.user_Slice
-  );
+  const { userId, role, isAdmin } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
 
-  // ADMIN API.....
+  // ADMIN APIS.....
   const getTotalNumOfUsers = async () => {
     await axios
-      .get("http://localhost:8000/api/v1/get-total-users-count", {
+      .get(`http://localhost:8000/api/v1/get-total-users-count/${userId}`, {
         withCredentials: true,
       })
       .then((res) => setTotalNumOfUsers(res.data.totalUsersCount))
@@ -42,9 +40,12 @@ const Highlights = () => {
 
   const getTotalNumOfVerifiedUsers = async () => {
     await axios
-      .get("http://localhost:8000/api/v1/get-total-verified-users-count", {
-        withCredentials: true,
-      })
+      .get(
+        `http://localhost:8000/api/v1/get-total-verified-users-count/${userId}`,
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) =>
         setTotalNumOfVerifiedUsers(res.data.totalVerifiedUsersCount)
       )
@@ -53,9 +54,12 @@ const Highlights = () => {
 
   const getTotalNumOfUnverifiedUsers = async () => {
     await axios
-      .get("http://localhost:8000/api/v1/get-total-unverified-users-count", {
-        withCredentials: true,
-      })
+      .get(
+        `http://localhost:8000/api/v1/get-total-unverified-users-count/${userId}`,
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) =>
         setTotalNumOfUnverifiedUsers(res.data.totalUnverifiedUsersCount)
       )
@@ -222,7 +226,7 @@ const Highlights = () => {
     }
   };
 
-  // USER API...
+  // USER APIS...
 
   const getTodayAppointmentsCountFilterByUsername = async () => {
     await axios

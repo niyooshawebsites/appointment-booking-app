@@ -6,6 +6,8 @@ const moment = require("moment");
 // book appointment controller
 const bookAppointmnentController = async (req, res) => {
   try {
+    const { username } = req.params;
+
     const {
       service,
       date,
@@ -22,7 +24,6 @@ const bookAppointmnentController = async (req, res) => {
       pinCode,
       paymentMethod,
       serviceProvider,
-      spUsername,
     } = req.body;
 
     // if service is not selected
@@ -145,12 +146,14 @@ const bookAppointmnentController = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ username: spUsername });
+    const user = await User.findOne({ username });
+
+    console.log(user._id);
 
     if (!user) {
       return res.status(404).json({
         success: false,
-        msg: `No service provider with the username ${spUsername} found`,
+        msg: `No service provider with the username ${username} found`,
       });
     }
 
@@ -184,15 +187,17 @@ const bookAppointmnentController = async (req, res) => {
 
     const fullName = `${firstName} ${lastName}`;
 
-    await appointmentConfirmationEmail(
-      email,
-      "Appointment confirmed",
-      fullName,
-      serviceProvider,
-      service,
-      date,
-      time
-    );
+    console.log(fullName);
+
+    // await appointmentConfirmationEmail(
+    //   email,
+    //   "Appointment confirmed",
+    //   fullName,
+    //   user.businessName,
+    //   service,
+    //   date,
+    //   time
+    // );
 
     return res.status(201).json({
       success: true,
@@ -282,23 +287,14 @@ const getTotalAppointmentsCountByUsernameController = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    console.log(userId);
-
     const filteredappointments = await Appointment.countDocuments({
       user: userId,
     });
 
-    if (totalAppointments === 0) {
-      return res.status(204).json({
-        success: false,
-        msg: "No appointments found",
-      });
-    }
-
     return res.status(200).json({
       success: true,
       msg: "Today's appointments found successfully",
-      appointments: filteredappointments.length,
+      appointments: filteredappointments,
     });
   } catch (err) {
     return res.status(500).json({
@@ -321,19 +317,10 @@ const getTodayAppointmentsCountByUsernameController = async (req, res) => {
       date: todayDate,
     });
 
-    const totalAppointments = filteredAppointments.length;
-
-    if (!filteredAppointments) {
-      return res.status(404).json({
-        success: false,
-        msg: "No appointments for today",
-      });
-    }
-
     return res.status(200).json({
       success: true,
       msg: "Today's appointments found successfully",
-      appointments: totalAppointments,
+      appointments: filteredAppointments,
     });
   } catch (err) {
     return res.status(500).json({

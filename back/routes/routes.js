@@ -77,7 +77,7 @@ router.patch(
 router.get("/get-services/:username", getAllServicesController);
 
 // book appointment route
-router.post("/book-appointment", bookAppointmnentController);
+router.post("/book-appointment/:username", bookAppointmnentController);
 
 // fetch all appointments route
 router.get(
@@ -172,17 +172,17 @@ router.get(
 router.get("/get-today-users", getUsersByDateController);
 
 // get total users count route
-router.get("/get-total-users-count", getTotalUsersCountController);
+router.get("/get-total-users-count/:userId", getTotalUsersCountController);
 
 // get total verified users count route
 router.get(
-  "/get-total-verified-users-count",
+  "/get-total-verified-users-count/:userId",
   getTotalVerifiedUsersCountController
 );
 
 // get total unverfied users count route
 router.get(
-  "/get-total-unverified-users-count",
+  "/get-total-unverified-users-count/:userId",
   getTotalUnverifiedUsersCountController
 );
 
