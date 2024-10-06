@@ -422,9 +422,15 @@ const Highlights = () => {
             <table className="min-w-full bg-white border border-gray-200 shadow-md">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 bg-gray-100 border-b">Users</th>
-                  <th className="py-2 px-4 bg-gray-100 border-b">Data</th>
-                  <th className="py-2 px-4 bg-gray-100 border-b">Action</th>
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                    Users
+                  </th>
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                    Data
+                  </th>
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -499,9 +505,15 @@ const Highlights = () => {
             <table className="min-w-full bg-white border border-gray-200 shadow-md">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 bg-gray-100 border-b">Users</th>
-                  <th className="py-2 px-4 bg-gray-100 border-b">Data</th>
-                  <th className="py-2 px-4 bg-gray-100 border-b">Action</th>
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                    Users
+                  </th>
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                    Data
+                  </th>
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -578,11 +590,15 @@ const Highlights = () => {
             <table className="min-w-full bg-white border border-gray-200 shadow-md">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 bg-gray-100 border-b">
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
                     Appointments
                   </th>
-                  <th className="py-2 px-4 bg-gray-100 border-b">Data</th>
-                  <th className="py-2 px-4 bg-gray-100 border-b">Action</th>
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                    Data
+                  </th>
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -625,11 +641,15 @@ const Highlights = () => {
             <table className="min-w-full bg-white border border-gray-200 shadow-md">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 bg-gray-100 border-b">
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
                     Appointments
                   </th>
-                  <th className="py-2 px-4 bg-gray-100 border-b">Data</th>
-                  <th className="py-2 px-4 bg-gray-100 border-b">Action</th>
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                    Data
+                  </th>
+                  <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>

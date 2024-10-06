@@ -66,26 +66,7 @@ const Sidebar = () => {
         </li>
         {role == 1 && isAdmin == true ? (
           // show only for admin
-          <li
-            className="block py-2 px-4 hover:bg-gray-700 rounded link"
-            onClick={() => {
-              getAllUsers();
-              dispatch(
-                dashboardOptionsSliceActions.toggleDashboardOptions({
-                  showHighlights: false,
-                  showAllUsers: true,
-                  showAppointments: false,
-                  showServices: false,
-                  showProfile: false,
-                  showAbout: false,
-                  showContact: false,
-                  showAppointmentDetails: false,
-                })
-              );
-            }}
-          >
-            Users
-          </li>
+          <></>
         ) : (
           // show only for users
           <>
