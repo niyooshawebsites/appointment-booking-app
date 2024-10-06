@@ -14,7 +14,6 @@ const Dashboard = () => {
   const {
     showHighlights,
     showAllUsers,
-    showAppointments,
     showServices,
     showProfile,
     showAbout,
@@ -39,17 +38,6 @@ const Dashboard = () => {
         <div className="w-full h-screen flex">
           <Sidebar />
           <UsersInfo />
-        </div>
-      </Layout>
-    );
-  }
-
-  if (showAppointments) {
-    return (
-      <Layout>
-        <div className="w-full h-screen flex">
-          <Sidebar />
-          <Appointments />
         </div>
       </Layout>
     );

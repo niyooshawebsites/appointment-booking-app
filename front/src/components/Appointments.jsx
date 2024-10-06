@@ -1,32 +1,19 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 
 const Appointments = () => {
-  const { username } = useSelector((state) => state.user_Slice);
-  const [allApppointments, setAllAppointments] = useState(() => []);
+  const { allAppointments } = useSelector(
+    (state) => state.appointments_Data_Slice
+  );
   const [searchAppointments, setSearchAppointments] = useState(() => "");
   const dispatch = useDispatch();
 
   const filterAppointments = (e) => {
     setSearchAppointments(() => e.target.value.toLowerCase());
   };
-
-  const fetchAllAppointments = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/get-all-appointments/${username}`, {
-        withCredentials: true,
-      })
-      .then((res) => setAllAppointments(res.data.data))
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    fetchAllAppointments();
-  }, []);
 
   return (
     <div className="mx-auto">
@@ -56,7 +43,7 @@ const Appointments = () => {
           </tr>
         </thead>
         <tbody>
-          {allApppointments
+          {allAppointments
             .filter(
               (appointment) =>
                 appointment.firstName

@@ -251,13 +251,13 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
 
     const filteredAppointments = await Appointment.find({
       date: todayDate,
-    }).populate("User");
+    }).populate("user");
 
     console.log(filteredAppointments);
 
     // Filter appointments by username
     const appointments = filteredAppointments.filter(
-      (appointment) => appointment.user.toString() == userId
+      (appointment) => appointment.user == userId
     );
 
     console.log(appointments);
@@ -278,6 +278,7 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };

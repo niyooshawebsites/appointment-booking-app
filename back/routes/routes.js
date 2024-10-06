@@ -172,15 +172,12 @@ router.get(
 
 // today's users route
 router.get("/get-today-users", getUsersByDateController);
-// ------------------------------------------------------------------------------------------------------
 
 // today's verified users route
 router.get("/get-today-verified-users", getTodayVerifiedUsersController);
 
 // today's unverified users route
 router.get("/get-today-unverified-users", getTodayUnverifiedUsersController);
-
-// -------------------------------------------------------------------------------------------------------
 
 // get total users count route
 router.get("/get-total-users-count/:userId", getTotalUsersCountController);
@@ -202,8 +199,6 @@ router.get(
   "/get-total-appointments-count",
   getTotalAppointmentsCountController
 );
-
-// getTotalAppointmentsCountByUsernameController
 
 // get total appointments count - filter by username route
 router.get(

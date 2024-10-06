@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
-import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
+import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -368,9 +368,9 @@ const Highlights = () => {
           }
         )
         .then((res) => {
-          console.log(res.data.users);
+          console.log(res.data.appointments);
           dispatch(
-            appointmentSliceActions.allAppointments({
+            appointmentsDataSliceActions.getAppointmentsData({
               allAppointments: res.data.appointments,
             })
           );
@@ -404,9 +404,9 @@ const Highlights = () => {
           }
         )
         .then((res) => {
-          console.log(res.data.users);
+          console.log(res.data.appointments);
           dispatch(
-            appointmentSliceActions.getAppointmentsData({
+            appointmentsDataSliceActions.getAppointmentsData({
               allAppointments: res.data.appointments,
             })
           );
