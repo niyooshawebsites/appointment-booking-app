@@ -81,9 +81,9 @@ router.get("/get-services/:username", getAllServicesController);
 // book appointment route
 router.post("/book-appointment/:username", bookAppointmnentController);
 
-// fetch all appointments route
+// fetch all appointments by userId route
 router.get(
-  "/get-all-appointments/:username",
+  "/get-all-appointments-by-userId/:userId",
   auth,
   isServiceProvider,
   getAllAppointmentsController
@@ -164,9 +164,9 @@ router.get(
 // delete user route
 router.delete("/delete-user/:id", auth, isAdmin, deleteUserController);
 
-// today's appointment by username route
+// today's appointment by userId route
 router.get(
-  "/get-today-appointments-by-username/:userId",
+  "/get-today-appointments-by-userId/:userId",
   getTodayAppointmentsByUsernameController
 );
 

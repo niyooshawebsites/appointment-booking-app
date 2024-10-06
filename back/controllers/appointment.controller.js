@@ -211,8 +211,8 @@ const bookAppointmnentController = async (req, res) => {
 // get all Apponitments controller
 const getAllAppointmentsController = async (req, res) => {
   try {
-    const { username } = req.body;
-    const appAppointments = await Appointment.find({ username })
+    const { userId } = req.params;
+    const appAppointments = await Appointment.find({ user: userId })
       .limit(10)
       .sort({ date: -1, time: -1 });
 
@@ -247,16 +247,20 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
     const { userId } = req.params;
 
     // getting today's date
-    const todayDate = moment(Date.now()).format("DD-MM-YYYY");
+    const todayDate = moment(Date.now()).format("YYYY-MM-DD");
 
     const filteredAppointments = await Appointment.find({
       date: todayDate,
     }).populate("User");
 
+    console.log(filteredAppointments);
+
     // Filter appointments by username
     const appointments = filteredAppointments.filter(
-      (appointment) => appointment.user._id === userId
+      (appointment) => appointment.user.toString() == userId
     );
+
+    console.log(appointments);
 
     if (!appointments) {
       return res.status(204).json({

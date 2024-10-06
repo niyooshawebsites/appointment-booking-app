@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
+import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -356,12 +357,12 @@ const Highlights = () => {
       .catch((err) => console.log(err));
   };
 
-  // get-today-appointments-by-username
-  const getTodaysAppointments = async () => {
+  // get-today-appointments-by-userId
+  const getAndPassAllAppointmentsByUserId = async () => {
     try {
       await axios
         .get(
-          `http://localhost:8000/api/v1/get-today-appointments-by-username/${userId}`,
+          `http://localhost:8000/api/v1/get-all-appointments-by-userId/${userId}`,
           {
             withCredentials: true,
           }
@@ -369,8 +370,44 @@ const Highlights = () => {
         .then((res) => {
           console.log(res.data.users);
           dispatch(
-            usersDataSliceActions.getUsersData({
-              allUsers: res.data.users,
+            appointmentSliceActions.allAppointments({
+              allAppointments: res.data.appointments,
+            })
+          );
+
+          dispatch(
+            dashboardOptionsSliceActions.toggleDashboardOptions({
+              showHighlights: false,
+              showAllUsers: false,
+              showAppointments: true,
+              showServices: false,
+              showProfile: false,
+              showAbout: false,
+              showContact: false,
+              showAppointmentDetails: false,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getAndPassTodaysAppointmentsByUserId = async () => {
+    try {
+      await axios
+        .get(
+          `http://localhost:8000/api/v1/get-today-appointments-by-userId/${userId}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          console.log(res.data.users);
+          dispatch(
+            appointmentSliceActions.getAppointmentsData({
+              allAppointments: res.data.appointments,
             })
           );
 
@@ -612,20 +649,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      onClick={() => {
-                        dispatch(
-                          dashboardOptionsSliceActions.toggleDashboardOptions({
-                            showHighlights: false,
-                            showAllUsers: false,
-                            showAppointments: true,
-                            showServices: false,
-                            showProfile: false,
-                            showAbout: false,
-                            showContact: false,
-                            showAppointmentDetails: false,
-                          })
-                        );
-                      }}
+                      onClick={getAndPassAllAppointmentsByUserId()}
                     >
                       View
                     </button>
@@ -663,7 +687,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      onClick={() => getTodaysAppointments()}
+                      onClick={() => getAndPassTodaysAppointmentsByUserId()}
                     >
                       View
                     </button>
