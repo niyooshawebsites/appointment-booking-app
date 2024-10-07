@@ -17,6 +17,23 @@ const AppointmentDetails = () => {
     pinCode,
     paymentMethod,
   } = useSelector((state) => state.appointment_Slice);
+
+  console.log(
+    service,
+    date,
+    time,
+    firstName,
+    lastName,
+    email,
+    contactNo,
+    age,
+    gender,
+    address,
+    city,
+    state,
+    pinCode,
+    paymentMethod
+  );
   return (
     <div className="w-8/12 mx-auto">
       <div className="space-y-1">

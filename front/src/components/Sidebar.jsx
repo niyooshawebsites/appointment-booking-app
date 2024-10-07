@@ -8,38 +8,6 @@ const Sidebar = () => {
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
 
-  // const getAllUsers = async () => {
-  //   try {
-  //     await axios
-  //       .get("http://localhost:8000/api/v1/get-all-users", {
-  //         withCredentials: true,
-  //       })
-  //       .then((res) => {
-  //         dispatch(
-  //           usersDataSliceActions.getUsersData({
-  //             allUsers: res.data.users,
-  //           })
-  //         );
-
-  //         dispatch(
-  //           dashboardOptionsSliceActions.toggleDashboardOptions({
-  //             showHighlights: false,
-  //             showAllUsers: true,
-  //             showAppointments: false,
-  //             showServices: false,
-  //             showProfile: false,
-  //             showAbout: false,
-  //             showContact: false,
-  //             showAppointmentDetails: false,
-  //           })
-  //         );
-  //       })
-  //       .catch((err) => console.log(err));
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
   return (
     <div className="w-2/12 bg-gray-800 text-white h-full p-4">
       <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>

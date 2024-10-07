@@ -44,6 +44,7 @@ const {
   getTodayTotalAppointmentsCountController,
   getTodayAppointmentsCountByUsernameController,
   getTotalAppointmentsCountByUsernameController,
+  getAParticaularApponitmentDetails,
 } = require("../controllers/appointment.controller");
 
 const isServiceProvider = require("../middlewares/isServiceProvider.middleware");
@@ -231,6 +232,13 @@ router.get(
 router.get(
   "/get-today-total-appointments-count",
   getTodayTotalAppointmentsCountController
+);
+
+router.get(
+  "/get-a-particular-appointment-details/:appointmentId",
+  auth,
+  isServiceProvider,
+  getAParticaularApponitmentDetails
 );
 
 module.exports = router;

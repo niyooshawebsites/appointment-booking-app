@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
+import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
+import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 
 const DisplayInfo = () => {
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
@@ -38,6 +40,55 @@ const DisplayInfo = () => {
 
   const filterAppointments = (e) => {
     setSearchAppointment(() => e.target.value);
+  };
+
+  // get a particular appointment details
+  const getAParticularAppointmentDetails = async (appointmentId) => {
+    await axios
+      .get(
+        `http://localhost:8000/api/v1/get-a-particular-appointment-details/${appointmentId}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res.data.appointment);
+        dispatch(
+          appointmentSliceActions.appointmentDetails({
+            service: res.data.appointment.service,
+            date: res.data.appointment.date,
+            time: res.data.appointment.time,
+            firstName: res.data.appointment.firstName,
+            lastName: res.data.appointment.lastName,
+            email: res.data.appointment.email,
+            contactNo: res.data.appointment.contactNo,
+            age: res.data.appointment.age,
+            gender: res.data.appointment.gender,
+            address: res.data.appointment.address,
+            city: res.data.appointment.city,
+            state: res.data.appointment.state,
+            pinCode: res.data.appointment.pinCode,
+            paymentMethod: res.data.appointment.paymentMethod,
+          })
+        );
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleDetails = async (appointmentId) => {
+    await getAParticularAppointmentDetails(appointmentId);
+
+    dispatch(
+      dashboardOptionsSliceActions.toggleDashboardOptions({
+        showHighlights: false,
+        showInfo: false,
+        showServices: false,
+        showProfile: false,
+        showAbout: false,
+        showContact: false,
+        showAppointmentDetails: true,
+      })
+    );
   };
 
   return (
@@ -137,6 +188,7 @@ const DisplayInfo = () => {
                 <th className="py-2 px-4 text-left text-gray-600">#</th>
                 <th className="py-2 px-4 text-left text-gray-600">Name</th>
                 <th className="py-2 px-4 text-left text-gray-600">Age</th>
+                <th className="py-2 px-4 text-left text-gray-600">Contact</th>
                 <th className="py-2 px-4 text-left text-gray-600">Service</th>
                 <th className="py-2 px-4 text-left text-gray-600">Date</th>
                 <th className="py-2 px-4 text-left text-gray-600">Time</th>
@@ -167,6 +219,9 @@ const DisplayInfo = () => {
                         {appointment.age}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
+                        {appointment.contactNo}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
                         {appointment.service}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
@@ -182,7 +237,12 @@ const DisplayInfo = () => {
                         {appointment.paymentMethod}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
-                        <Link>Details</Link>
+                        <Link
+                          className="text-blue-500"
+                          onClick={() => handleDetails(appointment._id)}
+                        >
+                          Details
+                        </Link>
                       </td>
                     </tr>
                   );

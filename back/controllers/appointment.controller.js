@@ -379,6 +379,34 @@ const getTodayTotalAppointmentsCountController = async (req, res) => {
   }
 };
 
+// get a particular apponitment
+const getAParticaularApponitmentDetails = async (req, res) => {
+  try {
+    const { appointmentId } = req.params;
+
+    const appointment = await Appointment.findOne({ _id: appointmentId });
+
+    if (!appointment) {
+      return res.status(204).json({
+        success: false,
+        msg: "No such appointment found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Appointment found successfully",
+      appointment,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+      err: err.message,
+    });
+  }
+};
+
 module.exports = {
   bookAppointmnentController,
   getAllAppointmentsController,
@@ -387,4 +415,5 @@ module.exports = {
   getTodayTotalAppointmentsCountController,
   getTodayAppointmentsCountByUsernameController,
   getTotalAppointmentsCountByUsernameController,
+  getAParticaularApponitmentDetails,
 };
