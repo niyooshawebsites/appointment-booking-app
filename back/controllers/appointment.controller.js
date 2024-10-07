@@ -212,21 +212,21 @@ const bookAppointmnentController = async (req, res) => {
 const getAllAppointmentsController = async (req, res) => {
   try {
     const { userId } = req.params;
-    const appAppointments = await Appointment.find({ user: userId })
+    const appointments = await Appointment.find({ user: userId })
       .limit(10)
       .sort({ date: -1, time: -1 });
 
     // fetching successful
-    if (appAppointments) {
+    if (Appointments) {
       return res.status(200).json({
         success: true,
         msg: "Appointments fetched successfully",
-        data: appAppointments,
+        appointments,
       });
     }
 
     // fetching unsuccessful
-    if (appAppointments) {
+    if (!appointments) {
       return res.status(409).json({
         success: false,
         msg: "Appointments fetching falied",

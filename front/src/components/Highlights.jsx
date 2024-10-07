@@ -362,7 +362,6 @@ const Highlights = () => {
           }
         )
         .then((res) => {
-          // console.log(res.data.appointments);
           dispatch(
             appointmentsDataSliceActions.getAppointmentsData({
               allAppointments: res.data.appointments,
@@ -372,8 +371,7 @@ const Highlights = () => {
           dispatch(
             dashboardOptionsSliceActions.toggleDashboardOptions({
               showHighlights: false,
-              showAllUsers: false,
-              showAppointments: true,
+              showInfo: true,
               showServices: false,
               showProfile: false,
               showAbout: false,
@@ -398,7 +396,6 @@ const Highlights = () => {
           }
         )
         .then((res) => {
-          console.log(res.data.appointments);
           dispatch(
             appointmentsDataSliceActions.getAppointmentsData({
               allAppointments: res.data.appointments,
@@ -642,7 +639,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      // onClick={getAndPassAllAppointmentsByUserId()}
+                      onClick={getAndPassAllAppointmentsByUserId()}
                     >
                       View
                     </button>
@@ -680,7 +677,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      // onClick={() => getAndPassTodaysAppointmentsByUserId()}
+                      onClick={() => getAndPassTodaysAppointmentsByUserId()}
                     >
                       View
                     </button>
