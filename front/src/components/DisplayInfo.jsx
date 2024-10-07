@@ -6,7 +6,7 @@ import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 
-const UsersInfo = () => {
+const DisplayInfo = () => {
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
   const { allUsers } = useSelector((state) => state.users_Data_Slice);
   const { allAppointments } = useSelector(
@@ -195,4 +195,4 @@ const UsersInfo = () => {
   );
 };
 
-export default UsersInfo;
+export default DisplayInfo;

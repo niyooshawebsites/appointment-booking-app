@@ -1,44 +1,44 @@
 import { useSelector, useDispatch } from "react-redux";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
-import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
-import axios from "axios";
+// import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
+// import axios from "axios";
 
 /* eslint-disable react/prop-types */
 const Sidebar = () => {
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
 
-  const getAllUsers = async () => {
-    try {
-      await axios
-        .get("http://localhost:8000/api/v1/get-all-users", {
-          withCredentials: true,
-        })
-        .then((res) => {
-          dispatch(
-            usersDataSliceActions.getUsersData({
-              allUsers: res.data.users,
-            })
-          );
+  // const getAllUsers = async () => {
+  //   try {
+  //     await axios
+  //       .get("http://localhost:8000/api/v1/get-all-users", {
+  //         withCredentials: true,
+  //       })
+  //       .then((res) => {
+  //         dispatch(
+  //           usersDataSliceActions.getUsersData({
+  //             allUsers: res.data.users,
+  //           })
+  //         );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showAllUsers: true,
-              showAppointments: false,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //         dispatch(
+  //           dashboardOptionsSliceActions.toggleDashboardOptions({
+  //             showHighlights: false,
+  //             showAllUsers: true,
+  //             showAppointments: false,
+  //             showServices: false,
+  //             showProfile: false,
+  //             showAbout: false,
+  //             showContact: false,
+  //             showAppointmentDetails: false,
+  //           })
+  //         );
+  //       })
+  //       .catch((err) => console.log(err));
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div className="w-2/12 bg-gray-800 text-white h-full p-4">
@@ -51,8 +51,7 @@ const Sidebar = () => {
             dispatch(
               dashboardOptionsSliceActions.toggleDashboardOptions({
                 showHighlights: true,
-                showAllUsers: false,
-                showAppointments: false,
+                showInfo: false,
                 showServices: false,
                 showProfile: false,
                 showAbout: false,
@@ -76,27 +75,7 @@ const Sidebar = () => {
                 dispatch(
                   dashboardOptionsSliceActions.toggleDashboardOptions({
                     showHighlights: false,
-                    showAllUsers: false,
-                    showAppointments: true,
-                    showServices: false,
-                    showProfile: false,
-                    showAbout: false,
-                    showContact: false,
-                    showAppointmentDetails: false,
-                  })
-                );
-              }}
-            >
-              Appointments
-            </li>
-            <li
-              className="block py-2 px-4 hover:bg-gray-700 rounded link"
-              onClick={() => {
-                dispatch(
-                  dashboardOptionsSliceActions.toggleDashboardOptions({
-                    showHighlights: false,
-                    showAllUsers: false,
-                    showAppointments: false,
+                    showInfo: false,
                     showServices: true,
                     showProfile: false,
                     showAbout: false,
@@ -114,8 +93,7 @@ const Sidebar = () => {
                 dispatch(
                   dashboardOptionsSliceActions.toggleDashboardOptions({
                     showHighlights: false,
-                    showAllUsers: false,
-                    showAppointments: false,
+                    showInfo: false,
                     showServices: false,
                     showProfile: false,
                     showAbout: true,
@@ -133,8 +111,7 @@ const Sidebar = () => {
                 dispatch(
                   dashboardOptionsSliceActions.toggleDashboardOptions({
                     showHighlights: false,
-                    showAllUsers: false,
-                    showAppointments: false,
+                    showInfo: false,
                     showServices: false,
                     showProfile: false,
                     showAbout: false,
@@ -155,8 +132,7 @@ const Sidebar = () => {
             dispatch(
               dashboardOptionsSliceActions.toggleDashboardOptions({
                 showHighlights: false,
-                showAllUsers: false,
-                showAppointments: false,
+                showInfo: false,
                 showServices: false,
                 showProfile: true,
                 showAbout: false,

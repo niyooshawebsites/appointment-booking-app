@@ -1,4 +1,3 @@
-import Appointments from "../components/Appointments";
 import AppointmentDetails from "../components/AppointmentDetails";
 import Profile from "../components/Profile";
 import Sidebar from "../components/Sidebar";
@@ -7,13 +6,13 @@ import AboutForm from "../components/AboutForm";
 import ContactForm from "../components/ContactForm";
 import ServiceForm from "../components/ServiceForm";
 import Highlights from "../components/Highlights";
-import UsersInfo from "../components/UsersInfo";
+import DisplayInfo from "../components/DisplayInfo";
 import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const {
     showHighlights,
-    showAllUsers,
+    showInfo,
     showServices,
     showProfile,
     showAbout,
@@ -32,12 +31,12 @@ const Dashboard = () => {
     );
   }
 
-  if (showAllUsers) {
+  if (showInfo) {
     return (
       <Layout>
         <div className="w-full h-screen flex">
           <Sidebar />
-          <UsersInfo />
+          <DisplayInfo />
         </div>
       </Layout>
     );

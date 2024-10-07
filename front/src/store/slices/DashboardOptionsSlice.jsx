@@ -4,8 +4,7 @@ const dashboardOptionsSlice = createSlice({
   name: "dashboard_Options_Slice",
   initialState: {
     showHighlights: true,
-    showAllUsers: false,
-    showAppointments: false,
+    showInfo: false,
     showServices: false,
     showProfile: false,
     showAbout: false,
@@ -16,8 +15,7 @@ const dashboardOptionsSlice = createSlice({
   reducers: {
     toggleDashboardOptions: (state, action) => {
       state.showHighlights = action.payload.showHighlights;
-      state.showAllUsers = action.payload.showAllUsers;
-      state.showAppointments = action.payload.showAppointments;
+      state.showInfo = action.payload.showInfo;
       state.showServices = action.payload.showServices;
       state.showProfile = action.payload.showProfile;
       state.showAbout = action.payload.showAbout;
