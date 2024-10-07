@@ -50,6 +50,7 @@ const AppointmentDetails = () => {
                   value={service}
                   readOnly
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                  disabled
                 />
               </div>
             </div>
@@ -59,8 +60,9 @@ const AppointmentDetails = () => {
                 <label>Date</label>
                 <input
                   type="text"
-                  value={date}
+                  value={date.split("-").reverse().join("-")}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -73,6 +75,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={time}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -93,6 +96,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={firstName}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -105,6 +109,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={lastName}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -117,6 +122,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={email}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                   required
                 />
@@ -130,6 +136,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={contactNo}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -142,6 +149,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={age}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -154,6 +162,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={gender}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -166,6 +175,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={city}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -178,6 +188,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={state}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -190,6 +201,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={pinCode}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -202,6 +214,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={address}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -220,6 +233,7 @@ const AppointmentDetails = () => {
                   type="text"
                   value={paymentMethod}
                   readOnly
+                  disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>

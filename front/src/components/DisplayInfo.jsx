@@ -225,7 +225,7 @@ const DisplayInfo = () => {
                         {appointment.service}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
-                        {appointment.date}
+                        {appointment.date.split("-").reverse().join("-")}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
                         {appointment.time}
