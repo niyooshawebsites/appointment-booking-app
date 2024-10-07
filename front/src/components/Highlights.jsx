@@ -471,7 +471,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      onClick={() => getAndPassAllUsers()}
+                      onClick={getAndPassAllUsers}
                     >
                       View
                     </button>
@@ -487,7 +487,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      onClick={() => getAndPassAllVerifiedUsers()}
+                      onClick={getAndPassAllVerifiedUsers}
                     >
                       View
                     </button>
@@ -503,7 +503,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      onClick={() => getAndPassAllUnverifiedUsers()}
+                      onClick={getAndPassAllUnverifiedUsers}
                     >
                       View
                     </button>
@@ -554,7 +554,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      onClick={() => getAndPassTodayUsers()}
+                      onClick={getAndPassTodayUsers}
                     >
                       View
                     </button>
@@ -570,7 +570,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      onClick={() => getAndPassTodayVerifiedUsers()}
+                      onClick={getAndPassTodayVerifiedUsers}
                     >
                       View
                     </button>
@@ -586,7 +586,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      onClick={() => getAndPassTodayUnverifiedUsers()}
+                      onClick={getAndPassTodayUnverifiedUsers}
                     >
                       View
                     </button>
@@ -639,7 +639,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      onClick={getAndPassAllAppointmentsByUserId()}
+                      onClick={getAndPassAllAppointmentsByUserId}
                     >
                       View
                     </button>
@@ -677,7 +677,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <button
                       className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                      onClick={() => getAndPassTodaysAppointmentsByUserId()}
+                      onClick={getAndPassTodaysAppointmentsByUserId}
                     >
                       View
                     </button>

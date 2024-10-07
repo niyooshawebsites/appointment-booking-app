@@ -216,20 +216,22 @@ const getAllAppointmentsController = async (req, res) => {
       .limit(10)
       .sort({ date: -1, time: -1 });
 
-    // fetching successful
-    if (Appointments) {
-      return res.status(200).json({
-        success: true,
-        msg: "Appointments fetched successfully",
-        appointments,
-      });
-    }
+    console.log(appointments);
 
     // fetching unsuccessful
     if (!appointments) {
       return res.status(409).json({
         success: false,
         msg: "Appointments fetching falied",
+      });
+    }
+
+    // fetching successful
+    if (appointments) {
+      return res.status(200).json({
+        success: true,
+        msg: "Appointments fetched successfully",
+        appointments,
       });
     }
   } catch (err) {

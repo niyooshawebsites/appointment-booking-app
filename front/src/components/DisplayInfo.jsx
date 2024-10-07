@@ -179,7 +179,7 @@ const DisplayInfo = () => {
                         {appointment.gender}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
-                        {appointment.payment}
+                        {appointment.paymentMethod}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
                         <Link>Details</Link>
