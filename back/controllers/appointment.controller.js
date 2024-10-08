@@ -208,7 +208,7 @@ const bookAppointmnentController = async (req, res) => {
   }
 };
 
-// get all Apponitments controller
+// get all Apponitments controller filer by userid for a specific service provider
 const getAllAppointmentsController = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -243,7 +243,40 @@ const getAllAppointmentsController = async (req, res) => {
   }
 };
 
-// get today's appointments filter by username
+// get all Apponitments controller filer by userid for a specific client
+const getAllAppointmentsControllerForClient = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const appointments = await Appointment.find({ _id: userId })
+      .limit(10)
+      .sort({ date: -1, time: -1 });
+
+    // fetching unsuccessful
+    if (!appointments) {
+      return res.status(409).json({
+        success: false,
+        msg: "Appointments fetching falied",
+      });
+    }
+
+    // fetching successful
+    if (appointments) {
+      return res.status(200).json({
+        success: true,
+        msg: "Appointments fetched successfully",
+        appointments,
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get today's appointments filter by userId - for service provider
 const getTodayAppointmentsByUsernameController = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -285,7 +318,7 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
   }
 };
 
-// get total appointments count filter by username
+// get total appointments count filter by userId - for service provider
 const getTotalAppointmentsCountByUsernameController = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -307,7 +340,32 @@ const getTotalAppointmentsCountByUsernameController = async (req, res) => {
   }
 };
 
-// get today's appointment count filter by username
+// get total appointments count filter by userId - for client
+const getTotalAppointmentsCountByUserForClientIdController = async (
+  req,
+  res
+) => {
+  try {
+    const { userId } = req.params;
+
+    const filteredappointments = await Appointment.countDocuments({
+      _id: userId,
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's appointments found successfully",
+      appointments: filteredappointments,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get today's appointment count filter by username - for service provider
 const getTodayAppointmentsCountByUsernameController = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -416,4 +474,6 @@ module.exports = {
   getTodayAppointmentsCountByUsernameController,
   getTotalAppointmentsCountByUsernameController,
   getAParticaularApponitmentDetails,
+  getTotalAppointmentsCountByUserForClientIdController,
+  getAllAppointmentsControllerForClient,
 };

@@ -196,7 +196,7 @@ const Sidebar = () => {
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
-                  showHighlights: true,
+                  showHighlights: false,
                   showInfo: false,
                   showServices: false,
                   showProfile: false,

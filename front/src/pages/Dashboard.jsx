@@ -49,7 +49,7 @@ const Dashboard = () => {
       <Layout>
         <div className="w-full h-screen flex">
           <Sidebar />
-          <AppointmentForm />
+          <AppointmentForm customerDashboard={true} />
         </div>
       </Layout>
     );
