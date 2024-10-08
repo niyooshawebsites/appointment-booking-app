@@ -80,260 +80,84 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
 
   const currentDate = new Date().toISOString().split("T")[0];
 
+  // if the client is logged in
   if (customerDashboard) {
     return (
-      <form
-        className="max-w-4xl mx-auto my-4 h-[600px] p-6 border rounded-lg shadow-md bg-white"
-        onSubmit={handleSubmit}
-      >
-        <div className="space-y-2 h-full flex flex-col justify-start">
-          {/* Appointment Details */}
-          <div className="border-b pb-4">
-            <h2 className="text-lg font-semibold mb-2">Appointment Details</h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div>
-                <select
-                  name="service"
-                  id="service"
-                  value={custDetails.service}
-                  onChange={handleChange}
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option value="">Select service</option>
-                  {services.map((service) => (
-                    <option value={service.serviceName} key={service.serviceId}>
-                      {`${service.serviceName} - Rs${service.fee}`}
-                    </option>
-                  ))}
-                </select>
-              </div>
+      <>
+        <div className="mx-auto">
+          <label
+            htmlFor="specialization"
+            className="block text-sm font-medium text-gray-700 mt-3"
+          >
+            Select Specialization
+          </label>
+          <select
+            name="specialization"
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          >
+            <option value="Cardiologist">Cardiologist</option>
+            <option value="Dentist">Dentist</option>
+            <option value="Dermatologist">Dermatologist</option>
+            <option value="Endocrinologist">Endocrinologist</option>
+            <option value="ENT Specialist">ENT Specialist</option>
+            <option value="Gastroenterologist">Gastroenterologist</option>
+            <option value="General Physician">General Physician</option>
+            <option value="Nephrologist">Nephrologist</option>
+            <option value="Oncologist">Oncologist</option>
+            <option value="Ophthalmologist">Ophthalmologist</option>
+            <option value="Orthopedist">Orthopedist</option>
+            <option value="Pediatrician">Pediatrician</option>
+            <option value="Psychiatrist">Psychiatrist</option>
+            <option value="Psychologist">Psychologist</option>
+            <option value="Pulmonologist">Pulmonologist</option>
+            <option value="Radiologist">Radiologist</option>
+            <option value="Rheumatologist">Rheumatologist</option>
+            <option value="Urologist">Urologist</option>
+          </select>
 
-              <div>
-                <input
-                  id="date"
-                  name="date"
-                  type="date"
-                  min={currentDate}
-                  autoComplete="on"
-                  value={custDetails.date}
-                  onChange={handleChange}
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-
-              <div>
-                <select
-                  name="time"
-                  id="time"
-                  value={custDetails.time}
-                  onChange={handleChange}
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option value="">Select time slot</option>
-                  <option value="10 AM">10 AM</option>
-                  <option value="11 AM">11 AM</option>
-                  <option value="12 PM">12 PM</option>
-                  <option value="01 PM">01 PM</option>
-                  <option value="02 PM">02 PM</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Personal Details */}
-          <div className="border-b pb-4">
-            <h2 className="text-lg font-semibold mb-2">Personal Details</h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div>
-                <input
-                  id="firstName"
-                  name="firstName"
-                  type="text"
-                  autoComplete="on"
-                  value={custDetails.firstName}
-                  onChange={handleChange}
-                  placeholder="First name"
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-
-              <div>
-                <input
-                  id="lastName"
-                  name="lastName"
-                  type="text"
-                  autoComplete="on"
-                  value={custDetails.lastName}
-                  onChange={handleChange}
-                  placeholder="Last name"
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-
-              <div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="on"
-                  value={custDetails.email}
-                  onChange={handleChange}
-                  placeholder="Email"
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-
-              <div>
-                <input
-                  id="contactNo"
-                  name="contactNo"
-                  type="number"
-                  minLength={10}
-                  maxLength={10}
-                  autoComplete="on"
-                  value={custDetails.contactNo}
-                  onChange={handleChange}
-                  placeholder="Contact number"
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-
-              <div>
-                <input
-                  id="age"
-                  name="age"
-                  type="number"
-                  min={1}
-                  autoComplete="on"
-                  value={custDetails.age}
-                  onChange={handleChange}
-                  placeholder="Age"
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-
-              <div>
-                <select
-                  name="gender"
-                  id="gender"
-                  value={custDetails.gender}
-                  onChange={handleChange}
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option value="">Select gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Others">Others</option>
-                </select>
-              </div>
-
-              <div className="col-span-full">
-                <input
-                  id="address"
-                  name="address"
-                  type="text"
-                  autoComplete="on"
-                  value={custDetails.address}
-                  onChange={handleChange}
-                  placeholder="Address"
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-
-              <div>
-                <input
-                  id="city"
-                  name="city"
-                  type="text"
-                  autoComplete="on"
-                  value={custDetails.city}
-                  onChange={handleChange}
-                  placeholder="City"
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-
-              <div>
-                <input
-                  id="state"
-                  name="state"
-                  type="text"
-                  autoComplete="on"
-                  value={custDetails.state}
-                  onChange={handleChange}
-                  placeholder="State"
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-
-              <div>
-                <input
-                  id="pinCode"
-                  name="pinCode"
-                  type="number"
-                  minLength={6}
-                  maxLength={6}
-                  autoComplete="on"
-                  value={custDetails.pinCode}
-                  onChange={handleChange}
-                  placeholder="Pin code"
-                  required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Payment Details */}
-          <div className="border-b pb-4">
-            <h2 className="text-lg font-semibold mb-2">Payment Details</h2>
-            <div>
-              <select
-                name="paymentMethod"
-                id="paymentMethod"
-                value={custDetails.paymentMethod}
-                onChange={handleChange}
-                required
-                className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-              >
-                <option value="">Select payment method</option>
-                <option value="Pay locally">Pay locally</option>
-                <option value="Pay online">Pay online</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="mt-2 flex justify-end gap-x-4">
-            <button
-              type="button"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              {payOnline ? "Pay & Book Appointment" : "Book Appointment"}
-            </button>
-          </div>
+          <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
+            <thead className="bg-gray-200 border-b border-gray-300">
+              <tr>
+                <th className="py-2 px-4 text-left text-gray-600">#</th>
+                <th className="py-2 px-4 text-left text-gray-600">DR. Name</th>
+                <th className="py-2 px-4 text-left text-gray-600">
+                  Clinic Name
+                </th>
+                <th className="py-2 px-4 text-left text-gray-600">Contact</th>
+                <th className="py-2 px-4 text-left text-gray-600">Email</th>
+                <th className="py-2 px-4 text-left text-gray-600">Webiste</th>
+                <th className="py-2 px-4 text-left text-gray-600">Book</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="py-2 px-4 text-left text-gray-600">#</td>
+                <td className="py-2 px-4 text-left text-gray-600">DR. Name</td>
+                <td className="py-2 px-4 text-left text-gray-600">
+                  Clinic Name
+                </td>
+                <td className="py-2 px-4 text-left text-gray-600">Contact</td>
+                <td className="py-2 px-4 text-left text-gray-600">Email</td>
+                <td className="py-2 px-4 text-left text-gray-600">
+                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                    Website
+                  </button>
+                </td>
+                <td className="py-2 px-4 text-left text-gray-600">
+                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                    Book
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </form>
+      </>
     );
   }
 
+  // if the client is not logged in
   if (!customerDashboard) {
     return (
       <form className="w-9/12 mx-auto mb-10" onSubmit={handleSubmit}>

@@ -246,8 +246,8 @@ const getAllAppointmentsController = async (req, res) => {
 // get all Apponitments controller filer by userid for a specific client
 const getAllAppointmentsControllerForClient = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const appointments = await Appointment.find({ _id: userId })
+    const { email } = req.params;
+    const appointments = await Appointment.find({ email })
       .limit(10)
       .sort({ date: -1, time: -1 });
 
@@ -346,10 +346,10 @@ const getTotalAppointmentsCountByUserForClientIdController = async (
   res
 ) => {
   try {
-    const { userId } = req.params;
+    const { email } = req.params;
 
     const filteredappointments = await Appointment.countDocuments({
-      _id: userId,
+      email: email,
     });
 
     return res.status(200).json({

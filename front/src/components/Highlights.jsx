@@ -28,7 +28,9 @@ const Highlights = () => {
   const [totalNumOfAppointmentsForClient, setTotalNumOfAppointmentsForClient] =
     useState(0);
 
-  const { userId, role, isAdmin } = useSelector((state) => state.user_Slice);
+  const { email, userId, role, isAdmin } = useSelector(
+    (state) => state.user_Slice
+  );
   const dispatch = useDispatch();
 
   // ADMIN APIS.....
@@ -435,7 +437,7 @@ const Highlights = () => {
   const getTotalAppointmentssCountByUserIdForClient = async () => {
     await axios
       .get(
-        `http://localhost:8000/api/v1/get-total-appointments-count-by-userId-for-client/${userId}`,
+        `http://localhost:8000/api/v1/get-total-appointments-count-by-userId-for-client/${email}`,
         {
           withCredentials: true,
         }
@@ -448,7 +450,7 @@ const Highlights = () => {
     try {
       await axios
         .get(
-          `http://localhost:8000/api/v1/get-all-appointments-for-client/${userId}`,
+          `http://localhost:8000/api/v1/get-all-appointments-for-client/${email}`,
           {
             withCredentials: true,
           }

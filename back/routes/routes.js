@@ -284,14 +284,14 @@ router.get(
 
 // get total appointments count - filter by userId route - for client
 router.get(
-  "/get-total-appointments-count-by-userId-for-client/:userId",
+  "/get-total-appointments-count-by-userId-for-client/:email",
   auth,
   getTotalAppointmentsCountByUserForClientIdController
 );
 
 // get all appointments - filter by userId for a particular client
 router.get(
-  "/get-all-appointments-for-client/:userId",
+  "/get-all-appointments-for-client/:email",
   auth,
   getAllAppointmentsControllerForClient
 );

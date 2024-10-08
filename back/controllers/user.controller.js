@@ -10,7 +10,7 @@ const {
 
 // register controller...
 const registerController = async (req, res) => {
-  const { role, username, email, password } = req.body;
+  const { role, specialization, username, email, password } = req.body;
   try {
     // check for all the details:
     if (!role) {
@@ -20,7 +20,13 @@ const registerController = async (req, res) => {
       });
     }
 
-    // check for all the details:
+    if (!specialization) {
+      return res.status(400).json({
+        success: false,
+        msg: "Specialization is required",
+      });
+    }
+
     if (!username) {
       return res.status(400).json({
         success: false,
@@ -57,6 +63,7 @@ const registerController = async (req, res) => {
     if (!existingUser) {
       const newUser = await new User({
         role,
+        specialization,
         username,
         email,
         password: await encryptPassword(password),
@@ -174,6 +181,7 @@ const loginController = async (req, res) => {
         msg: "Login successful!",
         username: registeredUser.username,
         role: registeredUser.role,
+        email: registeredUser.email,
         isAdmin: registeredUser.isAdmin,
         userId: registeredUser._id,
       });

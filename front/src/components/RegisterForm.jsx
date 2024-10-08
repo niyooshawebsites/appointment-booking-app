@@ -78,6 +78,40 @@ const RegisterForm = () => {
           </div>
           <div className="mb-4">
             <label
+              htmlFor="specialization"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Select Specialization
+            </label>
+            <select
+              name="specialization"
+              onChange={handleChange}
+              value={registrationDetails.role}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            >
+              <option value="Cardiologist">Cardiologist</option>
+              <option value="Dentist">Dentist</option>
+              <option value="Dermatologist">Dermatologist</option>
+              <option value="Endocrinologist">Endocrinologist</option>
+              <option value="ENT Specialist">ENT Specialist</option>
+              <option value="Gastroenterologist">Gastroenterologist</option>
+              <option value="General Physician">General Physician</option>
+              <option value="Nephrologist">Nephrologist</option>
+              <option value="Oncologist">Oncologist</option>
+              <option value="Ophthalmologist">Ophthalmologist</option>
+              <option value="Orthopedist">Orthopedist</option>
+              <option value="Pediatrician">Pediatrician</option>
+              <option value="Psychiatrist">Psychiatrist</option>
+              <option value="Psychologist">Psychologist</option>
+              <option value="Pulmonologist">Pulmonologist</option>
+              <option value="Radiologist">Radiologist</option>
+              <option value="Rheumatologist">Rheumatologist</option>
+              <option value="Urologist">Urologist</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
@@ -88,6 +122,7 @@ const RegisterForm = () => {
               id="username"
               name="username"
               value={registrationDetails.username}
+              placeholder="The username must be unique and without spaces"
               onChange={handleChange}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -105,6 +140,7 @@ const RegisterForm = () => {
               id="email"
               name="email"
               value={registrationDetails.email}
+              placeholder="Email must be correct"
               onChange={handleChange}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -126,6 +162,7 @@ const RegisterForm = () => {
                     name="password"
                     value={registrationDetails.password}
                     onChange={handleChange}
+                    placeholder="Enter a strong password"
                     required
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
