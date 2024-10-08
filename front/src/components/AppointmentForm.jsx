@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const path = window.location.pathname;
@@ -126,6 +127,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                 </th>
                 <th className="py-2 px-4 text-left text-gray-600">Contact</th>
                 <th className="py-2 px-4 text-left text-gray-600">Email</th>
+                <td className="py-2 px-4 text-left text-gray-600">Rating</td>
                 <th className="py-2 px-4 text-left text-gray-600">Webiste</th>
                 <th className="py-2 px-4 text-left text-gray-600">Book</th>
               </tr>
@@ -139,10 +141,15 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                 </td>
                 <td className="py-2 px-4 text-left text-gray-600">Contact</td>
                 <td className="py-2 px-4 text-left text-gray-600">Email</td>
+                <td className="py-2 px-4 text-left text-gray-600">Rating</td>
                 <td className="py-2 px-4 text-left text-gray-600">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+                  <Link
+                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                    to={`http://localhost:5173/${username}`}
+                    target="_blank"
+                  >
                     Website
-                  </button>
+                  </Link>
                 </td>
                 <td className="py-2 px-4 text-left text-gray-600">
                   <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
