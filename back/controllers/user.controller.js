@@ -687,7 +687,7 @@ const checkUserController = async (req, res) => {
 const getAllUsersController = async (req, res) => {
   try {
     // find all users whose username is not equal to abs
-    const users = await User.find({ username: { $ne: "abs" } })
+    const users = await User.find({ username: { $ne: "abs" }, role: 1 })
       .select(
         "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
       )
@@ -718,7 +718,11 @@ const getAllUsersController = async (req, res) => {
 const getAllVerifiedUsersController = async (req, res) => {
   const { userId } = req.params;
   try {
-    const users = await User.find({ isVerified: true, _id: { $ne: userId } });
+    const users = await User.find({
+      isVerified: true,
+      _id: { $ne: userId },
+      role: 1,
+    });
 
     if (!users) {
       return res.status(404).json({
@@ -743,7 +747,7 @@ const getAllVerifiedUsersController = async (req, res) => {
 // get all unverified users controller...
 const getAllUnverifiedUsersController = async (req, res) => {
   try {
-    const users = await User.find({ isVerified: false });
+    const users = await User.find({ isVerified: false, role: 1 });
 
     if (!users) {
       return res.status(404).json({
@@ -798,7 +802,7 @@ const deleteUserController = async (req, res) => {
   }
 };
 
-// get users by date controller
+// get todays users controller
 const getUsersByDateController = async (req, res) => {
   try {
     // getting todays start time using moment js
@@ -813,6 +817,7 @@ const getUsersByDateController = async (req, res) => {
         $gte: startOfDay,
         $lte: endOfDay,
       },
+      role: 1,
     }).select("-password");
 
     if (!users) {
@@ -851,6 +856,7 @@ const getTodayVerifiedUsersController = async (req, res) => {
         $lte: endOfDay,
       },
       isVerified: true,
+      role: 1,
     }).select("-password");
 
     if (!users) {
@@ -889,6 +895,7 @@ const getTodayUnverifiedUsersController = async (req, res) => {
         $lte: endOfDay,
       },
       isVerified: false,
+      role: 1,
     }).select("-password");
 
     if (!users) {
@@ -911,13 +918,14 @@ const getTodayUnverifiedUsersController = async (req, res) => {
   }
 };
 
-// get total users count controller
+// get total users/service providers count controller
 const getTotalUsersCountController = async (req, res) => {
   const { userId } = req.params;
 
   try {
     const totalUsersCount = await User.countDocuments({
       _id: { $ne: userId },
+      role: 1,
     });
 
     return res.status(200).json({
@@ -941,6 +949,7 @@ const getTotalVerifiedUsersCountController = async (req, res) => {
     const totalVerifiedUsersCount = await User.countDocuments({
       isVerified: true,
       _id: { $ne: userId },
+      role: 1,
     });
 
     return res.status(200).json({
@@ -964,6 +973,7 @@ const getTotalUnverifiedUsersCountController = async (req, res) => {
     const totalUnverifiedUsersCount = await User.countDocuments({
       isVerified: false,
       _id: { $ne: userId },
+      role: 1,
     });
 
     return res.status(200).json({
@@ -993,6 +1003,7 @@ const getTodayTotalUsersCountController = async (req, res) => {
         $gte: startOfDay,
         $lte: endOfDay,
       },
+      role: 1,
     });
 
     return res.status(200).json({
@@ -1023,6 +1034,7 @@ const getTodayTotalVerifiedUsersCountController = async (req, res) => {
         $gte: startOfDay,
         $lte: endOfDay,
       },
+      role: 1,
     });
 
     return res.status(200).json({
@@ -1053,6 +1065,7 @@ const getTodayTotalUnverifiedUsersCountController = async (req, res) => {
         $gte: startOfDay,
         $lte: endOfDay,
       },
+      role: 1,
     });
 
     return res.status(200).json({

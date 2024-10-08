@@ -358,7 +358,7 @@ const Highlights = () => {
       .catch((err) => console.log(err));
   };
 
-  // get-total-appointments-by-userId
+  // get and pass total-appointments-by-userId
   const getAndPassAllAppointmentsByUserId = async () => {
     try {
       await axios
@@ -394,7 +394,7 @@ const Highlights = () => {
     }
   };
 
-  // get-today-appointments-by-userId
+  // get and pass today-appointments-by-userId
   const getAndPassTodaysAppointmentsByUserId = async () => {
     try {
       await axios
@@ -512,7 +512,7 @@ const Highlights = () => {
             <thead>
               <tr>
                 <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Users
+                  Service Providers
                 </th>
                 <th className="py-2 text-left px-4 bg-gray-100 border-b">
                   Data
@@ -595,7 +595,7 @@ const Highlights = () => {
             <thead>
               <tr>
                 <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Users
+                  Service Providers
                 </th>
                 <th className="py-2 text-left px-4 bg-gray-100 border-b">
                   Data

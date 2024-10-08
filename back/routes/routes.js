@@ -170,69 +170,107 @@ router.delete("/delete-user/:id", auth, isAdmin, deleteUserController);
 // today's appointment by userId route
 router.get(
   "/get-today-appointments-by-userId/:userId",
+  auth,
+  isServiceProvider,
   getTodayAppointmentsByUsernameController
 );
 
 // today's users route
-router.get("/get-today-users", getUsersByDateController);
+router.get("/get-today-users", auth, isAdmin, getUsersByDateController);
 
 // today's verified users route
-router.get("/get-today-verified-users", getTodayVerifiedUsersController);
+router.get(
+  "/get-today-verified-users",
+  auth,
+  isAdmin,
+  getTodayVerifiedUsersController
+);
 
 // today's unverified users route
-router.get("/get-today-unverified-users", getTodayUnverifiedUsersController);
+router.get(
+  "/get-today-unverified-users",
+  auth,
+  isAdmin,
+  getTodayUnverifiedUsersController
+);
 
-// get total users count route
-router.get("/get-total-users-count/:userId", getTotalUsersCountController);
+// get total users count route - for admin
+router.get(
+  "/get-total-users-count/:userId",
+  auth,
+  isAdmin,
+  getTotalUsersCountController
+);
 
-// get total verified users count route
+// get total verified users count route - for admin
 router.get(
   "/get-total-verified-users-count/:userId",
+  auth,
+  isAdmin,
   getTotalVerifiedUsersCountController
 );
 
-// get total unverfied users count route
+// get total unverfied users count route - for admin
 router.get(
   "/get-total-unverified-users-count/:userId",
+  auth,
+  isAdmin,
   getTotalUnverifiedUsersCountController
 );
 
-// get total appointments count route
+// get total appointments count route - for admin
 router.get(
   "/get-total-appointments-count",
+  auth,
+  isAdmin,
   getTotalAppointmentsCountController
 );
 
 // get total appointments count - filter by username route
 router.get(
   "/fetch-total-appointments-count/:userId",
+  auth,
+  isServiceProvider,
   getTotalAppointmentsCountByUsernameController
 );
 
-// get today's appointments count - filter by username route
+// get today's appointments count - filter by username route - for service provider
 router.get(
   "/today-appointments-count/:userId",
+  auth,
+  isServiceProvider,
   getTodayAppointmentsCountByUsernameController
 );
 
 // get today total users count route
-router.get("/get-today-total-users-count", getTodayTotalUsersCountController);
+router.get(
+  "/get-today-total-users-count",
+  auth,
+  isAdmin,
+  getTodayTotalUsersCountController
+);
 
 // get today total verified users count route
 router.get(
   "/get-today-total-verified-users-count",
+  auth,
+  isAdmin,
   getTodayTotalVerifiedUsersCountController
 );
 
 // get today total unverified users count route
 router.get(
   "/get-today-total-unverified-users-count",
+  auth,
+  isAdmin,
   getTodayTotalUnverifiedUsersCountController
 );
 
 // get today's total appointments count route
 router.get(
   "/get-today-total-appointments-count",
+  auth,
+  isAdmin,
   getTodayTotalAppointmentsCountController
 );
 
@@ -254,6 +292,7 @@ router.get(
 // get all appointments - filter by userId for a particular client
 router.get(
   "/get-all-appointments-for-client/:userId",
+  auth,
   getAllAppointmentsControllerForClient
 );
 
