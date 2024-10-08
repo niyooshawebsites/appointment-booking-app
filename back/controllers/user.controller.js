@@ -10,8 +10,16 @@ const {
 
 // register controller...
 const registerController = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { role, username, email, password } = req.body;
   try {
+    // check for all the details:
+    if (!role) {
+      return res.status(400).json({
+        success: false,
+        msg: "Role is required",
+      });
+    }
+
     // check for all the details:
     if (!username) {
       return res.status(400).json({
@@ -48,6 +56,7 @@ const registerController = async (req, res) => {
     // new user
     if (!existingUser) {
       const newUser = await new User({
+        role,
         username,
         email,
         password: await encryptPassword(password),

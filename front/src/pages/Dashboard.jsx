@@ -8,6 +8,7 @@ import ServiceForm from "../components/ServiceForm";
 import Highlights from "../components/Highlights";
 import DisplayInfo from "../components/DisplayInfo";
 import { useSelector } from "react-redux";
+import AppointmentForm from "../components/AppointmentForm";
 
 const Dashboard = () => {
   const {
@@ -18,6 +19,7 @@ const Dashboard = () => {
     showAbout,
     showContact,
     showAppointmentDetails,
+    showBookAppointment,
   } = useSelector((state) => state.dashboard_Options_Slice);
 
   if (showHighlights) {
@@ -37,6 +39,17 @@ const Dashboard = () => {
         <div className="w-full h-screen flex">
           <Sidebar />
           <DisplayInfo />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (showBookAppointment) {
+    return (
+      <Layout>
+        <div className="w-full h-screen flex">
+          <Sidebar />
+          <AppointmentForm />
         </div>
       </Layout>
     );

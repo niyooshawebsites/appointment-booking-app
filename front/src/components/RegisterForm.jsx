@@ -10,6 +10,7 @@ const RegisterForm = () => {
 
   const [registrationDetails, setRegistrationDetails] = useState(() => {
     return {
+      role: 1,
       username: "",
       email: "",
       password: "",
@@ -40,6 +41,7 @@ const RegisterForm = () => {
 
     setRegistrationDetails(() => {
       return {
+        role: 1,
         username: "",
         email: "",
         password: "",
@@ -56,6 +58,24 @@ const RegisterForm = () => {
       <div className="w-full max-w-md p-6 mx-auto bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
         <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              htmlFor="role"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Select Role
+            </label>
+            <select
+              name="role"
+              onChange={handleChange}
+              value={registrationDetails.role}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            >
+              <option value="1">Service Provider</option>
+              <option value="0">Client</option>
+            </select>
+          </div>
           <div className="mb-4">
             <label
               htmlFor="email"
