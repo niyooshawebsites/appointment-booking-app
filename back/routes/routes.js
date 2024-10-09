@@ -28,6 +28,7 @@ const {
   getAllUnverifiedUsersController,
   getTodayVerifiedUsersController,
   getTodayUnverifiedUsersController,
+  getAllUsersBySpecificSpecializationController,
 } = require("../controllers/user.controller");
 
 const {
@@ -294,6 +295,13 @@ router.get(
   "/get-all-appointments-for-client/:email",
   auth,
   getAllAppointmentsControllerForClient
+);
+
+// get all users by specific specialization
+router.get(
+  "/get-all-users-by-specific-specialization/:specialization",
+  auth,
+  getAllUsersBySpecificSpecializationController
 );
 
 module.exports = router;

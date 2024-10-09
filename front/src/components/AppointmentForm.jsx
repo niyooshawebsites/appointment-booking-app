@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -31,6 +31,30 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   });
 
   const [payOnline, setPayOnline] = useState(false);
+  const [specialization, setSpecialization] = useState("");
+  const [isSpecializationChnaged, setIsSpecializationChnaged] = useState(false);
+  const [usersBySpecialization, setUsersBySpecialization] = useState([]);
+
+  // get all the users by a specific specialization
+  const getAllUsersBySpecificSpecialization = async () => {
+    await axios
+      .get(
+        `http://localhost:8000/api/v1/get-all-users-by-specific-specialization/${specialization}`,
+        { withCredentials: true }
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(
+    () => getAllUsersBySpecificSpecialization(),
+    [isSpecializationChnaged]
+  );
+
+  const handleChangeSpecialization = async (e) => {
+    setSpecialization(e.target.value);
+    setIsSpecializationChnaged((prevState) => !prevState);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -94,9 +118,14 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
           </label>
           <select
             name="specialization"
+            value={specialization}
+            onChange={handleChangeSpecialization}
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           >
+            <option value="Select a specialization">
+              Select a specialization
+            </option>
             <option value="Cardiologist">Cardiologist</option>
             <option value="Dentist">Dentist</option>
             <option value="Dermatologist">Dermatologist</option>

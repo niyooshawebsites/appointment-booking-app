@@ -1085,6 +1085,34 @@ const getTodayTotalUnverifiedUsersCountController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err,
+    });
+  }
+};
+
+// get All users by Specialization - for client
+const getAllUsersBySpecificSpecializationController = async (req, res) => {
+  try {
+    const { specialization } = req.params;
+    const users = await User.find({ specialization });
+
+    if (!users) {
+      return res.status(204).json({
+        success: false,
+        msg: "No users found with specialization",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "All users found with specialization",
+      users,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err,
     });
   }
 };
@@ -1118,4 +1146,5 @@ module.exports = {
   getAllUnverifiedUsersController,
   getTodayVerifiedUsersController,
   getTodayUnverifiedUsersController,
+  getAllUsersBySpecificSpecializationController,
 };
