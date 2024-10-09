@@ -29,6 +29,7 @@ const {
   getTodayVerifiedUsersController,
   getTodayUnverifiedUsersController,
   getAllUsersBySpecificSpecializationController,
+  updateClientDetailsController,
 } = require("../controllers/user.controller");
 
 const {
@@ -311,5 +312,8 @@ router.get(
   auth,
   getAllUsersBySpecificSpecializationController
 );
+
+// update client details
+router.patch("/update-client-details", auth, updateClientDetailsController);
 
 module.exports = router;

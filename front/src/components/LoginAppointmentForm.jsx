@@ -6,8 +6,7 @@ import { useSelector } from "react-redux";
 const LoginAppointmentForm = ({ customerDashboard }) => {
   const [services, setServices] = useState([]);
   const { username } = useSelector((state) => state.appointment_Slice);
-
-  console.log(username);
+  const { userId } = useSelector((state) => state.user_Slice);
 
   const [custDetails, setCustDetails] = useState(() => {
     return {
@@ -44,6 +43,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
 
   const handleSubmit = async function (e) {
     e.preventDefault();
+    // api for booking appointment
     await axios
       .post(
         `http://localhost:8000/api/v1/book-appointment-by-login/${username}`,
@@ -56,6 +56,27 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
       .catch((err) => {
         toast.error("Appointment booking failed!");
       });
+
+    // udpating client details
+    // await axios
+    //   .patch(
+    //     `http://localhost:8000/api/v1/update-client-details`,
+    //     {
+    //       firstName: custDetails.firstName,
+    //       lastName: custDetails.lastName,
+    //       email: custDetails.email,
+    //       contactNo: custDetails.contactNo,
+    //       age: custDetails.age,
+    //       gender: custDetails.gender,
+    //       address: custDetails.address,
+    //       city: custDetails.city,
+    //       state: custDetails.state,
+    //       pinCode: custDetails.pinCode,
+    //     },
+    //     { withCredentials: true }
+    //   )
+    //   .then((res) => toast.success("Appointment booked successfully!"))
+    //   .catch((err) => toast.error("Appointment booking failed!"));
 
     setCustDetails((prevDetails) => {
       return {

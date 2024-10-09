@@ -1121,6 +1121,140 @@ const getAllUsersBySpecificSpecializationController = async (req, res) => {
   }
 };
 
+// update client details after login booking done
+const updateClientDetailsController = async (req, res) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      email,
+      contactNo,
+      age,
+      gender,
+      address,
+      city,
+      state,
+      pinCode,
+    } = req.body;
+
+    // if firstname is not provided
+    if (!firstName) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your first name",
+      });
+    }
+
+    // if lastName is not provided
+    if (!lastName) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your last name",
+      });
+    }
+
+    // if email is not provided
+    if (!email) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your email",
+      });
+    }
+
+    // if contactNo is not provided
+    if (!contactNo) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your contact number",
+      });
+    }
+
+    // if age is not provided
+    if (!age) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your age",
+      });
+    }
+
+    // if gender is not selected
+    if (!gender) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please select your gender",
+      });
+    }
+
+    // if address is not provided
+    if (!address) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your address",
+      });
+    }
+
+    // if city is not provided
+    if (!city) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your city",
+      });
+    }
+
+    // if state is not provided
+    if (!state) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your state",
+      });
+    }
+
+    // if pinCode is not provided
+    if (!pinCode) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your pincode",
+      });
+    }
+
+    const user = await User.findOne({ _id: req.user._id });
+
+    if (!user) {
+      return res.status(204).json({
+        success: false,
+        msg: "No such client to update",
+      });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      {
+        firstName,
+        lastName,
+        email,
+        contactNo,
+        age,
+        gender,
+        address,
+        city,
+        state,
+        pinCode,
+      },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      success: true,
+      msg: "Client updated successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   registerController,
   loginController,
@@ -1151,4 +1285,5 @@ module.exports = {
   getTodayVerifiedUsersController,
   getTodayUnverifiedUsersController,
   getAllUsersBySpecificSpecializationController,
+  updateClientDetailsController,
 };
