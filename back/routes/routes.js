@@ -39,6 +39,7 @@ const {
 
 const {
   bookAppointmnentController,
+  bookAppointmnentByLoginController,
   getAllAppointmentsController,
   getTodayAppointmentsByUsernameController,
   getTotalAppointmentsCountController,
@@ -82,8 +83,15 @@ router.patch(
 // get all services routes
 router.get("/get-services/:username", getAllServicesController);
 
-// book appointment route
+// book appointment route - without login
 router.post("/book-appointment/:username", bookAppointmnentController);
+
+// book appointment route - by login - for client
+router.post(
+  "/book-appointment-by-login/:username",
+  auth,
+  bookAppointmnentByLoginController
+);
 
 // fetch all appointments by userId route
 router.get(

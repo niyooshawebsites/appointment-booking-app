@@ -57,8 +57,6 @@ const Sidebar = () => {
     );
   }
 
-  console.log(role);
-
   // service provider sidebar options
   if (role == 1 && isAdmin == false) {
     return (

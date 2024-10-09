@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const appointmentSlice = createSlice({
   name: "appointment_Slice",
   initialState: {
+    username: "",
     service: "",
     date: "",
     time: "",
@@ -20,6 +21,7 @@ const appointmentSlice = createSlice({
   },
   reducers: {
     appointmentDetails: (state, action) => {
+      state.username = action.payload.username;
       state.service = action.payload.service;
       state.date = action.payload.date;
       state.time = action.payload.time;

@@ -87,6 +87,7 @@ const DisplayInfo = () => {
         showAbout: false,
         showContact: false,
         showAppointmentDetails: true,
+        showBookAppointment: false,
       })
     );
   };

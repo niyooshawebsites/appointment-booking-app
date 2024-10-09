@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 const ServiceForm = () => {
   const { username } = useSelector((state) => state.user_Slice);
+  console.log(username);
   const [serivceDeleted, setServiceDeleted] = useState(false);
   const [currentService, setCurrentService] = useState(() => {
     return {

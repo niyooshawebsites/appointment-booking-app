@@ -9,6 +9,8 @@ import Highlights from "../components/Highlights";
 import DisplayInfo from "../components/DisplayInfo";
 import { useSelector } from "react-redux";
 import AppointmentForm from "../components/AppointmentForm";
+import LoginAppointmentForm from "../components/LoginAppointmentForm";
+import { useState } from "react";
 
 const Dashboard = () => {
   const {
@@ -20,7 +22,10 @@ const Dashboard = () => {
     showContact,
     showAppointmentDetails,
     showBookAppointment,
+    loginBooking,
   } = useSelector((state) => state.dashboard_Options_Slice);
+
+  const [customerDashboard] = useState(true);
 
   if (showHighlights) {
     return (
@@ -49,7 +54,11 @@ const Dashboard = () => {
       <Layout>
         <div className="w-full h-screen flex">
           <Sidebar />
-          <AppointmentForm customerDashboard={true} />
+          {loginBooking ? (
+            <LoginAppointmentForm />
+          ) : (
+            <AppointmentForm customerDashboard={customerDashboard} />
+          )}
         </div>
       </Layout>
     );

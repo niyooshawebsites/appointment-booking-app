@@ -208,6 +208,211 @@ const bookAppointmnentController = async (req, res) => {
   }
 };
 
+// book appointment controller
+const bookAppointmnentByLoginController = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const {
+      service,
+      date,
+      time,
+      firstName,
+      lastName,
+      email,
+      contactNo,
+      age,
+      gender,
+      address,
+      city,
+      state,
+      pinCode,
+      paymentMethod,
+      serviceProvider,
+    } = req.body;
+
+    // if service is not selected
+    if (!service) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please select the service",
+      });
+    }
+
+    // if date is not selected
+    if (!date) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please select the date",
+      });
+    }
+
+    // if time is not selected
+    if (!time) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please select the time",
+      });
+    }
+
+    // if firstname is not provided
+    if (!firstName) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your first name",
+      });
+    }
+
+    // if lastName is not provided
+    if (!lastName) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your last name",
+      });
+    }
+
+    // if email is not provided
+    if (!email) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your email",
+      });
+    }
+
+    // if contactNo is not provided
+    if (!contactNo) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your contact number",
+      });
+    }
+
+    // if age is not provided
+    if (!age) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your age",
+      });
+    }
+
+    // if gender is not selected
+    if (!gender) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please select your gender",
+      });
+    }
+
+    // if address is not provided
+    if (!address) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your address",
+      });
+    }
+
+    // if city is not provided
+    if (!city) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your city",
+      });
+    }
+
+    // if state is not provided
+    if (!state) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your state",
+      });
+    }
+
+    // if pinCode is not provided
+    if (!pinCode) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide your pincode",
+      });
+    }
+
+    // if paymentMethod is not selected
+    if (!paymentMethod) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please select your payment method",
+      });
+    }
+
+    // if Service provider is not selected
+    if (!serviceProvider) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Service provider is missing",
+      });
+    }
+
+    const user = await User.findOne({ username: serviceProvider });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: `No service provider with the username ${username} found`,
+      });
+    }
+
+    // if all the information is provided
+    const existingCustomer = new Appointment({
+      service,
+      date,
+      time,
+      firstName,
+      lastName,
+      email,
+      contactNo,
+      age,
+      gender,
+      address,
+      city,
+      state,
+      pinCode,
+      paymentMethod,
+      user: user._id,
+    });
+
+    const result = await existingCustomer.save();
+
+    if (!result) {
+      return res.status(500).json({
+        success: false,
+        msg: "Appointment booking failed. Please try again",
+      });
+    }
+
+    const fullName = `${firstName} ${lastName}`;
+
+    await appointmentConfirmationEmail(
+      email,
+      "Appointment confirmed",
+      fullName,
+      user.businessName,
+      service,
+      date,
+      time
+    );
+
+    return res.status(201).json({
+      success: true,
+      msg: "Appointment booked successfully",
+    });
+  } catch (err) {
+    console.error("Error occurred:", err);
+    return res.status(500).json({
+      success: false,
+      msg: "Internal Server Error",
+    });
+  }
+};
+
 // get all Apponitments controller filer by userid for a specific service provider
 const getAllAppointmentsController = async (req, res) => {
   try {
@@ -467,6 +672,7 @@ const getAParticaularApponitmentDetails = async (req, res) => {
 
 module.exports = {
   bookAppointmnentController,
+  bookAppointmnentByLoginController,
   getAllAppointmentsController,
   getTodayAppointmentsByUsernameController,
   getTotalAppointmentsCountController,

@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-const LoginAppointmentForm = () => {
-  const path = window.location.pathname;
-  let username = path.split("/")[1];
+const LoginAppointmentForm = ({ customerDashboard }) => {
+  const [services, setServices] = useState([]);
+  const { username } = useSelector((state) => state.appointment_Slice);
 
-  const { services } = useSelector((state) => state.service_Provider_Slice);
+  console.log(username);
 
-  const [custDetails, setCustDetails] = useState(({ serviceProvider }) => {
+  const [custDetails, setCustDetails] = useState(() => {
     return {
       service: "",
       date: "",
@@ -25,7 +25,7 @@ const LoginAppointmentForm = () => {
       state: "",
       pinCode: "",
       paymentMethod: "",
-      serviceProvider,
+      serviceProvider: username,
     };
   });
 
@@ -46,8 +46,9 @@ const LoginAppointmentForm = () => {
     e.preventDefault();
     await axios
       .post(
-        `http://localhost:8000/api/v1/book-appointment/${username}`,
-        custDetails
+        `http://localhost:8000/api/v1/book-appointment-by-login/${username}`,
+        custDetails,
+        { withCredentials: true }
       )
       .then((res) => {
         toast.success("Appointment booked successfully!");
@@ -73,12 +74,25 @@ const LoginAppointmentForm = () => {
         state: "",
         pinCode: "",
         paymentMethod: "",
-        spUsername: username || "",
+        serviceProvider: username,
       };
     });
   };
 
+  // get all services by a particular username
+  const getAllServicesByUsername = async () => {
+    await axios
+      .get(`http://localhost:8000/api/v1/get-services/${username}`)
+      .then((res) => setServices(res.data.services))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getAllServicesByUsername();
+  }, []);
+
   const currentDate = new Date().toISOString().split("T")[0];
+
   return (
     <form
       className="max-w-4xl mx-auto my-4 h-[600px] p-6 border rounded-lg shadow-md bg-white"

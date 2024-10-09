@@ -38,7 +38,6 @@ const LoginForm = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         dispatch(
           userSliceActions.captureLoginUserDetails({
             username: res.data.username,

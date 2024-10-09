@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
+import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 
 const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
+  const { userId } = useSelector((state) => state.user_Slice);
   const path = window.location.pathname;
   let username = path.split("/")[1];
+  const dispatch = useDispatch();
 
-  const { services } = useSelector((state) => state.service_Provider_Slice);
+  const [services, setServices] = useState([]);
 
   const [custDetails, setCustDetails] = useState(() => {
     return {
@@ -31,7 +35,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   });
 
   const [payOnline, setPayOnline] = useState(false);
-  const [specialization, setSpecialization] = useState("");
+  const [specialization, setSpecialization] = useState("Cardiologist");
   const [isSpecializationChnaged, setIsSpecializationChnaged] = useState(false);
   const [usersBySpecialization, setUsersBySpecialization] = useState([]);
 
@@ -42,14 +46,28 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
         `http://localhost:8000/api/v1/get-all-users-by-specific-specialization/${specialization}`,
         { withCredentials: true }
       )
-      .then((res) => console.log(res))
+      .then((res) => setUsersBySpecialization(res.data.users))
       .catch((err) => console.log(err));
   };
 
-  useEffect(
-    () => getAllUsersBySpecificSpecialization(),
-    [isSpecializationChnaged]
-  );
+  // get all services by a particular username
+  const getAllServicesByUsername = async () => {
+    await axios
+      .get(`http://localhost:8000/api/v1/get-services/${username}`)
+      .then((res) => setServices(res.data.services))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    // calling it only for non loggedin user
+    if (userId != null) {
+      getAllUsersBySpecificSpecialization();
+    }
+
+    if (!userId) {
+      getAllServicesByUsername();
+    }
+  }, [isSpecializationChnaged]);
 
   const handleChangeSpecialization = async (e) => {
     setSpecialization(e.target.value);
@@ -123,9 +141,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           >
-            <option value="Select a specialization">
-              Select a specialization
-            </option>
             <option value="Cardiologist">Cardiologist</option>
             <option value="Dentist">Dentist</option>
             <option value="Dermatologist">Dermatologist</option>
@@ -154,38 +169,67 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                 <th className="py-2 px-4 text-left text-gray-600">
                   Clinic Name
                 </th>
-                <th className="py-2 px-4 text-left text-gray-600">Contact</th>
-                <th className="py-2 px-4 text-left text-gray-600">Email</th>
-                <td className="py-2 px-4 text-left text-gray-600">Rating</td>
                 <th className="py-2 px-4 text-left text-gray-600">Webiste</th>
                 <th className="py-2 px-4 text-left text-gray-600">Book</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="py-2 px-4 text-left text-gray-600">#</td>
-                <td className="py-2 px-4 text-left text-gray-600">DR. Name</td>
-                <td className="py-2 px-4 text-left text-gray-600">
-                  Clinic Name
-                </td>
-                <td className="py-2 px-4 text-left text-gray-600">Contact</td>
-                <td className="py-2 px-4 text-left text-gray-600">Email</td>
-                <td className="py-2 px-4 text-left text-gray-600">Rating</td>
-                <td className="py-2 px-4 text-left text-gray-600">
-                  <Link
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    to={`http://localhost:5173/${username}`}
-                    target="_blank"
-                  >
-                    Website
-                  </Link>
-                </td>
-                <td className="py-2 px-4 text-left text-gray-600">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
-                    Book
-                  </button>
-                </td>
-              </tr>
+              {usersBySpecialization.map((user, index) => {
+                return (
+                  <tr key={user._id}>
+                    <td className="py-2 px-4 text-left text-gray-600">
+                      {index + 1}
+                    </td>
+                    <td className="py-2 px-4 text-left text-gray-600">
+                      DR. {user.name}
+                    </td>
+                    <td className="py-2 px-4 text-left text-gray-600">
+                      {user.businessName}
+                    </td>
+                    <td className="py-2 px-4 text-left text-gray-600">
+                      <Link
+                        className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                        to={`http://localhost:5173/${user.username}`}
+                        target="_blank"
+                      >
+                        Website
+                      </Link>
+                    </td>
+                    {console.log("username", user.username)}
+                    <td className="py-2 px-4 text-left text-gray-600">
+                      <Link
+                        className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                        customerDashboard={customerDashboard}
+                        onClick={() => {
+                          dispatch(
+                            appointmentSliceActions.appointmentDetails({
+                              username: user.username,
+                            })
+                          );
+
+                          dispatch(
+                            dashboardOptionsSliceActions.toggleDashboardOptions(
+                              {
+                                showHighlights: false,
+                                showInfo: false,
+                                showServices: false,
+                                showProfile: false,
+                                showAbout: false,
+                                showContact: false,
+                                showAppointmentDetails: false,
+                                showBookAppointment: true,
+                                loginBooking: true,
+                              }
+                            )
+                          );
+                        }}
+                      >
+                        Book
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

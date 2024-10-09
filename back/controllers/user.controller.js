@@ -1094,7 +1094,11 @@ const getTodayTotalUnverifiedUsersCountController = async (req, res) => {
 const getAllUsersBySpecificSpecializationController = async (req, res) => {
   try {
     const { specialization } = req.params;
-    const users = await User.find({ specialization });
+    const users = await User.find({
+      specialization,
+      isVerified: true,
+      role: 1,
+    });
 
     if (!users) {
       return res.status(204).json({

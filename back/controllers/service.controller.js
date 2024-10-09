@@ -36,7 +36,7 @@ const updateServiceController = async (req, res) => {
     }
 
     const updatedUser = await User.findOneAndUpdate(
-      { email: req.user.email },
+      { username: req.user.username },
       { services: [...user.services, { serviceId, serviceName, fee }] },
       { new: true }
     );
