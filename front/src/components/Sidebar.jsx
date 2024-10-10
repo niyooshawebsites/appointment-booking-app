@@ -1,6 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
-import { FcFlashOn } from "react-icons/fc";
+import { FcBookmark, FcFlashOn, FcContacts } from "react-icons/fc";
+import { FaUserCog } from "react-icons/fa";
+import { LuMenuSquare } from "react-icons/lu";
+import { CgWebsite } from "react-icons/cg";
 
 /* eslint-disable react/prop-types */
 const Sidebar = () => {
@@ -14,7 +17,7 @@ const Sidebar = () => {
         <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
         <ul>
           <li
-            className="block py-2 px-4 hover:bg-gray-700 rounded link"
+            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -30,10 +33,10 @@ const Sidebar = () => {
               );
             }}
           >
-            <FcFlashOn /> Highlights
+            <FcFlashOn /> &nbsp; Highlights
           </li>
           <li
-            className="block py-2 px-4 hover:bg-gray-700 rounded link"
+            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -49,7 +52,7 @@ const Sidebar = () => {
               );
             }}
           >
-            Profile
+            <FaUserCog style={{ color: "teal" }} /> &nbsp; Profile
           </li>
         </ul>
       </div>
@@ -63,7 +66,7 @@ const Sidebar = () => {
         <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
         <ul>
           <li
-            className="block py-2 px-4 hover:bg-gray-700 rounded link"
+            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -79,10 +82,10 @@ const Sidebar = () => {
               );
             }}
           >
-            Highlights
+            <FcFlashOn /> &nbsp; Highlights
           </li>
           <li
-            className="block py-2 px-4 hover:bg-gray-700 rounded link"
+            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -98,10 +101,10 @@ const Sidebar = () => {
               );
             }}
           >
-            Services
+            <LuMenuSquare style={{ color: "crimson" }} /> &nbsp; Services
           </li>
           <li
-            className="block py-2 px-4 hover:bg-gray-700 rounded link"
+            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -117,10 +120,10 @@ const Sidebar = () => {
               );
             }}
           >
-            About
+            <CgWebsite style={{ color: "DarkOrange" }} /> &nbsp; About
           </li>
           <li
-            className="block py-2 px-4 hover:bg-gray-700 rounded link"
+            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -136,11 +139,11 @@ const Sidebar = () => {
               );
             }}
           >
-            Contact
+            <FcContacts /> &nbsp; Contact
           </li>
 
           <li
-            className="block py-2 px-4 hover:bg-gray-700 rounded link"
+            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -156,7 +159,7 @@ const Sidebar = () => {
               );
             }}
           >
-            Profile
+            <FaUserCog style={{ color: "teal" }} /> &nbsp; Profile
           </li>
         </ul>
       </div>
@@ -170,7 +173,7 @@ const Sidebar = () => {
         <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
         <ul>
           <li
-            className="block py-2 px-4 hover:bg-gray-700 rounded link"
+            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -186,10 +189,10 @@ const Sidebar = () => {
               );
             }}
           >
-            Highlights
+            <FcFlashOn /> &nbsp; Highlights
           </li>
           <li
-            className="block py-2 px-4 hover:bg-gray-700 rounded link"
+            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -205,119 +208,31 @@ const Sidebar = () => {
               );
             }}
           >
-            Book Appointment
+            <FcBookmark /> &nbsp; Book Appointment
+          </li>
+          <li
+            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            onClick={() => {
+              dispatch(
+                dashboardOptionsSliceActions.toggleDashboardOptions({
+                  showHighlights: false,
+                  showInfo: false,
+                  showServices: false,
+                  showProfile: true,
+                  showAbout: false,
+                  showContact: false,
+                  showAppointmentDetails: false,
+                  showBookAppointment: false,
+                })
+              );
+            }}
+          >
+            <FaUserCog style={{ color: "teal" }} /> &nbsp; Profile
           </li>
         </ul>
       </div>
     );
   }
-  return (
-    <div className="w-2/12 bg-gray-800 text-white h-full p-4">
-      <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
-      <ul>
-        {/*  Show highlights for  admins and users* */}
-        <li
-          className="block py-2 px-4 hover:bg-gray-700 rounded link"
-          onClick={() => {
-            dispatch(
-              dashboardOptionsSliceActions.toggleDashboardOptions({
-                showHighlights: true,
-                showInfo: false,
-                showServices: false,
-                showProfile: false,
-                showAbout: false,
-                showContact: false,
-                showAppointmentDetails: false,
-              })
-            );
-          }}
-        >
-          Highlights
-        </li>
-        {role == 1 && isAdmin == true ? (
-          // show only for admin
-          <></>
-        ) : (
-          // show only for users
-          <>
-            <li
-              className="block py-2 px-4 hover:bg-gray-700 rounded link"
-              onClick={() => {
-                dispatch(
-                  dashboardOptionsSliceActions.toggleDashboardOptions({
-                    showHighlights: false,
-                    showInfo: false,
-                    showServices: true,
-                    showProfile: false,
-                    showAbout: false,
-                    showContact: false,
-                    showAppointmentDetails: false,
-                  })
-                );
-              }}
-            >
-              Services
-            </li>
-            <li
-              className="block py-2 px-4 hover:bg-gray-700 rounded link"
-              onClick={() => {
-                dispatch(
-                  dashboardOptionsSliceActions.toggleDashboardOptions({
-                    showHighlights: false,
-                    showInfo: false,
-                    showServices: false,
-                    showProfile: false,
-                    showAbout: true,
-                    showContact: false,
-                    showAppointmentDetails: false,
-                  })
-                );
-              }}
-            >
-              About
-            </li>
-            <li
-              className="block py-2 px-4 hover:bg-gray-700 rounded link"
-              onClick={() => {
-                dispatch(
-                  dashboardOptionsSliceActions.toggleDashboardOptions({
-                    showHighlights: false,
-                    showInfo: false,
-                    showServices: false,
-                    showProfile: false,
-                    showAbout: false,
-                    showContact: true,
-                    showAppointmentDetails: false,
-                  })
-                );
-              }}
-            >
-              Contact
-            </li>
-          </>
-        )}
-        {/* Show profile for  admins and users*/}
-        <li
-          className="block py-2 px-4 hover:bg-gray-700 rounded link"
-          onClick={() => {
-            dispatch(
-              dashboardOptionsSliceActions.toggleDashboardOptions({
-                showHighlights: false,
-                showInfo: false,
-                showServices: false,
-                showProfile: true,
-                showAbout: false,
-                showContact: false,
-                showAppointmentDetails: false,
-              })
-            );
-          }}
-        >
-          Profile
-        </li>
-      </ul>
-    </div>
-  );
 };
 
 export default Sidebar;
