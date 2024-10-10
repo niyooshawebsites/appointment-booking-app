@@ -670,6 +670,47 @@ const getAParticaularApponitmentDetails = async (req, res) => {
   }
 };
 
+// check appointment availability
+const checkAppointmentAvailability = async (req, res) => {
+  try {
+    const { date, time, username } = req.query;
+
+    const user = await User.findOne({ username });
+
+    console.log(user);
+
+    if (!user) {
+      return res.status(204).json({
+        success: false,
+        msg: "No such service provider available",
+      });
+    }
+
+    const appointments = await Appointment.find({ user: user._id, date, time });
+
+    console.log(appointments);
+
+    if (appointments.length > 0) {
+      return res.status(200).json({
+        success: false,
+        msg: "Sorry! The slot already booked. Pick a different one",
+      });
+    }
+
+    if (appointments.length == 0) {
+      return res.status(200).json({
+        success: true,
+        msg: "Congrats! The slot is available. Book it now",
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   bookAppointmnentController,
   bookAppointmnentByLoginController,
@@ -682,4 +723,5 @@ module.exports = {
   getAParticaularApponitmentDetails,
   getTotalAppointmentsCountByUserForClientIdController,
   getAllAppointmentsControllerForClient,
+  checkAppointmentAvailability,
 };

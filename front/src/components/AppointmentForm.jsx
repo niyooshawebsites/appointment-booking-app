@@ -123,6 +123,15 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
 
   const currentDate = new Date().toISOString().split("T")[0];
 
+  const checkAvailability = async () => {
+    await axios
+      .get(
+        `http://localhost:8000/api/v1/check-appointment-availability?date=${custDetails.date}&time=${custDetails.time}&username=${username}`
+      )
+      .then((res) => alert(res.data.msg))
+      .catch((err) => console.log(err));
+  };
+
   // if the client is logged in
   if (customerDashboard) {
     return (
@@ -288,23 +297,29 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
               </div>
 
               <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <select
+                <div className="mt-2 flex justify-center items-center">
+                  <label htmlFor="time">Time</label>
+                  <input
+                    type="time"
+                    id="appt"
                     name="time"
-                    id="time"
+                    min="09:00"
+                    max="18:00"
+                    placeholder="HH:MM"
                     value={custDetails.time}
                     onChange={handleChange}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  >
-                    <option value="No slection">Select time slot</option>
-                    <option value="10 AM">10 AM</option>
-                    <option value="11 AM">11 AM</option>
-                    <option value="12 AM">12 AM</option>
-                    <option value="01 PM">01 PM</option>
-                    <option value="02 PM">02 PM</option>
-                  </select>
+                    className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 ml-2"
+                    required
+                  />
                 </div>
               </div>
+
+              <Link
+                className="text-white text-center bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded w-full"
+                onClick={checkAvailability}
+              >
+                Check Availability
+              </Link>
             </div>
           </div>
 

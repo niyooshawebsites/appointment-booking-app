@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userSliceActions } from "../store/slices/UserSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import axios from "axios";
+import { AiOutlineLogout } from "react-icons/ai";
 
 const Header = () => {
   const path = window.location.pathname;
@@ -131,9 +132,10 @@ const Header = () => {
                       Hello, {username}
                     </NavLink>
                     <NavLink
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center"
                       onClick={logout}
                     >
+                      <AiOutlineLogout style={{ color: "orangered" }} /> &nbsp;
                       logout
                     </NavLink>
                   </>

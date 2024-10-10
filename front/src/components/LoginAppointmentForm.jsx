@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const LoginAppointmentForm = ({ customerDashboard }) => {
   const [services, setServices] = useState([]);
@@ -132,18 +133,6 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
           };
         });
       })
-
-      // [custDetails.firstName] = res.data.user.firstName,
-      // [custDetails.lastName] = res.data.user.lastName,
-      // [custDetails.email] = res.data.user.email,
-      // [custDetails.contactNo] = res.data.user.contactNo,
-      // [custDetails.age] = res.data.user.age,
-      // [custDetails.gender] = res.data.user.gender,
-      // [custDetails.address] = res.data.user.address,
-      // [custDetails.city] = res.data.user.city,
-      // [custDetails.state] = res.data.user.state,
-      // [custDetails.pinCode]  = res.data.user.pinCode,
-
       .catch((err) => console.log(err));
   };
 
@@ -154,12 +143,22 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
 
   const currentDate = new Date().toISOString().split("T")[0];
 
+  const checkAvailability = async () => {
+    await axios
+      .get(
+        `http://localhost:8000/api/v1/check-appointment-availability?date=${custDetails.date}&time=${custDetails.time}&username=${username}`
+      )
+      .then((res) => alert(res.data.msg))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <form
       className="max-w-4xl mx-auto my-4 h-[600px] p-6 border rounded-lg shadow-md bg-white"
       onSubmit={handleSubmit}
     >
       <div className="space-y-2 h-full flex flex-col justify-start">
+        {/* Appointment Details */}
         {/* Appointment Details */}
         <div className="border-b pb-4">
           <h2 className="text-lg font-semibold mb-2">Appointment Details</h2>
@@ -196,28 +195,33 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
               />
             </div>
 
-            <div>
-              <select
-                name="time"
+            <div className="flex justify-center items-center">
+              <label htmlFor="time" className="block mb-1 mr-2">
+                Time
+              </label>
+              <input
+                type="time"
                 id="time"
+                name="time"
+                min="09:00"
+                max="18:00"
                 value={custDetails.time}
                 onChange={handleChange}
+                className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 "
                 required
-                className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-              >
-                <option value="">Select time slot</option>
-                <option value="10 AM">10 AM</option>
-                <option value="11 AM">11 AM</option>
-                <option value="12 PM">12 PM</option>
-                <option value="01 PM">01 PM</option>
-                <option value="02 PM">02 PM</option>
-              </select>
+              />
             </div>
           </div>
         </div>
+        <Link
+          className="text-white text-center bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded w-full"
+          onClick={checkAvailability}
+        >
+          Check Availability
+        </Link>
 
         {/* Personal Details */}
-        <div className="border-b pb-4">
+        <div className="border-b border-t pb-4">
           <h2 className="text-lg font-semibold mb-2">Personal Details</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>

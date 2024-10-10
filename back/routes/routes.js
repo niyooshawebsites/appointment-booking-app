@@ -51,6 +51,7 @@ const {
   getAParticaularApponitmentDetails,
   getTotalAppointmentsCountByUserForClientIdController,
   getAllAppointmentsControllerForClient,
+  checkAppointmentAvailability,
 } = require("../controllers/appointment.controller");
 
 const isServiceProvider = require("../middlewares/isServiceProvider.middleware");
@@ -327,5 +328,8 @@ router.get(
   auth,
   getParticularClientDataByUserIdController
 );
+
+// get the check appointment route
+router.get("/check-appointment-availability", checkAppointmentAvailability);
 
 module.exports = router;
