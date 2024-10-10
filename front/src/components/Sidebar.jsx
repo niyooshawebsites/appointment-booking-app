@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
-// import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
-// import axios from "axios";
+import { FcFlashOn } from "react-icons/fc";
 
 /* eslint-disable react/prop-types */
 const Sidebar = () => {
@@ -31,7 +30,7 @@ const Sidebar = () => {
               );
             }}
           >
-            Highlights
+            <FcFlashOn /> Highlights
           </li>
           <li
             className="block py-2 px-4 hover:bg-gray-700 rounded link"

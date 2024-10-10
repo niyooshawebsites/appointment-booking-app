@@ -1137,6 +1137,8 @@ const updateClientDetailsController = async (req, res) => {
       pinCode,
     } = req.body;
 
+    const { userId } = req.params;
+
     // if firstname is not provided
     if (!firstName) {
       return res.status(401).json({
@@ -1217,7 +1219,10 @@ const updateClientDetailsController = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ _id: req.user._id });
+    const user = await User.findOne({ _id: userId });
+
+    console.log(userId);
+    console.log(user);
 
     if (!user) {
       return res.status(204).json({
@@ -1227,7 +1232,7 @@ const updateClientDetailsController = async (req, res) => {
     }
 
     const updatedUser = await User.findOneAndUpdate(
-      { _id: req.user._id },
+      { _id: userId },
       {
         firstName,
         lastName,
@@ -1243,9 +1248,17 @@ const updateClientDetailsController = async (req, res) => {
       { new: true }
     );
 
+    if (!updatedUser) {
+      return res.status(500).json({
+        success: false,
+        msg: "Something went wrong",
+      });
+    }
+
     return res.status(200).json({
       success: true,
-      msg: "Client updated successfully",
+      msg: "Data updated successfully",
+      updatedUser,
     });
   } catch (err) {
     return res.status(500).json({

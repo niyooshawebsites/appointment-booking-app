@@ -58,25 +58,25 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
       });
 
     // udpating client details
-    // await axios
-    //   .patch(
-    //     `http://localhost:8000/api/v1/update-client-details`,
-    //     {
-    //       firstName: custDetails.firstName,
-    //       lastName: custDetails.lastName,
-    //       email: custDetails.email,
-    //       contactNo: custDetails.contactNo,
-    //       age: custDetails.age,
-    //       gender: custDetails.gender,
-    //       address: custDetails.address,
-    //       city: custDetails.city,
-    //       state: custDetails.state,
-    //       pinCode: custDetails.pinCode,
-    //     },
-    //     { withCredentials: true }
-    //   )
-    //   .then((res) => toast.success("Appointment booked successfully!"))
-    //   .catch((err) => toast.error("Appointment booking failed!"));
+    await axios
+      .patch(
+        `http://localhost:8000/api/v1/update-client-details/${userId}`,
+        {
+          firstName: custDetails.firstName,
+          lastName: custDetails.lastName,
+          email: custDetails.email,
+          contactNo: custDetails.contactNo,
+          age: custDetails.age,
+          gender: custDetails.gender,
+          address: custDetails.address,
+          city: custDetails.city,
+          state: custDetails.state,
+          pinCode: custDetails.pinCode,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => toast.success("Appointment booked successfully!"))
+      .catch((err) => toast.error("Appointment booking failed!"));
 
     setCustDetails((prevDetails) => {
       return {

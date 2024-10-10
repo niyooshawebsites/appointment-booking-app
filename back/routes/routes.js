@@ -314,6 +314,10 @@ router.get(
 );
 
 // update client details
-router.patch("/update-client-details", auth, updateClientDetailsController);
+router.patch(
+  "/update-client-details/:userId",
+  auth,
+  updateClientDetailsController
+);
 
 module.exports = router;
