@@ -8,7 +8,7 @@ const ContactForm = () => {
       name: "",
       businessName: "",
       gst: "",
-      contact: "",
+      contactNo: "",
       office: "",
       floor: "",
       building: "",
@@ -46,7 +46,7 @@ const ContactForm = () => {
             name: "",
             businessName: "",
             gst: "",
-            contact: "",
+            contactNo: "",
             office: "",
             floor: "",
             building: "",
@@ -103,7 +103,7 @@ const ContactForm = () => {
                 type="text"
                 autoComplete="on"
                 placeholder="Contact number"
-                value={contactDetails.contact}
+                value={contactDetails.contactNo}
                 onChange={handleChange}
                 minLength={10}
                 maxLength={10}

@@ -102,7 +102,7 @@ const TodayData = () => {
                       </td>
                       <td className="py-2 px-4 text-gray-700">{user.email}</td>
                       <td className="py-2 px-4 text-gray-700">
-                        {user.contact.length > 10 ? "N/A" : user.contact}
+                        {user.contactNo.length > 10 ? "N/A" : user.contactNo}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
                         {moment(user.createdAt).format("DD-MM-YYYY")}

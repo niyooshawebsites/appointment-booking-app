@@ -321,7 +321,7 @@ const updateContactDetailsController = async (req, res) => {
       name,
       businessName,
       gst,
-      contact,
+      contactNo,
       office,
       floor,
       building,
@@ -339,7 +339,7 @@ const updateContactDetailsController = async (req, res) => {
       !name ||
       !businessName ||
       !gst ||
-      !contact ||
+      !contactNo ||
       !office ||
       !floor ||
       !building ||
@@ -362,7 +362,7 @@ const updateContactDetailsController = async (req, res) => {
         name,
         businessName,
         gst,
-        contact,
+        contactNo,
         office,
         floor,
         building,
@@ -619,7 +619,7 @@ const getContactDetailsController = async (req, res) => {
           name: user.name,
           businessName: user.businessName,
           gst: user.gst,
-          contact: user.contact,
+          contactNo: user.contactNo,
           office: user.office,
           floor: user.floor,
           building: user.building,
@@ -656,14 +656,14 @@ const checkUserController = async (req, res) => {
       return res.status(200).json({
         success: true,
         email: user.email,
-        contactNo: user.contact,
+        contactNo: user.contactNo,
         about: user.about,
         services: user.services,
         contact: {
           businessName: user.businessName,
           gst: user.gst,
           email: user.email,
-          contact: user.contact,
+          contactNo: user.contactNo,
           office: user.office,
           floor: user.floor,
           building: user.building,
@@ -1128,7 +1128,7 @@ const updateClientDetailsController = async (req, res) => {
       firstName,
       lastName,
       email,
-      contactNo,
+      contact,
       age,
       gender,
       address,
@@ -1164,7 +1164,7 @@ const updateClientDetailsController = async (req, res) => {
     }
 
     // if contactNo is not provided
-    if (!contactNo) {
+    if (!contact) {
       return res.status(401).json({
         succss: false,
         msg: "Please provide your contact number",
@@ -1237,7 +1237,7 @@ const updateClientDetailsController = async (req, res) => {
         firstName,
         lastName,
         email,
-        contactNo,
+        contact,
         age,
         gender,
         address,
