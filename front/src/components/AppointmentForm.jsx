@@ -169,7 +169,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                 <th className="py-2 px-4 text-left text-gray-600">
                   Clinic Name
                 </th>
-                <th className="py-2 px-4 text-left text-gray-600">Webiste</th>
+                <th className="py-2 px-4 text-left text-gray-600">Profile</th>
                 <th className="py-2 px-4 text-left text-gray-600">Book</th>
               </tr>
             </thead>
@@ -188,17 +188,16 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                     </td>
                     <td className="py-2 px-4 text-left text-gray-600">
                       <Link
-                        className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                        className="text-blue-500"
                         to={`http://localhost:5173/${user.username}`}
                         target="_blank"
                       >
-                        Website
+                        Visit
                       </Link>
                     </td>
-                    {console.log("username", user.username)}
                     <td className="py-2 px-4 text-left text-gray-600">
                       <Link
-                        className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                        className="text-blue-500"
                         customerDashboard={customerDashboard}
                         onClick={() => {
                           dispatch(

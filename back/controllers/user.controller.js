@@ -1098,7 +1098,7 @@ const getAllUsersBySpecificSpecializationController = async (req, res) => {
       specialization,
       isVerified: true,
       role: 1,
-    });
+    }).select("-password");
 
     if (!users) {
       return res.status(204).json({
@@ -1128,7 +1128,7 @@ const updateClientDetailsController = async (req, res) => {
       firstName,
       lastName,
       email,
-      contact,
+      contactNo,
       age,
       gender,
       address,
@@ -1164,7 +1164,7 @@ const updateClientDetailsController = async (req, res) => {
     }
 
     // if contactNo is not provided
-    if (!contact) {
+    if (!contactNo) {
       return res.status(401).json({
         succss: false,
         msg: "Please provide your contact number",
@@ -1221,9 +1221,6 @@ const updateClientDetailsController = async (req, res) => {
 
     const user = await User.findOne({ _id: userId });
 
-    console.log(userId);
-    console.log(user);
-
     if (!user) {
       return res.status(204).json({
         success: false,
@@ -1237,7 +1234,7 @@ const updateClientDetailsController = async (req, res) => {
         firstName,
         lastName,
         email,
-        contact,
+        contactNo,
         age,
         gender,
         address,
@@ -1258,7 +1255,35 @@ const updateClientDetailsController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Data updated successfully",
-      updatedUser,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get client data by userId
+const getParticularClientDataByUserIdController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findOne({ _id: userId }).select(
+      "-password -socialProfiles -name -businessName -office -floor -building -street -locality -district -about -services -gst -createdAt -updatedAt"
+    );
+
+    if (!user) {
+      return res.status(204).json({
+        success: false,
+        msg: "No such client",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Client found",
+      user,
     });
   } catch (err) {
     return res.status(500).json({
@@ -1299,4 +1324,5 @@ module.exports = {
   getTodayUnverifiedUsersController,
   getAllUsersBySpecificSpecializationController,
   updateClientDetailsController,
+  getParticularClientDataByUserIdController,
 };

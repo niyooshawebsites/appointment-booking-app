@@ -30,6 +30,7 @@ const {
   getTodayUnverifiedUsersController,
   getAllUsersBySpecificSpecializationController,
   updateClientDetailsController,
+  getParticularClientDataByUserIdController,
 } = require("../controllers/user.controller");
 
 const {
@@ -318,6 +319,13 @@ router.patch(
   "/update-client-details/:userId",
   auth,
   updateClientDetailsController
+);
+
+// get data related to particular client route -  client
+router.get(
+  "/get-particular-client-data-by-userId/:userId",
+  auth,
+  getParticularClientDataByUserIdController
 );
 
 module.exports = router;

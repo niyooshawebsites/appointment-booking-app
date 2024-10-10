@@ -75,7 +75,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
         },
         { withCredentials: true }
       )
-      .then((res) => toast.success("Appointment booked successfully!"))
+      .then((res) => toast.success(res.data.msg))
       .catch((err) => toast.error("Appointment booking failed!"));
 
     setCustDetails((prevDetails) => {
@@ -108,8 +108,48 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
       .catch((err) => console.log(err));
   };
 
+  // get all the data related to a particular client
+  const getParticularClientDataByUserId = async () => {
+    await axios
+      .get(
+        `http://localhost:8000/api/v1/get-particular-client-data-by-userId/${userId}`,
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setCustDetails((prevDetails) => {
+          return {
+            ...prevDetails,
+            firstName: res.data.user.firstName || "",
+            lastName: res.data.user.lastName || "",
+            email: res.data.user.email || "",
+            contactNo: res.data.user.contactNo || "",
+            age: res.data.user.age || "",
+            gender: res.data.user.gender || "",
+            address: res.data.user.address || "",
+            city: res.data.user.city || "",
+            state: res.data.user.state || "",
+            pinCode: res.data.user.pinCode || "",
+          };
+        });
+      })
+
+      // [custDetails.firstName] = res.data.user.firstName,
+      // [custDetails.lastName] = res.data.user.lastName,
+      // [custDetails.email] = res.data.user.email,
+      // [custDetails.contactNo] = res.data.user.contactNo,
+      // [custDetails.age] = res.data.user.age,
+      // [custDetails.gender] = res.data.user.gender,
+      // [custDetails.address] = res.data.user.address,
+      // [custDetails.city] = res.data.user.city,
+      // [custDetails.state] = res.data.user.state,
+      // [custDetails.pinCode]  = res.data.user.pinCode,
+
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getAllServicesByUsername();
+    getParticularClientDataByUserId();
   }, []);
 
   const currentDate = new Date().toISOString().split("T")[0];
@@ -218,6 +258,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                 onChange={handleChange}
                 placeholder="Email"
                 required
+                readOnly
                 className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
               />
             </div>
