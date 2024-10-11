@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -16,6 +16,8 @@ const DisplayInfo = () => {
   );
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
+  const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
+
   const dispatch = useDispatch();
 
   const handleDelete = async (id) => {
@@ -75,6 +77,23 @@ const DisplayInfo = () => {
       .catch((err) => console.log(err));
   };
 
+  // get appointments count per user
+  const fetchAppointmentsCount = async () => {
+    const counts = {};
+
+    for (const user of allUsers) {
+      const response = await axios.get(
+        `http://localhost:8000/api/v1/get-no-of-appointments-per-user/${user._id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      counts[user._id] = response.data.noOfAppointments;
+    }
+
+    setAppointmentsCountPerUser(counts);
+  };
+
   const handleDetails = async (appointmentId) => {
     await getAParticularAppointmentDetails(appointmentId);
 
@@ -91,6 +110,12 @@ const DisplayInfo = () => {
       })
     );
   };
+
+  useEffect(() => {
+    if (allUsers.length) {
+      fetchAppointmentsCount();
+    }
+  }, [allUsers]);
 
   // show admin info...
   if (role == 1 && isAdmin) {
@@ -114,6 +139,7 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left text-gray-600">Email</th>
               <th className="py-2 px-4 text-left text-gray-600">Contact</th>
               <th className="py-2 px-4 text-left text-gray-600">DOJ</th>
+              <th className="py-2 px-4 text-left text-gray-600">Apps</th>
               <th className="py-2 px-4 text-left text-gray-600">Verified</th>
               <th className="py-2 px-4 text-left text-gray-600">Action</th>
             </tr>
@@ -139,6 +165,9 @@ const DisplayInfo = () => {
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {moment(user.createdAt).format("DD-MM-YYYY")}
+                    </td>
+                    <td className="py-2 px-4 text-gray-700">
+                      {appointmentsCountPerUser[user._id] || 0}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {user.isVerified ? (

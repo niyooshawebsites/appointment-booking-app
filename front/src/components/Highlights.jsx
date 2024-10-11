@@ -91,7 +91,6 @@ const Highlights = () => {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res.data.users);
           dispatch(
             usersDataSliceActions.getUsersData({
               allUsers: res.data.users,

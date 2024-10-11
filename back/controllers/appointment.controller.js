@@ -712,6 +712,36 @@ const checkAppointmentAvailability = async (req, res) => {
   }
 };
 
+// get number of appointments per user controller
+const getNoOfAppointmentsPerUserController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const appointments = await Appointment.countDocuments({ user: userId });
+
+    if (appointments == 0) {
+      return res.status(200).json({
+        success: true,
+        msg: "No appointments for this service provider",
+        noOfAppointments: 0,
+      });
+    }
+
+    if (appointments > 0) {
+      return res.status(200).json({
+        success: true,
+        msg: "No of appointments for this service provider fetched successfully",
+        noOfAppointments: appointments,
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
 module.exports = {
   bookAppointmnentController,
   bookAppointmnentByLoginController,
@@ -725,4 +755,5 @@ module.exports = {
   getTotalAppointmentsCountByUserForClientIdController,
   getAllAppointmentsControllerForClient,
   checkAppointmentAvailability,
+  getNoOfAppointmentsPerUserController,
 };
