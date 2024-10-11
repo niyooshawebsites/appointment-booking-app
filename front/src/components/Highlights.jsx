@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
+import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -87,10 +88,17 @@ const Highlights = () => {
   const getAndPassAllUsers = async () => {
     try {
       await axios
-        .get("http://localhost:8000/api/v1/get-all-users", {
+        .get(`http://localhost:8000/api/v1/get-all-users/1`, {
           withCredentials: true,
         })
         .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              currentPageNo: res.data.currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+
           dispatch(
             usersDataSliceActions.getUsersData({
               allUsers: res.data.users,
@@ -123,7 +131,6 @@ const Highlights = () => {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res.data.users);
           dispatch(
             usersDataSliceActions.getUsersData({
               allUsers: res.data.users,

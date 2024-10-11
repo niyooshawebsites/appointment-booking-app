@@ -694,12 +694,24 @@ const checkUserController = async (req, res) => {
 // get all users controller...
 const getAllUsersController = async (req, res) => {
   try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
     // find all users whose username is not equal to abs
     const users = await User.find({ username: { $ne: "abs" }, role: 1 })
       .select(
         "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
       )
-      .limit(10);
+      .skip(skip)
+      .limit(limit);
+
+    // calc total users to find total number of pages (total users/limit)
+    const totalUsers = await User.countDocuments({
+      username: { $ne: "abs" },
+      role: 1,
+    });
 
     if (!users) {
       return res.status(404).json({
@@ -712,6 +724,8 @@ const getAllUsersController = async (req, res) => {
       success: true,
       msg: "All users found",
       users,
+      totalPages: Math.ceil(totalUsers / limit),
+      currentPageNo,
     });
   } catch (err) {
     return res.status(500).json({

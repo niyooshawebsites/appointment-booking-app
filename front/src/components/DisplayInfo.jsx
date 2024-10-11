@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
+import Pagination from "./Pagination";
 
 const DisplayInfo = () => {
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
@@ -17,6 +18,8 @@ const DisplayInfo = () => {
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
+  const [page, setPage] = useState(1); // Current page
+  const [totalPages, setTotalPages] = useState(1); // Total number of pages
 
   const dispatch = useDispatch();
 
@@ -81,6 +84,7 @@ const DisplayInfo = () => {
   const fetchAppointmentsCount = async () => {
     const counts = {};
 
+    // looping through allUsers
     for (const user of allUsers) {
       const response = await axios.get(
         `http://localhost:8000/api/v1/get-no-of-appointments-per-user/${user._id}`,
@@ -117,6 +121,39 @@ const DisplayInfo = () => {
     }
   }, [allUsers]);
 
+  // get 10 users at a time...
+  const get10UsersAtATime = async (currentPage) => {
+    try {
+      await axios
+        .get(`http://localhost:8000/api/v1/get-all-users/${currentPage}`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+
+          dispatch(
+            dashboardOptionsSliceActions.toggleDashboardOptions({
+              showHighlights: false,
+              showInfo: true,
+              showServices: false,
+              showProfile: false,
+              showAbout: false,
+              showContact: false,
+              showAppointmentDetails: false,
+              showBookAppointment: false,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // show admin info...
   if (role == 1 && isAdmin) {
     return allUsers.length > 0 ? (
@@ -142,6 +179,7 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left text-gray-600">Apps</th>
               <th className="py-2 px-4 text-left text-gray-600">Verified</th>
               <th className="py-2 px-4 text-left text-gray-600">Action</th>
+              <th className="py-2 px-4 text-left text-gray-600">Profile</th>
             </tr>
           </thead>
           <tbody>
@@ -191,11 +229,21 @@ const DisplayInfo = () => {
                         Delete
                       </Link>
                     </td>
+                    <td className="py-2 px-4 text-gray-700">
+                      <Link
+                        to={`http://localhost:5173/${user.username}`}
+                        target="_blank"
+                        className="text-blue-500"
+                      >
+                        Visit
+                      </Link>
+                    </td>
                   </tr>
                 );
               })}
           </tbody>
         </table>
+        <Pagination totalPages={totalPages} />
       </div>
     ) : (
       <div className="w-6/12 py-5 mx-auto">

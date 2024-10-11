@@ -159,7 +159,7 @@ router.get("/checkUser/:username", checkUserController);
 router.get("/reset-password/:email", forgotPasswordController);
 
 // get all users route
-router.get("/get-all-users", auth, isAdmin, getAllUsersController);
+router.get("/get-all-users/:currentPage", auth, isAdmin, getAllUsersController);
 
 // get all verified users route
 router.get(
