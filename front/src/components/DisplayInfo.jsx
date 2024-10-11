@@ -18,8 +18,6 @@ const DisplayInfo = () => {
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
-  const [page, setPage] = useState(1); // Current page
-  const [totalPages, setTotalPages] = useState(1); // Total number of pages
 
   const dispatch = useDispatch();
 
@@ -243,7 +241,7 @@ const DisplayInfo = () => {
               })}
           </tbody>
         </table>
-        <Pagination totalPages={totalPages} />
+        <Pagination />
       </div>
     ) : (
       <div className="w-6/12 py-5 mx-auto">
