@@ -120,7 +120,7 @@ const Header = () => {
                 <img
                   className="h-8 w-auto"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                  alt="Your Company"
+                  alt="Doc App"
                 />
               </Link>
             </div>
@@ -128,7 +128,7 @@ const Header = () => {
               <div className="flex space-x-4 ">
                 {authenticated ? (
                   <>
-                    <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300">
+                    <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
                       Hello, {username}
                     </NavLink>
                     <NavLink
