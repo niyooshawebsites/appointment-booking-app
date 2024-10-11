@@ -454,7 +454,8 @@ const getAllAppointmentsControllerForClient = async (req, res) => {
     const { email } = req.params;
     const appointments = await Appointment.find({ email })
       .limit(10)
-      .sort({ date: -1, time: -1 });
+      .sort({ date: -1, time: -1 })
+      .populate("user");
 
     // fetching unsuccessful
     if (!appointments) {

@@ -456,7 +456,7 @@ const Highlights = () => {
           }
         )
         .then((res) => {
-          console.log(res.data.users);
+          console.log(res.data.appointments);
           dispatch(
             appointmentsDataSliceActions.getAppointmentsData({
               allAppointments: res.data.appointments,

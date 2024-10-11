@@ -277,15 +277,13 @@ const DisplayInfo = () => {
           <thead className="bg-gray-200 border-b border-gray-300">
             <tr>
               <th className="py-2 px-4 text-left text-gray-600">#</th>
-              <th className="py-2 px-4 text-left text-gray-600">Name</th>
-              <th className="py-2 px-4 text-left text-gray-600">Age</th>
-              <th className="py-2 px-4 text-left text-gray-600">Contact</th>
+              <th className="py-2 px-4 text-left text-gray-600">Doctor</th>
+              <th className="py-2 px-4 text-left text-gray-600">Clinic</th>
               <th className="py-2 px-4 text-left text-gray-600">Service</th>
               <th className="py-2 px-4 text-left text-gray-600">Date</th>
               <th className="py-2 px-4 text-left text-gray-600">Time</th>
-              <th className="py-2 px-4 text-left text-gray-600">Gender</th>
               <th className="py-2 px-4 text-left text-gray-600">Payment</th>
-              <th className="py-2 px-4 text-left text-gray-600">Details</th>
+              <th className="py-2 px-4 text-left text-gray-600">Dr. Profile</th>
             </tr>
           </thead>
           <tbody>
@@ -302,13 +300,10 @@ const DisplayInfo = () => {
                   <tr key={appointment._id}>
                     <td className="py-2 px-4 text-gray-700">{index + 1}</td>
                     <td className="py-2 px-4 text-gray-700">
-                      {appointment.firstName}
+                      {appointment.user.name}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      {appointment.age}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.contactNo}
+                      {appointment.user.businessName}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.service}
@@ -320,17 +315,15 @@ const DisplayInfo = () => {
                       {appointment.time}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      {appointment.gender}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
                       {appointment.paymentMethod}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       <Link
                         className="text-blue-500"
-                        onClick={() => handleDetails(appointment._id)}
+                        to={`http://localhost:5173/${appointment.user.username}`}
+                        target="_blank"
                       >
-                        Details
+                        Visit
                       </Link>
                     </td>
                   </tr>
