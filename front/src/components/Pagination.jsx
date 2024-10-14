@@ -1,24 +1,113 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
+import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
+import axios from "axios";
 
 const Pagination = () => {
-  const { currentPageNo, totalPages } = useSelector(
+  const { dataToDisplay, currentPageNo, totalPages } = useSelector(
     (state) => state.pagination_Slice
   );
+
+  const { userId } = useSelector((state) => state.user_Slice);
+  const dispatch = useDispatch();
+
+  const onPageChange = async (currentPageNo) => {
+    if (dataToDisplay == "all users") {
+      await axios
+        .get(`http://localhost:8000/api/v1/get-all-users/${currentPageNo}`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              currentPageNo,
+            })
+          );
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if (dataToDisplay == "all verified users") {
+      await axios
+        .get(
+          `http://localhost:8000/api/v1/get-all-verified-users/${userId}/${currentPageNo}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              currentPageNo,
+            })
+          );
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if (dataToDisplay == "all unverified users") {
+      await axios
+        .get(
+          `http://localhost:8000/api/v1/get-all-unverified-users/${currentPageNo}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              currentPageNo,
+            })
+          );
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
   const handlePrevious = () => {
     if (currentPageNo > 1) {
       onPageChange(currentPageNo - 1);
+      dispatch(
+        paginationSliceActions.setPaginationDetails({
+          currentPageNo: currentPageNo - 1,
+        })
+      );
     }
   };
 
   const handleNext = () => {
     if (currentPageNo < totalPages) {
       onPageChange(currentPageNo + 1);
+      dispatch(
+        paginationSliceActions.setPaginationDetails({
+          currentPageNo: currentPageNo + 1,
+        })
+      );
     }
   };
 
-  const handlePageClick = (page) => {
-    onPageChange(page);
+  const handlePageClick = (currentPageNo) => {
+    onPageChange(currentPageNo);
+    dispatch(
+      paginationSliceActions.setPaginationDetails({
+        currentPageNo,
+      })
+    );
   };
 
   const renderPageNumbers = () => {
@@ -27,7 +116,14 @@ const Pagination = () => {
       pages.push(
         <button
           key={i}
-          onClick={() => handlePageClick(i)}
+          onClick={() => {
+            dispatch(
+              paginationSliceActions.setPaginationDetails({
+                currentPageNo: i,
+              })
+            );
+            handlePageClick(i);
+          }}
           className={`mx-1 px-3 py-1 rounded ${
             currentPageNo === i
               ? "bg-blue-500 text-white"

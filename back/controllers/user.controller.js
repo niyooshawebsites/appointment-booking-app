@@ -738,11 +738,26 @@ const getAllUsersController = async (req, res) => {
 
 // get all verified users controller...
 const getAllVerifiedUsersController = async (req, res) => {
-  const { userId } = req.params;
+  const { currentPage, userId } = req.params;
+  const limit = 10;
+  const currentPageNo = parseInt(currentPage) || 1;
+  const skip = (currentPageNo - 1) * limit;
   try {
     const users = await User.find({
       isVerified: true,
       _id: { $ne: userId },
+      role: 1,
+    })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total users to find total number of pages (total users/limit)
+    const totalUsers = await User.countDocuments({
+      username: { $ne: "abs" },
+      isVerified: true,
       role: 1,
     });
 
@@ -757,6 +772,8 @@ const getAllVerifiedUsersController = async (req, res) => {
       success: true,
       msg: "Verified users fetched successfully",
       users,
+      totalPages: Math.ceil(totalUsers / limit),
+      currentPageNo,
     });
   } catch (err) {
     return res.status(500).json({
@@ -769,7 +786,23 @@ const getAllVerifiedUsersController = async (req, res) => {
 // get all unverified users controller...
 const getAllUnverifiedUsersController = async (req, res) => {
   try {
-    const users = await User.find({ isVerified: false, role: 1 });
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
+    const users = await User.find({ isVerified: false, role: 1 })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total users to find total number of pages (total users/limit)
+    const totalUsers = await User.countDocuments({
+      isVerified: false,
+      role: 1,
+    });
 
     if (!users) {
       return res.status(404).json({
@@ -782,6 +815,8 @@ const getAllUnverifiedUsersController = async (req, res) => {
       success: true,
       msg: "Unverified users fetched successfully",
       users,
+      totalPages: Math.ceil(totalUsers / limit),
+      currentPageNo,
     });
   } catch (err) {
     return res.status(500).json({

@@ -163,7 +163,7 @@ router.get("/get-all-users/:currentPage", auth, isAdmin, getAllUsersController);
 
 // get all verified users route
 router.get(
-  "/get-all-verified-users/:userId",
+  "/get-all-verified-users/:userId/:currentPage",
   auth,
   isAdmin,
   getAllVerifiedUsersController
@@ -171,7 +171,7 @@ router.get(
 
 // get all unverified users route
 router.get(
-  "/get-all-unverified-users",
+  "/get-all-unverified-users/:currentPage",
   auth,
   isAdmin,
   getAllUnverifiedUsersController

@@ -119,39 +119,6 @@ const DisplayInfo = () => {
     }
   }, [allUsers]);
 
-  // get 10 users at a time...
-  const get10UsersAtATime = async (currentPage) => {
-    try {
-      await axios
-        .get(`http://localhost:8000/api/v1/get-all-users/${currentPage}`, {
-          withCredentials: true,
-        })
-        .then((res) => {
-          dispatch(
-            usersDataSliceActions.getUsersData({
-              allUsers: res.data.users,
-            })
-          );
-
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showInfo: true,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   // show admin info...
   if (role == 1 && isAdmin) {
     return allUsers.length > 0 ? (

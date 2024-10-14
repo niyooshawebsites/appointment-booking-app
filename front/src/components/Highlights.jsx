@@ -32,6 +32,7 @@ const Highlights = () => {
   const { email, userId, role, isAdmin } = useSelector(
     (state) => state.user_Slice
   );
+
   const dispatch = useDispatch();
 
   // ADMIN APIS.....
@@ -94,6 +95,7 @@ const Highlights = () => {
         .then((res) => {
           dispatch(
             paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all users",
               currentPageNo: res.data.currentPageNo,
               totalPages: res.data.totalPages,
             })
@@ -127,10 +129,21 @@ const Highlights = () => {
   const getAndPassAllVerifiedUsers = async () => {
     try {
       await axios
-        .get(`http://localhost:8000/api/v1/get-all-verified-users/${userId}`, {
-          withCredentials: true,
-        })
+        .get(
+          `http://localhost:8000/api/v1/get-all-verified-users/${userId}/1`,
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all verified users",
+              currentPageNo: res.data.currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+
           dispatch(
             usersDataSliceActions.getUsersData({
               allUsers: res.data.users,
@@ -159,11 +172,18 @@ const Highlights = () => {
   const getAndPassAllUnverifiedUsers = async () => {
     try {
       await axios
-        .get("http://localhost:8000/api/v1/get-all-unverified-users", {
+        .get(`http://localhost:8000/api/v1/get-all-unverified-users/1`, {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res.data.users);
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all unverified users",
+              currentPageNo: res.data.currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+
           dispatch(
             usersDataSliceActions.getUsersData({
               allUsers: res.data.users,
