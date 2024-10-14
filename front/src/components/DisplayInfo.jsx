@@ -18,6 +18,7 @@ const DisplayInfo = () => {
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
+  const [dataChange, setDatachange] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -208,7 +209,7 @@ const DisplayInfo = () => {
               })}
           </tbody>
         </table>
-        <Pagination />
+        <Pagination dataChange={dataChange} setDatachange={setDatachange} />
       </div>
     ) : (
       <div className="w-6/12 py-5 mx-auto">

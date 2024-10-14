@@ -1,11 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 
-const Pagination = () => {
-  const [dataChange, setDatachange] = useState(false);
+const Pagination = ({ dataChange, setDatachange }) => {
   const { dataToDisplay, currentPageNo, totalPages } = useSelector(
     (state) => state.pagination_Slice
   );
@@ -83,7 +82,7 @@ const Pagination = () => {
 
   useEffect(() => {
     onPageChange;
-  }, [dataChange]);
+  }, [dataToDisplay, currentPageNo]);
 
   const handlePrevious = () => {
     if (currentPageNo > 1) {
@@ -94,11 +93,14 @@ const Pagination = () => {
       );
 
       setDatachange(!dataChange);
+
+      console.log(currentPageNo);
     }
   };
 
   const handleNext = () => {
     if (currentPageNo < totalPages) {
+      console.log(currentPageNo);
       dispatch(
         paginationSliceActions.setPaginationDetails({
           currentPageNo: currentPageNo + 1,
@@ -106,6 +108,7 @@ const Pagination = () => {
       );
 
       setDatachange(!dataChange);
+      console.log(currentPageNo);
     }
   };
 
@@ -117,6 +120,7 @@ const Pagination = () => {
     );
 
     setDatachange(!dataChange);
+    console.log(currentPageNo);
   };
 
   const renderPageNumbers = () => {
@@ -131,6 +135,7 @@ const Pagination = () => {
                 currentPageNo: i,
               })
             );
+            setDatachange(!dataChange);
             handlePageClick(i);
           }}
           className={`mx-1 px-3 py-1 rounded ${

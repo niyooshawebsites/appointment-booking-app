@@ -19,7 +19,6 @@ const Profile = () => {
     setNewConfirmPassword(e.target.value);
   };
 
-  console.log(showNewPassword);
   const toggleNewPassword = () => {
     setShowNewPassword((prevSate) => !prevSate);
   };
