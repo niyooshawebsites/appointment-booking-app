@@ -1,9 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Pagination = () => {
+  const [dataChange, setDatachange] = useState(false);
   const { dataToDisplay, currentPageNo, totalPages } = useSelector(
     (state) => state.pagination_Slice
   );
@@ -79,35 +81,42 @@ const Pagination = () => {
     }
   };
 
+  useEffect(() => {
+    onPageChange;
+  }, [dataChange]);
+
   const handlePrevious = () => {
     if (currentPageNo > 1) {
-      onPageChange(currentPageNo - 1);
       dispatch(
         paginationSliceActions.setPaginationDetails({
           currentPageNo: currentPageNo - 1,
         })
       );
+
+      setDatachange(!dataChange);
     }
   };
 
   const handleNext = () => {
     if (currentPageNo < totalPages) {
-      onPageChange(currentPageNo + 1);
       dispatch(
         paginationSliceActions.setPaginationDetails({
           currentPageNo: currentPageNo + 1,
         })
       );
+
+      setDatachange(!dataChange);
     }
   };
 
   const handlePageClick = (currentPageNo) => {
-    onPageChange(currentPageNo);
     dispatch(
       paginationSliceActions.setPaginationDetails({
         currentPageNo,
       })
     );
+
+    setDatachange(!dataChange);
   };
 
   const renderPageNumbers = () => {
