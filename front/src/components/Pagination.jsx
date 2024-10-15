@@ -1,10 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
-import { useEffect } from "react";
 import axios from "axios";
 
-const Pagination = ({ dataChange, setDatachange }) => {
+const Pagination = () => {
   const { dataToDisplay, currentPageNo, totalPages } = useSelector(
     (state) => state.pagination_Slice
   );
@@ -21,7 +20,9 @@ const Pagination = ({ dataChange, setDatachange }) => {
         .then((res) => {
           dispatch(
             paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all users",
               currentPageNo,
+              totalPages: res.data.totalPages,
             })
           );
           dispatch(
@@ -44,7 +45,9 @@ const Pagination = ({ dataChange, setDatachange }) => {
         .then((res) => {
           dispatch(
             paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all verified users",
               currentPageNo,
+              totalPages: res.data.totalPages,
             })
           );
           dispatch(
@@ -67,7 +70,9 @@ const Pagination = ({ dataChange, setDatachange }) => {
         .then((res) => {
           dispatch(
             paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all unverified users",
               currentPageNo,
+              totalPages: res.data.totalPages,
             })
           );
           dispatch(
@@ -80,47 +85,38 @@ const Pagination = ({ dataChange, setDatachange }) => {
     }
   };
 
-  useEffect(() => {
-    onPageChange;
-  }, [dataToDisplay, currentPageNo]);
-
-  const handlePrevious = () => {
+  const handlePrevious = async () => {
     if (currentPageNo > 1) {
       dispatch(
         paginationSliceActions.setPaginationDetails({
           currentPageNo: currentPageNo - 1,
         })
       );
-
-      setDatachange(!dataChange);
-
-      console.log(currentPageNo);
+      onPageChange(currentPageNo - 1);
+      renderPageNumbers();
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentPageNo < totalPages) {
-      console.log(currentPageNo);
       dispatch(
         paginationSliceActions.setPaginationDetails({
           currentPageNo: currentPageNo + 1,
         })
       );
-
-      setDatachange(!dataChange);
-      console.log(currentPageNo);
+      onPageChange(currentPageNo + 1);
+      renderPageNumbers();
     }
   };
 
-  const handlePageClick = (currentPageNo) => {
+  const handlePageClick = async (currentPageNo) => {
     dispatch(
       paginationSliceActions.setPaginationDetails({
         currentPageNo,
       })
     );
-
-    setDatachange(!dataChange);
-    console.log(currentPageNo);
+    onPageChange(currentPageNo);
+    renderPageNumbers();
   };
 
   const renderPageNumbers = () => {
@@ -135,7 +131,6 @@ const Pagination = ({ dataChange, setDatachange }) => {
                 currentPageNo: i,
               })
             );
-            setDatachange(!dataChange);
             handlePageClick(i);
           }}
           className={`mx-1 px-3 py-1 rounded ${
