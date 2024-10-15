@@ -18,7 +18,6 @@ const DisplayInfo = () => {
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
-  const [dataChange, setDatachange] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -115,7 +114,7 @@ const DisplayInfo = () => {
   };
 
   useEffect(() => {
-    if (allUsers.length) {
+    if (role == 1 && isAdmin && allUsers.length) {
       fetchAppointmentsCount();
     }
   }, [allUsers]);
@@ -209,7 +208,7 @@ const DisplayInfo = () => {
               })}
           </tbody>
         </table>
-        <Pagination dataChange={dataChange} setDatachange={setDatachange} />
+        <Pagination />
       </div>
     ) : (
       <div className="w-6/12 py-5 mx-auto">
@@ -296,6 +295,7 @@ const DisplayInfo = () => {
               })}
           </tbody>
         </table>
+        <Pagination />
       </div>
     ) : (
       <div className="w-6/12 py-5 mx-auto">
@@ -304,6 +304,7 @@ const DisplayInfo = () => {
     );
   }
 
+  // show client info
   if (role == 0 && isAdmin == false) {
     return allAppointments.length > 0 ? (
       <div className="mx-auto">
@@ -374,6 +375,7 @@ const DisplayInfo = () => {
               })}
           </tbody>
         </table>
+        <Pagination />
       </div>
     ) : (
       <div className="w-6/12 py-5 mx-auto">

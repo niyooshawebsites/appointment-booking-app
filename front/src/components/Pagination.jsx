@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
+import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import axios from "axios";
 
@@ -12,6 +13,7 @@ const Pagination = () => {
   const dispatch = useDispatch();
 
   const onPageChange = async (currentPageNo) => {
+    // ADMIN...
     if (dataToDisplay == "all users") {
       await axios
         .get(`http://localhost:8000/api/v1/get-all-users/${currentPageNo}`, {
@@ -83,6 +85,131 @@ const Pagination = () => {
         })
         .catch((err) => console.log(err));
     }
+
+    if (dataToDisplay == "today's all users") {
+      await axios
+        .get(`http://localhost:8000/api/v1/get-today-users/${currentPageNo}`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "today's all users",
+              currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if (dataToDisplay == "today's all verified users") {
+      await axios
+        .get(
+          `http://localhost:8000/api/v1/get-today-verified-users/${currentPageNo}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "today's all verified users",
+              currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if (dataToDisplay == "today's all unverified users") {
+      await axios
+        .get(
+          `http://localhost:8000/api/v1/get-today-unverified-users/${currentPageNo}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "today's all unverified users",
+              currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.users,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+
+    // USERS...
+    if (dataToDisplay == "all appointments for a specific user") {
+      await axios
+        .get(
+          `http://localhost:8000/api/v1/get-all-appointments-by-userId/${userId}/${currentPageNo}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all appointments for a specific user",
+              currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+          dispatch(
+            appointmentsDataSliceActions.getAppointmentsData({
+              allAppointments: res.data.appointments,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if (dataToDisplay == "today's all appointments for a specific user") {
+      await axios
+        .get(
+          `http://localhost:8000/api/v1/get-today-appointments-by-userId/${userId}/${currentPageNo}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "today's all appointments for a specific user",
+              currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+          dispatch(
+            appointmentsDataSliceActions.getAppointmentsData({
+              allAppointments: res.data.appointments,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+
+    // CLIENTS...
   };
 
   const handlePrevious = async () => {

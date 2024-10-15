@@ -99,7 +99,7 @@ router.post(
 
 // fetch all appointments by userId route
 router.get(
-  "/get-all-appointments-by-userId/:userId",
+  "/get-all-appointments-by-userId/:userId/:currentPage",
   auth,
   isServiceProvider,
   getAllAppointmentsController
@@ -182,18 +182,23 @@ router.delete("/delete-user/:id", auth, isAdmin, deleteUserController);
 
 // today's appointment by userId route
 router.get(
-  "/get-today-appointments-by-userId/:userId",
+  "/get-today-appointments-by-userId/:userId/:currentPage",
   auth,
   isServiceProvider,
   getTodayAppointmentsByUsernameController
 );
 
 // today's users route
-router.get("/get-today-users", auth, isAdmin, getUsersByDateController);
+router.get(
+  "/get-today-users/:currentPage",
+  auth,
+  isAdmin,
+  getUsersByDateController
+);
 
 // today's verified users route
 router.get(
-  "/get-today-verified-users",
+  "/get-today-verified-users/:currentPage",
   auth,
   isAdmin,
   getTodayVerifiedUsersController
@@ -201,7 +206,7 @@ router.get(
 
 // today's unverified users route
 router.get(
-  "/get-today-unverified-users",
+  "/get-today-unverified-users/:currentPage",
   auth,
   isAdmin,
   getTodayUnverifiedUsersController

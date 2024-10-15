@@ -862,6 +862,11 @@ const deleteUserController = async (req, res) => {
 // get todays users controller
 const getUsersByDateController = async (req, res) => {
   try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
     // getting todays start time using moment js
     const startOfDay = moment().startOf("day").toDate().toISOString();
 
@@ -875,7 +880,21 @@ const getUsersByDateController = async (req, res) => {
         $lte: endOfDay,
       },
       role: 1,
-    }).select("-password");
+    })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total users to find total number of pages (total users/limit)
+    const totalUsers = await User.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      role: 1,
+    });
 
     if (!users) {
       return res.status(404).json({
@@ -888,6 +907,8 @@ const getUsersByDateController = async (req, res) => {
       success: true,
       msg: "Today's users found successfully",
       users,
+      totalPages: Math.ceil(totalUsers / limit),
+      currentPageNo,
     });
   } catch (err) {
     return res.status(500).json({
@@ -900,6 +921,11 @@ const getUsersByDateController = async (req, res) => {
 // get today's verified users controller
 const getTodayVerifiedUsersController = async (req, res) => {
   try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
     // getting todays start time using moment js
     const startOfDay = moment().startOf("day").toDate().toISOString();
 
@@ -914,7 +940,22 @@ const getTodayVerifiedUsersController = async (req, res) => {
       },
       isVerified: true,
       role: 1,
-    }).select("-password");
+    })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total users to find total number of pages (total users/limit)
+    const totalUsers = await User.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      isVerified: true,
+      role: 1,
+    });
 
     if (!users) {
       return res.status(404).json({
@@ -927,6 +968,8 @@ const getTodayVerifiedUsersController = async (req, res) => {
       success: true,
       msg: "Today's users found successfully",
       users,
+      totalPages: Math.ceil(totalUsers / limit),
+      currentPageNo,
     });
   } catch (err) {
     return res.status(500).json({
@@ -939,6 +982,11 @@ const getTodayVerifiedUsersController = async (req, res) => {
 // get today's unverified users controller
 const getTodayUnverifiedUsersController = async (req, res) => {
   try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
     // getting todays start time using moment js
     const startOfDay = moment().startOf("day").toDate().toISOString();
 
@@ -953,7 +1001,22 @@ const getTodayUnverifiedUsersController = async (req, res) => {
       },
       isVerified: false,
       role: 1,
-    }).select("-password");
+    })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total users to find total number of pages (total users/limit)
+    const totalUsers = await User.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      isVerified: false,
+      role: 1,
+    });
 
     if (!users) {
       return res.status(404).json({
@@ -966,6 +1029,8 @@ const getTodayUnverifiedUsersController = async (req, res) => {
       success: true,
       msg: "Today's users found successfully",
       users,
+      totalPages: Math.ceil(totalUsers / limit),
+      currentPageNo,
     });
   } catch (err) {
     return res.status(500).json({

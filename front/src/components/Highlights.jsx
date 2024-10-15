@@ -266,11 +266,18 @@ const Highlights = () => {
   const getAndPassTodayUsers = async () => {
     try {
       await axios
-        .get("http://localhost:8000/api/v1/get-today-users", {
+        .get(`http://localhost:8000/api/v1/get-today-users/1`, {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res.data.users);
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "today's all users",
+              currentPageNo: res.data.currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+
           dispatch(
             usersDataSliceActions.getUsersData({
               allUsers: res.data.users,
@@ -299,11 +306,18 @@ const Highlights = () => {
   const getAndPassTodayVerifiedUsers = async () => {
     try {
       await axios
-        .get("http://localhost:8000/api/v1/get-today-verified-users", {
+        .get(`http://localhost:8000/api/v1/get-today-verified-users/1`, {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res.data.users);
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "today's all verified users",
+              currentPageNo: res.data.currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+
           dispatch(
             usersDataSliceActions.getUsersData({
               allUsers: res.data.users,
@@ -332,11 +346,18 @@ const Highlights = () => {
   const getAndPassTodayUnverifiedUsers = async () => {
     try {
       await axios
-        .get("http://localhost:8000/api/v1/get-today-unverified-users", {
+        .get(`http://localhost:8000/api/v1/get-today-unverified-users/1`, {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res.data.users);
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "today's all unverified users",
+              currentPageNo: res.data.currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+
           dispatch(
             usersDataSliceActions.getUsersData({
               allUsers: res.data.users,
@@ -391,12 +412,20 @@ const Highlights = () => {
     try {
       await axios
         .get(
-          `http://localhost:8000/api/v1/get-all-appointments-by-userId/${userId}`,
+          `http://localhost:8000/api/v1/get-all-appointments-by-userId/${userId}/1`,
           {
             withCredentials: true,
           }
         )
         .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all appointments for a specific user",
+              currentPageNo: res.data.currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+
           dispatch(
             appointmentsDataSliceActions.getAppointmentsData({
               allAppointments: res.data.appointments,
@@ -427,12 +456,20 @@ const Highlights = () => {
     try {
       await axios
         .get(
-          `http://localhost:8000/api/v1/get-today-appointments-by-userId/${userId}`,
+          `http://localhost:8000/api/v1/get-today-appointments-by-userId/${userId}/1`,
           {
             withCredentials: true,
           }
         )
         .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "today's all appointments for a specific user",
+              currentPageNo: res.data.currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+
           dispatch(
             appointmentsDataSliceActions.getAppointmentsData({
               allAppointments: res.data.appointments,

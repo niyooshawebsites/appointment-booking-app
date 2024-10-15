@@ -416,12 +416,20 @@ const bookAppointmnentByLoginController = async (req, res) => {
 // get all Apponitments controller filer by userid for a specific service provider
 const getAllAppointmentsController = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { userId, currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
     const appointments = await Appointment.find({ user: userId })
-      .limit(10)
+      .skip(skip)
+      .limit(limit)
       .sort({ date: -1, time: -1 });
 
-    console.log(appointments);
+    // calc total users to find total number of pages (total appointments/limit)
+    const totalAppointments = await Appointment.countDocuments({
+      user: userId,
+    });
 
     // fetching unsuccessful
     if (!appointments) {
@@ -437,6 +445,8 @@ const getAllAppointmentsController = async (req, res) => {
         success: true,
         msg: "Appointments fetched successfully",
         appointments,
+        currentPageNo,
+        totalPages: Math.ceil(totalAppointments / limit),
       });
     }
   } catch (err) {
@@ -485,23 +495,29 @@ const getAllAppointmentsControllerForClient = async (req, res) => {
 // get today's appointments filter by userId - for service provider
 const getTodayAppointmentsByUsernameController = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { userId, currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
 
     // getting today's date
     const todayDate = moment(Date.now()).format("YYYY-MM-DD");
 
     const filteredAppointments = await Appointment.find({
       date: todayDate,
-    }).populate("user");
-
-    console.log(filteredAppointments);
+    })
+      .skip(skip)
+      .limit(limit)
+      .sort({ date: -1, time: -1 })
+      .populate("user");
 
     // Filter appointments by username
     const appointments = filteredAppointments.filter(
       (appointment) => appointment.user == userId
     );
 
-    console.log(appointments);
+    // calc total users to find total number of pages (total appointments/limit)
+    const totalPages = appointments.length;
 
     if (!appointments) {
       return res.status(204).json({
@@ -514,6 +530,8 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
       success: true,
       msg: "Today's appointments found successfully",
       appointments,
+      totalPages,
+      currentPageNo,
     });
   } catch (err) {
     return res.status(500).json({
