@@ -513,13 +513,20 @@ const Highlights = () => {
     try {
       await axios
         .get(
-          `http://localhost:8000/api/v1/get-all-appointments-for-client/${email}`,
+          `http://localhost:8000/api/v1/get-all-appointments-for-client/${email}/1`,
           {
             withCredentials: true,
           }
         )
         .then((res) => {
-          console.log(res.data.appointments);
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all appointments for a specific client",
+              currentPageNo: res.data.currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+
           dispatch(
             appointmentsDataSliceActions.getAppointmentsData({
               allAppointments: res.data.appointments,

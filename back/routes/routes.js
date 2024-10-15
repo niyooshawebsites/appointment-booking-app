@@ -309,14 +309,14 @@ router.get(
 
 // get all appointments - filter by userId for a particular client
 router.get(
-  "/get-all-appointments-for-client/:email",
+  "/get-all-appointments-for-client/:email/:currentPage",
   auth,
   getAllAppointmentsControllerForClient
 );
 
-// get all users by specific specialization
+// get all users by specific specialization - for client
 router.get(
-  "/get-all-users-by-specific-specialization/:specialization",
+  "/get-all-users-by-specific-specialization/:specialization/:currentPage",
   auth,
   getAllUsersBySpecificSpecializationController
 );

@@ -5,15 +5,18 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
+import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
+import { specializationSliceActions } from "../store/slices/SpecializationSlice";
 
 const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const { userId } = useSelector((state) => state.user_Slice);
+  const { specialization, usersBySpecialization } = useSelector(
+    (state) => state.specialization_Slice
+  );
   const path = window.location.pathname;
   let username = path.split("/")[1];
   const dispatch = useDispatch();
-
   const [services, setServices] = useState([]);
-
   const [custDetails, setCustDetails] = useState(() => {
     return {
       service: "",
@@ -33,20 +36,31 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       serviceProvider,
     };
   });
-
   const [payOnline, setPayOnline] = useState(false);
-  const [specialization, setSpecialization] = useState("Cardiologist");
   const [isSpecializationChnaged, setIsSpecializationChnaged] = useState(false);
-  const [usersBySpecialization, setUsersBySpecialization] = useState([]);
 
   // get all the users by a specific specialization
   const getAllUsersBySpecificSpecialization = async () => {
     await axios
       .get(
-        `http://localhost:8000/api/v1/get-all-users-by-specific-specialization/${specialization}`,
+        `http://localhost:8000/api/v1/get-all-users-by-specific-specialization/${specialization}/1`,
         { withCredentials: true }
       )
-      .then((res) => setUsersBySpecialization(res.data.users))
+      .then((res) => {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all users with a specific specialization",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
+
+        dispatch(
+          specializationSliceActions.changeSpecialization({
+            usersBySpecialization: res.data.users,
+          })
+        );
+      })
       .catch((err) => console.log(err));
   };
 
@@ -70,7 +84,11 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   }, [isSpecializationChnaged]);
 
   const handleChangeSpecialization = async (e) => {
-    setSpecialization(e.target.value);
+    dispatch(
+      specializationSliceActions.changeSpecialization({
+        specialization: e.target.value,
+      })
+    );
     setIsSpecializationChnaged((prevState) => !prevState);
   };
 

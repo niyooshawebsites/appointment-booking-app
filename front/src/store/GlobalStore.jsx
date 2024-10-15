@@ -6,6 +6,7 @@ import dashboardOptionsSliceReducers from "./slices/DashboardOptionsSlice";
 import usersDataSliceReducers from "./slices/UsersDataSlice";
 import appointmentsDataSliceReducers from "./slices/AppintmentsDataSlice";
 import paginationSliceReducers from "./slices/PaginationDataSlice";
+import specializationSliceReducers from "./slices/SpecializationSlice";
 
 const GlobalStore = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const GlobalStore = configureStore({
     users_Data_Slice: usersDataSliceReducers,
     appointments_Data_Slice: appointmentsDataSliceReducers,
     pagination_Slice: paginationSliceReducers,
+    specialization_Slice: specializationSliceReducers,
   },
 });
 

@@ -9,7 +9,9 @@ const Pagination = () => {
     (state) => state.pagination_Slice
   );
 
-  const { userId } = useSelector((state) => state.user_Slice);
+  const { specialization } = useSelector((state) => state.specialization_Slice);
+
+  const { userId, email } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
 
   const onPageChange = async (currentPageNo) => {
@@ -210,6 +212,55 @@ const Pagination = () => {
     }
 
     // CLIENTS...
+    if (dataToDisplay == "all appointments for a specific client") {
+      await axios
+        .get(
+          `http://localhost:8000/api/v1/get-all-appointments-for-client/${email}/${currentPageNo}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all appointments for a specific client",
+              currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+          dispatch(
+            appointmentsDataSliceActions.getAppointmentsData({
+              allAppointments: res.data.appointments,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if (dataToDisplay == "all users with a specific specialization") {
+      await axios
+        .get(
+          `http://localhost:8000/api/v1/get-all-users-by-specific-specialization/${specialization}/${currentPageNo}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          dispatch(
+            paginationSliceActions.setPaginationDetails({
+              dataToDisplay: "all users with a specific specialization",
+              currentPageNo,
+              totalPages: res.data.totalPages,
+            })
+          );
+          dispatch(
+            appointmentsDataSliceActions.getAppointmentsData({
+              allAppointments: res.data.appointments,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const handlePrevious = async () => {

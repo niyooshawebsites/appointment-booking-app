@@ -1207,12 +1207,22 @@ const getTodayTotalUnverifiedUsersCountController = async (req, res) => {
 // get All users by Specialization - for client
 const getAllUsersBySpecificSpecializationController = async (req, res) => {
   try {
-    const { specialization } = req.params;
+    const { specialization, currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
     const users = await User.find({
       specialization,
       isVerified: true,
       role: 1,
     }).select("-password");
+
+    const totalUsers = await User.countDocuments({
+      specialization,
+      isVerified: true,
+      role: 1,
+    });
 
     if (!users) {
       return res.status(204).json({
@@ -1225,6 +1235,8 @@ const getAllUsersBySpecificSpecializationController = async (req, res) => {
       success: true,
       msg: "All users found with specialization",
       users,
+      currentPageNo,
+      totalPages: Math.ceil(totalUsers / limit),
     });
   } catch (err) {
     return res.status(500).json({

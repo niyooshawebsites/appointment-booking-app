@@ -461,11 +461,18 @@ const getAllAppointmentsController = async (req, res) => {
 // get all Apponitments controller filer by userid for a specific client
 const getAllAppointmentsControllerForClient = async (req, res) => {
   try {
-    const { email } = req.params;
+    const { email, currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
     const appointments = await Appointment.find({ email })
-      .limit(10)
+      .skip(skip)
+      .limit(limit)
       .sort({ date: -1, time: -1 })
       .populate("user");
+
+    // calc total number of pages (totalAppointments/limit)
+    const totalAppointments = await Appointment.countDocuments({ email });
 
     // fetching unsuccessful
     if (!appointments) {
@@ -481,6 +488,8 @@ const getAllAppointmentsControllerForClient = async (req, res) => {
         success: true,
         msg: "Appointments fetched successfully",
         appointments,
+        currentPageNo,
+        totalPages: Math.ceil(totalAppointments / limit),
       });
     }
   } catch (err) {
