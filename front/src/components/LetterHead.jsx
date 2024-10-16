@@ -15,10 +15,14 @@ const LetterHead = () => {
   };
 
   return (
-    <>
-      <button onClick={reactToPrintFn}>Print</button>
+    <div className="m-4">
+      <div className="flex justify-end">
+        <button onClick={reactToPrintFn} className="text-blue-500">
+          Print
+        </button>
+      </div>
       <div
-        className="flex flex-col border p-5"
+        className="flex flex-col border border-b border-slate-500 p-5"
         ref={contentRef}
         style={myStyle}
       >
@@ -72,8 +76,9 @@ const LetterHead = () => {
           <h1 className="mt-3 text-center text-2xl underline">Prescription</h1>
           <div className="h-96 w-full"></div>
         </section>
-        <hr />
+
         <footer className="flex flex-col">
+          <hr />
           <div className="flex justify-evenly py-2">
             <div>
               <span className="font-bold">Website</span>: www.docapp/username
@@ -97,7 +102,7 @@ const LetterHead = () => {
           </div>
         </footer>
       </div>
-    </>
+    </div>
   );
 };
 
