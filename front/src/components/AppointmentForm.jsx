@@ -195,77 +195,89 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
             <option value="Urologist">Urologist</option>
           </select>
 
-          <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
-            <thead className="bg-gray-200 border-b border-gray-300">
-              <tr>
-                <th className="py-2 px-4 text-left text-gray-600">#</th>
-                <th className="py-2 px-4 text-left text-gray-600">DR. Name</th>
-                <th className="py-2 px-4 text-left text-gray-600">
-                  Clinic Name
-                </th>
-                <th className="py-2 px-4 text-left text-gray-600">Profile</th>
-                <th className="py-2 px-4 text-left text-gray-600">Book</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usersBySpecialization.map((user, index) => {
-                return (
-                  <tr key={user._id}>
-                    <td className="py-2 px-4 text-left text-gray-600">
-                      {index + 1}
-                    </td>
-                    <td className="py-2 px-4 text-left text-gray-600">
-                      DR. {user.name}
-                    </td>
-                    <td className="py-2 px-4 text-left text-gray-600">
-                      {user.businessName}
-                    </td>
-                    <td className="py-2 px-4 text-left text-gray-600">
-                      <Link
-                        className="text-blue-500"
-                        to={`http://localhost:5173/${user.username}`}
-                        target="_blank"
-                      >
-                        Visit
-                      </Link>
-                    </td>
-                    <td className="py-2 px-4 text-left text-gray-600">
-                      <Link
-                        className="text-blue-500"
-                        customerDashboard={customerDashboard}
-                        onClick={() => {
-                          dispatch(
-                            appointmentSliceActions.appointmentDetails({
-                              username: user.username,
-                            })
-                          );
-
-                          dispatch(
-                            dashboardOptionsSliceActions.toggleDashboardOptions(
-                              {
-                                showHighlights: false,
-                                showInfo: false,
-                                showServices: false,
-                                showProfile: false,
-                                showAbout: false,
-                                showContact: false,
-                                showAppointmentDetails: false,
-                                showBookAppointment: true,
-                                loginBooking: true,
-                              }
-                            )
-                          );
-                        }}
-                      >
-                        Book
-                      </Link>
-                    </td>
+          {usersBySpecialization.length > 0 ? (
+            <>
+              <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
+                <thead className="bg-gray-200 border-b border-gray-300">
+                  <tr>
+                    <th className="py-2 px-4 text-left text-gray-600">#</th>
+                    <th className="py-2 px-4 text-left text-gray-600">
+                      DR. Name
+                    </th>
+                    <th className="py-2 px-4 text-left text-gray-600">
+                      Clinic Name
+                    </th>
+                    <th className="py-2 px-4 text-left text-gray-600">
+                      Profile
+                    </th>
+                    <th className="py-2 px-4 text-left text-gray-600">Book</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <Pagination />
+                </thead>
+                <tbody>
+                  {usersBySpecialization.map((user, index) => {
+                    return (
+                      <tr key={user._id}>
+                        <td className="py-2 px-4 text-left text-gray-600">
+                          {index + 1}
+                        </td>
+                        <td className="py-2 px-4 text-left text-gray-600">
+                          DR. {user.name}
+                        </td>
+                        <td className="py-2 px-4 text-left text-gray-600">
+                          {user.businessName}
+                        </td>
+                        <td className="py-2 px-4 text-left text-gray-600">
+                          <Link
+                            className="text-blue-500"
+                            to={`http://localhost:5173/${user.username}`}
+                            target="_blank"
+                          >
+                            Visit
+                          </Link>
+                        </td>
+                        <td className="py-2 px-4 text-left text-gray-600">
+                          <Link
+                            className="text-blue-500"
+                            customerDashboard={customerDashboard}
+                            onClick={() => {
+                              dispatch(
+                                appointmentSliceActions.appointmentDetails({
+                                  username: user.username,
+                                })
+                              );
+
+                              dispatch(
+                                dashboardOptionsSliceActions.toggleDashboardOptions(
+                                  {
+                                    showHighlights: false,
+                                    showInfo: false,
+                                    showServices: false,
+                                    showProfile: false,
+                                    showAbout: false,
+                                    showContact: false,
+                                    showAppointmentDetails: false,
+                                    showBookAppointment: true,
+                                    loginBooking: true,
+                                  }
+                                )
+                              );
+                            }}
+                          >
+                            Book
+                          </Link>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              <Pagination />
+            </>
+          ) : (
+            <div className=" py-5 mx-auto">
+              <h1 className="text-center text-lg">No data to display</h1>
+            </div>
+          )}
         </div>
       </>
     );
