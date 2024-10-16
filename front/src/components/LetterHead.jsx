@@ -1,6 +1,24 @@
+import { useRef, useEffect } from "react";
+import { printSliceActions } from "../store/slices/PrintSlice";
+import { useDispatch } from "react-redux";
+
 const LetterHead = () => {
+  const letterHeadRef = useRef();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      printSliceActions.setRefComponent({
+        refComponent: letterHeadRef.current.value,
+      })
+    );
+  }, []);
+
   return (
-    <div className="flex flex-col border-8 border-blue-500 p-5">
+    <div
+      className="flex flex-col border-8 border-blue-500 p-5"
+      ref={letterHeadRef}
+    >
       <header className="flex justify-between">
         <div>
           <h1 className="text-3xl text-blue-400">Dr. Alex Austin</h1>

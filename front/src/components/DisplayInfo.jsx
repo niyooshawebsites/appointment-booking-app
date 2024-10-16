@@ -8,6 +8,9 @@ import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import Pagination from "./Pagination";
+import { FaPrint } from "react-icons/fa";
+import { TbListDetails } from "react-icons/tb";
+import { useReactToPrint } from "react-to-print";
 
 const DisplayInfo = () => {
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
@@ -15,10 +18,13 @@ const DisplayInfo = () => {
   const { allAppointments } = useSelector(
     (state) => state.appointments_Data_Slice
   );
+
+  const { refComponent } = useSelector((state) => state.print_Slice);
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
 
+  const reactToPrintFn = useReactToPrint({ refComponent });
   const dispatch = useDispatch();
 
   const handleDelete = async (id) => {
@@ -243,6 +249,7 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left text-gray-600">Gender</th>
               <th className="py-2 px-4 text-left text-gray-600">Payment</th>
               <th className="py-2 px-4 text-left text-gray-600">Details</th>
+              <th className="py-2 px-4 text-left text-gray-600">Print</th>
             </tr>
           </thead>
           <tbody>
@@ -287,7 +294,12 @@ const DisplayInfo = () => {
                         className="text-blue-500"
                         onClick={() => handleDetails(appointment._id)}
                       >
-                        Details
+                        <TbListDetails />
+                      </Link>
+                    </td>
+                    <td className="py-2 px-4 text-gray-700">
+                      <Link className="text-slate-800" onClick={reactToPrintFn}>
+                        <FaPrint />
                       </Link>
                     </td>
                   </tr>
