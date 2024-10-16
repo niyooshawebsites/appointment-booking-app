@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import AppointmentForm from "../components/AppointmentForm";
 import LoginAppointmentForm from "../components/LoginAppointmentForm";
 import { useState } from "react";
+import LetterHead from "../components/LetterHead";
 
 const Dashboard = () => {
   const {
@@ -23,6 +24,7 @@ const Dashboard = () => {
     showAppointmentDetails,
     showBookAppointment,
     loginBooking,
+    showLetterHead,
   } = useSelector((state) => state.dashboard_Options_Slice);
 
   const [customerDashboard] = useState(true);
@@ -114,6 +116,17 @@ const Dashboard = () => {
         <div className="w-full h-screen flex">
           <Sidebar />
           <ContactForm />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (showLetterHead) {
+    return (
+      <Layout>
+        <div className="w-full h-screen flex">
+          <Sidebar />
+          <LetterHead />
         </div>
       </Layout>
     );

@@ -29,6 +29,7 @@ const Sidebar = () => {
                   showContact: false,
                   showAppointmentDetails: false,
                   showBookAppointment: false,
+                  showLetterHead: false,
                 })
               );
             }}
@@ -48,6 +49,7 @@ const Sidebar = () => {
                   showContact: false,
                   showAppointmentDetails: false,
                   showBookAppointment: false,
+                  showLetterHead: false,
                 })
               );
             }}
@@ -78,6 +80,7 @@ const Sidebar = () => {
                   showContact: false,
                   showAppointmentDetails: false,
                   showBookAppointment: false,
+                  showLetterHead: false,
                 })
               );
             }}
@@ -97,6 +100,7 @@ const Sidebar = () => {
                   showContact: false,
                   showAppointmentDetails: false,
                   showBookAppointment: false,
+                  showLetterHead: false,
                 })
               );
             }}
@@ -116,6 +120,7 @@ const Sidebar = () => {
                   showContact: false,
                   showAppointmentDetails: false,
                   showBookAppointment: false,
+                  showLetterHead: false,
                 })
               );
             }}
@@ -135,6 +140,7 @@ const Sidebar = () => {
                   showContact: true,
                   showAppointmentDetails: false,
                   showBookAppointment: false,
+                  showLetterHead: false,
                 })
               );
             }}
@@ -155,6 +161,7 @@ const Sidebar = () => {
                   showContact: false,
                   showAppointmentDetails: false,
                   showBookAppointment: false,
+                  showLetterHead: false,
                 })
               );
             }}
@@ -185,6 +192,7 @@ const Sidebar = () => {
                   showContact: false,
                   showAppointmentDetails: false,
                   showBookAppointment: false,
+                  showLetterHead: false,
                 })
               );
             }}
@@ -204,6 +212,7 @@ const Sidebar = () => {
                   showContact: false,
                   showAppointmentDetails: false,
                   showBookAppointment: true,
+                  showLetterHead: false,
                 })
               );
             }}
@@ -223,6 +232,7 @@ const Sidebar = () => {
                   showContact: false,
                   showAppointmentDetails: false,
                   showBookAppointment: false,
+                  showLetterHead: false,
                 })
               );
             }}

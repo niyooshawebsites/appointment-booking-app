@@ -12,6 +12,7 @@ const dashboardOptionsSlice = createSlice({
     showAppointmentDetails: false,
     showBookAppointment: false,
     loginBooking: false,
+    showLetterHead: false,
   },
 
   reducers: {
@@ -25,6 +26,7 @@ const dashboardOptionsSlice = createSlice({
       state.showAppointmentDetails = action.payload.showAppointmentDetails;
       state.showBookAppointment = action.payload.showBookAppointment;
       state.loginBooking = action.payload.loginBooking;
+      state.showLetterHead = action.payload.showLetterHead;
     },
   },
 });

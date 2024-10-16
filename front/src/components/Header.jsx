@@ -51,6 +51,8 @@ const Header = () => {
               showAbout: false,
               showContact: false,
               showAppointmentDetails: false,
+              showBookAppointment: false,
+              showLetterHead: false,
             })
           );
         })

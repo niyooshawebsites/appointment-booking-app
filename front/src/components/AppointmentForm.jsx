@@ -258,6 +258,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                                     showAppointmentDetails: false,
                                     showBookAppointment: true,
                                     loginBooking: true,
+                                    showLetterHead: false,
                                   }
                                 )
                               );

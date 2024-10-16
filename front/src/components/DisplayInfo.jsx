@@ -10,7 +10,6 @@ import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import Pagination from "./Pagination";
 import { FaPrint } from "react-icons/fa";
 import { TbListDetails } from "react-icons/tb";
-import { useReactToPrint } from "react-to-print";
 
 const DisplayInfo = () => {
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
@@ -18,13 +17,9 @@ const DisplayInfo = () => {
   const { allAppointments } = useSelector(
     (state) => state.appointments_Data_Slice
   );
-
-  const { refComponent } = useSelector((state) => state.print_Slice);
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
-
-  const reactToPrintFn = useReactToPrint({ refComponent });
   const dispatch = useDispatch();
 
   const handleDelete = async (id) => {
@@ -115,6 +110,22 @@ const DisplayInfo = () => {
         showContact: false,
         showAppointmentDetails: true,
         showBookAppointment: false,
+      })
+    );
+  };
+
+  const handlePrint = () => {
+    dispatch(
+      dashboardOptionsSliceActions.toggleDashboardOptions({
+        showHighlights: false,
+        showInfo: false,
+        showServices: false,
+        showProfile: false,
+        showAbout: false,
+        showContact: false,
+        showAppointmentDetails: false,
+        showBookAppointment: false,
+        showLetterHead: true,
       })
     );
   };
@@ -298,7 +309,7 @@ const DisplayInfo = () => {
                       </Link>
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      <Link className="text-slate-800" onClick={reactToPrintFn}>
+                      <Link className="text-slate-800" onClick={handlePrint}>
                         <FaPrint />
                       </Link>
                     </td>

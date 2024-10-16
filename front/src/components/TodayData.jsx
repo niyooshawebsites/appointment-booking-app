@@ -200,6 +200,8 @@ const TodayData = () => {
                                   showAbout: false,
                                   showContact: false,
                                   showAppointmentDetails: true,
+                                  showBookAppointment: false,
+                                  showLetterHead: false,
                                 }
                               )
                             );

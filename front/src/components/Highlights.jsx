@@ -117,6 +117,7 @@ const Highlights = () => {
               showContact: false,
               showAppointmentDetails: false,
               showBookAppointment: false,
+              showLetterHead: false,
             })
           );
         })
@@ -160,6 +161,7 @@ const Highlights = () => {
               showContact: false,
               showAppointmentDetails: false,
               showBookAppointment: false,
+              showLetterHead: false,
             })
           );
         })
@@ -200,6 +202,7 @@ const Highlights = () => {
               showContact: false,
               showAppointmentDetails: false,
               showBookAppointment: false,
+              showLetterHead: false,
             })
           );
         })
@@ -294,6 +297,7 @@ const Highlights = () => {
               showContact: false,
               showAppointmentDetails: false,
               showBookAppointment: false,
+              showLetterHead: false,
             })
           );
         })
@@ -334,6 +338,7 @@ const Highlights = () => {
               showContact: false,
               showAppointmentDetails: false,
               showBookAppointment: false,
+              showLetterHead: false,
             })
           );
         })
@@ -374,6 +379,7 @@ const Highlights = () => {
               showContact: false,
               showAppointmentDetails: false,
               showBookAppointment: false,
+              showLetterHead: false,
             })
           );
         })
@@ -442,6 +448,7 @@ const Highlights = () => {
               showContact: false,
               showAppointmentDetails: false,
               showBookAppointment: false,
+              showLetterHead: false,
             })
           );
         })
@@ -486,6 +493,7 @@ const Highlights = () => {
               showContact: false,
               showAppointmentDetails: false,
               showBookAppointment: false,
+              showLetterHead: false,
             })
           );
         })
@@ -543,6 +551,7 @@ const Highlights = () => {
               showContact: false,
               showAppointmentDetails: false,
               showBookAppointment: false,
+              showLetterHead: false,
             })
           );
         })
