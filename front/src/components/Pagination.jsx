@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
+import { specializationSliceActions } from "../store/slices/SpecializationSlice";
 import axios from "axios";
 
 const Pagination = () => {
@@ -254,8 +255,9 @@ const Pagination = () => {
             })
           );
           dispatch(
-            appointmentsDataSliceActions.getAppointmentsData({
-              allAppointments: res.data.appointments,
+            specializationSliceActions.changeSpecialization({
+              specialization,
+              usersBySpecialization: res.data.users,
             })
           );
         })

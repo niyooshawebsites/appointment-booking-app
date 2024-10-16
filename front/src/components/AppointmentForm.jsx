@@ -7,12 +7,15 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import { specializationSliceActions } from "../store/slices/SpecializationSlice";
+import Pagination from "../components/Pagination";
 
 const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const { userId } = useSelector((state) => state.user_Slice);
   const { specialization, usersBySpecialization } = useSelector(
     (state) => state.specialization_Slice
   );
+  console.log(specialization);
+  console.log(usersBySpecialization);
   const path = window.location.pathname;
   let username = path.split("/")[1];
   const dispatch = useDispatch();
@@ -57,6 +60,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
 
         dispatch(
           specializationSliceActions.changeSpecialization({
+            specialization: specialization || "Cardiologist",
             usersBySpecialization: res.data.users,
           })
         );
@@ -64,7 +68,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       .catch((err) => console.log(err));
   };
 
-  // get all services by a particular username
+  // get all services by a particular username - for non loggedin clients
   const getAllServicesByUsername = async () => {
     await axios
       .get(`http://localhost:8000/api/v1/get-services/${username}`)
@@ -78,6 +82,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       getAllUsersBySpecificSpecialization();
     }
 
+    // for non loggedin clients...
     if (!userId) {
       getAllServicesByUsername();
     }
@@ -87,8 +92,10 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
     dispatch(
       specializationSliceActions.changeSpecialization({
         specialization: e.target.value,
+        usersBySpecialization: [],
       })
     );
+
     setIsSpecializationChnaged((prevState) => !prevState);
   };
 
@@ -258,6 +265,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
               })}
             </tbody>
           </table>
+          <Pagination />
         </div>
       </>
     );

@@ -8,7 +8,7 @@ const specializationSlice = createSlice({
   },
   reducers: {
     changeSpecialization: (state, action) => {
-      state.Cardiologist = action.payload.Cardiologist;
+      state.specialization = action.payload.specialization;
       state.usersBySpecialization = action.payload.usersBySpecialization;
     },
   },
