@@ -1424,6 +1424,52 @@ const getParticularClientDataByUserIdController = async (req, res) => {
   }
 };
 
+// get a particular service Provider for printing purpose
+const getUserDetailsForPrintController = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    if (!username) {
+      return res.status(400).json({
+        success: false,
+        msg: "No username to search",
+      });
+    }
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(204).json({
+        success: false,
+        msg: "Could not find the user",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "user found successfully",
+      user: {
+        businessName: user.businessName,
+        contactNo: user.contactNo,
+        email: user.email,
+        timings: "6 PM to 9 PM",
+        office: user.office,
+        floor: user.floor,
+        building: user.building,
+        street: user.street,
+        locality: user.locality,
+        district: user.district,
+        state: user.state,
+        pinCode: user.pinCode,
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   registerController,
   loginController,
@@ -1456,4 +1502,5 @@ module.exports = {
   getAllUsersBySpecificSpecializationController,
   updateClientDetailsController,
   getParticularClientDataByUserIdController,
+  getUserDetailsForPrintController,
 };

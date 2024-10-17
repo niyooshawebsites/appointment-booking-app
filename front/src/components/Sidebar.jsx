@@ -30,6 +30,8 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: false,
                 })
               );
             }}
@@ -50,6 +52,8 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: false,
                 })
               );
             }}
@@ -64,8 +68,10 @@ const Sidebar = () => {
   // service provider sidebar options
   if (role == 1 && isAdmin == false) {
     return (
-      <div className="w-2/12 bg-indigo-900 text-white h-full p-4">
-        <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
+      <div className="w-2/12 bg-indigo-800 text-white h-full p-4">
+        <h1 className="text-xl font-semibold mb-6 bg-pink-600 p-2 rounded">
+          My Dashboard
+        </h1>
         <ul>
           <li
             className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
@@ -81,6 +87,8 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: false,
                 })
               );
             }}
@@ -101,6 +109,8 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: false,
                 })
               );
             }}
@@ -116,11 +126,57 @@ const Sidebar = () => {
                   showInfo: false,
                   showServices: false,
                   showProfile: false,
+                  showAbout: false,
+                  showContact: false,
+                  showAppointmentDetails: false,
+                  showBookAppointment: false,
+                  showLetterHead: false,
+                  showQaulifications: true,
+                  showTimings: false,
+                })
+              );
+            }}
+          >
+            <LuMenuSquare style={{ color: "crimson" }} /> &nbsp; Qualifications
+          </li>
+          <li
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+            onClick={() => {
+              dispatch(
+                dashboardOptionsSliceActions.toggleDashboardOptions({
+                  showHighlights: false,
+                  showInfo: false,
+                  showServices: false,
+                  showProfile: false,
+                  showAbout: false,
+                  showContact: false,
+                  showAppointmentDetails: false,
+                  showBookAppointment: false,
+                  showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: true,
+                })
+              );
+            }}
+          >
+            <LuMenuSquare style={{ color: "crimson" }} /> &nbsp; Timings
+          </li>
+          <li
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+            onClick={() => {
+              dispatch(
+                dashboardOptionsSliceActions.toggleDashboardOptions({
+                  showHighlights: false,
+                  showInfo: false,
+                  showServices: false,
+                  showProfile: false,
                   showAbout: true,
                   showContact: false,
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: false,
                 })
               );
             }}
@@ -141,6 +197,8 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: false,
                 })
               );
             }}
@@ -162,6 +220,8 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: false,
                 })
               );
             }}
@@ -193,6 +253,8 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: false,
                 })
               );
             }}
@@ -213,6 +275,8 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: true,
                   showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: false,
                 })
               );
             }}
@@ -233,6 +297,8 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showQaulifications: false,
+                  showTimings: false,
                 })
               );
             }}

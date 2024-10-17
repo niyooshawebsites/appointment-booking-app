@@ -10,6 +10,7 @@ import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import Pagination from "./Pagination";
 import { FaPrint } from "react-icons/fa";
 import { TbListDetails } from "react-icons/tb";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 const DisplayInfo = () => {
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
@@ -110,11 +111,15 @@ const DisplayInfo = () => {
         showContact: false,
         showAppointmentDetails: true,
         showBookAppointment: false,
+        showQaulifications: false,
+        showTimings: false,
       })
     );
   };
 
-  const handlePrint = () => {
+  const handlePrint = async (appointmentId) => {
+    await getAParticularAppointmentDetails(appointmentId);
+
     dispatch(
       dashboardOptionsSliceActions.toggleDashboardOptions({
         showHighlights: false,
@@ -126,6 +131,8 @@ const DisplayInfo = () => {
         showAppointmentDetails: false,
         showBookAppointment: false,
         showLetterHead: true,
+        showQaulifications: false,
+        showTimings: false,
       })
     );
   };
@@ -312,7 +319,10 @@ const DisplayInfo = () => {
                       </Link>
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      <Link className="text-slate-800" onClick={handlePrint}>
+                      <Link
+                        className="text-slate-800"
+                        onClick={() => handlePrint(appointment._id)}
+                      >
                         <FaPrint />
                       </Link>
                     </td>
@@ -389,11 +399,11 @@ const DisplayInfo = () => {
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       <Link
-                        className="text-blue-500"
+                        className="text-indigo-800"
                         to={`http://localhost:5173/${appointment.user.username}`}
                         target="_blank"
                       >
-                        Visit
+                        <FaExternalLinkAlt />
                       </Link>
                     </td>
                   </tr>

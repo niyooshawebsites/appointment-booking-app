@@ -4,6 +4,7 @@ import { userSliceActions } from "../store/slices/UserSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import axios from "axios";
 import { AiOutlineLogout } from "react-icons/ai";
+import { FaRegSmile } from "react-icons/fa";
 
 const Header = () => {
   const path = window.location.pathname;
@@ -52,6 +53,8 @@ const Header = () => {
               showAppointmentDetails: false,
               showBookAppointment: false,
               showLetterHead: false,
+              showQaulifications: false,
+              showTimings: false,
             })
           );
         })
@@ -130,7 +133,7 @@ const Header = () => {
                 {authenticated ? (
                   <>
                     <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
-                      Hello, {username}
+                      <FaRegSmile /> &nbsp; {username}
                     </NavLink>
                     <NavLink
                       className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white flex items-center"
@@ -206,7 +209,7 @@ const Header = () => {
           {authenticated ? (
             <>
               <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300">
-                Hello, {username}
+                <FaRegSmile /> &nbsp; {username}
               </NavLink>
               <NavLink
                 className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"

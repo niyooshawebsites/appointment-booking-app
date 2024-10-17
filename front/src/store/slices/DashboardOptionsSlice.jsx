@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const dashboardOptionsSlice = createSlice({
   name: "dashboard_Options_Slice",
+
   initialState: {
     showHighlights: true,
     showInfo: false,
@@ -13,6 +14,8 @@ const dashboardOptionsSlice = createSlice({
     showBookAppointment: false,
     loginBooking: false,
     showLetterHead: false,
+    showQaulifications: false,
+    showTimings: false,
   },
 
   reducers: {
@@ -27,6 +30,8 @@ const dashboardOptionsSlice = createSlice({
       state.showBookAppointment = action.payload.showBookAppointment;
       state.loginBooking = action.payload.loginBooking;
       state.showLetterHead = action.payload.showLetterHead;
+      state.showQaulifications = action.payload.showQaulifications;
+      state.showTimings = action.payload.showTimings;
     },
   },
 });

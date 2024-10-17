@@ -12,6 +12,8 @@ import AppointmentForm from "../components/AppointmentForm";
 import LoginAppointmentForm from "../components/LoginAppointmentForm";
 import { useState } from "react";
 import LetterHead from "../components/LetterHead";
+import Qualifications from "../components/Qualifications";
+import Timings from "../components/Timings";
 
 const Dashboard = () => {
   const {
@@ -25,6 +27,8 @@ const Dashboard = () => {
     showBookAppointment,
     loginBooking,
     showLetterHead,
+    showQaulifications,
+    showTimings,
   } = useSelector((state) => state.dashboard_Options_Slice);
 
   const [customerDashboard] = useState(true);
@@ -127,6 +131,28 @@ const Dashboard = () => {
         <div className="w-full h-screen flex">
           <Sidebar />
           <LetterHead />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (showQaulifications) {
+    return (
+      <Layout>
+        <div className="w-full h-screen flex">
+          <Sidebar />
+          <Qualifications />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (showTimings) {
+    return (
+      <Layout>
+        <div className="w-full h-screen flex">
+          <Sidebar />
+          <Timings />
         </div>
       </Layout>
     );

@@ -31,6 +31,7 @@ const {
   getAllUsersBySpecificSpecializationController,
   updateClientDetailsController,
   getParticularClientDataByUserIdController,
+  getUserDetailsForPrintController,
 } = require("../controllers/user.controller");
 
 const {
@@ -344,6 +345,14 @@ router.get(
   auth,
   isAdmin,
   getNoOfAppointmentsPerUserController
+);
+
+// get a particular service provider route - for printing - service provider
+router.get(
+  "/get-a-particular-user-for-printing-by-username/:username",
+  auth,
+  isServiceProvider,
+  getUserDetailsForPrintController
 );
 
 module.exports = router;

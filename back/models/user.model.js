@@ -169,6 +169,16 @@ const userSchema = new mongoose.Schema(
         default: "https://youtube.com",
       },
     },
+    // service provider
+    qualifications: {
+      type: String,
+      default: "",
+    },
+    // service provider
+    timings: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

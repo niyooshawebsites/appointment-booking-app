@@ -1,9 +1,30 @@
-import { useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 
 const LetterHead = () => {
   const contentRef = useRef();
+  const dispatch = useDispatch();
+  const [serviceProviderDetails, setServiceProviderDetails] = useState(() => {
+    return {
+      businessName: "",
+      contactNo: "",
+      email: "",
+      website: "",
+      timings: "",
+      office: "",
+      floor: "",
+      building: "",
+      street: "",
+      locality: "",
+      district: "",
+      state: "",
+      pinCode: "",
+    };
+  });
+
   const reactToPrintFn = useReactToPrint({ contentRef });
   const {
     service,
@@ -24,6 +45,59 @@ const LetterHead = () => {
 
   const { username } = useSelector((state) => state.user_Slice);
 
+  // get a particular service provider for printing by username
+  const getAParticularUserForPrinting = async () => {
+    await axios
+      .get(
+        `http://localhost:8000/api/v1/get-a-particular-user-for-printing-by-username/${username}`,
+        { withCredentials: true }
+      )
+      .then((res) =>
+        setServiceProviderDetails((prevDetails) => {
+          return {
+            ...prevDetails,
+            businessName: res.data.user.businessName,
+            contactNo: res.data.user.contactNo,
+            email: res.data.user.email,
+            website: res.data.user.website,
+            timings: res.data.user.timings,
+            office: res.data.user.office,
+            floor: res.data.user.floor,
+            building: res.data.user.building,
+            street: res.data.user.street,
+            locality: res.data.user.locality,
+            district: res.data.user.district,
+            state: res.data.user.state,
+            pinCode: res.data.user.pinCode,
+          };
+        })
+      )
+      .catch((err) => console.log(err));
+  };
+
+  // go back function
+  const goback = () => {
+    dispatch(
+      dashboardOptionsSliceActions.toggleDashboardOptions({
+        showHighlights: false,
+        showInfo: true,
+        showServices: false,
+        showProfile: false,
+        showAbout: false,
+        showContact: false,
+        showAppointmentDetails: false,
+        showBookAppointment: false,
+        showLetterHead: false,
+        showQaulifications: false,
+        showTimings: false,
+      })
+    );
+  };
+
+  useEffect(() => {
+    getAParticularUserForPrinting();
+  }, []);
+
   const myStyle = {
     "@mediaPrint": {
       "@page": {
@@ -39,10 +113,16 @@ const LetterHead = () => {
       className="m-1"
       style={{ transform: "scale(0.5)", margin: "-300px 0" }}
     >
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+        <button
+          onClick={goback}
+          className=" text-3xl bg-pink-600 px-4 py-2 rounded text-white m-2 hover:bg-pink-700"
+        >
+          Back
+        </button>
         <button
           onClick={reactToPrintFn}
-          className=" text-3xl bg-indigo-500 px-4 py-2 rounded text-white m-2 hover:bg-indigo-700"
+          className=" text-3xl bg-pink-600 px-4 py-2 rounded text-white m-2 hover:bg-pink-700"
         >
           Print
         </button>
@@ -55,11 +135,13 @@ const LetterHead = () => {
         <div>
           <header className="flex justify-between mb-3">
             <div>
-              <h1 className="text-3xl text-blue-400">Dr. {username}</h1>
+              <h1 className="text-3xl text-pink-600">Dr. {username}</h1>
               <p>MMBS, MS</p>
             </div>
             <div>
-              <h2 className="text-2xl text-blue-400">{username}</h2>
+              <h2 className="text-2xl text-pink-600">
+                {serviceProviderDetails.businessName}
+              </h2>
             </div>
           </header>
           <hr className="mb-3" />
@@ -113,6 +195,11 @@ const LetterHead = () => {
                 <span className="font-bold">Service: </span>
                 {service}
               </span>
+              &nbsp;
+              <span>
+                <span className="font-bold">Payment: </span>
+                {paymentMethod}
+              </span>
             </div>
           </section>
           <section>
@@ -126,24 +213,27 @@ const LetterHead = () => {
         <footer className="flex flex-col">
           <hr />
           <div className="py-2 text-center">
-            <span className="font-bold">Address</span>: Lorem, ipsum dolor sit
-            amet consectetur adipisicing elit. Sint, voluptate?
+            <span className="font-bold">Address</span>:{" "}
+            {`${serviceProviderDetails.office}, ${serviceProviderDetails.floor}, ${serviceProviderDetails.building}, ${serviceProviderDetails.street}, ${serviceProviderDetails.locality}, ${serviceProviderDetails.locality}, ${serviceProviderDetails.district}, ${serviceProviderDetails.state} ${serviceProviderDetails.pinCode}`}
           </div>
           <div className="flex justify-center py-2">
             <div className="mx-2">
               <span className="font-bold">Website</span>:
-              www.docapp.com/username
+              {`http://localhost:5173/${username}`}
             </div>
             <div className="mx-2">
-              <span className="font-bold">Timings</span>: 6 PM - 9 PM
+              <span className="font-bold">Timings</span>:{" "}
+              {serviceProviderDetails.timings}
             </div>
           </div>
           <div className="flex justify-center py-2">
             <div className="mx-2">
-              <span className="font-bold">Contact</span>: 7874784477
+              <span className="font-bold">Contact No</span>:{" "}
+              {serviceProviderDetails.contactNo}
             </div>
             <div className="mx-2">
-              <span className="font-bold">Email</span>: info@docapp.com
+              <span className="font-bold">Email</span>:{" "}
+              {serviceProviderDetails.email}
             </div>
           </div>
           <div className="py-2 text-center font-bold">
