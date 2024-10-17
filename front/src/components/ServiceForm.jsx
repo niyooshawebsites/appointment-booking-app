@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { AiFillDelete } from "react-icons/ai";
 
 const ServiceForm = () => {
   const { username } = useSelector((state) => state.user_Slice);
@@ -86,7 +87,7 @@ const ServiceForm = () => {
   }, [currentService, serivceDeleted]);
 
   return (
-    <div className="w-8/12  mx-auto p-4">
+    <div className="w-6/12  mx-auto p-2">
       <h2 className="mt-10 mb-4 text-center text-2xl">Service Details</h2>
       {/* Form Section */}
       <form
@@ -100,7 +101,7 @@ const ServiceForm = () => {
             value={currentService.serviceName}
             onChange={handleChange}
             placeholder="Service Name"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
           />
           <input
@@ -109,12 +110,12 @@ const ServiceForm = () => {
             value={currentService.fee}
             onChange={handleChange}
             placeholder="Fee"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             required
           />
           <button
             type="submit"
-            className="w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition-colors"
+            className="w-full bg-pink-600 text-white py-2 px-4 rounded-md hover:bg-pink-700 transition-colors"
           >
             Add Service
           </button>
@@ -122,28 +123,28 @@ const ServiceForm = () => {
       </form>
 
       {/* Table Section */}
-      <table className="min-w-full bg-white shadow-md rounded-lg">
-        <thead>
-          <tr className="bg-gray-200 text-left text-sm uppercase font-semibold">
-            <th className="py-3 px-4">#</th>
-            <th className="py-3 px-4">Service</th>
-            <th className="py-3 px-4">Fee</th>
-            <th className="py-3 px-4">Action</th>
+      <table className="w-8/12 mx-auto bg-white shadow-md rounded-lg">
+        <thead className="bg-pink-600 text-white">
+          <tr className=" text-left text-sm font-semibold">
+            <th className="py-2 px-3">#</th>
+            <th className="py-2 px-3">Service</th>
+            <th className="py-2 px-3">Fee</th>
+            <th className="py-2 px-3">Delete</th>
           </tr>
         </thead>
 
         <tbody>
           {allServices.map((service, index) => (
             <tr key={service.serviceId} className="border-b">
-              <td className="py-3 px-4">{index + 1}</td>
-              <td className="py-3 px-4">{service.serviceName}</td>
-              <td className="py-3 px-4">${service.fee}</td>
-              <td className="py-3 px-4 space-x-2">
+              <td className="px-3 py-2">{index + 1}</td>
+              <td className="px-3 py-2">{service.serviceName}</td>
+              <td className="px-3 py-2">Rs {service.fee}</td>
+              <td className="px-3 py-2">
                 <Link
-                  className="text-red-500 px-3 py-1 rounded-md hover:text-red-600 transition-colors"
+                  className="text-red-600 text-xl rounded-md hover:text-red-800 transition-colors"
                   onClick={() => handleDelete(service.serviceId)}
                 >
-                  Delete
+                  <AiFillDelete />
                 </Link>
               </td>
             </tr>

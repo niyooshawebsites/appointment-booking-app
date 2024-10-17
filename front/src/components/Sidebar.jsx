@@ -64,11 +64,11 @@ const Sidebar = () => {
   // service provider sidebar options
   if (role == 1 && isAdmin == false) {
     return (
-      <div className="w-2/12 bg-gray-800 text-white h-full p-4">
+      <div className="w-2/12 bg-indigo-900 text-white h-full p-4">
         <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
         <ul>
           <li
-            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -88,7 +88,7 @@ const Sidebar = () => {
             <FcFlashOn /> &nbsp; Highlights
           </li>
           <li
-            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -108,7 +108,7 @@ const Sidebar = () => {
             <LuMenuSquare style={{ color: "crimson" }} /> &nbsp; Services
           </li>
           <li
-            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -128,7 +128,7 @@ const Sidebar = () => {
             <CgWebsite style={{ color: "DarkOrange" }} /> &nbsp; About
           </li>
           <li
-            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -149,7 +149,7 @@ const Sidebar = () => {
           </li>
 
           <li
-            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -180,7 +180,7 @@ const Sidebar = () => {
         <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
         <ul>
           <li
-            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -200,7 +200,7 @@ const Sidebar = () => {
             <FcFlashOn /> &nbsp; Highlights
           </li>
           <li
-            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -220,7 +220,7 @@ const Sidebar = () => {
             <FcBookmark /> &nbsp; Book Appointment
           </li>
           <li
-            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({

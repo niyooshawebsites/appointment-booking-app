@@ -4,6 +4,8 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { TbListDetails } from "react-icons/tb";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Highlights = () => {
@@ -761,36 +763,28 @@ const Highlights = () => {
       <div className="flex space-x-8 p-8 mx-auto w-6/12">
         {/* Column 1 */}
         <div className="w-1/2">
-          <h2 className="text-xl font-bold mb-4">Total</h2>
+          <h2 className="text-xl font-bold mb-4">All Appointments</h2>
           <table className="min-w-full bg-white border border-gray-200 shadow-md">
-            <thead>
+            <thead className="bg-pink-600 text-white">
               <tr>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Appointments
-                </th>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Data
-                </th>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Action
-                </th>
+                <th className="py-2 text-left px-4 border-b">Entries</th>
+                <th className="py-2 text-left px-4 border-b">View</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="py-2 px-4 border-b">Total</td>
                 <td className="py-2 px-4 border-b">
                   {totalAppointmentsCountFilterByUsername < 10
                     ? `0${totalAppointmentsCountFilterByUsername}`
                     : totalAppointmentsCountFilterByUsername}
                 </td>
                 <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                  <Link
+                    className="text-indigo-500"
                     onClick={getAndPassAllAppointmentsByUserId}
                   >
-                    View
-                  </button>
+                    <TbListDetails />
+                  </Link>
                 </td>
               </tr>
             </tbody>
@@ -799,36 +793,28 @@ const Highlights = () => {
 
         {/* Column 2 */}
         <div className="w-1/2">
-          <h2 className="text-xl font-bold mb-4">Today</h2>
+          <h2 className="text-xl font-bold mb-4">Today's Appointments</h2>
           <table className="min-w-full bg-white border border-gray-200 shadow-md">
-            <thead>
+            <thead className="bg-pink-600 text-white">
               <tr>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Appointments
-                </th>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Data
-                </th>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Action
-                </th>
+                <th className="py-2 text-left px-4 border-b">Entries</th>
+                <th className="py-2 text-left px-4 border-b">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="py-2 px-4 border-b">Total</td>
                 <td className="py-2 px-4 border-b">
                   {todayAppointmentCountsByUsername < 10
                     ? `0${todayAppointmentCountsByUsername}`
                     : todayAppointmentCountsByUsername}
                 </td>
                 <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
+                  <Link
+                    className="text-indigo-500"
                     onClick={getAndPassTodaysAppointmentsByUserId}
                   >
-                    View
-                  </button>
+                    <TbListDetails />
+                  </Link>
                 </td>
               </tr>
             </tbody>

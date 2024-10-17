@@ -21,8 +21,7 @@ const Header = () => {
     user = "abs";
   }
 
-  const { username } = useSelector((state) => state.user_Slice);
-  const { authenticated } = useSelector((state) => state.user_Slice);
+  const { username, authenticated } = useSelector((state) => state.user_Slice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -63,14 +62,14 @@ const Header = () => {
   };
 
   return (
-    <nav className="bg-gray-800">
+    <nav className="bg-indigo-900">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
             <button
               type="button"
-              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-pink-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               aria-controls="mobile-menu"
               aria-expanded="false"
             >
@@ -134,10 +133,10 @@ const Header = () => {
                       Hello, {username}
                     </NavLink>
                     <NavLink
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white flex items-center"
                       onClick={logout}
                     >
-                      <AiOutlineLogout style={{ color: "orangered" }} /> &nbsp;
+                      <AiOutlineLogout style={{ color: "white" }} /> &nbsp;
                       logout
                     </NavLink>
                   </>
@@ -210,7 +209,7 @@ const Header = () => {
                 Hello, {username}
               </NavLink>
               <NavLink
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                 onClick={logout}
               >
                 logout

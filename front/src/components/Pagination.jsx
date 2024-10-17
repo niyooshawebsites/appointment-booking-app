@@ -315,7 +315,7 @@ const Pagination = () => {
           }}
           className={`mx-1 px-3 py-1 rounded ${
             currentPageNo === i
-              ? "bg-blue-500 text-white"
+              ? "bg-indigo-800 text-white"
               : "bg-gray-200 text-gray-700"
           }`}
         >

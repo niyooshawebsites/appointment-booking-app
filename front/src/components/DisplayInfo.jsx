@@ -248,19 +248,19 @@ const DisplayInfo = () => {
         />
 
         <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
-          <thead className="bg-gray-200 border-b border-gray-300">
+          <thead className="bg-pink-600 text-white border-b border-gray-300">
             <tr>
-              <th className="py-2 px-4 text-left text-gray-600">#</th>
-              <th className="py-2 px-4 text-left text-gray-600">Name</th>
-              <th className="py-2 px-4 text-left text-gray-600">Age</th>
-              <th className="py-2 px-4 text-left text-gray-600">Contact</th>
-              <th className="py-2 px-4 text-left text-gray-600">Service</th>
-              <th className="py-2 px-4 text-left text-gray-600">Date</th>
-              <th className="py-2 px-4 text-left text-gray-600">Time</th>
-              <th className="py-2 px-4 text-left text-gray-600">Gender</th>
-              <th className="py-2 px-4 text-left text-gray-600">Payment</th>
-              <th className="py-2 px-4 text-left text-gray-600">Details</th>
-              <th className="py-2 px-4 text-left text-gray-600">Print</th>
+              <th className="py-2 px-4 text-left">#</th>
+              <th className="py-2 px-4 text-left">Name</th>
+              <th className="py-2 px-4 text-left">Age</th>
+              <th className="py-2 px-4 text-left">Contact</th>
+              <th className="py-2 px-4 text-left">Service</th>
+              <th className="py-2 px-4 text-left">Date</th>
+              <th className="py-2 px-4 text-left">Time</th>
+              <th className="py-2 px-4 text-left">Gender</th>
+              <th className="py-2 px-4 text-left">Payment</th>
+              <th className="py-2 px-4 text-left">Details</th>
+              <th className="py-2 px-4 text-left">Print</th>
             </tr>
           </thead>
           <tbody>
@@ -274,7 +274,10 @@ const DisplayInfo = () => {
               )
               .map((appointment, index) => {
                 return (
-                  <tr key={appointment._id}>
+                  <tr
+                    key={appointment._id}
+                    className="odd:bg-gray-200 even:bg-white"
+                  >
                     <td className="py-2 px-4 text-gray-700">{index + 1}</td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.firstName}
@@ -302,7 +305,7 @@ const DisplayInfo = () => {
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       <Link
-                        className="text-blue-500"
+                        className="text-indigo-800"
                         onClick={() => handleDetails(appointment._id)}
                       >
                         <TbListDetails />
