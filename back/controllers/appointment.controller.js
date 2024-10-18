@@ -520,9 +520,11 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
       .sort({ date: -1, time: -1 })
       .populate("user");
 
+    console.log(filteredAppointments);
+
     // Filter appointments by username
     const appointments = filteredAppointments.filter(
-      (appointment) => appointment.user == userId
+      (appointment) => appointment.user._id == userId
     );
 
     // calc total users to find total number of pages (total appointments/limit)

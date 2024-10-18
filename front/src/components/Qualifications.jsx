@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Qualifications = () => {
   const [qualifications, setQualifications] = useState("");
@@ -11,11 +12,18 @@ const Qualifications = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     await axios
-      .get(`http://localhost:8000/api/v1/sdljkflkdsjflksd/${username}`, {
-        withCredentials: true,
+      .put(
+        `http://localhost:8000/api/v1/update-user-qualifications`,
+        { qualifications },
+        {
+          withCredentials: true,
+        }
+      )
+      .then(() => {
+        toast.success("Qualifications updated successfully");
+        setQualifications("");
       })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .catch(() => toast.error("Qualifications updatedtion failed"));
   };
 
   return (
@@ -29,11 +37,11 @@ const Qualifications = () => {
           onSubmit={onSubmitHandler}
         >
           <div className="mt-4">
-            <label htmlFor="facebook" className="text-gray-400">
+            <label htmlFor="qualifications" className="text-gray-400">
               Separate your qualifications with commas
             </label>
             <input
-              name="facebookUrl"
+              name="qualifications"
               type="text"
               value={qualifications}
               onChange={handleChange}

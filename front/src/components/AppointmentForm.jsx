@@ -211,7 +211,10 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                 <tbody>
                   {usersBySpecialization.map((user, index) => {
                     return (
-                      <tr key={user._id}>
+                      <tr
+                        key={user._id}
+                        className="odd:bg-gray-200 even:bg-white"
+                      >
                         <td className="py-2 px-4 text-left text-gray-600">
                           {index + 1}
                         </td>
@@ -223,7 +226,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                         </td>
                         <td className="py-2 px-4 text-left text-gray-600">
                           <Link
-                            className="text-pink-500"
+                            className="text-indigo-600"
                             to={`http://localhost:5173/${user.username}`}
                             target="_blank"
                           >
@@ -232,7 +235,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                         </td>
                         <td className="py-2 px-4 text-left text-gray-600">
                           <Link
-                            className="text-pink-500"
+                            className="text-indigo-600"
                             customerDashboard={customerDashboard}
                             onClick={() => {
                               dispatch(

@@ -783,7 +783,7 @@ const Highlights = () => {
     return (
       <div className="w-full flex flex-col border">
         <h1 className="text-center text-3xl my-3 text-pink-500">Highlights</h1>
-        <div className="flex space-x-8 p-8 mx-auto w-4/12">
+        <div className="flex space-x-8 p-8 mx-auto w-6/12">
           {/* Column 1 */}
           <div className="w-1/2">
             <h2 className="text-xl mb-4 text-center">All Appointments</h2>
@@ -856,28 +856,24 @@ const Highlights = () => {
           <h1 className="text-center text-3xl my-3 text-pink-500">
             Highlights
           </h1>
-          <div className="flex space-x-8 p-8 mx-auto w-4/12">
+          <div className="flex space-x-8 p-8 mx-auto w-6/12">
             {/* Column 1 */}
             <div className=" mx-auto">
               {/* <h2 className="text-xl font-bold mb-4">Total</h2> */}
               <table className="min-w-full bg-white border border-gray-200 shadow-md">
-                <thead>
+                <thead className="bg-pink-600 text-white">
                   <tr>
-                    <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                      Total Appointments
+                    <th className="py-2 text-left px-4 border-b">
+                      Appointments
                     </th>
-                    <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                      Data
-                    </th>
-                    <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                      Action
-                    </th>
+                    <th className="py-2 text-center px-4  border-b">Entries</th>
+                    <th className="py-2 text-left px-4 border-b">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td className="py-2 px-4 border-b">Total</td>
-                    <td className="py-2 px-4 border-b">
+                    <td className="py-2 px-4 border-b text-center">
                       {totalNumOfAppointmentsForClient < 10
                         ? `0${totalNumOfAppointmentsForClient}`
                         : totalNumOfAppointmentsForClient}

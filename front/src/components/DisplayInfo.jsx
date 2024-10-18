@@ -358,6 +358,9 @@ const DisplayInfo = () => {
   if (role == 0 && isAdmin == false) {
     return allAppointments.length > 0 ? (
       <div className="mx-auto">
+        <h1 className="mt-10 text-3xl text-center text-pink-600">
+          Appointments
+        </h1>
         <input
           type="text"
           autoComplete="on"
@@ -368,16 +371,16 @@ const DisplayInfo = () => {
         />
 
         <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
-          <thead className="bg-gray-200 border-b border-gray-300">
+          <thead className="bg-pink-600 text-white border-b border-gray-300">
             <tr>
-              <th className="py-2 px-4 text-left text-gray-600">#</th>
-              <th className="py-2 px-4 text-left text-gray-600">Doctor</th>
-              <th className="py-2 px-4 text-left text-gray-600">Clinic</th>
-              <th className="py-2 px-4 text-left text-gray-600">Service</th>
-              <th className="py-2 px-4 text-left text-gray-600">Date</th>
-              <th className="py-2 px-4 text-left text-gray-600">Time</th>
-              <th className="py-2 px-4 text-left text-gray-600">Payment</th>
-              <th className="py-2 px-4 text-left text-gray-600">Dr. Profile</th>
+              <th className="py-2 px-4 text-left">#</th>
+              <th className="py-2 px-4 text-left">Doctor</th>
+              <th className="py-2 px-4 text-left">Clinic</th>
+              <th className="py-2 px-4 text-left">Service</th>
+              <th className="py-2 px-4 text-left">Date</th>
+              <th className="py-2 px-4 text-left">Time</th>
+              <th className="py-2 px-4 text-left">Payment</th>
+              <th className="py-2 px-4 text-left">Dr. Profile</th>
             </tr>
           </thead>
           <tbody>

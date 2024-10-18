@@ -401,8 +401,6 @@ const updateAboutDetailsController = async (req, res) => {
     // getting data from body
     const { about } = req.body;
 
-    console.log(about);
-
     // if detail is not available
     if (!about) {
       return res.status(400).json({
@@ -421,7 +419,7 @@ const updateAboutDetailsController = async (req, res) => {
     if (!updatedUser) {
       return res.status(404).json({
         success: false,
-        msg: "user not found",
+        msg: "user count not be updated",
       });
     }
 
@@ -1452,6 +1450,7 @@ const getUserDetailsForPrintController = async (req, res) => {
         contactNo: user.contactNo,
         email: user.email,
         timings: "6 PM to 9 PM",
+        qualifications: user.qualifications,
         office: user.office,
         floor: user.floor,
         building: user.building,
@@ -1461,6 +1460,82 @@ const getUserDetailsForPrintController = async (req, res) => {
         state: user.state,
         pinCode: user.pinCode,
       },
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// update service provider qualification controller
+const updateUserQualificationController = async (req, res) => {
+  try {
+    const { qualifications } = req.body;
+
+    if (!qualifications) {
+      return res.status(400).json({
+        success: false,
+        msg: "Please provide qualifications",
+      });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      {
+        username: req.user.username,
+      },
+      { qualifications },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        msg: "user count not be updated",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Qualifications updated successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// update service provider timings controller
+const updateUserTimingsController = async (req, res) => {
+  try {
+    const { timings } = req.body;
+
+    if (!timings) {
+      return res.status(400).json({
+        success: false,
+        msg: "Please provide timings",
+      });
+    }
+
+    const updatedUser = User.findOneAndUpdate(
+      { username: req.user.username },
+      { timings },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        msg: "user count not be updated",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Timings updated successfully",
     });
   } catch (err) {
     return res.status(500).json({
@@ -1503,4 +1578,6 @@ module.exports = {
   updateClientDetailsController,
   getParticularClientDataByUserIdController,
   getUserDetailsForPrintController,
+  updateUserQualificationController,
+  updateUserTimingsController,
 };

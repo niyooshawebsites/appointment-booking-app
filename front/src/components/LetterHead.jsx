@@ -13,6 +13,7 @@ const LetterHead = () => {
       contactNo: "",
       email: "",
       website: "",
+      qualifications: "",
       timings: "",
       office: "",
       floor: "",
@@ -61,6 +62,7 @@ const LetterHead = () => {
             email: res.data.user.email,
             website: res.data.user.website,
             timings: res.data.user.timings,
+            qualifications: res.data.user.qualifications,
             office: res.data.user.office,
             floor: res.data.user.floor,
             building: res.data.user.building,
@@ -136,7 +138,7 @@ const LetterHead = () => {
           <header className="flex justify-between mb-3">
             <div>
               <h1 className="text-3xl text-pink-600">Dr. {username}</h1>
-              <p>MMBS, MS</p>
+              <p>{serviceProviderDetails.qualifications}</p>
             </div>
             <div>
               <h2 className="text-2xl text-pink-600">

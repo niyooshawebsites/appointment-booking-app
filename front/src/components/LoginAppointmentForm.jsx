@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 
 const LoginAppointmentForm = ({ customerDashboard }) => {
   const [services, setServices] = useState([]);
   const { username } = useSelector((state) => state.appointment_Slice);
   const { userId } = useSelector((state) => state.user_Slice);
+  const dispatch = useDispatch();
 
   const [custDetails, setCustDetails] = useState(() => {
     return {
@@ -152,6 +154,25 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
       .catch((err) => console.log(err));
   };
 
+  // go back function
+  const goback = () => {
+    dispatch(
+      dashboardOptionsSliceActions.toggleDashboardOptions({
+        showHighlights: false,
+        showInfo: false,
+        showServices: false,
+        showProfile: false,
+        showAbout: false,
+        showContact: false,
+        showAppointmentDetails: false,
+        showBookAppointment: true,
+        showLetterHead: false,
+        showQaulifications: false,
+        showTimings: false,
+      })
+    );
+  };
+
   return (
     <form
       className="max-w-4xl mx-auto my-4 h-[600px] p-6 border rounded-lg shadow-md bg-white"
@@ -161,7 +182,9 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
         {/* Appointment Details */}
         {/* Appointment Details */}
         <div className="border-b pb-4">
-          <h2 className="text-lg font-semibold mb-2">Appointment Details</h2>
+          <h2 className="text-lg font-semibold mb-2 text-pink-600">
+            Appointment Details
+          </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
               <select
@@ -214,7 +237,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
           </div>
         </div>
         <Link
-          className="text-white text-center bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded w-full"
+          className="text-white text-center bg-pink-600 hover:bg-pink-700 py-1 px-3 rounded w-full"
           onClick={checkAvailability}
         >
           Check Availability
@@ -222,7 +245,9 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
 
         {/* Personal Details */}
         <div className="border-b border-t pb-4">
-          <h2 className="text-lg font-semibold mb-2">Personal Details</h2>
+          <h2 className="text-lg font-semibold mb-2 text-pink-600">
+            Personal Details
+          </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
               <input
@@ -376,7 +401,9 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
 
         {/* Payment Details */}
         <div className="border-b pb-4">
-          <h2 className="text-lg font-semibold mb-2">Payment Details</h2>
+          <h2 className="text-lg font-semibold mb-2 text-pink-600">
+            Payment Details
+          </h2>
           <div>
             <select
               name="paymentMethod"
@@ -400,12 +427,16 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
         </div>
 
         <div className="mt-2 flex justify-end gap-x-4">
-          <button type="button" className="text-sm font-semibold text-gray-700">
+          <button
+            type="button"
+            className="text-sm font-semibold text-gray-700"
+            onClick={goback}
+          >
             Cancel
           </button>
           <button
             type="submit"
-            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="rounded-md bg-pink-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             {payOnline ? "Pay & Book Appointment" : "Book Appointment"}
           </button>

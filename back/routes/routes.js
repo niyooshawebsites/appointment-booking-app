@@ -32,6 +32,8 @@ const {
   updateClientDetailsController,
   getParticularClientDataByUserIdController,
   getUserDetailsForPrintController,
+  updateUserQualificationController,
+  updateUserTimingsController,
 } = require("../controllers/user.controller");
 
 const {
@@ -353,6 +355,14 @@ router.get(
   auth,
   isServiceProvider,
   getUserDetailsForPrintController
+);
+
+// update user qualification route
+router.put(
+  "/update-user-qualifications",
+  auth,
+  isServiceProvider,
+  updateUserQualificationController
 );
 
 module.exports = router;
