@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { AiFillDelete } from "react-icons/ai";
+import { RxCross2 } from "react-icons/rx";
 
 const ServiceForm = () => {
   const { username } = useSelector((state) => state.user_Slice);
@@ -88,7 +88,9 @@ const ServiceForm = () => {
 
   return (
     <div className="w-6/12  mx-auto p-2">
-      <h2 className="mt-10 mb-4 text-center text-2xl">Service Details</h2>
+      <h2 className="mt-10 mb-4 text-center text-3xl text-pink-600">
+        Services
+      </h2>
       {/* Form Section */}
       <form
         className="bg-white shadow-md rounded-lg p-6 mb-6"
@@ -123,7 +125,7 @@ const ServiceForm = () => {
       </form>
 
       {/* Table Section */}
-      <table className="w-8/12 mx-auto bg-white shadow-md rounded-lg">
+      <table className="w-8/12 mx-auto bg-white shadow-md rounded-lg mt-10">
         <thead className="bg-pink-600 text-white">
           <tr className=" text-left text-sm font-semibold">
             <th className="py-2 px-3">#</th>
@@ -135,7 +137,10 @@ const ServiceForm = () => {
 
         <tbody>
           {allServices.map((service, index) => (
-            <tr key={service.serviceId} className="border-b">
+            <tr
+              key={service.serviceId}
+              className="border-b odd:bg-gray-200 even:bg-white"
+            >
               <td className="px-3 py-2">{index + 1}</td>
               <td className="px-3 py-2">{service.serviceName}</td>
               <td className="px-3 py-2">Rs {service.fee}</td>
@@ -144,7 +149,7 @@ const ServiceForm = () => {
                   className="text-red-600 text-xl rounded-md hover:text-red-800 transition-colors"
                   onClick={() => handleDelete(service.serviceId)}
                 >
-                  <AiFillDelete />
+                  <RxCross2 />
                 </Link>
               </td>
             </tr>

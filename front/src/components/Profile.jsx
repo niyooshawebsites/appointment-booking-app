@@ -53,7 +53,9 @@ const Profile = () => {
 
   return (
     <div className="w-4/12 mx-auto">
-      <h2 className="mt-10 mb-4 text-center text-2xl">Update Profile</h2>
+      <h2 className="mt-10 mb-4 text-center text-3xl text-pink-600">
+        Update Profile
+      </h2>
       <form className="w-full p-3 mt-2 rounded-md " onSubmit={handleSubmit}>
         <div className="mt-4">
           <div className="flex">

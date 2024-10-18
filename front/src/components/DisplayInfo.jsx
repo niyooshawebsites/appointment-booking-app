@@ -8,9 +8,14 @@ import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import Pagination from "./Pagination";
-import { FaPrint } from "react-icons/fa";
+import { FaPrint, FaExternalLinkAlt } from "react-icons/fa";
 import { TbListDetails } from "react-icons/tb";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import {
+  RxCheckCircled,
+  RxCrossCircled,
+  RxCross2,
+  RxLink2,
+} from "react-icons/rx";
 
 const DisplayInfo = () => {
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
@@ -18,6 +23,7 @@ const DisplayInfo = () => {
   const { allAppointments } = useSelector(
     (state) => state.appointments_Data_Slice
   );
+  const [userDeleted, setUserDeleted] = useState(false);
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
@@ -147,6 +153,7 @@ const DisplayInfo = () => {
   if (role == 1 && isAdmin) {
     return allUsers.length > 0 ? (
       <div className="mx-auto">
+        <h1 className="mt-10 text-3xl text-center text-pink-600">Users</h1>
         <input
           type="text"
           autoComplete="on"
@@ -157,18 +164,18 @@ const DisplayInfo = () => {
         />
 
         <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
-          <thead className="bg-gray-200 border-b border-gray-300">
+          <thead className="bg-pink-600 border-b border-gray-300">
             <tr>
-              <th className="py-2 px-4 text-left text-gray-600">#</th>
-              <th className="py-2 px-4 text-left text-gray-600">Username</th>
-              <th className="py-2 px-4 text-left text-gray-600">B Name</th>
-              <th className="py-2 px-4 text-left text-gray-600">Email</th>
-              <th className="py-2 px-4 text-left text-gray-600">Contact</th>
-              <th className="py-2 px-4 text-left text-gray-600">DOJ</th>
-              <th className="py-2 px-4 text-left text-gray-600">Apps</th>
-              <th className="py-2 px-4 text-left text-gray-600">Verified</th>
-              <th className="py-2 px-4 text-left text-gray-600">Action</th>
-              <th className="py-2 px-4 text-left text-gray-600">Profile</th>
+              <th className="py-2 px-4 text-left text-white">#</th>
+              <th className="py-2 px-4 text-left text-white">Username</th>
+              <th className="py-2 px-4 text-left text-white">B Name</th>
+              <th className="py-2 px-4 text-left text-white">Email</th>
+              <th className="py-2 px-4 text-left text-white">Contact</th>
+              <th className="py-2 px-4 text-left text-white">DOJ</th>
+              <th className="py-2 px-4 text-left text-white">Apps</th>
+              <th className="py-2 px-4 text-left text-white">Verified</th>
+              <th className="py-2 px-4 text-left text-white">Action</th>
+              <th className="py-2 px-4 text-left text-white">Profile</th>
             </tr>
           </thead>
           <tbody>
@@ -180,7 +187,7 @@ const DisplayInfo = () => {
               )
               .map((user, index) => {
                 return (
-                  <tr key={user._id}>
+                  <tr key={user._id} className="odd:bg-gray-200 even:bg-white">
                     <td className="py-2 px-4 text-gray-700">{index + 1}</td>
                     <td className="py-2 px-4 text-gray-700">{user.username}</td>
                     <td className="py-2 px-4 text-gray-700">
@@ -198,9 +205,13 @@ const DisplayInfo = () => {
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {user.isVerified ? (
-                        <span className="text-green-500">Yes</span>
+                        <span className="text-green-500">
+                          <RxCheckCircled />
+                        </span>
                       ) : (
-                        <span className="text-red-500">No</span>
+                        <span className="text-red-500">
+                          <RxCrossCircled />
+                        </span>
                       )}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
@@ -215,7 +226,7 @@ const DisplayInfo = () => {
                         }}
                         className="text-red-500"
                       >
-                        Delete
+                        <RxCross2 />
                       </Link>
                     </td>
                     <td className="py-2 px-4 text-gray-700">
@@ -224,7 +235,7 @@ const DisplayInfo = () => {
                         target="_blank"
                         className="text-blue-500"
                       >
-                        Visit
+                        <RxLink2 />
                       </Link>
                     </td>
                   </tr>
@@ -245,6 +256,9 @@ const DisplayInfo = () => {
   if (role == 1 && isAdmin == false) {
     return allAppointments.length > 0 ? (
       <div className="mx-auto">
+        <h1 className="mt-10 text-3xl text-center text-pink-600">
+          Appointments
+        </h1>
         <input
           type="text"
           autoComplete="on"
@@ -403,7 +417,7 @@ const DisplayInfo = () => {
                         to={`http://localhost:5173/${appointment.user.username}`}
                         target="_blank"
                       >
-                        <FaExternalLinkAlt />
+                        <RxLink2 />
                       </Link>
                     </td>
                   </tr>

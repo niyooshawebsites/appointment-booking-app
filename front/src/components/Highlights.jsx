@@ -605,238 +605,244 @@ const Highlights = () => {
   // show higlights for admin
   if (role == 1 && isAdmin) {
     return (
-      <div className="flex space-x-8 p-8 mx-auto w-6/12">
-        {/* Column 1 */}
-        <div className="w-1/2">
-          <h2 className="text-xl font-bold mb-4">Total</h2>
-          <table className="min-w-full bg-white border border-gray-200 shadow-md">
-            <thead>
-              <tr>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Service Providers
-                </th>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Data
-                </th>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b">Total</td>
-                <td className="py-2 px-4 border-b">
-                  {totalNumOfUsers < 10
-                    ? `0${totalNumOfUsers}`
-                    : totalNumOfUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    onClick={getAndPassAllUsers}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Verified</td>
-                <td className="py-2 px-4 border-b">
-                  {totalNumOfVerifiedUsers < 10
-                    ? `0${totalNumOfVerifiedUsers}`
-                    : totalNumOfVerifiedUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    onClick={getAndPassAllVerifiedUsers}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Unverified</td>
-                <td className="py-2 px-4 border-b">
-                  {totalNumOfUnverifiedUsers < 10
-                    ? `0${totalNumOfUnverifiedUsers}`
-                    : totalNumOfUnverifiedUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    onClick={getAndPassAllUnverifiedUsers}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Appointments</td>
-                <td className="py-2 px-4 border-b">
-                  {totalNumOfAppointments < 10
-                    ? `0${totalNumOfAppointments}`
-                    : totalNumOfAppointments}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
-                    View
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <>
+        <div className="w-full flex flex-col border">
+          <h1 className="text-center text-3xl mt-10 text-pink-600">
+            Highlights
+          </h1>
+          <div className="flex space-x-8 p-8 mx-auto w-6/12">
+            {/* Column 1 */}
+            <div className="w-1/2">
+              <h2 className="text-xl text-center mb-4">All Data</h2>
+              <table className="min-w-full bg-white border border-gray-200 shadow-md text-center">
+                <thead className="bg-pink-600 text-white">
+                  <tr>
+                    <th className="text-left py-2 px-4 border-b">
+                      Service Providers
+                    </th>
+                    <th className="text-left py-2 px-4 border-b">Entries</th>
+                    <th className="text-left py-2 px-4 border-b">View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="text-left py-2 px-4 border-b">Total</td>
+                    <td className="py-2 px-4 border-b">
+                      {totalNumOfUsers < 10
+                        ? `0${totalNumOfUsers}`
+                        : totalNumOfUsers}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <Link
+                        className="text-indigo-800"
+                        onClick={getAndPassAllUsers}
+                      >
+                        <TbListDetails />
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-left py-2 px-4 border-b">Verified</td>
+                    <td className="py-2 px-4 border-b">
+                      {totalNumOfVerifiedUsers < 10
+                        ? `0${totalNumOfVerifiedUsers}`
+                        : totalNumOfVerifiedUsers}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <Link
+                        className="text-indigo-800"
+                        onClick={getAndPassAllVerifiedUsers}
+                      >
+                        <TbListDetails />
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-left py-2 px-4 border-b">Unverified</td>
+                    <td className="py-2 px-4 border-b">
+                      {totalNumOfUnverifiedUsers < 10
+                        ? `0${totalNumOfUnverifiedUsers}`
+                        : totalNumOfUnverifiedUsers}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <Link
+                        className="text-indigo-800"
+                        onClick={getAndPassAllUnverifiedUsers}
+                      >
+                        <TbListDetails />
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-left py-2 px-4 border-b">
+                      Appointments
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {totalNumOfAppointments < 10
+                        ? `0${totalNumOfAppointments}`
+                        : totalNumOfAppointments}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <Link className="text-indigo-800">
+                        <TbListDetails />
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-        {/* Column 2 */}
-        <div className="w-1/2">
-          <h2 className="text-xl font-bold mb-4">Today</h2>
-          <table className="min-w-full bg-white border border-gray-200 shadow-md">
-            <thead>
-              <tr>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Service Providers
-                </th>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Data
-                </th>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b">Total</td>
-                <td className="py-2 px-4 border-b">
-                  {todayTotalNumOfUsers < 10
-                    ? `0${todayTotalNumOfUsers}`
-                    : todayTotalNumOfUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    onClick={getAndPassTodayUsers}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Verified</td>
-                <td className="py-2 px-4 border-b">
-                  {todayTotalNumOfVerifiedUsers < 10
-                    ? `0${todayTotalNumOfVerifiedUsers}`
-                    : todayTotalNumOfVerifiedUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    onClick={getAndPassTodayVerifiedUsers}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Unverified</td>
-                <td className="py-2 px-4 border-b">
-                  {todayTotalNumOfUnverifiedUsers < 10
-                    ? `0${todayTotalNumOfUnverifiedUsers}`
-                    : todayTotalNumOfUnverifiedUsers}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    onClick={getAndPassTodayUnverifiedUsers}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4 border-b">Appointments</td>
-                <td className="py-2 px-4 border-b">
-                  {todayTotalNumOfAppointments < 10
-                    ? `0${todayTotalNumOfAppointments}`
-                    : todayTotalNumOfAppointments}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
-                    View
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+            {/* Column 2 */}
+            <div className="w-1/2">
+              <h2 className="text-xl text-center mb-4">Today's Data</h2>
+              <table className="min-w-full bg-white border border-gray-200 shadow-md text-center">
+                <thead className="bg-pink-600 text-white">
+                  <tr>
+                    <th className="text-left py-2 px-4 border-b">
+                      Service Providers
+                    </th>
+                    <th className="py-2 px-4 border-b">Entries</th>
+                    <th className="py-2 px-4 border-b">View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="text-left py-2 px-4 border-b">Total</td>
+                    <td className="py-2 px-4 border-b">
+                      {todayTotalNumOfUsers < 10
+                        ? `0${todayTotalNumOfUsers}`
+                        : todayTotalNumOfUsers}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <Link
+                        className="text-indigo-800"
+                        onClick={getAndPassTodayUsers}
+                      >
+                        <TbListDetails />
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-left py-2 px-4 border-b">Verified</td>
+                    <td className="py-2 px-4 border-b">
+                      {todayTotalNumOfVerifiedUsers < 10
+                        ? `0${todayTotalNumOfVerifiedUsers}`
+                        : todayTotalNumOfVerifiedUsers}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <Link
+                        className="text-indigo-800"
+                        onClick={getAndPassTodayVerifiedUsers}
+                      >
+                        <TbListDetails />
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-left py-2 px-4 border-b">Unverified</td>
+                    <td className="py-2 px-4 border-b">
+                      {todayTotalNumOfUnverifiedUsers < 10
+                        ? `0${todayTotalNumOfUnverifiedUsers}`
+                        : todayTotalNumOfUnverifiedUsers}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <Link
+                        className="text-indigo-800"
+                        onClick={getAndPassTodayUnverifiedUsers}
+                      >
+                        <TbListDetails />
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-left py-2 px-4 border-b">
+                      Appointments
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {todayTotalNumOfAppointments < 10
+                        ? `0${todayTotalNumOfAppointments}`
+                        : todayTotalNumOfAppointments}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <Link className="text-indigo-800">
+                        <TbListDetails />
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   // show highlights for service providers
   if (role == 1 && isAdmin == false) {
     return (
-      <div className="flex space-x-8 p-8 mx-auto w-6/12">
-        {/* Column 1 */}
-        <div className="w-1/2">
-          <h2 className="text-xl font-bold mb-4">All Appointments</h2>
-          <table className="min-w-full bg-white border border-gray-200 shadow-md">
-            <thead className="bg-pink-600 text-white">
-              <tr>
-                <th className="py-2 text-left px-4 border-b">Entries</th>
-                <th className="py-2 text-left px-4 border-b">View</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b">
-                  {totalAppointmentsCountFilterByUsername < 10
-                    ? `0${totalAppointmentsCountFilterByUsername}`
-                    : totalAppointmentsCountFilterByUsername}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <Link
-                    className="text-indigo-500"
-                    onClick={getAndPassAllAppointmentsByUserId}
-                  >
-                    <TbListDetails />
-                  </Link>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div className="w-full flex flex-col border">
+        <h1 className="text-center text-3xl my-3 text-pink-500">Highlights</h1>
+        <div className="flex space-x-8 p-8 mx-auto w-4/12">
+          {/* Column 1 */}
+          <div className="w-1/2">
+            <h2 className="text-xl mb-4 text-center">All Appointments</h2>
+            <table className="min-w-full bg-white border border-gray-200 shadow-md">
+              <thead className="bg-pink-600 text-white">
+                <tr>
+                  <th className="py-2 px-4 border-b text-center">Entries</th>
+                  <th className="py-2 px-4 border-b text-center">View</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-2 px-4 border-b text-center">
+                    {totalAppointmentsCountFilterByUsername < 10
+                      ? `0${totalAppointmentsCountFilterByUsername}`
+                      : totalAppointmentsCountFilterByUsername}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    <Link
+                      className="text-indigo-500"
+                      onClick={getAndPassAllAppointmentsByUserId}
+                    >
+                      <TbListDetails />
+                    </Link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        {/* Column 2 */}
-        <div className="w-1/2">
-          <h2 className="text-xl font-bold mb-4">Today's Appointments</h2>
-          <table className="min-w-full bg-white border border-gray-200 shadow-md">
-            <thead className="bg-pink-600 text-white">
-              <tr>
-                <th className="py-2 text-left px-4 border-b">Entries</th>
-                <th className="py-2 text-left px-4 border-b">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b">
-                  {todayAppointmentCountsByUsername < 10
-                    ? `0${todayAppointmentCountsByUsername}`
-                    : todayAppointmentCountsByUsername}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <Link
-                    className="text-indigo-500"
-                    onClick={getAndPassTodaysAppointmentsByUserId}
-                  >
-                    <TbListDetails />
-                  </Link>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          {/* Column 2 */}
+          <div className="w-1/2">
+            <h2 className="text-xl mb-4 text-center">Today's Appointments</h2>
+            <table className="min-w-full bg-white border border-gray-200 shadow-md">
+              <thead className="bg-pink-600 text-white">
+                <tr>
+                  <th className="py-2 text-center px-4 border-b">Entries</th>
+                  <th className="py-2 text-center px-4 border-b">View</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-2 px-4 border-b text-center">
+                    {todayAppointmentCountsByUsername < 10
+                      ? `0${todayAppointmentCountsByUsername}`
+                      : todayAppointmentCountsByUsername}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <Link
+                      className="text-indigo-500"
+                      onClick={getAndPassTodaysAppointmentsByUserId}
+                    >
+                      <TbListDetails />
+                    </Link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );
@@ -845,45 +851,52 @@ const Highlights = () => {
   // show highlights for clients
   if (role == 0 && isAdmin == false) {
     return (
-      <div className="flex space-x-8 p-8 mx-auto w-6/12">
-        {/* Column 1 */}
-        <div className=" mx-auto">
-          {/* <h2 className="text-xl font-bold mb-4">Total</h2> */}
-          <table className="min-w-full bg-white border border-gray-200 shadow-md">
-            <thead>
-              <tr>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Total Appointments
-                </th>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Data
-                </th>
-                <th className="py-2 text-left px-4 bg-gray-100 border-b">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b">Total</td>
-                <td className="py-2 px-4 border-b">
-                  {totalNumOfAppointmentsForClient < 10
-                    ? `0${totalNumOfAppointmentsForClient}`
-                    : totalNumOfAppointmentsForClient}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded"
-                    onClick={getAndAllPassApponitmentsForClient}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <>
+        <div className="w-full flex flex-col border">
+          <h1 className="text-center text-3xl my-3 text-pink-500">
+            Highlights
+          </h1>
+          <div className="flex space-x-8 p-8 mx-auto w-4/12">
+            {/* Column 1 */}
+            <div className=" mx-auto">
+              {/* <h2 className="text-xl font-bold mb-4">Total</h2> */}
+              <table className="min-w-full bg-white border border-gray-200 shadow-md">
+                <thead>
+                  <tr>
+                    <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                      Total Appointments
+                    </th>
+                    <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                      Data
+                    </th>
+                    <th className="py-2 text-left px-4 bg-gray-100 border-b">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="py-2 px-4 border-b">Total</td>
+                    <td className="py-2 px-4 border-b">
+                      {totalNumOfAppointmentsForClient < 10
+                        ? `0${totalNumOfAppointmentsForClient}`
+                        : totalNumOfAppointmentsForClient}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <Link
+                        className="text-indigo-800"
+                        onClick={getAndAllPassApponitmentsForClient}
+                      >
+                        <TbListDetails />
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 };

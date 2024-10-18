@@ -1,6 +1,10 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
+import { RxDoubleArrowLeft } from "react-icons/rx";
+import { Link } from "react-router-dom";
 
 const AppointmentDetails = () => {
+  const dispatch = useDispatch();
   const {
     service,
     date,
@@ -18,11 +22,38 @@ const AppointmentDetails = () => {
     paymentMethod,
   } = useSelector((state) => state.appointment_Slice);
 
+  // go back function
+  const goback = () => {
+    dispatch(
+      dashboardOptionsSliceActions.toggleDashboardOptions({
+        showHighlights: false,
+        showInfo: true,
+        showServices: false,
+        showProfile: false,
+        showAbout: false,
+        showContact: false,
+        showAppointmentDetails: false,
+        showBookAppointment: false,
+        showLetterHead: false,
+        showQaulifications: false,
+        showTimings: false,
+      })
+    );
+  };
+
   return (
     <div className="w-8/12 mx-auto">
+      <div className="flex justify-between mt-2">
+        <Link
+          onClick={goback}
+          className=" text-2xl text-pink-600  hover:text-pink-700"
+        >
+          <RxDoubleArrowLeft />
+        </Link>
+      </div>
       <div className="space-y-1">
         <div className="border-b border-gray-900/10 py-6">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
+          <h2 className="text-base font-semibold leading-7 text-pink-600">
             Appintment Details
           </h2>
           <div className="mt-2 grid grid-cols-3 gap-x-6 gap-y-4">
@@ -68,7 +99,7 @@ const AppointmentDetails = () => {
         </div>
 
         <div className="border-b border-gray-900/10 py-6">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
+          <h2 className="text-base font-semibold leading-7 text-pink-600">
             Personal Details
           </h2>
 
@@ -207,7 +238,7 @@ const AppointmentDetails = () => {
         </div>
 
         <div className="py-6">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
+          <h2 className="text-base font-semibold leading-7 text-pink-600">
             Payment Details
           </h2>
           <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">

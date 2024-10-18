@@ -1,9 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
-import { FcBookmark, FcFlashOn, FcContacts } from "react-icons/fc";
 import { FaUserCog } from "react-icons/fa";
 import { LuMenuSquare } from "react-icons/lu";
 import { CgWebsite } from "react-icons/cg";
+import {
+  RxClock,
+  RxStar,
+  RxComponent1,
+  RxBackpack,
+  RxBookmarkFilled,
+} from "react-icons/rx";
 
 /* eslint-disable react/prop-types */
 const Sidebar = () => {
@@ -11,13 +17,15 @@ const Sidebar = () => {
   const dispatch = useDispatch();
 
   // admin sidebar optoins
-  if (role == 1 && isAdmin == true) {
+  if (role == 1 && isAdmin) {
     return (
-      <div className="w-2/12 bg-gray-800 text-white h-full p-4">
-        <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
+      <div className="w-2/12 bg-indigo-800 text-white h-full p-4">
+        <h1 className="text-xl font-semibold mb-6 bg-pink-600 p-2 rounded">
+          My Dashboard
+        </h1>
         <ul>
           <li
-            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -36,10 +44,10 @@ const Sidebar = () => {
               );
             }}
           >
-            <FcFlashOn /> &nbsp; Highlights
+            <RxStar style={{ color: "white" }} /> &nbsp; Highlights
           </li>
           <li
-            className="py-2 px-4 hover:bg-gray-700 rounded link flex items-center"
+            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {
               dispatch(
                 dashboardOptionsSliceActions.toggleDashboardOptions({
@@ -58,7 +66,7 @@ const Sidebar = () => {
               );
             }}
           >
-            <FaUserCog style={{ color: "teal" }} /> &nbsp; Profile
+            <FaUserCog style={{ color: "white" }} /> &nbsp; Profile
           </li>
         </ul>
       </div>
@@ -93,7 +101,7 @@ const Sidebar = () => {
               );
             }}
           >
-            <FcFlashOn /> &nbsp; Highlights
+            <RxStar /> &nbsp; Highlights
           </li>
           <li
             className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
@@ -115,7 +123,7 @@ const Sidebar = () => {
               );
             }}
           >
-            <LuMenuSquare style={{ color: "crimson" }} /> &nbsp; Services
+            <LuMenuSquare style={{ color: "white" }} /> &nbsp; Services
           </li>
           <li
             className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
@@ -137,7 +145,7 @@ const Sidebar = () => {
               );
             }}
           >
-            <LuMenuSquare style={{ color: "crimson" }} /> &nbsp; Qualifications
+            <RxBackpack style={{ color: "white" }} /> &nbsp; Qualifications
           </li>
           <li
             className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
@@ -159,7 +167,7 @@ const Sidebar = () => {
               );
             }}
           >
-            <LuMenuSquare style={{ color: "crimson" }} /> &nbsp; Timings
+            <RxClock style={{ color: "white" }} /> &nbsp; Timings
           </li>
           <li
             className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
@@ -181,7 +189,7 @@ const Sidebar = () => {
               );
             }}
           >
-            <CgWebsite style={{ color: "DarkOrange" }} /> &nbsp; About
+            <CgWebsite style={{ color: "white" }} /> &nbsp; About
           </li>
           <li
             className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
@@ -203,7 +211,7 @@ const Sidebar = () => {
               );
             }}
           >
-            <FcContacts /> &nbsp; Contact
+            <RxComponent1 style={{ color: "white" }} /> &nbsp; Contact
           </li>
 
           <li
@@ -226,7 +234,7 @@ const Sidebar = () => {
               );
             }}
           >
-            <FaUserCog style={{ color: "teal" }} /> &nbsp; Profile
+            <FaUserCog style={{ color: "white" }} /> &nbsp; Profile
           </li>
         </ul>
       </div>
@@ -236,8 +244,10 @@ const Sidebar = () => {
   // clients sidebar options
   if (role == 0 && isAdmin == false) {
     return (
-      <div className="w-2/12 bg-gray-800 text-white h-full p-4">
-        <h1 className="text-xl font-semibold mb-6">My Dashboard</h1>
+      <div className="w-2/12 bg-indigo-800 text-white h-full p-4">
+        <h1 className="text-xl font-semibold mb-6 bg-pink-600 p-2 rounded">
+          My Dashboard
+        </h1>
         <ul>
           <li
             className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
@@ -259,7 +269,7 @@ const Sidebar = () => {
               );
             }}
           >
-            <FcFlashOn /> &nbsp; Highlights
+            <RxStar style={{ color: "white" }} /> &nbsp; Highlights
           </li>
           <li
             className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
@@ -281,7 +291,8 @@ const Sidebar = () => {
               );
             }}
           >
-            <FcBookmark /> &nbsp; Book Appointment
+            <RxBookmarkFilled style={{ color: "white" }} /> &nbsp; Book
+            Appointment
           </li>
           <li
             className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
@@ -303,7 +314,7 @@ const Sidebar = () => {
               );
             }}
           >
-            <FaUserCog style={{ color: "teal" }} /> &nbsp; Profile
+            <FaUserCog style={{ color: "white" }} /> &nbsp; Profile
           </li>
         </ul>
       </div>

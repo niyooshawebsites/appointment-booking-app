@@ -156,13 +156,13 @@ const Header = () => {
                         </NavLink>
                         <NavLink
                           to={`/${user}/about`}
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                         >
                           About
                         </NavLink>
                         <NavLink
                           to={`/${user}/contact`}
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                         >
                           Contact
                         </NavLink>
@@ -171,25 +171,25 @@ const Header = () => {
                       <>
                         <NavLink
                           to={`/about`}
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                         >
                           About
                         </NavLink>
                         <NavLink
                           to={`/contact`}
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                         >
                           Contact
                         </NavLink>
                         <NavLink
                           to="/register"
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                         >
                           Register
                         </NavLink>
                         <NavLink
                           to="/login"
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                         >
                           Login
                         </NavLink>
@@ -231,13 +231,13 @@ const Header = () => {
                   </NavLink>
                   <NavLink
                     to={`/${user}/about`}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                   >
                     About
                   </NavLink>
                   <NavLink
                     to={`/${user}/contact`}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                   >
                     Contact
                   </NavLink>
@@ -246,25 +246,25 @@ const Header = () => {
                 <>
                   <NavLink
                     to={`/about`}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                   >
                     About
                   </NavLink>
                   <NavLink
                     to={`/contact`}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                   >
                     Contact
                   </NavLink>
                   <NavLink
                     to="/register"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                   >
                     Register
                   </NavLink>
                   <NavLink
                     to="/login"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                   >
                     Login
                   </NavLink>

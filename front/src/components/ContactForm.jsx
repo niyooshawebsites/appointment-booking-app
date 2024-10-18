@@ -65,7 +65,9 @@ const ContactForm = () => {
   };
   return (
     <div className="w-8/12 mx-auto">
-      <h2 className="mt-10 mb-4 text-center text-2xl">Contact Details</h2>
+      <h2 className="mt-10 mb-4 text-center text-3xl text-pink-600">
+        Contact Details
+      </h2>
       <form className="w-full p-5 mt-2 rounded-md" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* First Column */}

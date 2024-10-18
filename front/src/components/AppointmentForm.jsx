@@ -8,6 +8,7 @@ import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import { specializationSliceActions } from "../store/slices/SpecializationSlice";
 import Pagination from "../components/Pagination";
+import { RxLink2, RxBookmarkFilled } from "react-icons/rx";
 
 const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const { userId } = useSelector((state) => state.user_Slice);
@@ -198,19 +199,13 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
           {usersBySpecialization.length > 0 ? (
             <>
               <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
-                <thead className="bg-gray-200 border-b border-gray-300">
+                <thead className="bg-pink-600 border-b border-gray-300 text-white">
                   <tr>
-                    <th className="py-2 px-4 text-left text-gray-600">#</th>
-                    <th className="py-2 px-4 text-left text-gray-600">
-                      DR. Name
-                    </th>
-                    <th className="py-2 px-4 text-left text-gray-600">
-                      Clinic Name
-                    </th>
-                    <th className="py-2 px-4 text-left text-gray-600">
-                      Profile
-                    </th>
-                    <th className="py-2 px-4 text-left text-gray-600">Book</th>
+                    <th className="py-2 px-4 text-left">#</th>
+                    <th className="py-2 px-4 text-left">DR. Name</th>
+                    <th className="py-2 px-4 text-left">Clinic Name</th>
+                    <th className="py-2 px-4 text-left">Profile</th>
+                    <th className="py-2 px-4 text-left">Book</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -228,16 +223,16 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                         </td>
                         <td className="py-2 px-4 text-left text-gray-600">
                           <Link
-                            className="text-blue-500"
+                            className="text-pink-500"
                             to={`http://localhost:5173/${user.username}`}
                             target="_blank"
                           >
-                            Visit
+                            <RxLink2 />
                           </Link>
                         </td>
                         <td className="py-2 px-4 text-left text-gray-600">
                           <Link
-                            className="text-blue-500"
+                            className="text-pink-500"
                             customerDashboard={customerDashboard}
                             onClick={() => {
                               dispatch(
@@ -266,7 +261,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                               );
                             }}
                           >
-                            Book
+                            <RxBookmarkFilled />
                           </Link>
                         </td>
                       </tr>
