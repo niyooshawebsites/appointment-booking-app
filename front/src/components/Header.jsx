@@ -5,6 +5,8 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 import axios from "axios";
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaRegSmile } from "react-icons/fa";
+import { announcementSliceActions } from "../store/slices/AnnouncementSlice";
+import { HiSpeakerphone } from "react-icons/hi";
 
 const Header = () => {
   const path = window.location.pathname;
@@ -132,6 +134,20 @@ const Header = () => {
               <div className="flex space-x-4 ">
                 {authenticated ? (
                   <>
+                    <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                      <Link
+                        className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
+                        onClick={() => {
+                          dispatch(
+                            announcementSliceActions.changeAnnouncementStatus({
+                              showAnnouncementModal: true,
+                            })
+                          );
+                        }}
+                      >
+                        <HiSpeakerphone />
+                      </Link>
+                    </NavLink>
                     <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
                       <FaRegSmile /> &nbsp; {username}
                     </NavLink>

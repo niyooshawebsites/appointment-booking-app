@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Announcement from "./Announcement";
 
 const Highlights = () => {
   const [totalNumOfUsers, setTotalNumOfUsers] = useState(0);
@@ -844,6 +845,7 @@ const Highlights = () => {
             </table>
           </div>
         </div>
+        <Announcement />
       </div>
     );
   }

@@ -1512,6 +1512,7 @@ const updateUserQualificationController = async (req, res) => {
 const updateUserTimingsController = async (req, res) => {
   try {
     const { timings } = req.body;
+    console.log(timings);
 
     if (!timings) {
       return res.status(400).json({
@@ -1536,6 +1537,7 @@ const updateUserTimingsController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Timings updated successfully",
+      timings: updatedUser.timings,
     });
   } catch (err) {
     return res.status(500).json({

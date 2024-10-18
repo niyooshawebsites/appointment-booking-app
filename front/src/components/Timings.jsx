@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Timings = () => {
   const [timings, setTimings] = useState({
@@ -64,15 +65,24 @@ const Timings = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data:", timings);
-    // Submit the timings to your backend or handle it as needed
+    await axios
+      .put(
+        `http://localhost:8000/api/v1/update-user-timings`,
+        { timings },
+        {
+          withCredentials: true,
+        }
+      )
+      .then(() => toast.success("Timings updated successfully"))
+      .catch(() => toast.error("Timings updation failed"));
   };
 
   return (
     <div
-      className="w-5/12 mx-auto p-4 bg-white shadow-lg rounded-lg overflow-y-auto"
+      className="w-5/12 mx-auto p-4 bg-white shadow-lg rounded-lg overflow-y-auto mt-5"
       style={{ height: "600px" }}
     >
       <h2 className="text-3xl font-bold mb-4 text-pink-600 text-center">
@@ -90,7 +100,7 @@ const Timings = () => {
                 type="time"
                 name={`${day}MorningFrom`}
                 value={timings.days[day].morningFrom}
-                onChange={(e) => handleInputChange(e, day, "morningFrom")}
+                onChange={(e) => handleInputChange(e, day, `morningFrom`)}
                 className="border border-gray-300 rounded-md p-1 text-sm"
                 required
               />
@@ -99,7 +109,7 @@ const Timings = () => {
                 type="time"
                 name={`${day}MorningTo`}
                 value={timings.days[day].morningTo}
-                onChange={(e) => handleInputChange(e, day, "morningTo")}
+                onChange={(e) => handleInputChange(e, day, `morningTo`)}
                 className="border border-gray-300 rounded-md p-1 text-sm"
                 required
               />
@@ -111,7 +121,7 @@ const Timings = () => {
                 type="time"
                 name={`${day}EveningFrom`}
                 value={timings.days[day].eveningFrom}
-                onChange={(e) => handleInputChange(e, day, "eveningFrom")}
+                onChange={(e) => handleInputChange(e, day, `eveningFrom`)}
                 className="border border-gray-300 rounded-md p-1 text-sm"
                 required
               />
@@ -120,7 +130,7 @@ const Timings = () => {
                 type="time"
                 name={`${day}EveningTo`}
                 value={timings.days[day].eveningTo}
-                onChange={(e) => handleInputChange(e, day, "eveningTo")}
+                onChange={(e) => handleInputChange(e, day, `eveningTo`)}
                 className="border border-gray-300 rounded-md p-1 text-sm"
                 required
               />

@@ -365,4 +365,12 @@ router.put(
   updateUserQualificationController
 );
 
+// update user timings route
+router.put(
+  "/update-user-timings",
+  auth,
+  isServiceProvider,
+  updateUserTimingsController
+);
+
 module.exports = router;

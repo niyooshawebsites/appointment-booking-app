@@ -179,130 +179,135 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
     // service provider
+    announcement: {
+      type: String,
+      default: "",
+    },
+    // service provider
     timings: {
       days: {
         monday: {
-          morningFrom: {
+          mondayMorningFrom: {
             type: String,
             default: "",
           },
-          morningTo: {
+          mondayMorningTo: {
             type: String,
             default: "",
           },
-          eveningFrom: {
+          mondayEveningFrom: {
             type: String,
             default: "",
           },
-          eveningTo: {
+          mondayEveningTo: {
             type: String,
             default: "",
           },
         },
         tuesday: {
-          morningFrom: {
+          tuesdayMorningFrom: {
             type: String,
             default: "",
           },
-          morningTo: {
+          tuesdayMorningTo: {
             type: String,
             default: "",
           },
-          eveningFrom: {
+          tuesdayEveningFrom: {
             type: String,
             default: "",
           },
-          eveningTo: {
+          tuesdayEveningTo: {
             type: String,
             default: "",
           },
         },
         wednesday: {
-          morningFrom: {
+          wednesdayMorningFrom: {
             type: String,
             default: "",
           },
-          morningTo: {
+          wednesdayMorningTo: {
             type: String,
             default: "",
           },
-          eveningFrom: {
+          wednesdayEveningFrom: {
             type: String,
             default: "",
           },
-          eveningTo: {
+          wednesdayEveningTo: {
             type: String,
             default: "",
           },
         },
         thursday: {
-          morningFrom: {
+          thursdayMorningFrom: {
             type: String,
             default: "",
           },
-          morningTo: {
+          thursdayMorningTo: {
             type: String,
             default: "",
           },
-          eveningFrom: {
+          thursdayEveningFrom: {
             type: String,
             default: "",
           },
-          eveningTo: {
+          thursdayEveningTo: {
             type: String,
             default: "",
           },
         },
         friday: {
-          morningFrom: {
+          fridayMorningFrom: {
             type: String,
             default: "",
           },
-          morningTo: {
+          fridayMorningTo: {
             type: String,
             default: "",
           },
-          eveningFrom: {
+          fridayEveningFrom: {
             type: String,
             default: "",
           },
-          eveningTo: {
+          fridayEveningTo: {
             type: String,
             default: "",
           },
         },
         saturday: {
-          morningFrom: {
+          saturdayMorningFrom: {
             type: String,
             default: "",
           },
-          morningTo: {
+          saturdayMorningTo: {
             type: String,
             default: "",
           },
-          eveningFrom: {
+          saturdayEveningFrom: {
             type: String,
             default: "",
           },
-          eveningTo: {
+          saturdayEveningTo: {
             type: String,
             default: "",
           },
         },
         sunday: {
-          morningFrom: {
+          sundayMorningFrom: {
             type: String,
             default: "",
           },
-          morningTo: {
+          sundayMorningTo: {
             type: String,
             default: "",
           },
-          eveningFrom: {
+          sundayEveningFrom: {
             type: String,
             default: "",
           },
-          eveningTo: {
+          sundayEveningTo: {
             type: String,
             default: "",
           },
