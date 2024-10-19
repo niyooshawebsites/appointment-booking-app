@@ -10,7 +10,7 @@ const VerificationOutcome = ({ outCome }) => {
               Email verfication successful
             </h2>
             <Link to="/login">
-              <button className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-center">
+              <button className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 text-center">
                 Log In
               </button>
             </Link>

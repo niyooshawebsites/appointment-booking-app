@@ -9,8 +9,10 @@ import { announcementSliceActions } from "../store/slices/AnnouncementSlice";
 import { HiSpeakerphone } from "react-icons/hi";
 
 const Header = () => {
+  const navigate = useNavigate();
   const path = window.location.pathname;
   let user = path.split("/")[1];
+
   if (
     user == "register" ||
     user == "login" ||
@@ -19,7 +21,8 @@ const Header = () => {
     user == "verify-email" ||
     user == "forgot-password" ||
     user == "reset-password" ||
-    user == ""
+    user == "" ||
+    user == "dashboard"
   ) {
     user = "abs";
   }
@@ -29,7 +32,7 @@ const Header = () => {
   );
 
   const { businessName } = useSelector((state) => state.service_Provider_Slice);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const logout = async () => {
@@ -46,7 +49,10 @@ const Header = () => {
               authenticated: false,
             })
           );
-          navigate("/");
+
+          const navigationLink = user !== "abs" ? `/${user}/login` : "/login";
+          navigate(navigationLink);
+
           dispatch(
             dashboardOptionsSliceActions.toggleDashboardOptions({
               showHighlights: true,
@@ -218,7 +224,7 @@ const Header = () => {
                         >
                           Register
                         </NavLink>
-                        {user != "abs" ? (
+                        {/* {user !== "abs" ? (
                           <NavLink
                             to="/login"
                             className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
@@ -227,7 +233,7 @@ const Header = () => {
                           </NavLink>
                         ) : (
                           ""
-                        )}
+                        )} */}
                       </>
                     )}
                   </>

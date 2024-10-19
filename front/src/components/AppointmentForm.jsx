@@ -292,7 +292,9 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
     return (
       <form className="w-9/12 mx-auto mb-10" onSubmit={handleSubmit}>
         <div className="space-y-12">
-          <h1 className="text-center text-4xl mt-5">Book Appointment</h1>
+          <h1 className="text-center text-4xl mt-5 text-indigo-600">
+            Book Appointment
+          </h1>
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-pink-600">
               Appointment Details

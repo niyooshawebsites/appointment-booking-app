@@ -90,7 +90,11 @@ const LoginForm = () => {
           })
         );
         toast.success("Login successful!");
-        navigate("/dashboard");
+        {
+          username !== "abs"
+            ? navigate(`/${username}/dashboard`)
+            : navigate("/dashboard");
+        }
       })
       .catch((err) => {
         console.log(err);
