@@ -2,11 +2,11 @@ import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userSliceActions } from "../store/slices/UserSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
-import axios from "axios";
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaRegSmile } from "react-icons/fa";
 import { announcementSliceActions } from "../store/slices/AnnouncementSlice";
 import { HiSpeakerphone } from "react-icons/hi";
+import axios from "axios";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -163,6 +163,15 @@ const Header = () => {
                     ) : (
                       ""
                     )}
+
+                    {/* For clients.... */}
+                    {role == 0 && authenticated ? (
+                      <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center bg-orange-600 hover:bg-orange-700 book-appointment">
+                        Book Appointment
+                      </NavLink>
+                    ) : (
+                      ""
+                    )}
                     <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
                       <FaRegSmile /> &nbsp; {username}
                     </NavLink>
@@ -224,16 +233,6 @@ const Header = () => {
                         >
                           Register
                         </NavLink>
-                        {/* {user !== "abs" ? (
-                          <NavLink
-                            to="/login"
-                            className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                          >
-                            Login
-                          </NavLink>
-                        ) : (
-                          ""
-                        )} */}
                       </>
                     )}
                   </>

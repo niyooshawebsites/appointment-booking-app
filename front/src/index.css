@@ -23,3 +23,18 @@
   display: flex;
   min-width: 100%; /* Ensure the content spans the full width */
 }
+
+.book-appointment {
+  animation: blinking-Appointment 0.5s infinite ease-in-out;
+}
+
+@keyframes blinking-Appointment {
+  0% {
+    background-color: orangered;
+    transform: scale(1);
+  }
+  100% {
+    background-color: orangered;
+    transform: scale(1.1);
+  }
+}
