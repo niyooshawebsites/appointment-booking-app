@@ -5,3 +5,21 @@
 .link:hover {
   cursor: pointer;
 }
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.ticker-text {
+  animation: ticker 20s linear infinite;
+}
+
+.ticker-content {
+  display: flex;
+  min-width: 100%; /* Ensure the content spans the full width */
+}

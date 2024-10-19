@@ -14,6 +14,7 @@ import { useState } from "react";
 import LetterHead from "../components/LetterHead";
 import Qualifications from "../components/Qualifications";
 import Timings from "../components/Timings";
+import Announcement from "../components/Announcement";
 
 const Dashboard = () => {
   const {
@@ -39,6 +40,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
           <Highlights />
+          <Announcement />
         </div>
       </Layout>
     );
@@ -50,6 +52,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
           <DisplayInfo />
+          <Announcement />
         </div>
       </Layout>
     );
@@ -76,6 +79,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
           <AppointmentDetails />
+          <Announcement />
         </div>
       </Layout>
     );
@@ -87,6 +91,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
           <ServiceForm />
+          <Announcement />
         </div>
       </Layout>
     );
@@ -98,6 +103,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
           <Profile />
+          <Announcement />
         </div>
       </Layout>
     );
@@ -109,6 +115,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
           <AboutForm />
+          <Announcement />
         </div>
       </Layout>
     );
@@ -120,6 +127,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
           <ContactForm />
+          <Announcement />
         </div>
       </Layout>
     );
@@ -131,6 +139,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
           <LetterHead />
+          <Announcement />
         </div>
       </Layout>
     );
@@ -142,6 +151,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
           <Qualifications />
+          <Announcement />
         </div>
       </Layout>
     );
@@ -153,6 +163,7 @@ const Dashboard = () => {
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
           <Timings />
+          <Announcement />
         </div>
       </Layout>
     );

@@ -21,11 +21,14 @@ const Announcement = () => {
 
     await axios
       .put(
-        "http://localhost:8000/api/v1/announcement",
+        "http://localhost:8000/api/v1/update-announcement",
         { announcement },
         { withCredentials: true }
       )
-      .then(() => toast.success("Announced successfully"))
+      .then(() => {
+        toast.success("Announced successfully");
+        setAnnouncement("");
+      })
       .catch(() => toast.error("Announcement failed"));
   };
 
@@ -69,15 +72,6 @@ const Announcement = () => {
               <button
                 type="submit"
                 className="ml-2 px-4 py-2 bg-pink-600 text-white rounded"
-                onClick={() => {
-                  if (announcement) {
-                    dispatch(
-                      announcementSliceActions.changeAnnouncementStatus({
-                        showAnnouncementModal: false,
-                      })
-                    );
-                  }
-                }}
               >
                 Announce
               </button>

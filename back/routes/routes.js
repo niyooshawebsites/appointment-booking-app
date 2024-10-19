@@ -34,6 +34,7 @@ const {
   getUserDetailsForPrintController,
   updateUserQualificationController,
   updateUserTimingsController,
+  updateAnnouncementController,
 } = require("../controllers/user.controller");
 
 const {
@@ -371,6 +372,14 @@ router.put(
   auth,
   isServiceProvider,
   updateUserTimingsController
+);
+
+// update announcement route
+router.put(
+  "/update-announcement",
+  auth,
+  isServiceProvider,
+  updateAnnouncementController
 );
 
 module.exports = router;

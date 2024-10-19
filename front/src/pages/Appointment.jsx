@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
 import axios from "axios";
+import Ticker from "../components/Ticker";
 
 const Appointment = ({ serviceProvider }) => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const Appointment = ({ serviceProvider }) => {
             services: res.data.services,
             contact: res.data.contact,
             socialProfiles: res.data.socialProfiles,
+            announcement: res.data.announcement,
           })
         );
       })
@@ -38,6 +40,7 @@ const Appointment = ({ serviceProvider }) => {
 
   return (
     <Layout>
+      <Ticker />
       <AppointmentForm serviceProvider={serviceProvider} />
     </Layout>
   );

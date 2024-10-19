@@ -657,6 +657,7 @@ const checkUserController = async (req, res) => {
         contactNo: user.contactNo,
         about: user.about,
         services: user.services,
+        announcement: user.announcement,
         contact: {
           businessName: user.businessName,
           gst: user.gst,
@@ -1490,7 +1491,7 @@ const updateUserQualificationController = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res.status(404).json({
+      return res.status(304).json({
         success: false,
         msg: "user count not be updated",
       });
@@ -1547,6 +1548,42 @@ const updateUserTimingsController = async (req, res) => {
   }
 };
 
+const updateAnnouncementController = async (req, res) => {
+  try {
+    const { announcement } = req.body;
+
+    if (!announcement) {
+      return res.status(400).json({
+        success: false,
+        msg: "Announcement is missing",
+      });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { username: req.user.username },
+      { announcement },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(304).json({
+        success: false,
+        msg: "user could not be updated",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Announcement udpated successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   registerController,
   loginController,
@@ -1582,4 +1619,5 @@ module.exports = {
   getUserDetailsForPrintController,
   updateUserQualificationController,
   updateUserTimingsController,
+  updateAnnouncementController,
 };

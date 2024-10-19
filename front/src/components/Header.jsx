@@ -24,7 +24,9 @@ const Header = () => {
     user = "abs";
   }
 
-  const { username, authenticated } = useSelector((state) => state.user_Slice);
+  const { username, role, authenticated } = useSelector(
+    (state) => state.user_Slice
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -134,20 +136,26 @@ const Header = () => {
               <div className="flex space-x-4 ">
                 {authenticated ? (
                   <>
-                    <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
-                      <Link
-                        className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
-                        onClick={() => {
-                          dispatch(
-                            announcementSliceActions.changeAnnouncementStatus({
-                              showAnnouncementModal: true,
-                            })
-                          );
-                        }}
-                      >
-                        <HiSpeakerphone />
-                      </Link>
-                    </NavLink>
+                    {role == 1 && authenticated ? (
+                      <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                        <Link
+                          className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
+                          onClick={() => {
+                            dispatch(
+                              announcementSliceActions.changeAnnouncementStatus(
+                                {
+                                  showAnnouncementModal: true,
+                                }
+                              )
+                            );
+                          }}
+                        >
+                          <HiSpeakerphone />
+                        </Link>
+                      </NavLink>
+                    ) : (
+                      ""
+                    )}
                     <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
                       <FaRegSmile /> &nbsp; {username}
                     </NavLink>
@@ -165,7 +173,7 @@ const Header = () => {
                       <>
                         <NavLink
                           to={`/${user}`}
-                          className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                          className="rounded-md bg-pink-600 px-3 py-2 text-sm font-medium text-white"
                           aria-current="page"
                         >
                           Book Appointment
@@ -240,7 +248,7 @@ const Header = () => {
                 <>
                   <NavLink
                     to={`/${user}`}
-                    className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                    className="rounded-md bg-pink-600 px-3 py-2 text-sm font-medium text-white"
                     aria-current="page"
                   >
                     Book Appointment

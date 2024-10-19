@@ -845,7 +845,6 @@ const Highlights = () => {
             </table>
           </div>
         </div>
-        <Announcement />
       </div>
     );
   }

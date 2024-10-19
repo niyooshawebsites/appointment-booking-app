@@ -15,8 +15,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const { specialization, usersBySpecialization } = useSelector(
     (state) => state.specialization_Slice
   );
-  console.log(specialization);
-  console.log(usersBySpecialization);
   const path = window.location.pathname;
   let username = path.split("/")[1];
   const dispatch = useDispatch();
@@ -291,7 +289,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
         <div className="space-y-12">
           <h1 className="text-center text-4xl mt-5">Book Appointment</h1>
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
+            <h2 className="text-base font-semibold leading-7 text-pink-600">
               Appintment Details
             </h2>
             <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -354,7 +352,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
               </div>
 
               <Link
-                className="text-white text-center bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded w-full"
+                className="text-white text-center bg-pink-600 hover:bg-pink-700 py-1 px-3 rounded w-full"
                 onClick={checkAvailability}
               >
                 Check Availability
@@ -363,7 +361,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
           </div>
 
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
+            <h2 className="text-base font-semibold leading-7 text-pink-600">
               Personal Details
             </h2>
             <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -537,7 +535,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
           </div>
 
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
+            <h2 className="text-base font-semibold leading-7 text-pink-600">
               Payment Details
             </h2>
             <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -581,14 +579,14 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
           {payOnline ? (
             <button
               type="submit"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
             >
               Pay & Book Appointment
             </button>
           ) : (
             <button
               type="submit"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
             >
               Book Appointment
             </button>
