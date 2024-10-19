@@ -27,6 +27,8 @@ const Header = () => {
   const { username, role, authenticated } = useSelector(
     (state) => state.user_Slice
   );
+
+  const { businessName } = useSelector((state) => state.service_Provider_Slice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -124,12 +126,11 @@ const Header = () => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-between">
             <div className="flex flex-shrink-0 items-center">
-              <Link to={user !== "abs" ? `/${user}` : "/"}>
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                  alt="Doc App"
-                />
+              <Link
+                to={user !== "abs" ? `/${user}` : "/"}
+                className="text-white text-3xl"
+              >
+                {businessName}
               </Link>
             </div>
             <div className="hidden sm:ml-6 sm:block ml-auto">
@@ -190,6 +191,12 @@ const Header = () => {
                         >
                           Contact
                         </NavLink>
+                        <NavLink
+                          to={`/${user}/login`}
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
+                        >
+                          login
+                        </NavLink>
                       </>
                     ) : (
                       <>
@@ -211,12 +218,16 @@ const Header = () => {
                         >
                           Register
                         </NavLink>
-                        <NavLink
-                          to="/login"
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                        >
-                          Login
-                        </NavLink>
+                        {user != "abs" ? (
+                          <NavLink
+                            to="/login"
+                            className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
+                          >
+                            Login
+                          </NavLink>
+                        ) : (
+                          ""
+                        )}
                       </>
                     )}
                   </>

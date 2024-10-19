@@ -1,12 +1,13 @@
 import Layout from "../components/Layout";
 import AppointmentForm from "../components/AppointmentForm";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
 import axios from "axios";
 import Ticker from "../components/Ticker";
 
 const Appointment = ({ serviceProvider }) => {
+  const { announcement } = useSelector((state) => state.service_Provider_Slice);
   const dispatch = useDispatch();
 
   // getting the username from url
@@ -40,8 +41,14 @@ const Appointment = ({ serviceProvider }) => {
 
   return (
     <Layout>
-      <Ticker />
-      <AppointmentForm serviceProvider={serviceProvider} />
+      {announcement ? (
+        <>
+          <Ticker />
+          <AppointmentForm serviceProvider={serviceProvider} />
+        </>
+      ) : (
+        <AppointmentForm serviceProvider={serviceProvider} />
+      )}
     </Layout>
   );
 };

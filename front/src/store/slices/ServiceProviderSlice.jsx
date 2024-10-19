@@ -15,8 +15,8 @@ const serviceProviderSlice = createSlice({
   },
   reducers: {
     serviceProviderDetails: (state, action) => {
-      state.about = action.payload.name;
-      state.about = action.payload.businessName;
+      state.name = action.payload.name;
+      state.businessName = action.payload.businessName;
       state.about = action.payload.about;
       state.email = action.payload.email;
       state.contactNo = action.payload.contactNo;

@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +20,49 @@ const RegisterForm = () => {
       password: "",
     };
   });
+
+  const dispatch = useDispatch();
+
+  // getting the username from url
+  const path = window.location.pathname;
+  let username = path.split("/")[1];
+
+  if (
+    username == "register" ||
+    username == "login" ||
+    username == "about" ||
+    username == "contact" ||
+    username == "verify-email" ||
+    username == "forgot-password" ||
+    username == "reset-password" ||
+    username == ""
+  ) {
+    username = "abs";
+  }
+
+  const checkUser = async () => {
+    await axios
+      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
+      .then((res) => {
+        dispatch(
+          serviceProviderSliceActons.serviceProviderDetails({
+            username: username,
+            businessName: res.data.contact.businessName,
+            about: res.data.about,
+            email: res.data.email,
+            contactNo: res.data.contactNo,
+            services: res.data.services,
+            contact: res.data.contact,
+            socialProfiles: res.data.socialProfiles,
+          })
+        );
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, [username]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -196,7 +241,10 @@ const RegisterForm = () => {
         </form>
         <p className="text-center text-gray-500 mt-5">
           Already have an account?{" "}
-          <Link to="/" className="text-indigo-500">
+          <Link
+            to={username != "abs" ? `/${username}/login` : "/login"}
+            className="text-indigo-500"
+          >
             Please login!
           </Link>
         </p>

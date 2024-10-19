@@ -1,38 +1,56 @@
 import Layout from "../components/Layout";
-import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import axios from "axios";
+import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
 
 const Contact = () => {
   const { businessName, email, contactNo, contact } = useSelector(
     (state) => state.service_Provider_Slice
   );
 
-  // const path = window.location.pathname;
-  // const username = path.split("/")[1] || "abs";
+  const dispatch = useDispatch();
 
-  // const [contactDetails, setContactDetails] = useState(() => {
-  //   return {
-  //     name: "",
-  //     businessName: "",
-  //     gst: "",
-  //     contact: "",
-  //     office: "",
-  //     floor: "",
-  //     building: "",
-  //     street: "",
-  //     locality: "",
-  //     district: "",
-  //     state: "",
-  //     pinCode: "",
-  //   }
-  // });
+  // getting the username from url
+  const path = window.location.pathname;
+  let username = path.split("/")[1];
 
-  // const getContactDetails = async () => {
-  //   await axios.get(`http://localhost:8000/api/v1/${username}`).then(res => setContactDetails(res.data.contact)).catch(err => console.log(err))
-  // }
+  if (
+    username == "register" ||
+    username == "login" ||
+    username == "about" ||
+    username == "contact" ||
+    username == "verify-email" ||
+    username == "forgot-password" ||
+    username == "reset-password" ||
+    username == ""
+  ) {
+    username = "abs";
+  }
 
-  // useEffect(() => {getContactDetails()}, []);
+  const checkUser = async () => {
+    await axios
+      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
+      .then((res) => {
+        dispatch(
+          serviceProviderSliceActons.serviceProviderDetails({
+            username: username,
+            businessName: res.data.contact.businessName,
+            about: res.data.about,
+            email: res.data.email,
+            contactNo: res.data.contactNo,
+            services: res.data.services,
+            contact: res.data.contact,
+            socialProfiles: res.data.socialProfiles,
+          })
+        );
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, [username]);
 
   const mapAddress = `${contact.building}, ${contact.locality}, ${contact.district}, ${contact.state}`;
 

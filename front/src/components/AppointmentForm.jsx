@@ -148,6 +148,11 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const currentDate = new Date().toISOString().split("T")[0];
 
   const checkAvailability = async () => {
+    if (!custDetails.date || !custDetails.time) {
+      return alert(
+        "Please fill the appointment date and time to check the availability"
+      );
+    }
     await axios
       .get(
         `http://localhost:8000/api/v1/check-appointment-availability?date=${custDetails.date}&time=${custDetails.time}&username=${username}`
@@ -290,7 +295,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
           <h1 className="text-center text-4xl mt-5">Book Appointment</h1>
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-pink-600">
-              Appintment Details
+              Appointment Details
             </h2>
             <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="col-span-full">
