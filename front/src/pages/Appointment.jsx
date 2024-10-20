@@ -7,7 +7,9 @@ import axios from "axios";
 import Ticker from "../components/Ticker";
 
 const Appointment = ({ serviceProvider }) => {
-  const { announcement } = useSelector((state) => state.service_Provider_Slice);
+  const { announcement, isVerified } = useSelector(
+    (state) => state.service_Provider_Slice
+  );
   const dispatch = useDispatch();
 
   // getting the username from url
@@ -22,6 +24,7 @@ const Appointment = ({ serviceProvider }) => {
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
             businessName: res.data.contact.businessName,
+            isVerified: res.data.isVerified,
             about: res.data.about,
             email: res.data.email,
             contactNo: res.data.contactNo,
@@ -38,6 +41,21 @@ const Appointment = ({ serviceProvider }) => {
   useEffect(() => {
     checkUser();
   }, [username]);
+
+  if (!isVerified) {
+    return (
+      <Layout>
+        <div className="flex flex-col justify-center items-center h-screen">
+          <h1 className="text-5xl text-center text-red-500">
+            Doctor account is not verified!
+          </h1>
+          <h2 className="text-xl text-gray-500 mt-3">
+            Please verify your email to access the service
+          </h2>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

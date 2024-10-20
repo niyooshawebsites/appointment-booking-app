@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { userSliceActions } from "../store/slices/UserSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { FaRegEye } from "react-icons/fa";
-import { FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
+import Unverified from "./Unverified";
 
 const LoginForm = () => {
+  const { isVerified } = useSelector((state) => state.service_Provider_Slice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -45,6 +46,7 @@ const LoginForm = () => {
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
             businessName: res.data.contact.businessName,
+            isVerified: res.data.isVerified,
             about: res.data.about,
             email: res.data.email,
             contactNo: res.data.contactNo,
@@ -112,6 +114,10 @@ const LoginForm = () => {
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  if (!isVerified) {
+    return <Unverified />;
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

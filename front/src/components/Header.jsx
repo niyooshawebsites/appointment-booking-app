@@ -164,14 +164,6 @@ const Header = () => {
                       ""
                     )}
 
-                    {/* For clients.... */}
-                    {role == 0 && authenticated ? (
-                      <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center bg-orange-600 hover:bg-orange-700 book-appointment">
-                        Book Appointment
-                      </NavLink>
-                    ) : (
-                      ""
-                    )}
                     <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
                       <FaRegSmile /> &nbsp; {username}
                     </NavLink>

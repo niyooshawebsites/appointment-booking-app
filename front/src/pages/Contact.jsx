@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
+import Unverified from "../components/Unverified";
 
 const Contact = () => {
-  const { businessName, email, contactNo, contact } = useSelector(
+  const { businessName, email, contactNo, contact, isVerified } = useSelector(
     (state) => state.service_Provider_Slice
   );
 
@@ -36,6 +37,7 @@ const Contact = () => {
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
             businessName: res.data.contact.businessName,
+            isVerified: res.data.isVerified,
             about: res.data.about,
             email: res.data.email,
             contactNo: res.data.contactNo,
@@ -57,6 +59,14 @@ const Contact = () => {
   const mapUrl = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(
     mapAddress
   )}`;
+
+  if (!isVerified) {
+    return (
+      <Layout>
+        <Unverified />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

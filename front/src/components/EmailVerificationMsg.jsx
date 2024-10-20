@@ -6,7 +6,7 @@ const VerificationOutcome = ({ outCome }) => {
       {outCome ? (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
           <div className="w-full max-w-md p-6 mx-auto bg-white rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-6 text-center text-blue-500">
+            <h2 className="text-2xl font-bold mb-6 text-center text-pink-600">
               Email verfication successful
             </h2>
             <Link to="/login">

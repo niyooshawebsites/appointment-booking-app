@@ -4,17 +4,19 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
+import Unverified from "./Unverified";
 
 const RegisterForm = () => {
+  const { isVerified } = useSelector((state) => state.service_Provider_Slice);
   const [showPassword, setShowPassword] = useState(false);
   const [showSpecialization, setShowSpecialization] = useState(true);
 
   const [registrationDetails, setRegistrationDetails] = useState(() => {
     return {
       role: 1,
-      specialization: "Cardiologist",
+      specialization: "",
       username: "",
       email: "",
       password: "",
@@ -48,6 +50,7 @@ const RegisterForm = () => {
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
             businessName: res.data.contact.businessName,
+            isVerified: res.data.isVerified,
             about: res.data.about,
             email: res.data.email,
             contactNo: res.data.contactNo,
@@ -85,8 +88,7 @@ const RegisterForm = () => {
         toast.success(res.data.msg);
       })
       .catch((err) => {
-        console.log(err);
-        toast.error("Nono no");
+        toast.error(err.data.msg);
       });
 
     setRegistrationDetails(() => {
@@ -102,6 +104,10 @@ const RegisterForm = () => {
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  if (!isVerified) {
+    return <Unverified />;
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -143,6 +149,7 @@ const RegisterForm = () => {
                 required
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               >
+                <option value="">Select Specialization</option>
                 <option value="Cardiologist">Cardiologist</option>
                 <option value="Dentist">Dentist</option>
                 <option value="Dermatologist">Dermatologist</option>

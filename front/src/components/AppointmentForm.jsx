@@ -9,21 +9,29 @@ import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import { specializationSliceActions } from "../store/slices/SpecializationSlice";
 import Pagination from "../components/Pagination";
 import { RxLink2, RxBookmarkFilled } from "react-icons/rx";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const { userId } = useSelector((state) => state.user_Slice);
   const { specialization, usersBySpecialization } = useSelector(
     (state) => state.specialization_Slice
   );
+  const [showPassword, setShowPassword] = useState(false);
+
   const path = window.location.pathname;
   let username = path.split("/")[1];
+
   const dispatch = useDispatch();
   const [services, setServices] = useState([]);
   const [custDetails, setCustDetails] = useState(() => {
     return {
+      role: "0",
+      specialization: "Patient",
       service: "",
       date: "",
       time: "",
+      username: "",
+      password: "",
       firstName: "",
       lastName: "",
       email: "",
@@ -40,6 +48,10 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   });
   const [payOnline, setPayOnline] = useState(false);
   const [isSpecializationChnaged, setIsSpecializationChnaged] = useState(false);
+
+  const togglePassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   // get all the users by a specific specialization
   const getAllUsersBySpecificSpecialization = async () => {
@@ -111,6 +123,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
 
   const handleSubmit = async function (e) {
     e.preventDefault();
+
     await axios
       .post(
         `http://localhost:8000/api/v1/book-appointment/${username}`,
@@ -123,12 +136,29 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
         toast.error("Appointment booking failed!");
       });
 
+    await axios
+      .post("http://localhost:8000/api/v1/register", {
+        role: custDetails.role,
+        specialization: custDetails.specialization,
+        username: custDetails.username,
+        password: custDetails.password,
+        email: custDetails.email,
+      })
+      .then((res) => {
+        toast.success(res.data.msg);
+      })
+      .catch((err) => {
+        toast.error("Account creation failed");
+      });
+
     setCustDetails((prevDetails) => {
       return {
         ...prevDetails,
         service: "",
         date: "",
         time: "",
+        username: "",
+        password: "",
         firstName: "",
         lastName: "",
         email: "",
@@ -164,126 +194,124 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   // if the client is logged in
   if (customerDashboard) {
     return (
-      <>
-        <div className="mx-auto">
-          <label
-            htmlFor="specialization"
-            className="block text-sm font-medium text-gray-700 mt-3"
-          >
-            Select Specialization
-          </label>
-          <select
-            name="specialization"
-            value={specialization}
-            onChange={handleChangeSpecialization}
-            required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-          >
-            <option value="Cardiologist">Cardiologist</option>
-            <option value="Dentist">Dentist</option>
-            <option value="Dermatologist">Dermatologist</option>
-            <option value="Endocrinologist">Endocrinologist</option>
-            <option value="ENT Specialist">ENT Specialist</option>
-            <option value="Gastroenterologist">Gastroenterologist</option>
-            <option value="General Physician">General Physician</option>
-            <option value="Nephrologist">Nephrologist</option>
-            <option value="Oncologist">Oncologist</option>
-            <option value="Ophthalmologist">Ophthalmologist</option>
-            <option value="Orthopedist">Orthopedist</option>
-            <option value="Pediatrician">Pediatrician</option>
-            <option value="Psychiatrist">Psychiatrist</option>
-            <option value="Psychologist">Psychologist</option>
-            <option value="Pulmonologist">Pulmonologist</option>
-            <option value="Radiologist">Radiologist</option>
-            <option value="Rheumatologist">Rheumatologist</option>
-            <option value="Urologist">Urologist</option>
-          </select>
+      <div className="mx-auto">
+        <label
+          htmlFor="specialization"
+          className="block text-sm font-medium text-gray-700 mt-3"
+        >
+          Select Specialization
+        </label>
+        <select
+          name="specialization"
+          value={specialization}
+          onChange={handleChangeSpecialization}
+          required
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        >
+          <option value="Cardiologist">Cardiologist</option>
+          <option value="Dentist">Dentist</option>
+          <option value="Dermatologist">Dermatologist</option>
+          <option value="Endocrinologist">Endocrinologist</option>
+          <option value="ENT Specialist">ENT Specialist</option>
+          <option value="Gastroenterologist">Gastroenterologist</option>
+          <option value="General Physician">General Physician</option>
+          <option value="Nephrologist">Nephrologist</option>
+          <option value="Oncologist">Oncologist</option>
+          <option value="Ophthalmologist">Ophthalmologist</option>
+          <option value="Orthopedist">Orthopedist</option>
+          <option value="Pediatrician">Pediatrician</option>
+          <option value="Psychiatrist">Psychiatrist</option>
+          <option value="Psychologist">Psychologist</option>
+          <option value="Pulmonologist">Pulmonologist</option>
+          <option value="Radiologist">Radiologist</option>
+          <option value="Rheumatologist">Rheumatologist</option>
+          <option value="Urologist">Urologist</option>
+        </select>
 
-          {usersBySpecialization.length > 0 ? (
-            <>
-              <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
-                <thead className="bg-pink-600 border-b border-gray-300 text-white">
-                  <tr>
-                    <th className="py-2 px-4 text-left">#</th>
-                    <th className="py-2 px-4 text-left">DR. Name</th>
-                    <th className="py-2 px-4 text-left">Clinic Name</th>
-                    <th className="py-2 px-4 text-left">Profile</th>
-                    <th className="py-2 px-4 text-left">Book</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {usersBySpecialization.map((user, index) => {
-                    return (
-                      <tr
-                        key={user._id}
-                        className="odd:bg-gray-200 even:bg-white"
-                      >
-                        <td className="py-2 px-4 text-left text-gray-600">
-                          {index + 1}
-                        </td>
-                        <td className="py-2 px-4 text-left text-gray-600">
-                          DR. {user.name}
-                        </td>
-                        <td className="py-2 px-4 text-left text-gray-600">
-                          {user.businessName}
-                        </td>
-                        <td className="py-2 px-4 text-left text-gray-600">
-                          <Link
-                            className="text-indigo-600"
-                            to={`http://localhost:5173/${user.username}`}
-                            target="_blank"
-                          >
-                            <RxLink2 />
-                          </Link>
-                        </td>
-                        <td className="py-2 px-4 text-left text-gray-600">
-                          <Link
-                            className="text-indigo-600"
-                            customerDashboard={customerDashboard}
-                            onClick={() => {
-                              dispatch(
-                                appointmentSliceActions.appointmentDetails({
-                                  username: user.username,
-                                })
-                              );
+        {usersBySpecialization.length > 0 ? (
+          <>
+            <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5">
+              <thead className="bg-pink-600 border-b border-gray-300 text-white">
+                <tr>
+                  <th className="py-2 px-4 text-left">#</th>
+                  <th className="py-2 px-4 text-left">DR. Name</th>
+                  <th className="py-2 px-4 text-left">Clinic Name</th>
+                  <th className="py-2 px-4 text-left">Profile</th>
+                  <th className="py-2 px-4 text-left">Book</th>
+                </tr>
+              </thead>
+              <tbody>
+                {usersBySpecialization.map((user, index) => {
+                  return (
+                    <tr
+                      key={user._id}
+                      className="odd:bg-gray-200 even:bg-white"
+                    >
+                      <td className="py-2 px-4 text-left text-gray-600">
+                        {index + 1}
+                      </td>
+                      <td className="py-2 px-4 text-left text-gray-600">
+                        DR. {user.name}
+                      </td>
+                      <td className="py-2 px-4 text-left text-gray-600">
+                        {user.businessName}
+                      </td>
+                      <td className="py-2 px-4 text-left text-gray-600">
+                        <Link
+                          className="text-indigo-600"
+                          to={`http://localhost:5173/${user.username}`}
+                          target="_blank"
+                        >
+                          <RxLink2 />
+                        </Link>
+                      </td>
+                      <td className="py-2 px-4 text-left text-gray-600">
+                        <Link
+                          className="text-indigo-600"
+                          customerDashboard={customerDashboard}
+                          onClick={() => {
+                            dispatch(
+                              appointmentSliceActions.appointmentDetails({
+                                username: user.username,
+                              })
+                            );
 
-                              dispatch(
-                                dashboardOptionsSliceActions.toggleDashboardOptions(
-                                  {
-                                    showHighlights: false,
-                                    showInfo: false,
-                                    showServices: false,
-                                    showProfile: false,
-                                    showAbout: false,
-                                    showContact: false,
-                                    showAppointmentDetails: false,
-                                    showBookAppointment: true,
-                                    loginBooking: true,
-                                    showLetterHead: false,
-                                    showQaulifications: false,
-                                    showTimings: false,
-                                  }
-                                )
-                              );
-                            }}
-                          >
-                            <RxBookmarkFilled />
-                          </Link>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-              <Pagination />
-            </>
-          ) : (
-            <div className=" py-5 mx-auto">
-              <h1 className="text-center text-lg">No data to display</h1>
-            </div>
-          )}
-        </div>
-      </>
+                            dispatch(
+                              dashboardOptionsSliceActions.toggleDashboardOptions(
+                                {
+                                  showHighlights: false,
+                                  showInfo: false,
+                                  showServices: false,
+                                  showProfile: false,
+                                  showAbout: false,
+                                  showContact: false,
+                                  showAppointmentDetails: false,
+                                  showBookAppointment: true,
+                                  loginBooking: true,
+                                  showLetterHead: false,
+                                  showQaulifications: false,
+                                  showTimings: false,
+                                }
+                              )
+                            );
+                          }}
+                        >
+                          <RxBookmarkFilled />
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <Pagination />
+          </>
+        ) : (
+          <div className=" py-5 mx-auto">
+            <h1 className="text-center text-lg">No data to display</h1>
+          </div>
+        )}
+      </div>
     );
   }
 
@@ -573,6 +601,52 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="border-b border-gray-900/10 pb-12">
+            <h2 className="text-base font-semibold leading-7 text-pink-600">
+              Account registration Details
+            </h2>
+            <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <div className="sm:col-span-3">
+                <div className="mt-2">
+                  <input
+                    name="username"
+                    type="text"
+                    autoComplete="on"
+                    value={custDetails.username}
+                    onChange={handleChange}
+                    placeholder="username"
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3 flex">
+                <div className="mt-2 w-11/12">
+                  <input
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="on"
+                    value={custDetails.password}
+                    onChange={handleChange}
+                    placeholder="Password"
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                  />
+                </div>
+                <div className="w-1/12 flex justify-center items-center text-gray-400">
+                  <Link onClick={togglePassword} className="text-2xl">
+                    {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <p className="text-gray-400 mt-3 text-center">
+              Note: Account registration details will create a new patient
+              account. Kindly directly login for 2nd booking onwards
+            </p>
           </div>
         </div>
 

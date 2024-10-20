@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
+import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
+import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import { FaUserCog } from "react-icons/fa";
 import { LuMenuSquare } from "react-icons/lu";
 import { CgWebsite } from "react-icons/cg";
@@ -10,11 +13,54 @@ import {
   RxBackpack,
   RxBookmarkFilled,
 } from "react-icons/rx";
+import axios from "axios";
 
 /* eslint-disable react/prop-types */
 const Sidebar = () => {
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
+
+  // getting the username from url
+  const path = window.location.pathname;
+  let username = path.split("/")[1];
+
+  if (
+    username == "register" ||
+    username == "login" ||
+    username == "about" ||
+    username == "contact" ||
+    username == "verify-email" ||
+    username == "forgot-password" ||
+    username == "reset-password" ||
+    username == "dashboard" ||
+    username == ""
+  ) {
+    username = "abs";
+  }
+
+  const checkUser = async () => {
+    await axios
+      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
+      .then((res) => {
+        dispatch(
+          serviceProviderSliceActons.serviceProviderDetails({
+            username: username,
+            businessName: res.data.contact.businessName,
+            about: res.data.about,
+            email: res.data.email,
+            contactNo: res.data.contactNo,
+            services: res.data.services,
+            contact: res.data.contact,
+            socialProfiles: res.data.socialProfiles,
+          })
+        );
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, [username]);
 
   // admin sidebar optoins
   if (role == 1 && isAdmin) {
@@ -271,29 +317,65 @@ const Sidebar = () => {
           >
             <RxStar style={{ color: "white" }} /> &nbsp; Highlights
           </li>
-          <li
-            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
-            onClick={() => {
-              dispatch(
-                dashboardOptionsSliceActions.toggleDashboardOptions({
-                  showHighlights: false,
-                  showInfo: false,
-                  showServices: false,
-                  showProfile: false,
-                  showAbout: false,
-                  showContact: false,
-                  showAppointmentDetails: false,
-                  showBookAppointment: true,
-                  showLetterHead: false,
-                  showQaulifications: false,
-                  showTimings: false,
-                })
-              );
-            }}
-          >
-            <RxBookmarkFilled style={{ color: "white" }} /> &nbsp; Book
-            Appointment
-          </li>
+
+          {username == "abs" ? (
+            <li
+              className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+              onClick={() => {
+                dispatch(
+                  dashboardOptionsSliceActions.toggleDashboardOptions({
+                    showHighlights: false,
+                    showInfo: false,
+                    showServices: false,
+                    showProfile: false,
+                    showAbout: false,
+                    showContact: false,
+                    showAppointmentDetails: false,
+                    showBookAppointment: true,
+                    showLetterHead: false,
+                    loginBooking: false,
+                    showQaulifications: false,
+                    showTimings: false,
+                  })
+                );
+              }}
+            >
+              <RxBookmarkFilled style={{ color: "white" }} /> &nbsp; Book
+              Appointment
+            </li>
+          ) : (
+            <li
+              className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+              onClick={() => {
+                dispatch(
+                  appointmentSliceActions.appointmentDetails({
+                    username,
+                  })
+                );
+
+                dispatch(
+                  dashboardOptionsSliceActions.toggleDashboardOptions({
+                    showHighlights: false,
+                    showInfo: false,
+                    showServices: false,
+                    showProfile: false,
+                    showAbout: false,
+                    showContact: false,
+                    showAppointmentDetails: false,
+                    showBookAppointment: true,
+                    showLetterHead: false,
+                    loginBooking: true,
+                    showQaulifications: false,
+                    showTimings: false,
+                  })
+                );
+              }}
+            >
+              <RxBookmarkFilled style={{ color: "white" }} /> &nbsp; Book
+              Appointment
+            </li>
+          )}
+
           <li
             className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
             onClick={() => {

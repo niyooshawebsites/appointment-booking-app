@@ -54,6 +54,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+
           {username != "abs" ? (
             <>
               <Route
@@ -99,6 +100,7 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify-email" element={<VeriryEmail />} />
+
           <Route element={<ProtectedContent />}>
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route

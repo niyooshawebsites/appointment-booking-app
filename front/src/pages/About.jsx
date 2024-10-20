@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
+import Unverified from "../components/Unverified";
 
 const About = () => {
-  const { about } = useSelector((state) => state.service_Provider_Slice);
+  const { about, isVerified } = useSelector(
+    (state) => state.service_Provider_Slice
+  );
   const dispatch = useDispatch();
 
   // getting the username from url
@@ -34,6 +37,7 @@ const About = () => {
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
             businessName: res.data.contact.businessName,
+            isVerified: res.data.isVerified,
             about: res.data.about,
             email: res.data.email,
             contactNo: res.data.contactNo,
@@ -49,6 +53,14 @@ const About = () => {
   useEffect(() => {
     checkUser();
   }, [username]);
+
+  if (!isVerified) {
+    return (
+      <Layout>
+        <Unverified />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

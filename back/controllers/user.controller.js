@@ -11,6 +11,7 @@ const {
 // register controller...
 const registerController = async (req, res) => {
   const { role, specialization, username, email, password } = req.body;
+  console.log(role);
   try {
     // check for all the details:
     if (!role) {
@@ -647,6 +648,7 @@ const checkUserController = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
+        msg: "user does not exist",
       });
     }
 
@@ -657,6 +659,7 @@ const checkUserController = async (req, res) => {
         contactNo: user.contactNo,
         about: user.about,
         services: user.services,
+        isVerified: user.isVerified,
         announcement: user.announcement,
         contact: {
           businessName: user.businessName,
