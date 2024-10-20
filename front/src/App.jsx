@@ -71,10 +71,13 @@ const App = () => {
                 path={`/${username}/about`}
                 element={serviceProvider ? <About /> : <NotFound />}
               />
+
               <Route
                 path={`/${username}/contact`}
                 element={serviceProvider ? <Contact /> : <NotFound />}
               />
+
+              <Route path={`/${username}/*`} element={<NotFound />} />
             </>
           ) : (
             <>

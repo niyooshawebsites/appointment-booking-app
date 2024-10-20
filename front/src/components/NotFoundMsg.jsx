@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -6,6 +6,7 @@ import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice
 
 const NotFoundMsg = () => {
   const dispatch = useDispatch();
+  const [realUser, setRealUser] = useState(false);
 
   // getting the username from url
   const path = window.location.pathname;
@@ -28,6 +29,8 @@ const NotFoundMsg = () => {
     await axios
       .get(`http://localhost:8000/api/v1/checkUser/${username}`)
       .then((res) => {
+        setRealUser(res.data.success);
+
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
@@ -58,7 +61,7 @@ const NotFoundMsg = () => {
       <div className="flex justify-center items-center">
         <Link
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          to={`/`}
+          to={realUser ? `/${username}` : "/"}
         >
           Back to Home
         </Link>
