@@ -5,6 +5,7 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaRegSmile } from "react-icons/fa";
 import { announcementSliceActions } from "../store/slices/AnnouncementSlice";
+import { walkinSliceActions } from "../store/slices/WalkinSlice";
 import { HiSpeakerphone } from "react-icons/hi";
 import axios from "axios";
 
@@ -144,28 +145,45 @@ const Header = () => {
                 {authenticated ? (
                   <>
                     {role == 1 && authenticated ? (
-                      <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
-                        <Link
-                          className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
-                          onClick={() => {
-                            dispatch(
-                              announcementSliceActions.changeAnnouncementStatus(
-                                {
-                                  showAnnouncementModal: true,
-                                }
-                              )
-                            );
-                          }}
-                        >
-                          <HiSpeakerphone />
-                        </Link>
-                      </NavLink>
+                      <>
+                        <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                          <Link
+                            className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
+                            onClick={() => {
+                              dispatch(
+                                announcementSliceActions.changeAnnouncementStatus(
+                                  {
+                                    showAnnouncementModal: true,
+                                  }
+                                )
+                              );
+                            }}
+                          >
+                            <HiSpeakerphone />
+                          </Link>
+                        </NavLink>
+
+                        <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                          <Link
+                            className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
+                            onClick={() => {
+                              dispatch(
+                                walkinSliceActions.changeWalkinStatus({
+                                  showWalkinModal: true,
+                                })
+                              );
+                            }}
+                          >
+                            Capture Walkins
+                          </Link>
+                        </NavLink>
+                      </>
                     ) : (
                       ""
                     )}
 
                     <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
-                      <FaRegSmile /> &nbsp; {username}
+                      <FaRegSmile /> &nbsp; Hello, {username}
                     </NavLink>
                     <NavLink
                       className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white flex items-center"
@@ -193,12 +211,6 @@ const Header = () => {
                           About
                         </NavLink>
                         <NavLink
-                          to={`/${user}/contact`}
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                        >
-                          Contact
-                        </NavLink>
-                        <NavLink
                           to={`/${user}/login`}
                           className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                         >
@@ -212,12 +224,6 @@ const Header = () => {
                           className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                         >
                           About
-                        </NavLink>
-                        <NavLink
-                          to={`/contact`}
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                        >
-                          Contact
                         </NavLink>
                         <NavLink
                           to="/register"
@@ -240,8 +246,43 @@ const Header = () => {
         <div className="space-y-1 px-2 pb-3 pt-2">
           {authenticated ? (
             <>
+              {role == 1 && authenticated ? (
+                <>
+                  <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                    <Link
+                      className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
+                      onClick={() => {
+                        dispatch(
+                          announcementSliceActions.changeAnnouncementStatus({
+                            showAnnouncementModal: true,
+                          })
+                        );
+                      }}
+                    >
+                      <HiSpeakerphone />
+                    </Link>
+                  </NavLink>
+
+                  <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                    <Link
+                      className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
+                      onClick={() => {
+                        dispatch(
+                          announcementSliceActions.changeAnnouncementStatus({
+                            showAnnouncementModal: true,
+                          })
+                        );
+                      }}
+                    >
+                      Walkin
+                    </Link>
+                  </NavLink>
+                </>
+              ) : (
+                ""
+              )}
               <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300">
-                <FaRegSmile /> &nbsp; {username}
+                <FaRegSmile /> &nbsp; Hello, {username}
               </NavLink>
               <NavLink
                 className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
@@ -267,12 +308,6 @@ const Header = () => {
                   >
                     About
                   </NavLink>
-                  <NavLink
-                    to={`/${user}/contact`}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                  >
-                    Contact
-                  </NavLink>
                 </>
               ) : (
                 <>
@@ -281,12 +316,6 @@ const Header = () => {
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                   >
                     About
-                  </NavLink>
-                  <NavLink
-                    to={`/contact`}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                  >
-                    Contact
                   </NavLink>
                   <NavLink
                     to="/register"

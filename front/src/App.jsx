@@ -72,11 +72,6 @@ const App = () => {
                 element={serviceProvider ? <About /> : <NotFound />}
               />
 
-              <Route
-                path={`/${username}/contact`}
-                element={serviceProvider ? <Contact /> : <NotFound />}
-              />
-
               <Route path={`/${username}/*`} element={<NotFound />} />
             </>
           ) : (
@@ -84,10 +79,6 @@ const App = () => {
               <Route
                 path={`/about`}
                 element={serviceProvider ? <About /> : <NotFound />}
-              />
-              <Route
-                path={`/contact`}
-                element={serviceProvider ? <Contact /> : <NotFound />}
               />
             </>
           )}

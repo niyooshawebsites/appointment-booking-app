@@ -1,23 +1,16 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
+import axios from "axios";
 
 const Footer = () => {
-  const {
-    businessName,
-    about,
-    email,
-    contactNo,
-    services,
-    contact,
-    socialProfiles,
-    isVerified,
-  } = useSelector((state) => state.service_Provider_Slice);
-
   // getting the username from url
   const path = window.location.pathname;
   let username = path.split("/")[1];
+
   if (
     username == "register" ||
     username == "login" ||
@@ -30,6 +23,45 @@ const Footer = () => {
   ) {
     username = "abs";
   }
+
+  const dispatch = useDispatch();
+
+  const checkUser = async () => {
+    await axios
+      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
+      .then((res) => {
+        dispatch(
+          serviceProviderSliceActons.serviceProviderDetails({
+            username: username,
+            businessName: res.data.contact.businessName,
+            isVerified: res.data.isVerified,
+            about: res.data.about,
+            email: res.data.email,
+            contactNo: res.data.contactNo,
+            services: res.data.services,
+            contact: res.data.contact,
+            socialProfiles: res.data.socialProfiles,
+            announcement: res.data.announcement || "",
+          })
+        );
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, [username]);
+
+  const {
+    businessName,
+    about,
+    email,
+    contactNo,
+    services,
+    contact,
+    socialProfiles,
+    isVerified,
+  } = useSelector((state) => state.service_Provider_Slice);
 
   return (
     <footer className="bg-indigo-900 text-white py-8">

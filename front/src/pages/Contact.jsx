@@ -54,11 +54,8 @@ const Contact = () => {
     checkUser();
   }, [username]);
 
-  const mapAddress = `${contact.building}, ${contact.locality}, ${contact.district}, ${contact.state}`;
-
-  const mapUrl = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(
-    mapAddress
-  )}`;
+  const mapUrl =
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.986330002446!2d77.2619868!3d28.540130599999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3de6aa6e483%3A0xc435a553bf3c0448!2sSaroj%20Tower%2C%20Guru%20Ravidas%20Marg%2C%20Block%20K%2C%20Kalkaji%2C%20New%20Delhi%2C%20Delhi%20110019!5e0!3m2!1sen!2sin!4v1729495744711!5m2!1sen!2sin";
 
   if (!isVerified) {
     return (
@@ -71,44 +68,42 @@ const Contact = () => {
   return (
     <Layout>
       <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Contact Us</h2>
+        <h1 className="text-4xl font-bold text-center mb-6 text-pink-600">
+          Contact us
+        </h1>
 
-        <div className="space-y-4">
-          <div>
-            <h3 className="font-semibold">Business Name</h3>
-            <p className="text-gray-600">{businessName}</p>
+        <div className="flex">
+          <div className="w-6/12">
+            <div>
+              <div>
+                <h3 className="font-semibold">Business Name</h3>
+                <p className="text-gray-600">{businessName}</p>
+              </div>
+
+              <div>
+                <h3 className="font-semibold">Email</h3>
+                <p className="text-gray-600">{email}</p>
+              </div>
+
+              <div>
+                <h3 className="font-semibold">Contact Number</h3>
+                <p className="text-gray-600">{contactNo}</p>
+              </div>
+            </div>
           </div>
-
-          <div>
-            <h3 className="font-semibold">Email</h3>
-            <p className="text-gray-600">{email}</p>
+          <div className="w-6/12">
+            <div>
+              <h3 className="font-semibold">Address</h3>
+              <p className="text-gray-600">{contact.office}</p>
+              <p className="text-gray-600">{contact.building}</p>
+              <p className="text-gray-600">
+                {contact.street} {contact.locality}
+              </p>
+              <p className="text-gray-600">
+                {contact.district} {contact.state} {contact.pinCode}
+              </p>
+            </div>
           </div>
-
-          <div>
-            <h3 className="font-semibold">Contact Number</h3>
-            <p className="text-gray-600">{contactNo}</p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold">Address</h3>
-            <p className="text-gray-600">{contact.office}</p>
-            <p className="text-gray-600">{contact.building}</p>
-            <p className="text-gray-600">{contact.street}</p>
-            <p className="text-gray-600">{contact.locality}</p>
-            <p className="text-gray-600">{contact.district}</p>
-            <p className="text-gray-600">{contact.state}</p>
-            <p className="text-gray-600">{contact.pinCode}</p>
-          </div>
-        </div>
-
-        <div className="mt-6">
-          <h3 className="font-semibold">Location Map</h3>
-          <iframe
-            title="Location Map"
-            className="w-full h-64 border-0 rounded-lg"
-            src={mapUrl}
-            allowFullScreen
-          ></iframe>
         </div>
       </div>
     </Layout>

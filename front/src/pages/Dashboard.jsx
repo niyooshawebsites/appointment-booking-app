@@ -15,6 +15,7 @@ import LetterHead from "../components/LetterHead";
 import Qualifications from "../components/Qualifications";
 import Timings from "../components/Timings";
 import Announcement from "../components/Announcement";
+import Walkin from "../components/Walkin";
 
 const Dashboard = () => {
   const {
@@ -41,6 +42,7 @@ const Dashboard = () => {
           <Sidebar />
           <Highlights />
           <Announcement />
+          <Walkin />
         </div>
       </Layout>
     );
@@ -53,6 +55,7 @@ const Dashboard = () => {
           <Sidebar />
           <DisplayInfo />
           <Announcement />
+          <Walkin />
         </div>
       </Layout>
     );
@@ -80,6 +83,7 @@ const Dashboard = () => {
           <Sidebar />
           <AppointmentDetails />
           <Announcement />
+          <Walkin />
         </div>
       </Layout>
     );
@@ -92,6 +96,7 @@ const Dashboard = () => {
           <Sidebar />
           <ServiceForm />
           <Announcement />
+          <Walkin />
         </div>
       </Layout>
     );
@@ -104,6 +109,7 @@ const Dashboard = () => {
           <Sidebar />
           <Profile />
           <Announcement />
+          <Walkin />
         </div>
       </Layout>
     );
@@ -116,6 +122,7 @@ const Dashboard = () => {
           <Sidebar />
           <AboutForm />
           <Announcement />
+          <Walkin />
         </div>
       </Layout>
     );
@@ -128,6 +135,7 @@ const Dashboard = () => {
           <Sidebar />
           <ContactForm />
           <Announcement />
+          <Walkin />
         </div>
       </Layout>
     );
@@ -140,6 +148,7 @@ const Dashboard = () => {
           <Sidebar />
           <LetterHead />
           <Announcement />
+          <Walkin />
         </div>
       </Layout>
     );
@@ -152,6 +161,7 @@ const Dashboard = () => {
           <Sidebar />
           <Qualifications />
           <Announcement />
+          <Walkin />
         </div>
       </Layout>
     );
@@ -164,6 +174,7 @@ const Dashboard = () => {
           <Sidebar />
           <Timings />
           <Announcement />
+          <Walkin />
         </div>
       </Layout>
     );

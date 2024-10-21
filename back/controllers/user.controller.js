@@ -181,6 +181,7 @@ const loginController = async (req, res) => {
         success: true,
         msg: "Login successful!",
         username: registeredUser.username,
+        isVerified: registeredUser.isVerified,
         role: registeredUser.role,
         email: registeredUser.email,
         isAdmin: registeredUser.isAdmin,
@@ -1515,19 +1516,19 @@ const updateUserQualificationController = async (req, res) => {
 // update service provider timings controller
 const updateUserTimingsController = async (req, res) => {
   try {
-    const { timings } = req.body;
-    console.log(timings);
+    const { days } = req.body;
+    console.log(days);
 
-    if (!timings) {
+    if (!days) {
       return res.status(400).json({
         success: false,
         msg: "Please provide timings",
       });
     }
 
-    const updatedUser = User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { username: req.user.username },
-      { timings },
+      { timings: { days } },
       { new: true }
     );
 

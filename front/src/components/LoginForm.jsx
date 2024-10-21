@@ -53,6 +53,7 @@ const LoginForm = () => {
             services: res.data.services,
             contact: res.data.contact,
             socialProfiles: res.data.socialProfiles,
+            announcement: res.data.announcement || "",
           })
         );
       })
