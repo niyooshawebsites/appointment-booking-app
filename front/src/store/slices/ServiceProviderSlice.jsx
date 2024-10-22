@@ -6,6 +6,7 @@ const serviceProviderSlice = createSlice({
     name: "",
     businessName: "",
     isVerified: false,
+    timings: "",
     about: "",
     email: "",
     contactNo: "",
@@ -19,6 +20,7 @@ const serviceProviderSlice = createSlice({
       state.name = action.payload.name;
       state.businessName = action.payload.businessName;
       state.isVerified = action.payload.isVerified;
+      state.timings = action.payload.timings;
       state.about = action.payload.about;
       state.email = action.payload.email;
       state.contactNo = action.payload.contactNo;

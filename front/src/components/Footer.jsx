@@ -35,6 +35,7 @@ const Footer = () => {
             username: username,
             businessName: res.data.contact.businessName,
             isVerified: res.data.isVerified,
+            timings: res.data.timings,
             about: res.data.about,
             email: res.data.email,
             contactNo: res.data.contactNo,
@@ -56,6 +57,7 @@ const Footer = () => {
     businessName,
     about,
     email,
+    timings,
     contactNo,
     services,
     contact,
@@ -68,7 +70,7 @@ const Footer = () => {
       {isVerified ? (
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-between">
-            <div className="w-full sm:w-1/3 mb-6 sm:mb-0">
+            <div className="w-full sm:w-1/4 mb-6 sm:mb-0">
               <h3 className="text-lg font-semibold mb-4">About Us</h3>
               <p className="text-gray-400 mb-4">
                 {about.substring(0, 100) + "..."}
@@ -116,7 +118,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="w-full sm:w-1/3 mb-6 sm:mb-0">
+            <div className="w-full sm:w-1/4 mb-6 sm:mb-0">
               <h3 className="text-lg font-semibold mb-4">Services</h3>
               <ul>
                 {services.map((service) => {
@@ -131,7 +133,24 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="w-full sm:w-1/3">
+            <div className="w-full sm:w-1/4 mb-6 sm:mb-0">
+              <h3 className="text-lg font-semibold mb-4">Timings</h3>
+              <ul>
+                {Object.entries(timings).map(([day, times], index) => (
+                  <div key={index}>
+                    <h3>{day.charAt(0).toUpperCase() + day.slice(1)}</h3>
+                    <p>
+                      Morning: {times.morningFrom} - {times.morningTo}
+                    </p>
+                    <p>
+                      Evening: {times.eveningFrom} - {times.eveningTo}
+                    </p>
+                  </div>
+                ))}
+              </ul>
+            </div>
+
+            <div className="w-full sm:w-1/4">
               <h3 className="text-lg font-semibold mb-4">Contact Details</h3>
               <p className="text-gray-400">{businessName}</p>
               <p className="text-gray-400">

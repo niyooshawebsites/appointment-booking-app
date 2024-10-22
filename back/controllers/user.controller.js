@@ -662,6 +662,7 @@ const checkUserController = async (req, res) => {
         services: user.services,
         isVerified: user.isVerified,
         announcement: user.announcement,
+        timings: user.timings,
         contact: {
           businessName: user.businessName,
           gst: user.gst,
