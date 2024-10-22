@@ -116,62 +116,70 @@ const RegisterForm = () => {
           Register
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label
-              htmlFor="role"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Select Role
-            </label>
-            <select
-              name="role"
-              onChange={handleChange}
-              value={registrationDetails.role}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            >
-              <option value="1">Service Provider</option>
-              <option value="0">Client</option>
-            </select>
-          </div>
-          {showSpecialization ? (
-            <div className="mb-4">
-              <label
-                htmlFor="specialization"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Select Specialization
-              </label>
-              <select
-                name="specialization"
-                onChange={handleChange}
-                value={registrationDetails.specialization}
-                required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              >
-                <option value="">Select Specialization</option>
-                <option value="Cardiologist">Cardiologist</option>
-                <option value="Dentist">Dentist</option>
-                <option value="Dermatologist">Dermatologist</option>
-                <option value="Endocrinologist">Endocrinologist</option>
-                <option value="ENT Specialist">ENT Specialist</option>
-                <option value="Gastroenterologist">Gastroenterologist</option>
-                <option value="General Physician">General Physician</option>
-                <option value="Nephrologist">Nephrologist</option>
-                <option value="Oncologist">Oncologist</option>
-                <option value="Ophthalmologist">Ophthalmologist</option>
-                <option value="Orthopedist">Orthopedist</option>
-                <option value="Pediatrician">Pediatrician</option>
-                <option value="Psychiatrist">Psychiatrist</option>
-                <option value="Psychologist">Psychologist</option>
-                <option value="Pulmonologist">Pulmonologist</option>
-                <option value="Radiologist">Radiologist</option>
-                <option value="Rheumatologist">Rheumatologist</option>
-                <option value="Urologist">Urologist</option>
-              </select>
-            </div>
+          {username == "abs" ? (
+            <>
+              <div className="mb-4">
+                <label
+                  htmlFor="role"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Select Role
+                </label>
+                <select
+                  name="role"
+                  onChange={handleChange}
+                  value={registrationDetails.role}
+                  required
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                  <option value="1">Service Provider</option>
+                  <option value="0">Client</option>
+                </select>
+              </div>
+              {showSpecialization ? (
+                <div className="mb-4">
+                  <label
+                    htmlFor="specialization"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Select Specialization
+                  </label>
+                  <select
+                    name="specialization"
+                    onChange={handleChange}
+                    value={registrationDetails.specialization}
+                    required
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  >
+                    <option value="">Select Specialization</option>
+                    <option value="Cardiologist">Cardiologist</option>
+                    <option value="Dentist">Dentist</option>
+                    <option value="Dermatologist">Dermatologist</option>
+                    <option value="Endocrinologist">Endocrinologist</option>
+                    <option value="ENT Specialist">ENT Specialist</option>
+                    <option value="Gastroenterologist">
+                      Gastroenterologist
+                    </option>
+                    <option value="General Physician">General Physician</option>
+                    <option value="Nephrologist">Nephrologist</option>
+                    <option value="Oncologist">Oncologist</option>
+                    <option value="Ophthalmologist">Ophthalmologist</option>
+                    <option value="Orthopedist">Orthopedist</option>
+                    <option value="Pediatrician">Pediatrician</option>
+                    <option value="Psychiatrist">Psychiatrist</option>
+                    <option value="Psychologist">Psychologist</option>
+                    <option value="Pulmonologist">Pulmonologist</option>
+                    <option value="Radiologist">Radiologist</option>
+                    <option value="Rheumatologist">Rheumatologist</option>
+                    <option value="Urologist">Urologist</option>
+                  </select>
+                </div>
+              ) : (
+                <></>
+              )}
+            </>
           ) : (
-            <></>
+            ""
           )}
           <div className="mb-4">
             <label

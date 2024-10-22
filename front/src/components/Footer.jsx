@@ -24,18 +24,31 @@ const Footer = () => {
     username = "abs";
   }
 
+  const {
+    businessName,
+    about,
+    email,
+    timings,
+    contactNo,
+    services,
+    contact,
+    socialProfiles,
+    isVerified,
+  } = useSelector((state) => state.service_Provider_Slice);
+
   const dispatch = useDispatch();
 
   const checkUser = async () => {
     await axios
       .get(`http://localhost:8000/api/v1/checkUser/${username}`)
       .then((res) => {
+        console.log(res);
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
             businessName: res.data.contact.businessName,
             isVerified: res.data.isVerified,
-            timings: res.data.timings,
+            timings: res.data.timings.days,
             about: res.data.about,
             email: res.data.email,
             contactNo: res.data.contactNo,
@@ -53,32 +66,23 @@ const Footer = () => {
     checkUser();
   }, [username]);
 
-  const {
-    businessName,
-    about,
-    email,
-    timings,
-    contactNo,
-    services,
-    contact,
-    socialProfiles,
-    isVerified,
-  } = useSelector((state) => state.service_Provider_Slice);
-
   return (
     <footer className="bg-indigo-900 text-white py-8">
       {isVerified ? (
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-between">
-            <div className="w-full sm:w-1/4 mb-6 sm:mb-0">
+          <div className="flex flex-wrap justify-evenly">
+            <div className="w-full flex flex-col justify-start items-center sm:w-3/12 mb-6 sm:mb-0">
               <h3 className="text-lg font-semibold mb-4">About Us</h3>
               <p className="text-gray-400 mb-4">
                 {about.substring(0, 100) + "..."}
-              </p>{" "}
-              <Link to={username == "abs" ? "/about" : `/${username}/about`}>
-                {" "}
-                More
-              </Link>
+                <Link
+                  to={username == "abs" ? "/about" : `/${username}/about`}
+                  className="text-white"
+                >
+                  {" "}
+                  More
+                </Link>
+              </p>
               <div className="flex space-x-4 mt-4">
                 <Link
                   to={socialProfiles.facebookUrl}
@@ -118,12 +122,13 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="w-full sm:w-1/4 mb-6 sm:mb-0">
+            <div className="w-full sm:w-2/12 mb-6 sm:mb-0">
               <h3 className="text-lg font-semibold mb-4">Services</h3>
               <ul>
                 {services.map((service) => {
                   return (
                     <li key={service.serviceId}>
+                      {""}
                       <Link href="#" className="text-gray-400 hover:text-white">
                         {service.serviceName}
                       </Link>
@@ -133,35 +138,46 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="w-full sm:w-1/4 mb-6 sm:mb-0">
+            <div className="w-full flex flex-col justify-start items-center sm:w-4/12 mb-6 sm:mb-0">
               <h3 className="text-lg font-semibold mb-4">Timings</h3>
               <ul>
-                {Object.entries(timings).map(([day, times], index) => (
-                  <div key={index}>
-                    <h3>{day.charAt(0).toUpperCase() + day.slice(1)}</h3>
-                    <p>
-                      Morning: {times.morningFrom} - {times.morningTo}
-                    </p>
-                    <p>
-                      Evening: {times.eveningFrom} - {times.eveningTo}
-                    </p>
-                  </div>
-                ))}
+                {timings &&
+                typeof timings === "object" &&
+                Object.keys(timings).length > 0 ? (
+                  Object.entries(timings).map(([day, times], index) => (
+                    <div key={index}>
+                      <span className="text-gray-400">
+                        {day.charAt(0).toUpperCase() + day.slice(1)}
+                        <span className="text-white">{" >> "}</span>
+                      </span>
+                      <span className="text-gray-400">
+                        {times.morningFrom} - {times.morningTo}
+                      </span>
+                      {" & "}
+                      <span className="text-gray-400">
+                        {times.eveningFrom} - {times.eveningTo}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <h1>Nothing</h1>
+                )}
               </ul>
             </div>
 
-            <div className="w-full sm:w-1/4">
+            <div className="w-full sm:w-3/12">
               <h3 className="text-lg font-semibold mb-4">Contact Details</h3>
-              <p className="text-gray-400">{businessName}</p>
+              <p className="text-gray-400">{businessName},</p>
               <p className="text-gray-400">
-                {contact.office} {contact.floor} {contact.building}
+                {contact.office}, {contact.floor}, {contact.building}
               </p>
               <p className="text-gray-400">
-                {contact.street} {contact.locality}
+                {contact.street}, {contact.locality},
               </p>
               <p className="text-gray-400">
-                {contact.district} {contact.state} {contact.pinCode}
+                {contact.district}, {contact.state} - {contact.pinCode}
               </p>
+              <br />
               <p className="text-gray-400">Email: {email}</p>
               <p className="text-gray-400">Phone: {contactNo}</p>
             </div>

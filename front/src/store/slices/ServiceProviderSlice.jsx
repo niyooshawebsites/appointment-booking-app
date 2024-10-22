@@ -6,7 +6,7 @@ const serviceProviderSlice = createSlice({
     name: "",
     businessName: "",
     isVerified: false,
-    timings: "",
+    timings: {},
     about: "",
     email: "",
     contactNo: "",
