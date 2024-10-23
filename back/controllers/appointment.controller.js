@@ -2,6 +2,7 @@ const Appointment = require("../models/appointment.model");
 const User = require("../models/user.model");
 const { appointmentConfirmationEmail } = require("../utils/mail");
 const moment = require("moment");
+const generateUniqueID = require("../utils/uniqueID");
 
 // book appointment controller
 const bookAppointmnentController = async (req, res) => {
@@ -23,6 +24,7 @@ const bookAppointmnentController = async (req, res) => {
       state,
       pinCode,
       paymentMethod,
+      transactionID,
       serviceProvider,
     } = req.body;
 
@@ -138,6 +140,14 @@ const bookAppointmnentController = async (req, res) => {
       });
     }
 
+    // if transaction ID is not provided
+    if (!transactionID) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide the tranaction ID",
+      });
+    }
+
     // if Service provider is not selected
     if (!serviceProvider) {
       return res.status(401).json({
@@ -171,6 +181,8 @@ const bookAppointmnentController = async (req, res) => {
       state,
       pinCode,
       paymentMethod,
+      transactionID,
+      appointmentID: generateUniqueID(8),
       user: user._id,
     });
 
@@ -228,6 +240,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
       state,
       pinCode,
       paymentMethod,
+      transactionID,
       serviceProvider,
     } = req.body;
 
@@ -340,6 +353,14 @@ const bookAppointmnentByLoginController = async (req, res) => {
       return res.status(401).json({
         succss: false,
         msg: "Please select your payment method",
+      });
+    }
+
+    // if paymentMethod is not selected
+    if (!transactionID) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide the transaction ID",
       });
     }
 

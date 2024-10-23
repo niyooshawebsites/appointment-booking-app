@@ -7,15 +7,19 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import { specializationSliceActions } from "../store/slices/SpecializationSlice";
+import { onlinePaymentSliceActions } from "../store/slices/OnlinePyamentSlice";
 import Pagination from "../components/Pagination";
 import { RxLink2, RxBookmarkFilled } from "react-icons/rx";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import OnlinePayment from "./OnlinePayment";
 
 const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const { userId } = useSelector((state) => state.user_Slice);
   const { specialization, usersBySpecialization } = useSelector(
     (state) => state.specialization_Slice
   );
+
+  const [activateTID, setActivateTID] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const path = window.location.pathname;
@@ -23,6 +27,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
 
   const dispatch = useDispatch();
   const [services, setServices] = useState([]);
+
   const [custDetails, setCustDetails] = useState(() => {
     return {
       role: "0",
@@ -43,10 +48,12 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       state: "",
       pinCode: "",
       paymentMethod: "",
+      transactionID: "",
+      localPay: "N/A",
       serviceProvider,
     };
   });
-  const [payOnline, setPayOnline] = useState(false);
+
   const [isSpecializationChnaged, setIsSpecializationChnaged] = useState(false);
 
   const togglePassword = () => {
@@ -113,6 +120,20 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    if (name === "paymentMethod" && value === "Pay online") {
+      setActivateTID(true);
+
+      dispatch(
+        onlinePaymentSliceActions.changeOnlinePaymentStatus({
+          payOnline: true,
+        })
+      );
+    }
+
+    if (name === "paymentMethod" && value === "Pay locally") {
+      setActivateTID(false);
+    }
+
     setCustDetails((prevDetails) => {
       return {
         ...prevDetails,
@@ -170,6 +191,8 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
         state: "",
         pinCode: "",
         paymentMethod: "",
+        transactionID: "",
+        localPay: "N/A",
         spUsername: username || "",
       };
     });
@@ -318,362 +341,367 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   // if the client is not logged in
   if (!customerDashboard) {
     return (
-      <form className="w-9/12 mx-auto mb-10" onSubmit={handleSubmit}>
-        <div className="space-y-12">
-          <h1 className="text-center text-4xl mt-5 text-indigo-600">
-            Book Appointment
-          </h1>
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-pink-600">
-              Appointment Details
-            </h2>
-            <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="col-span-full">
-                <div className="mt-2">
-                  <select
-                    name="service"
-                    id="service"
-                    value={custDetails.service}
-                    onChange={handleChange}
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  >
-                    <option value="No slection">Select service</option>
-                    {services.map((service) => {
-                      return (
-                        <option
-                          value={service.serviceName}
-                          key={service.serviceId}
-                        >
-                          {`${service.serviceName} - Rs${service.fee}`}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <input
-                    id="date"
-                    name="date"
-                    type="date"
-                    min={currentDate}
-                    autoComplete="on"
-                    value={custDetails.date}
-                    onChange={handleChange}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <div className="mt-2 flex justify-center items-center">
-                  <label htmlFor="time">Time</label>
-                  <input
-                    type="time"
-                    id="appt"
-                    name="time"
-                    min="09:00"
-                    max="18:00"
-                    placeholder="HH:MM"
-                    value={custDetails.time}
-                    onChange={handleChange}
-                    className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 ml-2"
-                    required
-                  />
-                </div>
-              </div>
-
-              <Link
-                className="text-white text-center bg-pink-600 hover:bg-pink-700 py-1 px-3 rounded w-full"
-                onClick={checkAvailability}
-              >
-                Check Availability
-              </Link>
-            </div>
-          </div>
-
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-pink-600">
-              Personal Details
-            </h2>
-            <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    autoComplete="on"
-                    value={custDetails.firstName}
-                    onChange={handleChange}
-                    placeholder="First name"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    autoComplete="on"
-                    value={custDetails.lastName}
-                    onChange={handleChange}
-                    placeholder="Last name"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="on"
-                    value={custDetails.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <input
-                    id="contactNo"
-                    name="contactNo"
-                    type="number"
-                    minLength={10}
-                    maxLength={10}
-                    autoComplete="on"
-                    value={custDetails.contactNo}
-                    onChange={handleChange}
-                    placeholder="Contact number"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <input
-                    id="age"
-                    name="age"
-                    type="number"
-                    min={1}
-                    autoComplete="on"
-                    value={custDetails.age}
-                    onChange={handleChange}
-                    placeholder="Age"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <select
-                    name="gender"
-                    id="gender"
-                    value={custDetails.gender}
-                    onChange={handleChange}
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  >
-                    <option value="No selection">Select gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Others">Others</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="col-span-full">
-                <div className="mt-2">
-                  <input
-                    id="address"
-                    name="address"
-                    type="text"
-                    autoComplete="on"
-                    value={custDetails.address}
-                    onChange={handleChange}
-                    placeholder="Address"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2 sm:col-start-1">
-                <div className="mt-2">
-                  <input
-                    id="city"
-                    name="city"
-                    type="text"
-                    autoComplete="on"
-                    value={custDetails.city}
-                    onChange={handleChange}
-                    placeholder="City"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <div className="mt-2">
-                  <input
-                    id="state"
-                    name="state"
-                    type="text"
-                    autoComplete="on"
-                    value={custDetails.state}
-                    onChange={handleChange}
-                    placeholder="State"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <div className="mt-2">
-                  <input
-                    id="pinCode"
-                    name="pinCode"
-                    type="number"
-                    minLength={6}
-                    maxLength={6}
-                    autoComplete="on"
-                    value={custDetails.pinCode}
-                    onChange={handleChange}
-                    placeholder="Pin code"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-pink-600">
-              Payment Details
-            </h2>
-            <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="col-span-full">
-                <div className="mt-2">
-                  <select
-                    name="paymentMethod"
-                    id="paymentMethod"
-                    value={custDetails.paymentMethod}
-                    onChange={handleChange}
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  >
-                    <option value="No slection">Select payment method</option>
-                    <option
-                      value="Pay locally"
-                      onClick={() => setPayOnline(false)}
+      <>
+        <form className="w-9/12 mx-auto mb-10" onSubmit={handleSubmit}>
+          <div className="space-y-12">
+            <h1 className="text-center text-4xl mt-5 text-indigo-600">
+              Book Appointment
+            </h1>
+            <div className="border-b border-gray-900/10 pb-12">
+              <h2 className="text-base font-semibold leading-7 text-pink-600">
+                Appointment Details
+              </h2>
+              <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="col-span-full">
+                  <div className="mt-2">
+                    <select
+                      name="service"
+                      id="service"
+                      value={custDetails.service}
+                      onChange={handleChange}
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     >
-                      Pay locally
-                    </option>
-                    <option
-                      value="Pay online"
-                      onClick={() => setPayOnline(true)}
+                      <option value="No slection">Select service</option>
+                      {services.map((service) => {
+                        return (
+                          <option
+                            value={service.serviceName}
+                            key={service.serviceId}
+                          >
+                            {`${service.serviceName} - Rs${service.fee}`}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <input
+                      id="date"
+                      name="date"
+                      type="date"
+                      min={currentDate}
+                      autoComplete="on"
+                      value={custDetails.date}
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-3">
+                  <div className="mt-2 flex justify-center items-center">
+                    <label htmlFor="time">Time</label>
+                    <input
+                      type="time"
+                      id="appt"
+                      name="time"
+                      min="09:00"
+                      max="18:00"
+                      placeholder="HH:MM"
+                      value={custDetails.time}
+                      onChange={handleChange}
+                      className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 ml-2"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <Link
+                  className="text-white text-center bg-pink-600 hover:bg-pink-700 py-1 px-3 rounded w-full"
+                  onClick={checkAvailability}
+                >
+                  Check Availability
+                </Link>
+              </div>
+            </div>
+
+            <div className="border-b border-gray-900/10 pb-12">
+              <h2 className="text-base font-semibold leading-7 text-pink-600">
+                Personal Details
+              </h2>
+              <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <input
+                      id="firstName"
+                      name="firstName"
+                      type="text"
+                      autoComplete="on"
+                      value={custDetails.firstName}
+                      onChange={handleChange}
+                      placeholder="First name"
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <input
+                      id="lastName"
+                      name="lastName"
+                      type="text"
+                      autoComplete="on"
+                      value={custDetails.lastName}
+                      onChange={handleChange}
+                      placeholder="Last name"
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="on"
+                      value={custDetails.email}
+                      onChange={handleChange}
+                      placeholder="Email"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <input
+                      id="contactNo"
+                      name="contactNo"
+                      type="number"
+                      minLength={10}
+                      maxLength={10}
+                      autoComplete="on"
+                      value={custDetails.contactNo}
+                      onChange={handleChange}
+                      placeholder="Contact number"
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <input
+                      id="age"
+                      name="age"
+                      type="number"
+                      min={1}
+                      autoComplete="on"
+                      value={custDetails.age}
+                      onChange={handleChange}
+                      placeholder="Age"
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <select
+                      name="gender"
+                      id="gender"
+                      value={custDetails.gender}
+                      onChange={handleChange}
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     >
-                      Pay online
-                    </option>
-                  </select>
+                      <option value="No selection">Select gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="col-span-full">
+                  <div className="mt-2">
+                    <input
+                      id="address"
+                      name="address"
+                      type="text"
+                      autoComplete="on"
+                      value={custDetails.address}
+                      onChange={handleChange}
+                      placeholder="Address"
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-2 sm:col-start-1">
+                  <div className="mt-2">
+                    <input
+                      id="city"
+                      name="city"
+                      type="text"
+                      autoComplete="on"
+                      value={custDetails.city}
+                      onChange={handleChange}
+                      placeholder="City"
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-2">
+                  <div className="mt-2">
+                    <input
+                      id="state"
+                      name="state"
+                      type="text"
+                      autoComplete="on"
+                      value={custDetails.state}
+                      onChange={handleChange}
+                      placeholder="State"
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-2">
+                  <div className="mt-2">
+                    <input
+                      id="pinCode"
+                      name="pinCode"
+                      type="number"
+                      minLength={6}
+                      maxLength={6}
+                      autoComplete="on"
+                      value={custDetails.pinCode}
+                      onChange={handleChange}
+                      placeholder="Pin code"
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-pink-600">
-              Account registration Details
-            </h2>
-            <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <div className="mt-2">
-                  <input
-                    name="username"
-                    type="text"
-                    autoComplete="on"
-                    value={custDetails.username}
-                    onChange={handleChange}
-                    placeholder="username"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
+            <div className="border-b border-gray-900/10 pb-12">
+              <h2 className="text-base font-semibold leading-7 text-pink-600">
+                Payment Details
+              </h2>
+              <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <select
+                      name="paymentMethod"
+                      id="paymentMethod"
+                      value={custDetails.paymentMethod}
+                      onChange={handleChange}
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    >
+                      <option value="">Select payment method</option>
+                      <option value="Pay locally">Pay locally</option>
+                      <option value="Pay online">Pay online</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
 
-              <div className="sm:col-span-3 flex">
-                <div className="mt-2 w-11/12">
-                  <input
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    autoComplete="on"
-                    value={custDetails.password}
-                    onChange={handleChange}
-                    placeholder="Password"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                  />
-                </div>
-                <div className="w-1/12 flex justify-center items-center text-gray-400">
-                  <Link onClick={togglePassword} className="text-2xl">
-                    {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
-                  </Link>
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <input
+                      id="transactionID"
+                      name="transactionID"
+                      type="text"
+                      autoComplete="on"
+                      value={
+                        activateTID
+                          ? custDetails.transactionID
+                          : custDetails.localPay
+                      }
+                      onChange={handleChange}
+                      placeholder="Online Payment - Enter Transtaction ID"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      required
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-            <p className="text-gray-400 mt-3 text-center">
-              Note: Account registration details will create a new patient
-              account. Kindly directly login for 2nd booking onwards
-            </p>
-          </div>
-        </div>
 
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button
-            type="button"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Cancel
-          </button>
-          {payOnline ? (
+            <div className="border-b border-gray-900/10 pb-12">
+              <h2 className="text-base font-semibold leading-7 text-pink-600">
+                Account registration Details
+              </h2>
+              <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="sm:col-span-3">
+                  <div className="mt-2">
+                    <input
+                      name="username"
+                      type="text"
+                      autoComplete="on"
+                      value={custDetails.username}
+                      onChange={handleChange}
+                      placeholder="username"
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-3 flex">
+                  <div className="mt-2 w-11/12">
+                    <input
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      autoComplete="on"
+                      value={custDetails.password}
+                      onChange={handleChange}
+                      placeholder="Password"
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    />
+                  </div>
+                  <div className="w-1/12 flex justify-center items-center text-gray-400">
+                    <Link onClick={togglePassword} className="text-2xl">
+                      {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <p className="text-gray-400 mt-3 text-center">
+                Note: Account registration details will create a new patient
+                account. Kindly directly login for 2nd booking onwards
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
-              type="submit"
-              className="rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+              type="button"
+              className="text-sm font-semibold leading-6 text-gray-900"
             >
-              Pay & Book Appointment
+              Cancel
             </button>
-          ) : (
+
             <button
               type="submit"
               className="rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
             >
               Book Appointment
             </button>
-          )}
-        </div>
-      </form>
+          </div>
+        </form>
+        <OnlinePayment />
+      </>
     );
   }
 };

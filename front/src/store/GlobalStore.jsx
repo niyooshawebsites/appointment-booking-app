@@ -9,6 +9,7 @@ import paginationSliceReducers from "./slices/PaginationDataSlice";
 import specializationSliceReducers from "./slices/SpecializationSlice";
 import announcementSliceReducers from "./slices/AnnouncementSlice";
 import walkinSliceReducers from "./slices/WalkinSlice";
+import onlinePaymentSliceReducers from "./slices/OnlinePyamentSlice";
 
 const GlobalStore = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const GlobalStore = configureStore({
     specialization_Slice: specializationSliceReducers,
     announcement_Slice: announcementSliceReducers,
     walkin_Slice: walkinSliceReducers,
+    online_Payment_Slice: onlinePaymentSliceReducers,
   },
 });
 

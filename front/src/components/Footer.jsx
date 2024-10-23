@@ -42,7 +42,6 @@ const Footer = () => {
     await axios
       .get(`http://localhost:8000/api/v1/checkUser/${username}`)
       .then((res) => {
-        console.log(res);
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
@@ -160,7 +159,7 @@ const Footer = () => {
                     </div>
                   ))
                 ) : (
-                  <h1>Nothing</h1>
+                  <h1>No timings set</h1>
                 )}
               </ul>
             </div>
@@ -186,7 +185,6 @@ const Footer = () => {
       ) : (
         <div className="flex h-1 w-full bg-indigo-900"></div>
       )}
-
       <div className="bg-pink-600 py-4 mt-8">
         <p className="text-center text-white text-sm">
           &copy; 2024 Niyoosha Websites LLP. All rights reserved.

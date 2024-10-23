@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 
 const appointmentSchema = new mongoose.Schema(
   {
+    appointmentID: {
+      type: String,
+      required: true,
+      unique: true,
+      default: "N/A",
+    },
     service: {
       type: String,
       required: true,
@@ -71,6 +77,12 @@ const appointmentSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+    },
+    transactionID: {
+      type: String,
+      required: true,
+      unique: true,
+      default: "N/A",
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

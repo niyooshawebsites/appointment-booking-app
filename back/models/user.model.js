@@ -4,6 +4,12 @@ const { v4: uuidv4 } = require("uuid");
 const userSchema = new mongoose.Schema(
   {
     // service provider and client
+    userID: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    // service provider and client
     username: {
       type: String,
       required: true,

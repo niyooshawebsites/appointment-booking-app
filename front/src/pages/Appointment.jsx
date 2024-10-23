@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
 import axios from "axios";
 import Ticker from "../components/Ticker";
+import Unverified from "../components/Unverified";
 
 const Appointment = ({ serviceProvider }) => {
   const { announcement, isVerified } = useSelector(
@@ -45,14 +46,7 @@ const Appointment = ({ serviceProvider }) => {
   if (!isVerified) {
     return (
       <Layout>
-        <div className="flex flex-col justify-center items-center h-screen">
-          <h1 className="text-5xl text-center text-red-500">
-            Doctor account is not verified!
-          </h1>
-          <h2 className="text-xl text-gray-500 mt-3">
-            Please verify your email to access the service
-          </h2>
-        </div>
+        <Unverified />
       </Layout>
     );
   }

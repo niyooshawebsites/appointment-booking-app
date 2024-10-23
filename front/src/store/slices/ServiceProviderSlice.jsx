@@ -6,7 +6,52 @@ const serviceProviderSlice = createSlice({
     name: "",
     businessName: "",
     isVerified: false,
-    timings: {},
+    timings: {
+      days: {
+        monday: {
+          morningFrom: "",
+          morningTo: "",
+          eveningFrom: "",
+          eveningTo: "",
+        },
+        tuesday: {
+          morningFrom: "",
+          morningTo: "",
+          eveningFrom: "",
+          eveningTo: "",
+        },
+        wednesday: {
+          morningFrom: "",
+          morningTo: "",
+          eveningFrom: "",
+          eveningTo: "",
+        },
+        thursday: {
+          morningFrom: "",
+          morningTo: "",
+          eveningFrom: "",
+          eveningTo: "",
+        },
+        friday: {
+          morningFrom: "",
+          morningTo: "",
+          eveningFrom: "",
+          eveningTo: "",
+        },
+        saturday: {
+          morningFrom: "",
+          morningTo: "",
+          eveningFrom: "",
+          eveningTo: "",
+        },
+        sunday: {
+          morningFrom: "",
+          morningTo: "",
+          eveningFrom: "",
+          eveningTo: "",
+        },
+      },
+    },
     about: "",
     email: "",
     contactNo: "",
