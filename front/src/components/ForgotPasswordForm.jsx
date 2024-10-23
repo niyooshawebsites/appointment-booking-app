@@ -13,18 +13,16 @@ const ForgotPasswordForm = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      await axios
-        .get(`http://localhost:8000/api/v1/reset-password/${email}`)
-        .then((res) => {
-          toast.success(res.data.msg);
-          setEmail("");
-        })
-        .catch((err) => {
-          toast.error("Email not found!");
-          setEmail("");
-        });
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/reset-password/${email}`
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
+        setEmail("");
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
   return (

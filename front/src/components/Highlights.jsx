@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Announcement from "./Announcement";
+import { toast } from "react-toastify";
 
 const Highlights = () => {
   const [totalNumOfUsers, setTotalNumOfUsers] = useState(0);
@@ -41,366 +41,413 @@ const Highlights = () => {
   // ADMIN APIS.....
   // get total number....
   const getTotalNumOfUsers = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/get-total-users-count/${userId}`, {
-        withCredentials: true,
-      })
-      .then((res) => setTotalNumOfUsers(res.data.totalUsersCount))
-      .catch((err) => console.log(err));
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-total-users-count/${userId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setTotalNumOfUsers(res.data.totalUsersCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   const getTotalNumOfVerifiedUsers = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/get-total-verified-users-count/${userId}`,
         {
           withCredentials: true,
         }
-      )
-      .then((res) =>
-        setTotalNumOfVerifiedUsers(res.data.totalVerifiedUsersCount)
-      )
-      .catch((err) => console.log(err));
+      );
+
+      if (res.data.success) {
+        setTotalNumOfVerifiedUsers(res.data.totalVerifiedUsersCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   const getTotalNumOfUnverifiedUsers = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/get-total-unverified-users-count/${userId}`,
         {
           withCredentials: true,
         }
-      )
-      .then((res) =>
-        setTotalNumOfUnverifiedUsers(res.data.totalUnverifiedUsersCount)
-      )
-      .catch((err) => console.log(err));
+      );
+
+      if (res.data.success) {
+        setTotalNumOfUnverifiedUsers(res.data.totalUnverifiedUsersCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   const getTotalNumOfAppointments = async () => {
-    await axios
-      .get("http://localhost:8000/api/v1/get-total-appointments-count", {
-        withCredentials: true,
-      })
-      .then((res) =>
-        setTotalNumOfApponintments(res.data.totalAppointmentsCount)
-      )
-      .catch((err) => console.log(err));
+    try {
+      const res = await axios.get(
+        "http://localhost:8000/api/v1/get-total-appointments-count",
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setTotalNumOfApponintments(res.data.totalAppointmentsCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   // pass total number...
   const getAndPassAllUsers = async () => {
     try {
-      await axios
-        .get(`http://localhost:8000/api/v1/get-all-users/1`, {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-all-users/1`,
+        {
           withCredentials: true,
-        })
-        .then((res) => {
-          dispatch(
-            paginationSliceActions.setPaginationDetails({
-              dataToDisplay: "all users",
-              currentPageNo: res.data.currentPageNo,
-              totalPages: res.data.totalPages,
-            })
-          );
+        }
+      );
 
-          dispatch(
-            usersDataSliceActions.getUsersData({
-              allUsers: res.data.users,
-            })
-          );
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showInfo: true,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-              showLetterHead: false,
-              showQaulifications: false,
-              showTimings: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.users,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 
   const getAndPassAllVerifiedUsers = async () => {
     try {
-      await axios
-        .get(
-          `http://localhost:8000/api/v1/get-all-verified-users/${userId}/1`,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          dispatch(
-            paginationSliceActions.setPaginationDetails({
-              dataToDisplay: "all verified users",
-              currentPageNo: res.data.currentPageNo,
-              totalPages: res.data.totalPages,
-            })
-          );
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-all-verified-users/${userId}/1`,
+        {
+          withCredentials: true,
+        }
+      );
 
-          dispatch(
-            usersDataSliceActions.getUsersData({
-              allUsers: res.data.users,
-            })
-          );
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all verified users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showInfo: true,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-              showLetterHead: false,
-              showQaulifications: false,
-              showTimings: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.users,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 
   const getAndPassAllUnverifiedUsers = async () => {
     try {
-      await axios
-        .get(`http://localhost:8000/api/v1/get-all-unverified-users/1`, {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-all-unverified-users/1`,
+        {
           withCredentials: true,
-        })
-        .then((res) => {
-          dispatch(
-            paginationSliceActions.setPaginationDetails({
-              dataToDisplay: "all unverified users",
-              currentPageNo: res.data.currentPageNo,
-              totalPages: res.data.totalPages,
-            })
-          );
+        }
+      );
 
-          dispatch(
-            usersDataSliceActions.getUsersData({
-              allUsers: res.data.users,
-            })
-          );
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all unverified users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showInfo: true,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-              showLetterHead: false,
-              showQaulifications: false,
-              showTimings: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.users,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 
   // get today total number...
   const getTodayTotalNumOfUsers = async () => {
-    await axios
-      .get("http://localhost:8000/api/v1/get-today-total-users-count", {
-        withCredentials: true,
-      })
-      .then((res) => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8000/api/v1/get-today-total-users-count",
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
         setTodayTotalNumOfUsers(res.data.todayTotalUsersCount);
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   const getTodayTotalNumOfVerifiedUsers = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         "http://localhost:8000/api/v1/get-today-total-verified-users-count",
         {
           withCredentials: true,
         }
-      )
-      .then((res) =>
-        setTodayTotalNumOfVerifiedUsers(res.data.todayTotalVerifiedUsersCount)
-      )
-      .catch((err) => console.log(err));
+      );
+
+      if (res.data.success) {
+        setTodayTotalNumOfVerifiedUsers(res.data.todayTotalVerifiedUsersCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   const getTodayTotalNumOfUnverifiedUsers = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         "http://localhost:8000/api/v1/get-today-total-unverified-users-count",
         {
           withCredentials: true,
         }
-      )
-      .then((res) =>
+      );
+
+      if (res.data.success) {
         setTodayTotalNumOfUnverifiedUsers(
           res.data.todayTotalUnverifiedUsersCount
-        )
-      )
-      .catch((err) => console.log(err));
+        );
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   const getTodayTotalNumOfApponintments = async () => {
-    await axios
-      .get("http://localhost:8000/api/v1/get-today-total-appointments-count", {
-        withCredentials: true,
-      })
-      .then((res) =>
-        setTodayTotalNumOfApponintments(res.data.todayTotalAppointmentsCount)
-      )
-      .catch((err) => console.log(err));
+    try {
+      const res = await axios.get(
+        "http://localhost:8000/api/v1/get-today-total-appointments-count",
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setTodayTotalNumOfApponintments(res.data.todayTotalAppointmentsCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   // pass today number...
   const getAndPassTodayUsers = async () => {
     try {
-      await axios
-        .get(`http://localhost:8000/api/v1/get-today-users/1`, {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-today-users/1`,
+        {
           withCredentials: true,
-        })
-        .then((res) => {
-          dispatch(
-            paginationSliceActions.setPaginationDetails({
-              dataToDisplay: "today's all users",
-              currentPageNo: res.data.currentPageNo,
-              totalPages: res.data.totalPages,
-            })
-          );
+        }
+      );
 
-          dispatch(
-            usersDataSliceActions.getUsersData({
-              allUsers: res.data.users,
-            })
-          );
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "today's all users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showInfo: true,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-              showLetterHead: false,
-              showQaulifications: false,
-              showTimings: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.users,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 
   const getAndPassTodayVerifiedUsers = async () => {
     try {
-      await axios
-        .get(`http://localhost:8000/api/v1/get-today-verified-users/1`, {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-today-verified-users/1`,
+        {
           withCredentials: true,
-        })
-        .then((res) => {
-          dispatch(
-            paginationSliceActions.setPaginationDetails({
-              dataToDisplay: "today's all verified users",
-              currentPageNo: res.data.currentPageNo,
-              totalPages: res.data.totalPages,
-            })
-          );
+        }
+      );
 
-          dispatch(
-            usersDataSliceActions.getUsersData({
-              allUsers: res.data.users,
-            })
-          );
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "today's all verified users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showInfo: true,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-              showLetterHead: false,
-              showQaulifications: false,
-              showTimings: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.users,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 
   const getAndPassTodayUnverifiedUsers = async () => {
     try {
-      await axios
-        .get(`http://localhost:8000/api/v1/get-today-unverified-users/1`, {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-today-unverified-users/1`,
+        {
           withCredentials: true,
-        })
-        .then((res) => {
-          dispatch(
-            paginationSliceActions.setPaginationDetails({
-              dataToDisplay: "today's all unverified users",
-              currentPageNo: res.data.currentPageNo,
-              totalPages: res.data.totalPages,
-            })
-          );
+        }
+      );
 
-          dispatch(
-            usersDataSliceActions.getUsersData({
-              allUsers: res.data.users,
-            })
-          );
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "today's all unverified users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showInfo: true,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-              showLetterHead: false,
-              showQaulifications: false,
-              showTimings: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.users,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 
@@ -415,170 +462,175 @@ const Highlights = () => {
   };
 
   const getTotalAppointmentsCountFilterByUsername = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/fetch-total-appointments-count/${userId}`,
         {
           withCredentials: true,
         }
-      )
-      .then((res) =>
-        setTotalAppointmentsCountFilterByUsername(res.data.appointments)
-      )
-      .catch((err) => console.log(err));
+      );
+
+      if (res.data.success) {
+        setTotalAppointmentsCountFilterByUsername(res.data.appointments);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   // get and pass total-appointments-by-userId
   const getAndPassAllAppointmentsByUserId = async () => {
     try {
-      await axios
-        .get(
-          `http://localhost:8000/api/v1/get-all-appointments-by-userId/${userId}/1`,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          dispatch(
-            paginationSliceActions.setPaginationDetails({
-              dataToDisplay: "all appointments for a specific user",
-              currentPageNo: res.data.currentPageNo,
-              totalPages: res.data.totalPages,
-            })
-          );
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-all-appointments-by-userId/${userId}/1`,
+        {
+          withCredentials: true,
+        }
+      );
 
-          dispatch(
-            appointmentsDataSliceActions.getAppointmentsData({
-              allAppointments: res.data.appointments,
-            })
-          );
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all appointments for a specific user",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showInfo: true,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-              showLetterHead: false,
-              showQaulifications: false,
-              showTimings: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
+        dispatch(
+          appointmentsDataSliceActions.getAppointmentsData({
+            allAppointments: res.data.appointments,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 
   // get and pass today-appointments-by-userId
   const getAndPassTodaysAppointmentsByUserId = async () => {
     try {
-      await axios
-        .get(
-          `http://localhost:8000/api/v1/get-today-appointments-by-userId/${userId}/1`,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          dispatch(
-            paginationSliceActions.setPaginationDetails({
-              dataToDisplay: "today's all appointments for a specific user",
-              currentPageNo: res.data.currentPageNo,
-              totalPages: res.data.totalPages,
-            })
-          );
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-today-appointments-by-userId/${userId}/1`,
+        {
+          withCredentials: true,
+        }
+      );
 
-          dispatch(
-            appointmentsDataSliceActions.getAppointmentsData({
-              allAppointments: res.data.appointments,
-            })
-          );
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "today's all appointments for a specific user",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showInfo: true,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-              showLetterHead: false,
-              showQaulifications: false,
-              showTimings: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
+        dispatch(
+          appointmentsDataSliceActions.getAppointmentsData({
+            allAppointments: res.data.appointments,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 
   // CLIENT APIS...
   // get total appointments for a specific client
   const getTotalAppointmentssCountByUserIdForClient = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/get-total-appointments-count-by-userId-for-client/${email}`,
         {
           withCredentials: true,
         }
-      )
-      .then((res) => setTotalNumOfAppointmentsForClient(res.data.appointments))
-      .catch((err) => console.log(err));
+      );
+
+      if (res.data.success) {
+        setTotalNumOfAppointmentsForClient(res.data.appointments);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   const getAndAllPassApponitmentsForClient = async () => {
     try {
-      await axios
-        .get(
-          `http://localhost:8000/api/v1/get-all-appointments-for-client/${email}/1`,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          dispatch(
-            paginationSliceActions.setPaginationDetails({
-              dataToDisplay: "all appointments for a specific client",
-              currentPageNo: res.data.currentPageNo,
-              totalPages: res.data.totalPages,
-            })
-          );
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-all-appointments-for-client/${email}/1`,
+        {
+          withCredentials: true,
+        }
+      );
 
-          dispatch(
-            appointmentsDataSliceActions.getAppointmentsData({
-              allAppointments: res.data.appointments,
-            })
-          );
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all appointments for a specific client",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: false,
-              showInfo: true,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-              showLetterHead: false,
-              showQaulifications: false,
-              showTimings: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
+        dispatch(
+          appointmentsDataSliceActions.getAppointmentsData({
+            allAppointments: res.data.appointments,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 

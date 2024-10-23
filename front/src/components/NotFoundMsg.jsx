@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
+import { toast } from "react-toastify";
 
 const NotFoundMsg = () => {
   const dispatch = useDispatch();
@@ -26,9 +27,12 @@ const NotFoundMsg = () => {
   }
 
   const checkUser = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
-      .then((res) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/checkUser/${username}`
+      );
+
+      if (res.data.success) {
         setRealUser(res.data.success);
 
         dispatch(
@@ -44,8 +48,10 @@ const NotFoundMsg = () => {
             socialProfiles: res.data.socialProfiles,
           })
         );
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {

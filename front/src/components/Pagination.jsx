@@ -3,6 +3,7 @@ import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import { specializationSliceActions } from "../store/slices/SpecializationSlice";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 const Pagination = () => {
@@ -18,11 +19,15 @@ const Pagination = () => {
   const onPageChange = async (currentPageNo) => {
     // ADMIN...
     if (dataToDisplay == "all users") {
-      await axios
-        .get(`http://localhost:8000/api/v1/get-all-users/${currentPageNo}`, {
-          withCredentials: true,
-        })
-        .then((res) => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/api/v1/get-all-users/${currentPageNo}`,
+          {
+            withCredentials: true,
+          }
+        );
+
+        if (res.data.success) {
           dispatch(
             paginationSliceActions.setPaginationDetails({
               dataToDisplay: "all users",
@@ -35,8 +40,10 @@ const Pagination = () => {
               allUsers: res.data.users,
             })
           );
-        })
-        .catch((err) => console.log(err));
+        }
+      } catch (err) {
+        toast.error(err.response.data.msg);
+      }
     }
 
     if (dataToDisplay == "all verified users") {

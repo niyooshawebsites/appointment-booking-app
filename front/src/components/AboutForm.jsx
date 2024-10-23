@@ -13,23 +13,22 @@ const AboutForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .patch(
+    try {
+      const res = await axios.patch(
         "http://localhost:8000/api/v1/update-about-details",
         { about },
         {
           withCredentials: true,
         }
-      )
-      .then((res) => {
-        console.log(res);
-        toast.success("About details updated successfully");
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
         setAbout("");
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("About details updation failed");
-      });
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   return (

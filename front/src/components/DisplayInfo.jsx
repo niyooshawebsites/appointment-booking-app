@@ -8,7 +8,7 @@ import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import Pagination from "./Pagination";
-import { FaPrint, FaExternalLinkAlt } from "react-icons/fa";
+import { FaPrint } from "react-icons/fa";
 import { TbListDetails } from "react-icons/tb";
 import {
   RxCheckCircled,
@@ -31,17 +31,19 @@ const DisplayInfo = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios
-        .delete(`http://localhost:8000/api/v1/delete-user/${id}`, {
+      const res = await axios.delete(
+        `http://localhost:8000/api/v1/delete-user/${id}`,
+        {
           withCredentials: true,
-        })
-        .then(() => {
-          toast.success("User deleted successfully");
-          setUserDeleted((prevState) => !prevState);
-        })
-        .catch(toast.error("Deleation failed"));
+        }
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
+        setUserDeleted((prevState) => !prevState);
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 
@@ -55,15 +57,15 @@ const DisplayInfo = () => {
 
   // get a particular appointment details
   const getAParticularAppointmentDetails = async (appointmentId) => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/get-a-particular-appointment-details/${appointmentId}`,
         {
           withCredentials: true,
         }
-      )
-      .then((res) => {
-        console.log(res.data.appointment);
+      );
+
+      if (res.data.success) {
         dispatch(
           appointmentSliceActions.appointmentDetails({
             service: res.data.appointment.service,
@@ -82,26 +84,32 @@ const DisplayInfo = () => {
             paymentMethod: res.data.appointment.paymentMethod,
           })
         );
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   // get appointments count per user
   const fetchAppointmentsCount = async () => {
-    const counts = {};
+    try {
+      const counts = {};
 
-    // looping through allUsers
-    for (const user of allUsers) {
-      const response = await axios.get(
-        `http://localhost:8000/api/v1/get-no-of-appointments-per-user/${user._id}`,
-        {
-          withCredentials: true,
-        }
-      );
-      counts[user._id] = response.data.noOfAppointments;
+      // looping through allUsers
+      for (const user of allUsers) {
+        const res = await axios.get(
+          `http://localhost:8000/api/v1/get-no-of-appointments-per-user/${user._id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        counts[user._id] = res.data.noOfAppointments;
+      }
+
+      setAppointmentsCountPerUser(counts);
+    } catch (err) {
+      toast.error(err.response.data.msg);
     }
-
-    setAppointmentsCountPerUser(counts);
   };
 
   const handleDetails = async (appointmentId) => {

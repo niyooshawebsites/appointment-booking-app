@@ -3,6 +3,7 @@ import { useReactToPrint } from "react-to-print";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
+import { toast } from "react-toastify";
 
 const LetterHead = () => {
   const contentRef = useRef();
@@ -48,12 +49,13 @@ const LetterHead = () => {
 
   // get a particular service provider for printing by username
   const getAParticularUserForPrinting = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/get-a-particular-user-for-printing-by-username/${username}`,
         { withCredentials: true }
-      )
-      .then((res) =>
+      );
+
+      if (res.data.success) {
         setServiceProviderDetails((prevDetails) => {
           return {
             ...prevDetails,
@@ -72,9 +74,11 @@ const LetterHead = () => {
             state: res.data.user.state,
             pinCode: res.data.user.pinCode,
           };
-        })
-      )
-      .catch((err) => console.log(err));
+        });
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   // go back function

@@ -3,6 +3,7 @@ import { Outlet, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
+import { toast } from "react-toastify";
 
 const ProtectedContent = () => {
   // getting the username from url
@@ -26,9 +27,12 @@ const ProtectedContent = () => {
   const dispatch = useDispatch();
 
   const checkUser = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
-      .then((res) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/checkUser/${username}`
+      );
+
+      if (res.data.success) {
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
@@ -41,8 +45,10 @@ const ProtectedContent = () => {
             socialProfiles: res.data.socialProfiles,
           })
         );
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {

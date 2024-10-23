@@ -13,7 +13,7 @@ const generateUniqueID = require("../utils/uniqueID");
 // register controller...
 const registerController = async (req, res) => {
   const { role, specialization, username, email, password } = req.body;
-  console.log(role);
+
   try {
     // check for all the details:
     if (!role) {
@@ -58,7 +58,7 @@ const registerController = async (req, res) => {
     if (existingUser) {
       return res.status(409).json({
         success: false,
-        msg: "Registration failed. User already exists. Please login.",
+        msg: "Registration failed. Account already exists.",
       });
     }
 

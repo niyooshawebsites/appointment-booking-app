@@ -14,6 +14,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
   const [custDetails, setCustDetails] = useState(() => {
     return {
       service: "",
+      specialization: "Patient",
       date: "",
       time: "",
       firstName: "",
@@ -46,23 +47,25 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
 
   const handleSubmit = async function (e) {
     e.preventDefault();
-    // api for booking appointment
-    await axios
-      .post(
+
+    try {
+      // api for booking appointment...
+      const res = await axios.post(
         `http://localhost:8000/api/v1/book-appointment-by-login/${username}`,
         custDetails,
         { withCredentials: true }
-      )
-      .then((res) => {
-        toast.success("Appointment booked successfully!");
-      })
-      .catch((err) => {
-        toast.error("Appointment booking failed!");
-      });
+      );
 
-    // udpating client details
-    await axios
-      .patch(
+      if (res.data.success) {
+        toast.success(res.data.msg);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+
+    try {
+      // udpating client details
+      const res = await axios.patch(
         `http://localhost:8000/api/v1/update-client-details/${userId}`,
         {
           firstName: custDetails.firstName,
@@ -77,9 +80,14 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
           pinCode: custDetails.pinCode,
         },
         { withCredentials: true }
-      )
-      .then((res) => toast.success(res.data.msg))
-      .catch((err) => toast.error("Appointment booking failed!"));
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
 
     setCustDetails((prevDetails) => {
       return {
@@ -105,20 +113,28 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
 
   // get all services by a particular username
   const getAllServicesByUsername = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/get-services/${username}`)
-      .then((res) => setServices(res.data.services))
-      .catch((err) => console.log(err));
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-services/${username}`
+      );
+
+      if (res.data.success) {
+        setServices(res.data.services);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   // get all the data related to a particular client
   const getParticularClientDataByUserId = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/get-particular-client-data-by-userId/${userId}`,
         { withCredentials: true }
-      )
-      .then((res) => {
+      );
+
+      if (res.data.success) {
         setCustDetails((prevDetails) => {
           return {
             ...prevDetails,
@@ -134,8 +150,10 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
             pinCode: res.data.user.pinCode || "",
           };
         });
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {
@@ -146,12 +164,17 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
   const currentDate = new Date().toISOString().split("T")[0];
 
   const checkAvailability = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/check-appointment-availability?date=${custDetails.date}&time=${custDetails.time}&username=${username}`
-      )
-      .then((res) => alert(res.data.msg))
-      .catch((err) => console.log(err));
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   // go back function
@@ -179,7 +202,6 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
       onSubmit={handleSubmit}
     >
       <div className="space-y-2 h-full flex flex-col justify-start">
-        {/* Appointment Details */}
         {/* Appointment Details */}
         <div className="border-b pb-4">
           <h2 className="text-lg font-semibold mb-2 text-pink-600">

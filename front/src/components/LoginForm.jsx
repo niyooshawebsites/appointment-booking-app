@@ -10,17 +10,6 @@ import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice
 import Unverified from "./Unverified";
 
 const LoginForm = () => {
-  const { isVerified } = useSelector((state) => state.service_Provider_Slice);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [loginDetails, setLoginDetails] = useState(() => {
-    return {
-      username: "",
-      password: "",
-    };
-  });
-
   // getting the username from url
   const path = window.location.pathname;
   let username = path.split("/")[1];
@@ -37,6 +26,17 @@ const LoginForm = () => {
   ) {
     username = "abs";
   }
+
+  const { isVerified } = useSelector((state) => state.service_Provider_Slice);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginDetails, setLoginDetails] = useState(() => {
+    return {
+      username: "",
+      password: "",
+    };
+  });
 
   const checkUser = async () => {
     await axios
@@ -76,12 +76,16 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/login",
+        loginDetails,
+        {
+          withCredentials: true,
+        }
+      );
 
-    await axios
-      .post("http://localhost:8000/api/v1/login", loginDetails, {
-        withCredentials: true,
-      })
-      .then((res) => {
+      if (res.data.success) {
         dispatch(
           userSliceActions.captureLoginUserDetails({
             username: res.data.username,
@@ -92,17 +96,16 @@ const LoginForm = () => {
             email: res.data.email,
           })
         );
+
         toast.success("Login successful!");
-        {
-          username !== "abs"
-            ? navigate(`/${username}/dashboard`)
-            : navigate("/dashboard");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Invalid credentials");
-      });
+
+        username !== "abs"
+          ? navigate(`/${username}/dashboard`)
+          : navigate("/dashboard");
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
 
     setLoginDetails(() => {
       return {

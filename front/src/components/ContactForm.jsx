@@ -32,15 +32,15 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .patch(
+    try {
+      const res = await axios.patch(
         "http://localhost:8000/api/v1/update-contact-details",
         contactDetails,
         { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
-        toast.success("Contact details updated successfully");
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
         setContactDetails(() => {
           return {
             name: "",
@@ -57,12 +57,12 @@ const ContactForm = () => {
             pinCode: "",
           };
         });
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Error updating details");
-      });
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
+
   return (
     <div className="w-8/12 mx-auto">
       <h2 className="mt-10 mb-4 text-center text-3xl text-pink-600">

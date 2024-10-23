@@ -34,21 +34,21 @@ const Profile = () => {
       return toast.error("Password mismatch!");
     }
 
-    await axios
-      .patch(
+    try {
+      const res = await axios.patch(
         "http://localhost:8000/api/v1/update-password",
         { newPassword },
         { withCredentials: true }
-      )
-      .then((res) => {
-        toast.success("Password updated successfully");
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
         setNewPassword("");
         setNewConfirmPassword("");
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Password updation failed");
-      });
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   return (

@@ -19,17 +19,20 @@ const Announcement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios
-      .put(
+    try {
+      const res = await axios.put(
         "http://localhost:8000/api/v1/update-announcement",
         { announcement },
         { withCredentials: true }
-      )
-      .then(() => {
-        toast.success("Announced successfully");
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
         setAnnouncement("");
-      })
-      .catch(() => toast.error("Announcement failed"));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   if (showAnnouncementModal) {

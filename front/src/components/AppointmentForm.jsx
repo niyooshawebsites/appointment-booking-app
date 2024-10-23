@@ -120,7 +120,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "paymentMethod" && value === "Pay online") {
+    if (name == "paymentMethod" && value == "Pay online") {
       setActivateTID(true);
 
       dispatch(
@@ -130,7 +130,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       );
     }
 
-    if (name === "paymentMethod" && value === "Pay locally") {
+    if (name == "paymentMethod" && value == "Pay locally") {
       setActivateTID(false);
     }
 
@@ -144,58 +144,60 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
 
   const handleSubmit = async function (e) {
     e.preventDefault();
-
-    await axios
-      .post(
-        `http://localhost:8000/api/v1/book-appointment/${username}`,
-        custDetails
-      )
-      .then((res) => {
-        toast.success("Appointment booked successfully!");
-      })
-      .catch((err) => {
-        toast.error("Appointment booking failed!");
-      });
-
-    await axios
-      .post("http://localhost:8000/api/v1/register", {
+    try {
+      // account creation for the first time...
+      const res = await axios.post("http://localhost:8000/api/v1/register", {
         role: custDetails.role,
         specialization: custDetails.specialization,
         username: custDetails.username,
         password: custDetails.password,
         email: custDetails.email,
-      })
-      .then((res) => {
-        toast.success(res.data.msg);
-      })
-      .catch((err) => {
-        toast.error("Account creation failed");
       });
 
-    setCustDetails((prevDetails) => {
-      return {
-        ...prevDetails,
-        service: "",
-        date: "",
-        time: "",
-        username: "",
-        password: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        contactNo: "",
-        age: "",
-        gender: "",
-        address: "",
-        city: "",
-        state: "",
-        pinCode: "",
-        paymentMethod: "",
-        transactionID: "",
-        localPay: "N/A",
-        spUsername: username || "",
-      };
-    });
+      if (res.data.success) {
+        toast.success(res.data.msg);
+
+        // book apponitment only when account creation succeeds....
+        const response = await axios.post(
+          `http://localhost:8000/api/v1/book-appointment/${username}`,
+          custDetails
+        );
+
+        // appointment booking is successful
+        if (response.data.success) {
+          toast.success(response.data.msg);
+        }
+
+        // reseting everyting
+        setCustDetails((prevDetails) => {
+          return {
+            ...prevDetails,
+            service: "",
+            date: "",
+            time: "",
+            username: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            contactNo: "",
+            age: "",
+            gender: "",
+            address: "",
+            city: "",
+            state: "",
+            pinCode: "",
+            paymentMethod: "",
+            transactionID: "",
+            localPay: "N/A",
+            spUsername: username || "",
+          };
+        });
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+      toast.error("Please login to complete booking");
+    }
   };
 
   const currentDate = new Date().toISOString().split("T")[0];

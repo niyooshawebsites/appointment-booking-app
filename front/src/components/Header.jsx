@@ -8,9 +8,11 @@ import { announcementSliceActions } from "../store/slices/AnnouncementSlice";
 import { walkinSliceActions } from "../store/slices/WalkinSlice";
 import { HiSpeakerphone } from "react-icons/hi";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const navigate = useNavigate();
+
   const path = window.location.pathname;
   let user = path.split("/")[1];
 
@@ -38,42 +40,43 @@ const Header = () => {
 
   const logout = async () => {
     try {
-      await axios
-        .post(
-          "http://localhost:8000/api/v1/logout",
-          {},
-          { withCredentials: true }
-        )
-        .then(() => {
-          dispatch(
-            userSliceActions.captureLoginUserDetails({
-              authenticated: false,
-            })
-          );
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/logout",
+        {},
+        { withCredentials: true }
+      );
 
-          const navigationLink = user !== "abs" ? `/${user}/login` : "/login";
-          navigate(navigationLink);
+      if (res.data.success) {
+        dispatch(
+          userSliceActions.captureLoginUserDetails({
+            authenticated: false,
+          })
+        );
 
-          dispatch(
-            dashboardOptionsSliceActions.toggleDashboardOptions({
-              showHighlights: true,
-              showAllUsers: false,
-              showAppointments: false,
-              showServices: false,
-              showProfile: false,
-              showAbout: false,
-              showContact: false,
-              showAppointmentDetails: false,
-              showBookAppointment: false,
-              showLetterHead: false,
-              showQaulifications: false,
-              showTimings: false,
-            })
-          );
-        })
-        .catch((err) => console.log(err));
+        const navigationLink = user !== "abs" ? `/${user}/login` : "/login";
+        navigate(navigationLink);
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: true,
+            showAllUsers: false,
+            showAppointments: false,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+
+        toast.success(res.data.msg);
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 

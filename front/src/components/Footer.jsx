@@ -39,9 +39,12 @@ const Footer = () => {
   const dispatch = useDispatch();
 
   const checkUser = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
-      .then((res) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/checkUser/${username}`
+      );
+
+      if (res.data.success) {
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
@@ -57,8 +60,10 @@ const Footer = () => {
             announcement: res.data.announcement || "",
           })
         );
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      console.log(err.response.data.msg);
+    }
   };
 
   useEffect(() => {

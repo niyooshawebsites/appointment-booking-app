@@ -33,7 +33,7 @@ const RegisterForm = () => {
   const [registrationDetails, setRegistrationDetails] = useState(() => {
     return {
       role: 1,
-      specialization: "",
+      specialization: "N/A",
       username: "",
       email: "",
       password: "",
@@ -43,9 +43,12 @@ const RegisterForm = () => {
   const dispatch = useDispatch();
 
   const checkUser = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
-      .then((res) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/checkUser/${username}`
+      );
+
+      if (res.data.success) {
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
@@ -59,8 +62,10 @@ const RegisterForm = () => {
             socialProfiles: res.data.socialProfiles,
           })
         );
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {
@@ -82,24 +87,28 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .post("http://localhost:8000/api/v1/register", registrationDetails)
-      .then((res) => {
-        toast.success(res.data.msg);
-      })
-      .catch((err) => {
-        toast.error(err.data.msg);
-      });
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/register",
+        registrationDetails
+      );
 
-    setRegistrationDetails(() => {
-      return {
-        role: 1,
-        specialization: "",
-        username: "",
-        email: "",
-        password: "",
-      };
-    });
+      if (res.data.success) {
+        toast.success(res.data.msg);
+      }
+
+      setRegistrationDetails(() => {
+        return {
+          role: 1,
+          specialization: "N/A",
+          username: "",
+          email: "",
+          password: "",
+        };
+      });
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   const togglePassword = () => {

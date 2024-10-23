@@ -11,19 +11,22 @@ const Qualifications = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    await axios
-      .put(
+    try {
+      const res = await axios.put(
         `http://localhost:8000/api/v1/update-user-qualifications`,
         { qualifications },
         {
           withCredentials: true,
         }
-      )
-      .then(() => {
-        toast.success("Qualifications updated successfully");
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
         setQualifications("");
-      })
-      .catch(() => toast.error("Qualifications updatedtion failed"));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   return (
