@@ -100,8 +100,8 @@ const ContactForm = () => {
             </div>
             <div>
               <input
-                id="contact"
-                name="contact"
+                id="contactNo"
+                name="contactNo"
                 type="text"
                 autoComplete="on"
                 placeholder="Contact number"

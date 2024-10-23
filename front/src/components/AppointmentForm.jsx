@@ -369,7 +369,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                             value={service.serviceName}
                             key={service.serviceId}
                           >
-                            {`${service.serviceName} - Rs${service.fee}`}
+                            {`${service.serviceName} - Rs ${service.fee}`}
                           </option>
                         );
                       })}

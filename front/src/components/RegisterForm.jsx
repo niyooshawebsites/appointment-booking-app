@@ -9,22 +9,6 @@ import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice
 import Unverified from "./Unverified";
 
 const RegisterForm = () => {
-  const { isVerified } = useSelector((state) => state.service_Provider_Slice);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showSpecialization, setShowSpecialization] = useState(true);
-
-  const [registrationDetails, setRegistrationDetails] = useState(() => {
-    return {
-      role: 1,
-      specialization: "",
-      username: "",
-      email: "",
-      password: "",
-    };
-  });
-
-  const dispatch = useDispatch();
-
   // getting the username from url
   const path = window.location.pathname;
   let username = path.split("/")[1];
@@ -41,6 +25,22 @@ const RegisterForm = () => {
   ) {
     username = "abs";
   }
+
+  const { isVerified } = useSelector((state) => state.service_Provider_Slice);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showSpecialization, setShowSpecialization] = useState(true);
+
+  const [registrationDetails, setRegistrationDetails] = useState(() => {
+    return {
+      role: 1,
+      specialization: "",
+      username: "",
+      email: "",
+      password: "",
+    };
+  });
+
+  const dispatch = useDispatch();
 
   const checkUser = async () => {
     await axios
@@ -94,6 +94,7 @@ const RegisterForm = () => {
     setRegistrationDetails(() => {
       return {
         role: 1,
+        specialization: "",
         username: "",
         email: "",
         password: "",

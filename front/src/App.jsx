@@ -85,6 +85,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path={`/${username}/login`} element={<Login />} />
 
+          <Route path="/register" element={<Register />} />
           <Route
             path={username != "abs" ? `/${username}/register` : "/register"}
             element={<Register />}

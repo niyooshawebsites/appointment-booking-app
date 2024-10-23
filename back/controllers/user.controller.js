@@ -8,6 +8,8 @@ const {
   forgotPasswordEmail,
 } = require("../utils/mail");
 
+const generateUniqueID = require("../utils/uniqueID");
+
 // register controller...
 const registerController = async (req, res) => {
   const { role, specialization, username, email, password } = req.body;
@@ -68,6 +70,7 @@ const registerController = async (req, res) => {
         username,
         email,
         password: await encryptPassword(password),
+        userID: generateUniqueID(8),
       }).save();
 
       // generate verification token
@@ -359,7 +362,7 @@ const updateContactDetailsController = async (req, res) => {
 
     // find the user using email
     const updatedUser = await User.findOneAndUpdate(
-      { email: req.user.email },
+      { username: req.user.username },
       {
         name,
         businessName,
@@ -412,7 +415,7 @@ const updateAboutDetailsController = async (req, res) => {
     }
 
     const updatedUser = await User.findOneAndUpdate(
-      { email: req.user.email },
+      { username: req.user.username },
       { about },
       { new: true }
     );
