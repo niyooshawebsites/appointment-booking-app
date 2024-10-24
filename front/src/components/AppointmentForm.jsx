@@ -33,6 +33,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       role: "0",
       specialization: "N/A",
       service: "",
+      fee: "",
       date: "",
       time: "",
       username: "",
@@ -171,7 +172,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
         // book apponitment only when account creation succeeds....
         const response = await axios.post(
           `http://localhost:8000/api/v1/book-appointment/${username}`,
-          custDetails
+          { ...custDetails, fee: custDetails.service.split("-")[1].slice(1) }
         );
 
         // appointment booking is successful
@@ -184,6 +185,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
           return {
             ...prevDetails,
             service: "",
+            fee: "",
             date: "",
             time: "",
             username: "",

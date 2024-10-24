@@ -28,6 +28,7 @@ const Invoice = () => {
   });
 
   const reactToPrintFn = useReactToPrint({ contentRef });
+
   const {
     service,
     date,
@@ -120,6 +121,7 @@ const Invoice = () => {
       className="m-1"
       style={{ transform: "scale(0.5)", margin: "-300px 0" }}
     >
+      {/* header */}
       <div className="flex justify-between">
         <button
           onClick={goback}
@@ -134,12 +136,15 @@ const Invoice = () => {
           Print
         </button>
       </div>
+
+      {/* body */}
       <div
         className="flex flex-col justify-between border border-slate-500 p-5"
         ref={contentRef}
         style={myStyle}
       >
-        <div>
+        <div className="flex flex-col justify-start mb-3">
+          {/* header */}
           <header className="flex justify-between mb-3">
             <div>
               <h1 className="text-3xl text-pink-600">Dr. {username}</h1>
@@ -151,14 +156,22 @@ const Invoice = () => {
               </h2>
             </div>
           </header>
+
           <hr className="mb-3" />
-          <p className="mt-3 text-center">
-            Date: {date} | Time: {time} | Invoice number: 7487852 | Payment
-            Mode: Online
-          </p>
-          <p className="mt-3 text-center">
-            Patient ID: 7845215232 | Appointment ID: 87545455
-          </p>
+
+          {/* Invoice number */}
+          <section>
+            <h1 className="mt-3 text-center text-2xl underline">INVOICE</h1>
+            <p className="mt-3 text-center">
+              Date: {date} | Time: {time} | Invoice number: 7487852 | Payment
+              Mode: Online
+            </p>
+            <p className="mt-3 text-center">
+              Patient ID: 7845215232 | Appointment ID: 87545455
+            </p>
+          </section>
+
+          {/* Patient Details */}
           <section>
             <h1 className="mt-3 text-center text-2xl underline">
               Patient Details
@@ -213,9 +226,10 @@ const Invoice = () => {
               </span>
             </div>
           </section>
+
+          {/* Service Details */}
           <section>
-            <h1 className="mt-3 text-center text-2xl underline">BILL</h1>
-            <div className="h-96 w-full"></div>
+            <h1 className="mt-3 text-center text-2xl underline">Bill</h1>
             <table className="mt-5 w-full">
               <thead>
                 <tr className="border border-slate-400">
@@ -226,7 +240,7 @@ const Invoice = () => {
               <tbody>
                 <tr className="border">
                   <td className="border border-slate-400 py-2 text-center">
-                    Service
+                    {service}
                   </td>
                   <td className="border border-slate-400 py-2 text-center">
                     500
@@ -261,6 +275,7 @@ const Invoice = () => {
           </section>
         </div>
 
+        {/* footer */}
         <footer className="flex flex-col">
           <hr />
           <div className="py-2 text-center">

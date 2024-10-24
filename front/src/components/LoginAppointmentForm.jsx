@@ -18,6 +18,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
   const [custDetails, setCustDetails] = useState(() => {
     return {
       service: "",
+      fee: "",
       specialization: "N/A",
       date: "",
       time: "",
@@ -72,7 +73,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
       // api for booking appointment...
       const res = await axios.post(
         `http://localhost:8000/api/v1/book-appointment-by-login/${username}`,
-        custDetails,
+        { ...custDetails, fee: custDetails.service.split("-")[1].slice(1) },
         { withCredentials: true }
       );
 
@@ -80,7 +81,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
         toast.success(res.data.msg);
       }
     } catch (err) {
-      toast.error(err.response.data.msg);
+      toast.error(err.response.data.msg || "An unexpected error occurred");
     }
 
     try {
@@ -113,6 +114,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
       return {
         ...prevDetails,
         service: "",
+        fee: "",
         date: "",
         time: "",
         firstName: "",
@@ -244,7 +246,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   <option value="">Select service</option>
                   {services.map((service) => (
                     <option value={service.serviceName} key={service.serviceId}>
-                      {`${service.serviceName} - Rs${service.fee}`}
+                      {`${service.serviceName} - Rs ${service.fee}`}
                     </option>
                   ))}
                 </select>

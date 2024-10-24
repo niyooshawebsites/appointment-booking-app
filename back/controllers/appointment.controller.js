@@ -11,6 +11,7 @@ const bookAppointmnentController = async (req, res) => {
 
     const {
       service,
+      fee,
       date,
       time,
       firstName,
@@ -33,6 +34,14 @@ const bookAppointmnentController = async (req, res) => {
       return res.status(401).json({
         succss: false,
         msg: "Please select the service",
+      });
+    }
+
+    // if fee is not selected
+    if (!fee) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide the fee",
       });
     }
 
@@ -168,6 +177,7 @@ const bookAppointmnentController = async (req, res) => {
     // if all the information is provided
     const existingCustomer = new Appointment({
       service,
+      fee,
       date,
       time,
       firstName,
@@ -226,6 +236,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     const {
       service,
+      fee,
       date,
       time,
       firstName,
@@ -248,6 +259,14 @@ const bookAppointmnentByLoginController = async (req, res) => {
       return res.status(401).json({
         succss: false,
         msg: "Please select the service",
+      });
+    }
+
+    // if fee is not selected
+    if (!fee) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide the fee",
       });
     }
 
@@ -383,6 +402,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
     // if all the information is provided
     const existingCustomer = new Appointment({
       service,
+      fee,
       date,
       time,
       firstName,

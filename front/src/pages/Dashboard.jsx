@@ -16,6 +16,7 @@ import Qualifications from "../components/Qualifications";
 import Timings from "../components/Timings";
 import Announcement from "../components/Announcement";
 import Walkin from "../components/Walkin";
+import Invoice from "../components/Invoice";
 
 const Dashboard = () => {
   const {
@@ -160,7 +161,7 @@ const Dashboard = () => {
       <Layout>
         <div className="w-full h-screen flex bg-gray-100">
           <Sidebar />
-          <LetterHead />
+          <Invoice />
           <Announcement />
           <Walkin />
         </div>
