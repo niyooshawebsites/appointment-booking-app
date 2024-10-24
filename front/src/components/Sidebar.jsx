@@ -6,6 +6,7 @@ import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import { FaUserCog } from "react-icons/fa";
 import { LuMenuSquare } from "react-icons/lu";
 import { CgWebsite } from "react-icons/cg";
+import { toast } from "react-toastify";
 import {
   RxClock,
   RxStar,
@@ -39,9 +40,12 @@ const Sidebar = () => {
   }
 
   const checkUser = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
-      .then((res) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/checkUser/${username}`
+      );
+
+      if (res.data.success) {
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
@@ -54,8 +58,10 @@ const Sidebar = () => {
             socialProfiles: res.data.socialProfiles,
           })
         );
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {

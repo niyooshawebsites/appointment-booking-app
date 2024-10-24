@@ -62,12 +62,13 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
 
   // get all the users by a specific specialization
   const getAllUsersBySpecificSpecialization = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/get-all-users-by-specific-specialization/${specialization}/1`,
         { withCredentials: true }
-      )
-      .then((res) => {
+      );
+
+      if (res.data.success) {
         dispatch(
           paginationSliceActions.setPaginationDetails({
             dataToDisplay: "all users with a specific specialization",
@@ -82,16 +83,25 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
             usersBySpecialization: res.data.users,
           })
         );
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   // get all services by a particular username - for non loggedin clients
   const getAllServicesByUsername = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/get-services/${username}`)
-      .then((res) => setServices(res.data.services))
-      .catch((err) => console.log(err));
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-services/${username}`
+      );
+
+      if (res.data.success) {
+        setServices(res.data.services);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {
@@ -208,12 +218,18 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
         "Please fill the appointment date and time to check the availability"
       );
     }
-    await axios
-      .get(
+
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/check-appointment-availability?date=${custDetails.date}&time=${custDetails.time}&username=${username}`
-      )
-      .then((res) => alert(res.data.msg))
-      .catch((err) => console.log(err));
+      );
+
+      if (res.data.success) {
+        alert(res.data.msg);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   // if the client is logged in

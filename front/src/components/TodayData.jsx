@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
+import { toast } from "react-toastify";
 
 const TodayData = () => {
   const { username, role, isAdmin } = useSelector((state) => state.user_Slice);
@@ -17,30 +18,36 @@ const TodayData = () => {
 
   const getUsersDetails = async () => {
     try {
-      await axios
-        .get("http://localhost:8000/api/v1/get-today-users", {
+      const res = await axios.get(
+        "http://localhost:8000/api/v1/get-today-users",
+        {
           withCredentials: true,
-        })
-        .then((res) => {
-          console.log(res);
-          setUsersDetails(res.data.users);
-        })
-        .catch((err) => console.log(err));
+        }
+      );
+
+      if (res.data.success) {
+        setUsersDetails(res.data.users);
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 
   const fetchAllAppointments = async () => {
-    await axios
-      .get(
+    try {
+      const res = await axios.get(
         `http://localhost:8000/api/v1/get-today-appointments-by-username/${username}`,
         {
           withCredentials: true,
         }
-      )
-      .then((res) => setAllAppointments(res.data.appointments))
-      .catch((err) => console.log(err));
+      );
+
+      if (res.data.success) {
+        setAllAppointments(res.data.appointments);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   // filter the users by search

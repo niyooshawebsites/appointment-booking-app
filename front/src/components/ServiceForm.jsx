@@ -8,7 +8,6 @@ import { RxCross2 } from "react-icons/rx";
 
 const ServiceForm = () => {
   const { username } = useSelector((state) => state.user_Slice);
-  console.log(username);
   const [serivceDeleted, setServiceDeleted] = useState(false);
   const [currentService, setCurrentService] = useState(() => {
     return {
@@ -34,18 +33,21 @@ const ServiceForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios
-      .patch("http://localhost:8000/api/v1/update-service", currentService, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res);
-        toast.success("Service created successfully");
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Service creation failed");
-      });
+    try {
+      const res = await axios.patch(
+        "http://localhost:8000/api/v1/update-service",
+        currentService,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
 
     setCurrentService(() => {
       return {
@@ -57,29 +59,36 @@ const ServiceForm = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios
-      .patch(
+    try {
+      const res = await axios.patch(
         `http://localhost:8000/api/v1/delete-service/${id}`,
         {},
         {
           withCredentials: true,
         }
-      )
-      .then((res) => {
+      );
+
+      if (res.data.success) {
         setServiceDeleted((prevState) => !prevState);
-        toast.success("Service deleted successfully");
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Service deletetion failed");
-      });
+        toast.success(res.data.msg);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   const fetchAllServices = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/get-services/${username}`)
-      .then((res) => setAllServices(res.data.services))
-      .catch((err) => console.log(err));
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-services/${username}`
+      );
+
+      if (res.data.success) {
+        setAllServices(res.data.services);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {

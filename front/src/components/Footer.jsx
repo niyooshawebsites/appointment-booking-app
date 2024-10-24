@@ -5,6 +5,7 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Footer = () => {
   // getting the username from url
@@ -62,7 +63,7 @@ const Footer = () => {
         );
       }
     } catch (err) {
-      console.log(err.response.data.msg);
+      toast.error(err.response.data.msg);
     }
   };
 

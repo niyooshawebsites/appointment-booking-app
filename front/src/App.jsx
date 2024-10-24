@@ -14,6 +14,7 @@ import GlobalStore from "./store/GlobalStore";
 import { Provider } from "react-redux";
 import ProtectedContent from "./components/ProtectedContent";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const App = () => {
   const [serviceProvider, setServiceProvider] = useState(false);
@@ -36,12 +37,17 @@ const App = () => {
   }
 
   const checkUser = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
-      .then((res) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/checkUser/${username}`
+      );
+
+      if (res.data.success) {
         setServiceProvider(res.data.success);
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {

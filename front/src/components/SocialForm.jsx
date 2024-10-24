@@ -26,24 +26,19 @@ const SocialForm = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      await axios
-        .patch(
-          `http://localhost:8000/api/v1/update-social-profiles`,
-          socialProfiles,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          console.log(res);
-          toast("Social profile updated successfully");
-        })
-        .catch((err) => {
-          console.log(err);
-          toast("Social profile updatedation failed");
-        });
+      const res = await axios.patch(
+        `http://localhost:8000/api/v1/update-social-profiles`,
+        socialProfiles,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 

@@ -6,6 +6,7 @@ import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice
 import axios from "axios";
 import Ticker from "../components/Ticker";
 import Unverified from "../components/Unverified";
+import { toast } from "react-toastify";
 
 const Appointment = ({ serviceProvider }) => {
   const { announcement, isVerified } = useSelector(
@@ -18,9 +19,12 @@ const Appointment = ({ serviceProvider }) => {
   const username = path.split("/")[1] || "abs";
 
   const checkUser = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
-      .then((res) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/checkUser/${username}`
+      );
+
+      if (res.data.success) {
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
@@ -35,8 +39,10 @@ const Appointment = ({ serviceProvider }) => {
             announcement: res.data.announcement,
           })
         );
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {

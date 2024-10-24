@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
 import Unverified from "../components/Unverified";
+import { toast } from "react-toastify";
 
 const About = () => {
   const { about, isVerified } = useSelector(
@@ -30,9 +31,12 @@ const About = () => {
   }
 
   const checkUser = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/checkUser/${username}`)
-      .then((res) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/checkUser/${username}`
+      );
+
+      if (res.data.success) {
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
@@ -44,10 +48,13 @@ const About = () => {
             services: res.data.services,
             contact: res.data.contact,
             socialProfiles: res.data.socialProfiles,
+            announcement: res.data.announcement,
           })
         );
-      })
-      .catch((err) => console.log(err));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {

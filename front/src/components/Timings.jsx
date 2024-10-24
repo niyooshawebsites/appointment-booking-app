@@ -67,13 +67,22 @@ const Timings = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", timings);
-    await axios
-      .put(`http://localhost:8000/api/v1/update-user-timings`, timings, {
-        withCredentials: true,
-      })
-      .then(() => toast.success("Timings updated successfully"))
-      .catch(() => toast.error("Timings updation failed"));
+
+    try {
+      const res = await axios.put(
+        `http://localhost:8000/api/v1/update-user-timings`,
+        timings,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   return (

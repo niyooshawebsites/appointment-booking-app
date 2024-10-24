@@ -453,12 +453,20 @@ const Highlights = () => {
 
   // USER APIS...
   const getTodayAppointmentsCountFilterByUsername = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/today-appointments-count/${userId}`, {
-        withCredentials: true,
-      })
-      .then((res) => setTodayAppointmentCountsByUsername(res.data.appointments))
-      .catch((err) => console.log(err));
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/today-appointments-count/${userId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setTodayAppointmentCountsByUsername(res.data.appointments);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   const getTotalAppointmentsCountFilterByUsername = async () => {

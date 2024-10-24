@@ -46,18 +46,19 @@ const Walkin = () => {
   const handleSubmit = async function (e) {
     e.preventDefault();
     // api for booking appointment
-    await axios
-      .post(
+    try {
+      const res = await axios.post(
         `http://localhost:8000/api/v1/book-appointment-by-login/${username}`,
         custDetails,
         { withCredentials: true }
-      )
-      .then((res) => {
-        toast.success("Appointment booked successfully!");
-      })
-      .catch((err) => {
-        toast.error("Appointment booking failed!");
-      });
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
 
     setCustDetails((prevDetails) => {
       return {
@@ -89,10 +90,17 @@ const Walkin = () => {
 
   // get all services by a particular username
   const getAllServicesByUsername = async () => {
-    await axios
-      .get(`http://localhost:8000/api/v1/get-services/${username}`)
-      .then((res) => setServices(res.data.services))
-      .catch((err) => console.log(err));
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-services/${username}`
+      );
+
+      if (res.data.success) {
+        setServices(res.data.services);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
   };
 
   useEffect(() => {
