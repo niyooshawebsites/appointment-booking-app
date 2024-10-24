@@ -9,7 +9,7 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import Pagination from "./Pagination";
 import { FaPrint } from "react-icons/fa";
-import { TbListDetails } from "react-icons/tb";
+import { TbListDetails, TbReceiptRupee } from "react-icons/tb";
 import {
   RxCheckCircled,
   RxCrossCircled,
@@ -125,13 +125,15 @@ const DisplayInfo = () => {
         showContact: false,
         showAppointmentDetails: true,
         showBookAppointment: false,
+        showLetterHead: false,
+        showInvoice: false,
         showQaulifications: false,
         showTimings: false,
       })
     );
   };
 
-  const handlePrint = async (appointmentId) => {
+  const printLetterHead = async (appointmentId) => {
     await getAParticularAppointmentDetails(appointmentId);
 
     dispatch(
@@ -145,6 +147,28 @@ const DisplayInfo = () => {
         showAppointmentDetails: false,
         showBookAppointment: false,
         showLetterHead: true,
+        showInvoice: false,
+        showQaulifications: false,
+        showTimings: false,
+      })
+    );
+  };
+
+  const printInvoice = async (appointmentId) => {
+    await getAParticularAppointmentDetails(appointmentId);
+
+    dispatch(
+      dashboardOptionsSliceActions.toggleDashboardOptions({
+        showHighlights: false,
+        showInfo: false,
+        showServices: false,
+        showProfile: false,
+        showAbout: false,
+        showContact: false,
+        showAppointmentDetails: false,
+        showBookAppointment: false,
+        showLetterHead: false,
+        showInvoice: true,
         showQaulifications: false,
         showTimings: false,
       })
@@ -340,12 +364,18 @@ const DisplayInfo = () => {
                         <TbListDetails />
                       </Link>
                     </td>
-                    <td className="py-2 px-4 text-gray-700">
+                    <td className="py-2 px-4 text-gray-700 flex">
                       <Link
-                        className="text-slate-800"
-                        onClick={() => handlePrint(appointment._id)}
+                        className="text-slate-800 mr-4 text-lg"
+                        onClick={() => printLetterHead(appointment._id)}
                       >
                         <FaPrint />
+                      </Link>
+                      <Link
+                        className="text-slate-800 text-xl"
+                        onClick={() => printInvoice(appointment._id)}
+                      >
+                        <TbReceiptRupee />
                       </Link>
                     </td>
                   </tr>

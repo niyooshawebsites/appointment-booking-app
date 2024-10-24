@@ -337,8 +337,6 @@ const updateContactDetailsController = async (req, res) => {
       pinCode,
     } = req.body;
 
-    console.log(req.body);
-
     // if all the details are not provided
     if (
       !name ||
@@ -1520,7 +1518,6 @@ const updateUserQualificationController = async (req, res) => {
 const updateUserTimingsController = async (req, res) => {
   try {
     const { days } = req.body;
-    console.log(days);
 
     if (!days) {
       return res.status(400).json({

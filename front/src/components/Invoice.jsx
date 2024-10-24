@@ -5,7 +5,7 @@ import axios from "axios";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import { toast } from "react-toastify";
 
-const LetterHead = () => {
+const Invoice = () => {
   const contentRef = useRef();
   const dispatch = useDispatch();
   const [serviceProviderDetails, setServiceProviderDetails] = useState(() => {
@@ -153,7 +153,11 @@ const LetterHead = () => {
           </header>
           <hr className="mb-3" />
           <p className="mt-3 text-center">
-            Date: {date} | Time: {time}
+            Date: {date} | Time: {time} | Invoice number: 7487852 | Payment
+            Mode: Online
+          </p>
+          <p className="mt-3 text-center">
+            Patient ID: 7845215232 | Appointment ID: 87545455
           </p>
           <section>
             <h1 className="mt-3 text-center text-2xl underline">
@@ -210,10 +214,50 @@ const LetterHead = () => {
             </div>
           </section>
           <section>
-            <h1 className="mt-3 text-center text-2xl underline">
-              Prescription
-            </h1>
+            <h1 className="mt-3 text-center text-2xl underline">BILL</h1>
             <div className="h-96 w-full"></div>
+            <table className="mt-5 w-full">
+              <thead>
+                <tr className="border border-slate-400">
+                  <th className="border border-slate-400 py-2">Particulars</th>
+                  <th className="border border-slate-400 py-2">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border">
+                  <td className="border border-slate-400 py-2 text-center">
+                    Service
+                  </td>
+                  <td className="border border-slate-400 py-2 text-center">
+                    500
+                  </td>
+                </tr>
+                <tr className="border">
+                  <td className="border border-slate-400 py-2 text-center">
+                    CGST - 9%
+                  </td>
+                  <td className="border border-slate-400 py-2 text-center">
+                    45
+                  </td>
+                </tr>
+                <tr className="border">
+                  <td className="border border-slate-400 py-2 text-center">
+                    SGST - 9%
+                  </td>
+                  <td className="border border-slate-400 py-2 text-center">
+                    45
+                  </td>
+                </tr>
+                <tr className="border">
+                  <td className="border border-slate-400 py-2 text-center">
+                    Total
+                  </td>
+                  <td className="border border-slate-400 py-2 text-center">
+                    590
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </section>
         </div>
 
@@ -253,6 +297,6 @@ const LetterHead = () => {
 };
 
 // Assign a display name to avoid the warning
-LetterHead.displayName = "LetterHead";
+Invoice.displayName = "Invoice";
 
-export default LetterHead;
+export default Invoice;

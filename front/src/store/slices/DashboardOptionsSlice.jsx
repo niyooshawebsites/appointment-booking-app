@@ -13,6 +13,7 @@ const dashboardOptionsSlice = createSlice({
     showAppointmentDetails: false,
     showBookAppointment: false,
     loginBooking: false,
+    showInvoice: false,
     showLetterHead: false,
     showQaulifications: false,
     showTimings: false,
@@ -30,6 +31,7 @@ const dashboardOptionsSlice = createSlice({
       state.showBookAppointment = action.payload.showBookAppointment;
       state.loginBooking = action.payload.loginBooking;
       state.showLetterHead = action.payload.showLetterHead;
+      state.showInvoice = action.payload.showInvoice;
       state.showQaulifications = action.payload.showQaulifications;
       state.showTimings = action.payload.showTimings;
     },

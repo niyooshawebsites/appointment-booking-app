@@ -90,6 +90,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: false,
                   showTimings: false,
                 })
@@ -112,6 +113,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: false,
                   showTimings: false,
                 })
@@ -147,6 +149,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: false,
                   showTimings: false,
                 })
@@ -169,6 +172,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: false,
                   showTimings: false,
                 })
@@ -191,6 +195,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: true,
                   showTimings: false,
                 })
@@ -213,6 +218,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: false,
                   showTimings: true,
                 })
@@ -235,6 +241,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: false,
                   showTimings: false,
                 })
@@ -257,6 +264,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: false,
                   showTimings: false,
                 })
@@ -280,6 +288,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: false,
                   showTimings: false,
                 })
@@ -315,6 +324,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: false,
                   showTimings: false,
                 })
@@ -340,6 +350,7 @@ const Sidebar = () => {
                     showBookAppointment: true,
                     showLetterHead: false,
                     loginBooking: false,
+                    showInvoice: false,
                     showQaulifications: false,
                     showTimings: false,
                   })
@@ -370,6 +381,7 @@ const Sidebar = () => {
                     showAppointmentDetails: false,
                     showBookAppointment: true,
                     showLetterHead: false,
+                    showInvoice: false,
                     loginBooking: true,
                     showQaulifications: false,
                     showTimings: false,
@@ -396,6 +408,7 @@ const Sidebar = () => {
                   showAppointmentDetails: false,
                   showBookAppointment: false,
                   showLetterHead: false,
+                  showInvoice: false,
                   showQaulifications: false,
                   showTimings: false,
                 })

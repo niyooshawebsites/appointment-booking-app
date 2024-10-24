@@ -29,6 +29,7 @@ const Dashboard = () => {
     showBookAppointment,
     loginBooking,
     showLetterHead,
+    showInvoice,
     showQaulifications,
     showTimings,
   } = useSelector((state) => state.dashboard_Options_Slice);
@@ -142,6 +143,19 @@ const Dashboard = () => {
   }
 
   if (showLetterHead) {
+    return (
+      <Layout>
+        <div className="w-full h-screen flex bg-gray-100">
+          <Sidebar />
+          <LetterHead />
+          <Announcement />
+          <Walkin />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (showInvoice) {
     return (
       <Layout>
         <div className="w-full h-screen flex bg-gray-100">

@@ -209,6 +209,7 @@ const TodayData = () => {
                                   showAppointmentDetails: true,
                                   showBookAppointment: false,
                                   showLetterHead: false,
+                                  showInvoice: false,
                                   showQaulifications: false,
                                   showTimings: false,
                                 }

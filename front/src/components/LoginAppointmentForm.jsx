@@ -212,6 +212,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
         showAppointmentDetails: false,
         showBookAppointment: true,
         showLetterHead: false,
+        showInvoice: false,
         showQaulifications: false,
         showTimings: false,
       })

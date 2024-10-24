@@ -212,7 +212,6 @@ const bookAppointmnentController = async (req, res) => {
       msg: "Appointment booked successfully",
     });
   } catch (err) {
-    console.error("Error occurred:", err);
     return res.status(500).json({
       success: false,
       msg: "Internal Server Error",
@@ -427,7 +426,6 @@ const bookAppointmnentByLoginController = async (req, res) => {
       msg: "Appointment booked successfully",
     });
   } catch (err) {
-    console.error("Error occurred:", err);
     return res.status(500).json({
       success: false,
       msg: "Internal Server Error",
@@ -541,8 +539,6 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
       .limit(limit)
       .sort({ date: -1, time: -1 })
       .populate("user");
-
-    console.log(filteredAppointments);
 
     // Filter appointments by username
     const appointments = filteredAppointments.filter(
@@ -729,8 +725,6 @@ const checkAppointmentAvailability = async (req, res) => {
 
     const user = await User.findOne({ username });
 
-    console.log(user);
-
     if (!user) {
       return res.status(204).json({
         success: false,
@@ -739,8 +733,6 @@ const checkAppointmentAvailability = async (req, res) => {
     }
 
     const appointments = await Appointment.find({ user: user._id, date, time });
-
-    console.log(appointments);
 
     if (appointments.length > 0) {
       return res.status(200).json({

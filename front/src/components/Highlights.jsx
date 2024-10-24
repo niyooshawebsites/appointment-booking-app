@@ -144,6 +144,7 @@ const Highlights = () => {
             showAppointmentDetails: false,
             showBookAppointment: false,
             showLetterHead: false,
+            showInvoice: false,
             showQaulifications: false,
             showTimings: false,
           })
@@ -189,6 +190,7 @@ const Highlights = () => {
             showAppointmentDetails: false,
             showBookAppointment: false,
             showLetterHead: false,
+            showInvoice: false,
             showQaulifications: false,
             showTimings: false,
           })
@@ -234,6 +236,7 @@ const Highlights = () => {
             showAppointmentDetails: false,
             showBookAppointment: false,
             showLetterHead: false,
+            showInvoice: false,
             showQaulifications: false,
             showTimings: false,
           })
@@ -351,6 +354,7 @@ const Highlights = () => {
             showAppointmentDetails: false,
             showBookAppointment: false,
             showLetterHead: false,
+            showInvoice: false,
             showQaulifications: false,
             showTimings: false,
           })
@@ -396,6 +400,7 @@ const Highlights = () => {
             showAppointmentDetails: false,
             showBookAppointment: false,
             showLetterHead: false,
+            showInvoice: false,
             showQaulifications: false,
             showTimings: false,
           })
@@ -441,6 +446,7 @@ const Highlights = () => {
             showAppointmentDetails: false,
             showBookAppointment: false,
             showLetterHead: false,
+            showInvoice: false,
             showQaulifications: false,
             showTimings: false,
           })
@@ -522,6 +528,7 @@ const Highlights = () => {
             showAppointmentDetails: false,
             showBookAppointment: false,
             showLetterHead: false,
+            showInvoice: false,
             showQaulifications: false,
             showTimings: false,
           })
@@ -568,6 +575,7 @@ const Highlights = () => {
             showAppointmentDetails: false,
             showBookAppointment: false,
             showLetterHead: false,
+            showInvoice: false,
             showQaulifications: false,
             showTimings: false,
           })
@@ -632,6 +640,7 @@ const Highlights = () => {
             showAppointmentDetails: false,
             showBookAppointment: false,
             showLetterHead: false,
+            showInvoice: false,
             showQaulifications: false,
             showTimings: false,
           })
