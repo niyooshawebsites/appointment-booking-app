@@ -1373,7 +1373,6 @@ const updateClientDetailsController = async (req, res) => {
         lastName,
         email,
         contactNo,
-        age,
         gender,
         address,
         city,

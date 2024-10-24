@@ -397,6 +397,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
       state,
       pinCode,
       paymentMethod,
+      transactionID,
       user: user._id,
     });
 

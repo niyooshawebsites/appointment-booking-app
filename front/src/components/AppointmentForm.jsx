@@ -14,6 +14,9 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import OnlinePayment from "./OnlinePayment";
 
 const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
+  const path = window.location.pathname;
+  let username = path.split("/")[1];
+
   const { userId } = useSelector((state) => state.user_Slice);
   const { specialization, usersBySpecialization } = useSelector(
     (state) => state.specialization_Slice
@@ -22,16 +25,13 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const [activateTID, setActivateTID] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const path = window.location.pathname;
-  let username = path.split("/")[1];
-
   const dispatch = useDispatch();
   const [services, setServices] = useState([]);
 
   const [custDetails, setCustDetails] = useState(() => {
     return {
       role: "0",
-      specialization: "Patient",
+      specialization: "N/A",
       service: "",
       date: "",
       time: "",
@@ -154,6 +154,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
 
   const handleSubmit = async function (e) {
     e.preventDefault();
+
     try {
       // account creation for the first time...
       const res = await axios.post("http://localhost:8000/api/v1/register", {
@@ -206,7 +207,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       }
     } catch (err) {
       toast.error(err.response.data.msg);
-      toast.error("Please login to complete booking");
+      toast.error("Please login for booking");
     }
   };
 

@@ -1,14 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
 import { walkinSliceActions } from "../store/slices/WalkinSlice";
+import { onlinePaymentSliceActions } from "../store/slices/OnlinePyamentSlice";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import OnlinePayment from "./OnlinePayment";
 
 const Walkin = () => {
   const { showWalkinModal } = useSelector((state) => state.walkin_Slice);
   const [services, setServices] = useState([]);
   const { username } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
+  const [activateTID, setActivateTID] = useState(false);
 
   const [custDetails, setCustDetails] = useState(() => {
     return {
@@ -26,6 +29,8 @@ const Walkin = () => {
       state: "",
       pinCode: "",
       paymentMethod: "",
+      transactionID: "",
+      localPay: "N/A",
       serviceProvider: username,
     };
   });
@@ -34,6 +39,20 @@ const Walkin = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name == "paymentMethod" && value == "Pay online") {
+      setActivateTID(true);
+
+      dispatch(
+        onlinePaymentSliceActions.changeOnlinePaymentStatus({
+          payOnline: true,
+        })
+      );
+    }
+
+    if (name == "paymentMethod" && value == "Pay locally") {
+      setActivateTID(false);
+    }
 
     setCustDetails((prevDetails) => {
       return {
@@ -77,6 +96,8 @@ const Walkin = () => {
         state: "",
         pinCode: "",
         paymentMethod: "",
+        transactionID: "",
+        localPay: "N/A",
         serviceProvider: username,
       };
     });
@@ -339,31 +360,53 @@ const Walkin = () => {
                 <h2 className="text-lg font-semibold mb-2 text-pink-600">
                   Payment Details
                 </h2>
-                <div>
-                  <select
-                    name="paymentMethod"
-                    id="paymentMethod"
-                    value={custDetails.paymentMethod}
-                    onChange={handleChange}
-                    required
-                    className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
-                  >
-                    <option value="Select payment method">
-                      Select payment method
-                    </option>
-                    <option
-                      value="Pay locally"
-                      onClick={() => setPayOnline(false)}
+                <div className="flex justify-between align-middle ">
+                  <div className="w-6/12 pr-1">
+                    <select
+                      name="paymentMethod"
+                      id="paymentMethod"
+                      value={custDetails.paymentMethod}
+                      onChange={handleChange}
+                      required
+                      className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
                     >
-                      Pay locally
-                    </option>
-                    <option
-                      value="Pay online"
-                      onClick={() => setPayOnline(true)}
-                    >
-                      Pay online
-                    </option>
-                  </select>
+                      <option value="Select payment method">
+                        Select payment method
+                      </option>
+                      <option
+                        value="Pay locally"
+                        onClick={() => setPayOnline(false)}
+                      >
+                        Pay locally
+                      </option>
+                      <option
+                        value="Pay online"
+                        onClick={() => setPayOnline(true)}
+                      >
+                        Pay online
+                      </option>
+                    </select>
+                  </div>
+
+                  <div className="w-6/12 pl-1">
+                    <div className="m-1">
+                      <input
+                        id="transactionID"
+                        name="transactionID"
+                        type="text"
+                        autoComplete="on"
+                        value={
+                          activateTID
+                            ? custDetails.transactionID
+                            : custDetails.localPay
+                        }
+                        onChange={handleChange}
+                        placeholder="Online Payment - Enter Transtaction ID"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                        required
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -383,13 +426,14 @@ const Walkin = () => {
                 </button>
                 <button
                   type="submit"
-                  className="rounded-md bg-pink-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="rounded-md bg-pink-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
                 >
-                  {payOnline ? "Pay & Book Appointment" : "Book Appointment"}
+                  Book Appointment
                 </button>
               </div>
             </div>
           </form>
+          <OnlinePayment />
         </div>
       </div>
     );

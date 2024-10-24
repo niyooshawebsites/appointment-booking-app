@@ -1,4 +1,4 @@
-import QR from "../images/dummyQR.png";
+import QR from "../images/QR/dummyQR.png";
 import { onlinePaymentSliceActions } from "../store/slices/OnlinePyamentSlice";
 import { useDispatch, useSelector } from "react-redux";
 
