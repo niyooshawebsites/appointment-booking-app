@@ -68,6 +68,7 @@ const Header = () => {
             showAppointmentDetails: false,
             showBookAppointment: false,
             showLetterHead: false,
+            showInvoice: false,
             showQaulifications: false,
             showTimings: false,
           })
