@@ -30,7 +30,7 @@ const Header = () => {
     user = "abs";
   }
 
-  const { username, role, authenticated } = useSelector(
+  const { username, role, authenticated, isAdmin } = useSelector(
     (state) => state.user_Slice
   );
 
@@ -166,20 +166,26 @@ const Header = () => {
                           </Link>
                         </NavLink>
 
-                        <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
-                          <Link
-                            className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
-                            onClick={() => {
-                              dispatch(
-                                walkinSliceActions.changeWalkinStatus({
-                                  showWalkinModal: true,
-                                })
-                              );
-                            }}
-                          >
-                            Capture Walkins
-                          </Link>
-                        </NavLink>
+                        {/* only available for service providers */}
+
+                        {!isAdmin ? (
+                          <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                            <Link
+                              className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
+                              onClick={() => {
+                                dispatch(
+                                  walkinSliceActions.changeWalkinStatus({
+                                    showWalkinModal: true,
+                                  })
+                                );
+                              }}
+                            >
+                              Capture Walkins
+                            </Link>
+                          </NavLink>
+                        ) : (
+                          ""
+                        )}
                       </>
                     ) : (
                       ""
@@ -245,7 +251,7 @@ const Header = () => {
       </div>
 
       {/* Mobile menu, show/hide based on menu state. */}
-      <div className="sm:hidden" id="mobile-menu">
+      {/* <div className="sm:hidden" id="mobile-menu">
         <div className="space-y-1 px-2 pb-3 pt-2">
           {authenticated ? (
             <>
@@ -337,7 +343,7 @@ const Header = () => {
             </>
           )}
         </div>
-      </div>
+      </div> */}
     </nav>
   );
 };
