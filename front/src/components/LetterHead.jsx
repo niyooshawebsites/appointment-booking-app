@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 const LetterHead = () => {
   const contentRef = useRef();
   const dispatch = useDispatch();
+  // const [clientID, setClientID] = useState("");
   const [serviceProviderDetails, setServiceProviderDetails] = useState(() => {
     return {
       businessName: "",
@@ -28,7 +29,10 @@ const LetterHead = () => {
   });
 
   const reactToPrintFn = useReactToPrint({ contentRef });
+
   const {
+    appointmentID,
+    patientID,
     service,
     date,
     time,
@@ -80,6 +84,22 @@ const LetterHead = () => {
       toast.error(err.response.data.msg);
     }
   };
+
+  // // get a particular client for printing by email
+  // const getAParticularClientForPrinting = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `http://localhost:8000/api/v1/get-particular-user-by-email/${email}`,
+  //       { withCredentials: true }
+  //     );
+
+  //     if (res.data.success) {
+  //       setClientID(res.data.userID);
+  //     }
+  //   } catch (err) {
+  //     toast.error(err.response.data.msg);
+  //   }
+  // };
 
   // go back function
   const goback = () => {
@@ -153,7 +173,7 @@ const LetterHead = () => {
           </header>
           <hr className="mb-3" />
           <p className="mt-3 text-center">
-            Date: {date} | Time: {time}
+            Date: {date} | Time: {time} | Appointment ID: {appointmentID}
           </p>
           <section>
             <h1 className="mt-3 text-center text-2xl underline">
@@ -162,6 +182,7 @@ const LetterHead = () => {
             <table className="mt-5 w-full">
               <thead>
                 <tr className="border border-slate-400">
+                  <th className="border border-slate-400 py-2">Patient ID</th>
                   <th className="border border-slate-400 py-2">Name</th>
                   <th className="border border-slate-400 py-2">Age</th>
                   <th className="border border-slate-400 py-2">Gender</th>
@@ -173,6 +194,9 @@ const LetterHead = () => {
               </thead>
               <tbody>
                 <tr className="border">
+                  <td className="border border-slate-400 py-2 text-center">
+                    {patientID}
+                  </td>
                   <td className="border border-slate-400 py-2 text-center">
                     {`${firstName} ${lastName}`}
                   </td>
@@ -201,11 +225,6 @@ const LetterHead = () => {
               <span>
                 <span className="font-bold">Service: </span>
                 {service}
-              </span>
-              &nbsp;
-              <span>
-                <span className="font-bold">Payment: </span>
-                {paymentMethod}
               </span>
             </div>
           </section>

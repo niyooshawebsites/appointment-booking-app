@@ -36,7 +36,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       fee: "",
       date: "",
       time: "",
-      username: "",
+      patientUsername: "",
       password: "",
       firstName: "",
       lastName: "",
@@ -172,7 +172,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
         // book apponitment only when account creation succeeds....
         const response = await axios.post(
           `http://localhost:8000/api/v1/book-appointment/${username}`,
-          { ...custDetails, fee: custDetails.service.split("-")[1].slice(1) }
+          { ...custDetails, fee: custDetails.service.split("-")[1].slice(4) }
         );
 
         // appointment booking is successful
@@ -188,7 +188,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
             fee: "",
             date: "",
             time: "",
-            username: "",
+            patientUsername: "",
             password: "",
             firstName: "",
             lastName: "",
@@ -388,7 +388,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       {services.map((service) => {
                         return (
                           <option
-                            value={service.serviceName}
+                            value={`${service.serviceName} - Rs ${service.fee}`}
                             key={service.serviceId}
                           >
                             {`${service.serviceName} - Rs ${service.fee}`}
@@ -433,7 +433,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                 </div>
 
                 <Link
-                  className="text-white text-center bg-pink-600 hover:bg-pink-700 py-1 px-3 rounded w-full"
+                  className="text-white text-center bg-green-600 hover:bg-green-700 py-1 px-3 rounded w-full"
                   onClick={checkAvailability}
                 >
                   Check Availability
@@ -667,10 +667,10 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                 <div className="sm:col-span-3">
                   <div className="mt-2">
                     <input
-                      name="username"
+                      name="patientUsername"
                       type="text"
                       autoComplete="on"
-                      value={custDetails.username}
+                      value={custDetails.patientUsername}
                       onChange={handleChange}
                       placeholder="username"
                       required

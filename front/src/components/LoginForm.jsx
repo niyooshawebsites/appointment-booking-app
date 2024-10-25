@@ -94,6 +94,7 @@ const LoginForm = () => {
         dispatch(
           userSliceActions.captureLoginUserDetails({
             username: res.data.username,
+            userID: res.data.userID,
             authenticated: res.data.success,
             role: res.data.role,
             isAdmin: res.data.isAdmin,

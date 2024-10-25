@@ -30,7 +30,9 @@ const Header = () => {
     user = "abs";
   }
 
-  const { username, role, authenticated, isAdmin } = useSelector(
+  let myID;
+
+  const { username, role, authenticated, isAdmin, userID } = useSelector(
     (state) => state.user_Slice
   );
 
@@ -80,6 +82,18 @@ const Header = () => {
       toast.error(err.response.data.msg);
     }
   };
+
+  if (isAdmin && role == 1) {
+    myID = "";
+  }
+
+  if (isAdmin == false && role == 1) {
+    myID = `Doctor ID: ${userID}`;
+  }
+
+  if (isAdmin == false && role == 0) {
+    myID = `Patient ID: ${userID}`;
+  }
 
   return (
     <nav className="bg-indigo-900">
@@ -192,6 +206,9 @@ const Header = () => {
                       ""
                     )}
 
+                    <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                      {myID}
+                    </NavLink>
                     <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
                       <FaRegSmile /> &nbsp; Hello, {username}
                     </NavLink>

@@ -14,6 +14,7 @@ const bookAppointmnentController = async (req, res) => {
       fee,
       date,
       time,
+      patientUsername,
       firstName,
       lastName,
       email,
@@ -58,6 +59,14 @@ const bookAppointmnentController = async (req, res) => {
       return res.status(401).json({
         succss: false,
         msg: "Please select the time",
+      });
+    }
+
+    // if time is not selected
+    if (!patientUsername) {
+      return res.status(401).json({
+        succss: false,
+        msg: "Please provide Patient username",
       });
     }
 
@@ -174,12 +183,28 @@ const bookAppointmnentController = async (req, res) => {
       });
     }
 
+    // get patient details
+    const client = await User.findOne({ username: patientUsername });
+
+    if (!client) {
+      return res.status(404).json({
+        success: false,
+        msg: "Client not found",
+      });
+    }
+
+    const clientID = client.userID;
+
     // if all the information is provided
     const existingCustomer = new Appointment({
-      service,
+      appointmentID: generateUniqueID(8),
+      service: service.split(" ")[0],
+      invoiceID: generateUniqueID(8),
+      patientID: clientID,
       fee,
       date,
       time,
+      paitentUsername,
       firstName,
       lastName,
       email,
@@ -192,7 +217,6 @@ const bookAppointmnentController = async (req, res) => {
       pinCode,
       paymentMethod,
       transactionID,
-      appointmentID: generateUniqueID(8),
       user: user._id,
     });
 
@@ -399,9 +423,23 @@ const bookAppointmnentByLoginController = async (req, res) => {
       });
     }
 
+    const client = await User.findOne({ username: req.user.username });
+
+    if (!client) {
+      return res.status(404).json({
+        success: false,
+        msg: "Client not found",
+      });
+    }
+
+    const clientID = client.userID;
+
     // if all the information is provided
     const existingCustomer = new Appointment({
-      service,
+      appointmentID: generateUniqueID(8),
+      service: service.split(" ")[0],
+      invoiceID: generateUniqueID(8),
+      patientID: clientID,
       fee,
       date,
       time,
@@ -446,6 +484,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
       msg: "Appointment booked successfully",
     });
   } catch (err) {
+    console.log(err.message);
     return res.status(500).json({
       success: false,
       msg: "Internal Server Error",

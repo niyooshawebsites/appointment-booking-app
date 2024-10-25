@@ -184,6 +184,7 @@ const loginController = async (req, res) => {
         success: true,
         msg: "Login successful!",
         username: registeredUser.username,
+        userID: registeredUser.userID,
         isVerified: registeredUser.isVerified,
         role: registeredUser.role,
         email: registeredUser.email,
@@ -1465,6 +1466,7 @@ const getUserDetailsForPrintController = async (req, res) => {
         district: user.district,
         state: user.state,
         pinCode: user.pinCode,
+        gst: user.gst,
       },
     });
   } catch (err) {

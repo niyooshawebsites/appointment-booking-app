@@ -3,6 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const appointmentSlice = createSlice({
   name: "appointment_Slice",
   initialState: {
+    appointmentID: "",
+    invoiceID: "",
+    patientID: "",
+    fee: "",
     username: "",
     service: "",
     date: "",
@@ -21,6 +25,10 @@ const appointmentSlice = createSlice({
   },
   reducers: {
     appointmentDetails: (state, action) => {
+      state.appointmentID = action.payload.appointmentID;
+      state.invoiceID = action.payload.invoiceID;
+      state.patientID = action.payload.patientID;
+      state.fee = action.payload.fee;
       state.username = action.payload.username;
       state.service = action.payload.service;
       state.date = action.payload.date;

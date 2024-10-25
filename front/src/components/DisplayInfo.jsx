@@ -68,6 +68,10 @@ const DisplayInfo = () => {
       if (res.data.success) {
         dispatch(
           appointmentSliceActions.appointmentDetails({
+            appointmentID: res.data.appointment.appointmentID,
+            invoiceID: res.data.appointment.invoiceID,
+            patientID: res.data.appointment.patientID,
+            fee: res.data.appointment.fee,
             service: res.data.appointment.service,
             date: res.data.appointment.date,
             time: res.data.appointment.time,
@@ -296,7 +300,7 @@ const DisplayInfo = () => {
           autoComplete="on"
           value={searchAppointment}
           onChange={filterAppointments}
-          placeholder="Search user using business name or email..."
+          placeholder="Search patients via Appointment ID or Patient ID or Patient name"
           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 mt-5"
         />
 
@@ -304,6 +308,8 @@ const DisplayInfo = () => {
           <thead className="bg-pink-600 text-white border-b border-gray-300">
             <tr>
               <th className="py-2 px-4 text-left">#</th>
+              <th className="py-2 px-4 text-left">App ID</th>
+              <th className="py-2 px-4 text-left">Patient ID</th>
               <th className="py-2 px-4 text-left">Name</th>
               <th className="py-2 px-4 text-left">Age</th>
               <th className="py-2 px-4 text-left">Contact</th>
@@ -320,10 +326,15 @@ const DisplayInfo = () => {
             {allAppointments
               .filter(
                 (appointment) =>
-                  appointment.firstName
+                  appointment.appointmentID
                     .toLowerCase()
                     .includes(searchAppointment) ||
-                  appointment.service.toLowerCase().includes(searchAppointment)
+                  appointment.patientID
+                    .toLowerCase()
+                    .includes(searchAppointment) ||
+                  appointment.firstName
+                    .toLowerCase()
+                    .includes(searchAppointment)
               )
               .map((appointment, index) => {
                 return (
@@ -332,6 +343,12 @@ const DisplayInfo = () => {
                     className="odd:bg-gray-200 even:bg-white"
                   >
                     <td className="py-2 px-4 text-gray-700">{index + 1}</td>
+                    <td className="py-2 px-4 text-gray-700">
+                      {appointment.appointmentID}
+                    </td>
+                    <td className="py-2 px-4 text-gray-700">
+                      {appointment.patientID}
+                    </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.firstName}
                     </td>
@@ -412,6 +429,7 @@ const DisplayInfo = () => {
           <thead className="bg-pink-600 text-white border-b border-gray-300">
             <tr>
               <th className="py-2 px-4 text-left">#</th>
+              <th className="py-2 px-4 text-left">App ID</th>
               <th className="py-2 px-4 text-left">Doctor</th>
               <th className="py-2 px-4 text-left">Clinic</th>
               <th className="py-2 px-4 text-left">Service</th>
@@ -425,15 +443,23 @@ const DisplayInfo = () => {
             {allAppointments
               .filter(
                 (appointment) =>
-                  appointment.firstName
+                  appointment.appointmentID
                     .toLowerCase()
                     .includes(searchAppointment) ||
-                  appointment.service.toLowerCase().includes(searchAppointment)
+                  appointment.user.name
+                    .toLowerCase()
+                    .includes(searchAppointment) ||
+                  appointment.user.businessName
+                    .toLowerCase()
+                    .includes(searchAppointment)
               )
               .map((appointment, index) => {
                 return (
                   <tr key={appointment._id}>
                     <td className="py-2 px-4 text-gray-700">{index + 1}</td>
+                    <td className="py-2 px-4 text-gray-700">
+                      {appointment.appointmentID}
+                    </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.user.name}
                     </td>

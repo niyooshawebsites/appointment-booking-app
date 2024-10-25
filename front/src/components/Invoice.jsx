@@ -6,6 +6,9 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 import { toast } from "react-toastify";
 
 const Invoice = () => {
+  const CGSTRate = 0.09;
+  const SGSTRate = 0.09;
+
   const contentRef = useRef();
   const dispatch = useDispatch();
   const [serviceProviderDetails, setServiceProviderDetails] = useState(() => {
@@ -24,12 +27,18 @@ const Invoice = () => {
       district: "",
       state: "",
       pinCode: "",
+      gst: "",
     };
   });
 
   const reactToPrintFn = useReactToPrint({ contentRef });
 
+  // Patient and apponitment details
   const {
+    appointmentID,
+    patientID,
+    invoiceID,
+    fee,
     service,
     date,
     time,
@@ -74,6 +83,7 @@ const Invoice = () => {
             district: res.data.user.district,
             state: res.data.user.state,
             pinCode: res.data.user.pinCode,
+            gst: res.data.user.gst,
           };
         });
       }
@@ -81,6 +91,10 @@ const Invoice = () => {
       toast.error(err.response.data.msg);
     }
   };
+
+  const taxableAmount = Math.round(parseInt(fee) / (1 + CGSTRate + SGSTRate));
+  const CGST = Math.round(taxableAmount * CGSTRate);
+  const SGST = Math.round(taxableAmount * SGSTRate);
 
   // go back function
   const goback = () => {
@@ -163,11 +177,12 @@ const Invoice = () => {
           <section>
             <h1 className="mt-3 text-center text-2xl underline">INVOICE</h1>
             <p className="mt-3 text-center">
-              Date: {date} | Time: {time} | Invoice number: 7487852 | Payment
-              Mode: Online
+              Date: {date.split("-").reverse().join("-")} | Time: {time} | GST:
+              {serviceProviderDetails.gst} | Payment Mode: Online
             </p>
             <p className="mt-3 text-center">
-              Patient ID: 7845215232 | Appointment ID: 87545455
+              Patient ID: {patientID} | Appointment ID: {appointmentID} |
+              Invoice number: {invoiceID}
             </p>
           </section>
 
@@ -243,7 +258,7 @@ const Invoice = () => {
                     {service}
                   </td>
                   <td className="border border-slate-400 py-2 text-center">
-                    500
+                    {taxableAmount}
                   </td>
                 </tr>
                 <tr className="border">
@@ -251,7 +266,7 @@ const Invoice = () => {
                     CGST - 9%
                   </td>
                   <td className="border border-slate-400 py-2 text-center">
-                    45
+                    {CGST}
                   </td>
                 </tr>
                 <tr className="border">
@@ -259,7 +274,7 @@ const Invoice = () => {
                     SGST - 9%
                   </td>
                   <td className="border border-slate-400 py-2 text-center">
-                    45
+                    {SGST}
                   </td>
                 </tr>
                 <tr className="border">
@@ -267,7 +282,7 @@ const Invoice = () => {
                     Total
                   </td>
                   <td className="border border-slate-400 py-2 text-center">
-                    590
+                    {taxableAmount + CGST + SGST}
                   </td>
                 </tr>
               </tbody>

@@ -8,6 +8,18 @@ const appointmentSchema = new mongoose.Schema(
       unique: true,
       default: "N/A",
     },
+    invoiceID: {
+      type: String,
+      required: true,
+      unique: true,
+      default: "N/A",
+    },
+    patientID: {
+      type: String,
+      required: true,
+      unique: true,
+      default: "N/A",
+    },
     service: {
       type: String,
       required: true,

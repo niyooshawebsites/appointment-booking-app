@@ -218,6 +218,9 @@ const TodayData = () => {
 
                             dispatch(
                               appointmentSliceActions.appointmentDetails({
+                                appointmentID: appointment.appointmentID,
+                                invoiceID: appointment.invoiceID,
+                                fee: appointment.fee,
                                 service: appointment.service,
                                 date: appointment.date,
                                 time: appointment.time,

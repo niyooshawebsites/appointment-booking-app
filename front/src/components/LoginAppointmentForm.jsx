@@ -69,11 +69,13 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
   const handleSubmit = async function (e) {
     e.preventDefault();
 
+    console.log(custDetails);
+
     try {
       // api for booking appointment...
       const res = await axios.post(
         `http://localhost:8000/api/v1/book-appointment-by-login/${username}`,
-        { ...custDetails, fee: custDetails.service.split("-")[1].slice(1) },
+        { ...custDetails, fee: custDetails.service.split("-")[1].slice(4) },
         { withCredentials: true }
       );
 
@@ -81,6 +83,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
         toast.success(res.data.msg);
       }
     } catch (err) {
+      console.log(err);
       toast.error(err.response.data.msg || "An unexpected error occurred");
     }
 
@@ -107,6 +110,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
         toast.success(res.data.msg);
       }
     } catch (err) {
+      console.log(err);
       toast.error(err.response.data.msg);
     }
 
@@ -245,7 +249,10 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                 >
                   <option value="">Select service</option>
                   {services.map((service) => (
-                    <option value={service.serviceName} key={service.serviceId}>
+                    <option
+                      value={`${service.serviceName} - Rs ${service.fee}`}
+                      key={service.serviceId}
+                    >
                       {`${service.serviceName} - Rs ${service.fee}`}
                     </option>
                   ))}
@@ -285,7 +292,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
             </div>
           </div>
           <Link
-            className="text-white text-center bg-pink-600 hover:bg-pink-700 py-1 px-3 rounded w-full"
+            className="text-white text-center bg-green-600 hover:bg-green-700 py-1 px-3 rounded w-full"
             onClick={checkAvailability}
           >
             Check Availability
