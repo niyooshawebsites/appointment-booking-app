@@ -50,6 +50,7 @@ const LoginForm = () => {
             username: username,
             businessName: res.data.contact.businessName,
             isVerified: res.data.isVerified,
+            timings: res.data.timings.days,
             about: res.data.about,
             email: res.data.email,
             contactNo: res.data.contactNo,

@@ -705,6 +705,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <Link
                         className="text-indigo-800"
+                        title="More details"
                         onClick={getAndPassAllUsers}
                       >
                         <TbListDetails />
@@ -721,6 +722,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <Link
                         className="text-indigo-800"
+                        title="More details"
                         onClick={getAndPassAllVerifiedUsers}
                       >
                         <TbListDetails />
@@ -737,6 +739,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <Link
                         className="text-indigo-800"
+                        title="More details"
                         onClick={getAndPassAllUnverifiedUsers}
                       >
                         <TbListDetails />
@@ -786,6 +789,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <Link
                         className="text-indigo-800"
+                        title="More details"
                         onClick={getAndPassTodayUsers}
                       >
                         <TbListDetails />
@@ -802,6 +806,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <Link
                         className="text-indigo-800"
+                        title="More details"
                         onClick={getAndPassTodayVerifiedUsers}
                       >
                         <TbListDetails />
@@ -818,6 +823,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <Link
                         className="text-indigo-800"
+                        title="More details"
                         onClick={getAndPassTodayUnverifiedUsers}
                       >
                         <TbListDetails />
@@ -874,6 +880,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b text-center">
                     <Link
                       className="text-indigo-500"
+                      title="More details"
                       onClick={getAndPassAllAppointmentsByUserId}
                     >
                       <TbListDetails />
@@ -904,6 +911,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <Link
                       className="text-indigo-500"
+                      title="More details"
                       onClick={getAndPassTodaysAppointmentsByUserId}
                     >
                       <TbListDetails />
@@ -929,6 +937,7 @@ const Highlights = () => {
           <div className="flex space-x-8 p-8 mx-auto w-6/12">
             {/* Column 1 */}
             <div className=" mx-auto">
+              <h2 className="text-xl mb-4 text-center">Your Appointments</h2>
               {/* <h2 className="text-xl font-bold mb-4">Total</h2> */}
               <table className="min-w-full bg-white border border-gray-200 shadow-md">
                 <thead className="bg-pink-600 text-white">
@@ -951,6 +960,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <Link
                         className="text-indigo-800"
+                        title="More details"
                         onClick={getAndAllPassApponitmentsForClient}
                       >
                         <TbListDetails />

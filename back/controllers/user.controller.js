@@ -8,7 +8,7 @@ const {
   forgotPasswordEmail,
 } = require("../utils/mail");
 
-const generateUniqueID = require("../utils/uniqueID");
+const generateUniqueUserID = require("../utils/uniqueID");
 
 // register controller...
 const registerController = async (req, res) => {
@@ -70,7 +70,7 @@ const registerController = async (req, res) => {
         username,
         email,
         password: await encryptPassword(password),
-        userID: generateUniqueID(8),
+        userID: await generateUniqueUserID(),
       }).save();
 
       // generate verification token

@@ -46,16 +46,32 @@ const Sidebar = () => {
       );
 
       if (res.data.success) {
+        // dispatch(
+        //   serviceProviderSliceActons.serviceProviderDetails({
+        //     username: username,
+        //     businessName: res.data.contact.businessName,
+        //     about: res.data.about,
+        //     email: res.data.email,
+        //     contactNo: res.data.contactNo,
+        //     services: res.data.services,
+        //     contact: res.data.contact,
+        //     socialProfiles: res.data.socialProfiles,
+        //   })
+        // );
+
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,
             businessName: res.data.contact.businessName,
+            isVerified: res.data.isVerified,
+            timings: res.data.timings.days,
             about: res.data.about,
             email: res.data.email,
             contactNo: res.data.contactNo,
             services: res.data.services,
             contact: res.data.contact,
             socialProfiles: res.data.socialProfiles,
+            announcement: res.data.announcement || "",
           })
         );
       }

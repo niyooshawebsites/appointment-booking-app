@@ -167,6 +167,7 @@ const Header = () => {
                         <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
                           <Link
                             className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
+                            title="New Announcement"
                             onClick={() => {
                               dispatch(
                                 announcementSliceActions.changeAnnouncementStatus(
@@ -187,6 +188,7 @@ const Header = () => {
                           <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
                             <Link
                               className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
+                              title="Register walkins"
                               onClick={() => {
                                 dispatch(
                                   walkinSliceActions.changeWalkinStatus({

@@ -260,6 +260,7 @@ const DisplayInfo = () => {
                             })
                           );
                         }}
+                        title="Delete"
                         className="text-red-500"
                       >
                         <RxCross2 />
@@ -269,6 +270,7 @@ const DisplayInfo = () => {
                       <Link
                         to={`http://localhost:5173/${user.username}`}
                         target="_blank"
+                        title="View Profile"
                         className="text-blue-500"
                       >
                         <RxLink2 />
@@ -376,6 +378,7 @@ const DisplayInfo = () => {
                     <td className="py-2 px-4 text-gray-700">
                       <Link
                         className="text-indigo-800"
+                        title="More details"
                         onClick={() => handleDetails(appointment._id)}
                       >
                         <TbListDetails />
@@ -384,12 +387,14 @@ const DisplayInfo = () => {
                     <td className="py-2 px-4 text-gray-700 flex">
                       <Link
                         className="text-slate-800 mr-4 text-lg"
+                        title="Letterhead"
                         onClick={() => printLetterHead(appointment._id)}
                       >
                         <FaPrint />
                       </Link>
                       <Link
                         className="text-slate-800 text-xl"
+                        title="Invoice"
                         onClick={() => printInvoice(appointment._id)}
                       >
                         <TbReceiptRupee />
@@ -482,6 +487,7 @@ const DisplayInfo = () => {
                       <Link
                         className="text-indigo-800"
                         to={`http://localhost:5173/${appointment.user.username}`}
+                        title="View Profile"
                         target="_blank"
                       >
                         <RxLink2 />
