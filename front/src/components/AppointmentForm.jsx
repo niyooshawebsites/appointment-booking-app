@@ -17,16 +17,20 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const path = window.location.pathname;
   let username = path.split("/")[1];
 
-  const { userId } = useSelector((state) => state.user_Slice);
-  const { specialization, usersBySpecialization } = useSelector(
-    (state) => state.specialization_Slice
-  );
+  // getting today's day
+  const getTodayDay = () => {
+    const today = new Date();
 
-  const [activateTID, setActivateTID] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+    // Get the year, month, and day
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    const day = String(today.getDate()).padStart(2, "0");
 
-  const dispatch = useDispatch();
-  const [services, setServices] = useState([]);
+    // Format to yyyy-mm-dd
+    const todayDate = `${year}-${month}-${day}`;
+
+    return new Date(todayDate).toLocaleDateString("en-US", { weekday: "long" });
+  };
 
   const [custDetails, setCustDetails] = useState(() => {
     return {
@@ -35,7 +39,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       service: "",
       fee: "",
       date: "",
-      time: "",
+      time: null,
       patientUsername: "",
       password: "",
       firstName: "",
@@ -52,8 +56,25 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       transactionID: "",
       localPay: "N/A",
       serviceProvider,
+      day: getTodayDay(),
+      timeOfDay: "",
     };
   });
+
+  const { userId } = useSelector((state) => state.user_Slice);
+  const { specialization, usersBySpecialization } = useSelector(
+    (state) => state.specialization_Slice
+  );
+
+  const { timings } = useSelector((state) => state.service_Provider_Slice);
+  const { morningFrom, morningTo, eveningFrom, eveningTo } =
+    timings[custDetails.day[0].toLowerCase() + custDetails.day.slice(1)];
+
+  const [activateTID, setActivateTID] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const dispatch = useDispatch();
+  const [services, setServices] = useState([]);
 
   const [isSpecializationChnaged, setIsSpecializationChnaged] = useState(false);
 
@@ -204,6 +225,8 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
             transactionID: "",
             localPay: "N/A",
             spUsername: username || "",
+            day: getTodayDay(),
+            timeOfDay: "",
           };
         });
       }
@@ -234,6 +257,21 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       toast.error(err.response.data.msg);
     }
   };
+
+  if (custDetails.timeOfDay == "morning") {
+    if (custDetails.time < morningFrom || custDetails.time > morningTo) {
+      alert(
+        `Please select the timings between ${morningFrom} and ${morningTo}`
+      );
+
+      setCustDetails((prevDetails) => {
+        return {
+          ...prevDetails,
+          ["time"]: null,
+        };
+      });
+    }
+  }
 
   // if the client is logged in
   if (customerDashboard) {
@@ -374,7 +412,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                 Appointment Details
               </h2>
               <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="col-span-full">
+                <div className="col-span-3">
                   <div className="mt-2">
                     <select
                       name="service"
@@ -395,6 +433,23 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                           </option>
                         );
                       })}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="col-span-3">
+                  <div className="mt-2">
+                    <select
+                      name="timeOfDay"
+                      id="timeOfDay"
+                      value={custDetails.timeOfDay}
+                      onChange={handleChange}
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    >
+                      <option value="No slection">Select service</option>
+                      <option value="morning">Morning</option>
+                      <option value="evening">Evening</option>
                     </select>
                   </div>
                 </div>
@@ -421,8 +476,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       type="time"
                       id="appt"
                       name="time"
-                      min="09:00"
-                      max="18:00"
                       placeholder="HH:MM"
                       value={custDetails.time}
                       onChange={handleChange}
@@ -431,7 +484,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                     />
                   </div>
                 </div>
-
                 <Link
                   className="text-white text-center bg-green-600 hover:bg-green-700 py-1 px-3 rounded w-full"
                   onClick={checkAvailability}

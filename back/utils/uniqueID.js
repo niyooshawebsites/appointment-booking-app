@@ -14,11 +14,17 @@ const generateUniqueID = (num) => {
 
 const generateUniqueAppointmentID = async (id) => {
   try {
-    const appointment = await Appointment.findOne();
-    const existingAppointmentID = appointment.appointmentID;
     const uniqueAppointmentID = generateUniqueID();
+    const appointment = await Appointment.findOne({
+      appointmentID: uniqueAppointmentID,
+    });
 
-    while (existingAppointmentID == uniqueAppointmentID) {
+    if (!appointment) {
+      return uniqueAppointmentID;
+    }
+
+    const existingAppointmentID = appointment.appointmentID;
+    while (uniqueAppointmentID == existingAppointmentID) {
       uniqueAppointmentID = generateUniqueID();
     }
 
@@ -51,12 +57,19 @@ const generateUniqueUserID = async () => {
 
 const generateUniqueInvoiceID = async (num) => {
   try {
-    const appointment = await Appointment.findOne();
-    const existingInvoiceID = appointment.invoiceID;
-    const uniqueInvoiceID = generateUniqueID();
+    let uniqueInvoiceID = generateUniqueID(8);
 
-    while (existingInvoiceID == uniqueInvoiceID) {
-      uniqueInvoiceID = generateUniqueID();
+    const appointment = await Appointment.findOne({
+      invoiceID: uniqueInvoiceID,
+    });
+
+    if (!appointment) {
+      return uniqueInvoiceID;
+    }
+
+    const existingInvoiceID = appointment.invoiceID;
+    while (uniqueInvoiceID == existingInvoiceID) {
+      uniqueInvoiceID = generateUniqueID(8);
     }
 
     return uniqueInvoiceID;
@@ -66,7 +79,6 @@ const generateUniqueInvoiceID = async (num) => {
 };
 
 module.exports = {
-  generateUniqueID,
   generateUniqueAppointmentID,
   generateUniqueUserID,
   generateUniqueInvoiceID,

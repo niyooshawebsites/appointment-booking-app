@@ -107,7 +107,6 @@ const Timings = () => {
                 value={timings.days[day].morningFrom}
                 onChange={(e) => handleInputChange(e, day, `morningFrom`)}
                 className="border border-gray-300 rounded-md p-1 text-sm"
-                required
               />
               <span className="text-xs text-center">to</span>
               <input
@@ -116,7 +115,6 @@ const Timings = () => {
                 value={timings.days[day].morningTo}
                 onChange={(e) => handleInputChange(e, day, `morningTo`)}
                 className="border border-gray-300 rounded-md p-1 text-sm"
-                required
               />
             </div>
 
@@ -128,7 +126,6 @@ const Timings = () => {
                 value={timings.days[day].eveningFrom}
                 onChange={(e) => handleInputChange(e, day, `eveningFrom`)}
                 className="border border-gray-300 rounded-md p-1 text-sm"
-                required
               />
               <span className="text-xs text-center">to</span>
               <input
@@ -137,7 +134,6 @@ const Timings = () => {
                 value={timings.days[day].eveningTo}
                 onChange={(e) => handleInputChange(e, day, `eveningTo`)}
                 className="border border-gray-300 rounded-md p-1 text-sm"
-                required
               />
             </div>
           </div>

@@ -8,7 +8,7 @@ const {
   forgotPasswordEmail,
 } = require("../utils/mail");
 
-const generateUniqueUserID = require("../utils/uniqueID");
+const { generateUniqueUserID } = require("../utils/uniqueID");
 
 // register controller...
 const registerController = async (req, res) => {

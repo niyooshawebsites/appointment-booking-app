@@ -2,7 +2,10 @@ const Appointment = require("../models/appointment.model");
 const User = require("../models/user.model");
 const { appointmentConfirmationEmail } = require("../utils/mail");
 const moment = require("moment");
-const generateUniqueID = require("../utils/uniqueID");
+const {
+  generateUniqueAppointmentID,
+  generateUniqueInvoiceID,
+} = require("../utils/uniqueID");
 
 // book appointment controller
 const bookAppointmnentController = async (req, res) => {
@@ -197,9 +200,9 @@ const bookAppointmnentController = async (req, res) => {
 
     // if all the information is provided
     const existingCustomer = new Appointment({
-      appointmentID: generateUniqueID(8),
+      appointmentID: await generateUniqueAppointmentID(),
       service: service.split(" ")[0],
-      invoiceID: generateUniqueID(8),
+      invoiceID: await generateUniqueInvoiceID(),
       patientID: clientID,
       fee,
       date,
@@ -436,9 +439,9 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if all the information is provided
     const existingCustomer = new Appointment({
-      appointmentID: generateUniqueID(8),
+      appointmentID: await generateUniqueAppointmentID(),
       service: service.split(" ")[0],
-      invoiceID: generateUniqueID(8),
+      invoiceID: await generateUniqueInvoiceID(),
       patientID: clientID,
       fee,
       date,

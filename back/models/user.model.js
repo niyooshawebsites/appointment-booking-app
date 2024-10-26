@@ -195,127 +195,127 @@ const userSchema = new mongoose.Schema(
         monday: {
           morningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           morningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
         },
         tuesday: {
           morningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           morningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
         },
         wednesday: {
           morningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           morningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
         },
         thursday: {
           morningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           morningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
         },
         friday: {
           morningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           morningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
         },
         saturday: {
           morningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           morningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
         },
         sunday: {
           morningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           morningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningFrom: {
             type: String,
-            default: "",
+            default: "Off",
           },
           eveningTo: {
             type: String,
-            default: "",
+            default: "Off",
           },
         },
       },
