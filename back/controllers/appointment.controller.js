@@ -199,7 +199,7 @@ const bookAppointmnentController = async (req, res) => {
     const clientID = client.userID;
 
     // if all the information is provided
-    const existingCustomer = new Appointment({
+    const existingClient = new Appointment({
       appointmentID: await generateUniqueAppointmentID(),
       service: service.split(" ")[0],
       invoiceID: await generateUniqueInvoiceID(),
@@ -207,7 +207,6 @@ const bookAppointmnentController = async (req, res) => {
       fee,
       date,
       time,
-      paitentUsername,
       firstName,
       lastName,
       email,
@@ -223,7 +222,7 @@ const bookAppointmnentController = async (req, res) => {
       user: user._id,
     });
 
-    const result = await existingCustomer.save();
+    const result = await existingClient.save();
 
     if (!result) {
       return res.status(500).json({
@@ -252,6 +251,7 @@ const bookAppointmnentController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal Server Error",
+      err: err.message,
     });
   }
 };
@@ -491,6 +491,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal Server Error",
+      err: err.message,
     });
   }
 };
@@ -651,6 +652,7 @@ const getTotalAppointmentsCountByUsernameController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -676,6 +678,7 @@ const getTotalAppointmentsCountByUserForClientIdController = async (
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -702,6 +705,7 @@ const getTodayAppointmentsCountByUsernameController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -719,6 +723,7 @@ const getTotalAppointmentsCountController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -748,6 +753,7 @@ const getTodayTotalAppointmentsCountController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -813,6 +819,7 @@ const checkAppointmentAvailability = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };

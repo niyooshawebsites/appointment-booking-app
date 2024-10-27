@@ -101,7 +101,7 @@ const registerController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -196,7 +196,7 @@ const loginController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -240,7 +240,7 @@ const userVerficationController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -284,7 +284,7 @@ const resetPasswordController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
-      err,
+      err: err.message,
     });
   }
 };
@@ -314,7 +314,7 @@ const logoutController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -394,7 +394,7 @@ const updateContactDetailsController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -435,7 +435,7 @@ const updateAboutDetailsController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -477,7 +477,7 @@ const updateSocialProfilesController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -521,7 +521,7 @@ const updatePasswordController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -550,7 +550,7 @@ const getAboutDetailsController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -594,7 +594,7 @@ const forgotPasswordController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
-      err,
+      err: err.message,
     });
   }
 };
@@ -637,7 +637,7 @@ const getContactDetailsController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -692,7 +692,7 @@ const checkUserController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Something went wrong",
-      err,
+      err: err.message,
     });
   }
 };
@@ -737,18 +737,19 @@ const getAllUsersController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
-      err,
+      err: err.message,
     });
   }
 };
 
 // get all verified users controller...
 const getAllVerifiedUsersController = async (req, res) => {
-  const { currentPage, userId } = req.params;
-  const limit = 10;
-  const currentPageNo = parseInt(currentPage) || 1;
-  const skip = (currentPageNo - 1) * limit;
   try {
+    const { currentPage, userId } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
     const users = await User.find({
       isVerified: true,
       _id: { $ne: userId },
@@ -785,6 +786,7 @@ const getAllVerifiedUsersController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -828,6 +830,7 @@ const getAllUnverifiedUsersController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -861,6 +864,7 @@ const deleteUserController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -920,6 +924,7 @@ const getUsersByDateController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -981,6 +986,7 @@ const getTodayVerifiedUsersController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1042,15 +1048,16 @@ const getTodayUnverifiedUsersController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
 
 // get total users/service providers count controller
 const getTotalUsersCountController = async (req, res) => {
-  const { userId } = req.params;
-
   try {
+    const { userId } = req.params;
+
     const totalUsersCount = await User.countDocuments({
       _id: { $ne: userId },
       role: 1,
@@ -1065,6 +1072,7 @@ const getTotalUsersCountController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1089,6 +1097,7 @@ const getTotalVerifiedUsersCountController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1113,6 +1122,7 @@ const getTotalUnverifiedUsersCountController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1143,6 +1153,7 @@ const getTodayTotalUsersCountController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1174,6 +1185,7 @@ const getTodayTotalVerifiedUsersCountController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1205,7 +1217,7 @@ const getTodayTotalUnverifiedUsersCountController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
-      err,
+      err: err.message,
     });
   }
 };
@@ -1253,7 +1265,7 @@ const getAllUsersBySpecificSpecializationController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
-      err,
+      err: err.message,
     });
   }
 };
@@ -1396,6 +1408,7 @@ const updateClientDetailsController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1425,6 +1438,7 @@ const getParticularClientDataByUserIdController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1473,6 +1487,7 @@ const getUserDetailsForPrintController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1512,6 +1527,7 @@ const updateUserQualificationController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1550,6 +1566,7 @@ const updateUserTimingsController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -1586,6 +1603,7 @@ const updateAnnouncementController = async (req, res) => {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };

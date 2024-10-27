@@ -14,7 +14,7 @@ const generateUniqueID = (num) => {
 
 const generateUniqueAppointmentID = async (id) => {
   try {
-    const uniqueAppointmentID = generateUniqueID();
+    const uniqueAppointmentID = generateUniqueID(8);
     const appointment = await Appointment.findOne({
       appointmentID: uniqueAppointmentID,
     });
@@ -25,7 +25,7 @@ const generateUniqueAppointmentID = async (id) => {
 
     const existingAppointmentID = appointment.appointmentID;
     while (uniqueAppointmentID == existingAppointmentID) {
-      uniqueAppointmentID = generateUniqueID();
+      uniqueAppointmentID = generateUniqueID(8);
     }
 
     return uniqueAppointmentID;

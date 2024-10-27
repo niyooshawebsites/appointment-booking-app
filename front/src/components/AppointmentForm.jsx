@@ -66,9 +66,9 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
     (state) => state.specialization_Slice
   );
 
-  const { timings } = useSelector((state) => state.service_Provider_Slice);
-  const { morningFrom, morningTo, eveningFrom, eveningTo } =
-    timings[custDetails.day[0].toLowerCase() + custDetails.day.slice(1)];
+  // const { timings } = useSelector((state) => state.service_Provider_Slice);
+  // const { morningFrom, morningTo, eveningFrom, eveningTo } =
+  //   timings[custDetails.day[0].toLowerCase() + custDetails.day.slice(1)];
 
   const [activateTID, setActivateTID] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -182,7 +182,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       const res = await axios.post("http://localhost:8000/api/v1/register", {
         role: custDetails.role,
         specialization: custDetails.specialization,
-        username: custDetails.username,
+        username: custDetails.patientUsername,
         password: custDetails.password,
         email: custDetails.email,
       });
@@ -258,20 +258,20 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
     }
   };
 
-  if (custDetails.timeOfDay == "morning") {
-    if (custDetails.time < morningFrom || custDetails.time > morningTo) {
-      alert(
-        `Please select the timings between ${morningFrom} and ${morningTo}`
-      );
+  // if (custDetails.timeOfDay == "morning") {
+  //   if (custDetails.time < morningFrom || custDetails.time > morningTo) {
+  //     alert(
+  //       `Please select the timings between ${morningFrom} and ${morningTo}`
+  //     );
 
-      setCustDetails((prevDetails) => {
-        return {
-          ...prevDetails,
-          ["time"]: null,
-        };
-      });
-    }
-  }
+  //     setCustDetails((prevDetails) => {
+  //       return {
+  //         ...prevDetails,
+  //         ["time"]: null,
+  //       };
+  //     });
+  //   }
+  // }
 
   // if the client is logged in
   if (customerDashboard) {
