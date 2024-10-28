@@ -1571,6 +1571,7 @@ const updateUserTimingsController = async (req, res) => {
   }
 };
 
+// update announcements
 const updateAnnouncementController = async (req, res) => {
   try {
     const { announcement } = req.body;
@@ -1598,6 +1599,79 @@ const updateAnnouncementController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Announcement udpated successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// WALK INS.......
+
+// check users for walkin clients
+const checkWalkinClientAvailabilityController = async (req, res) => {
+  try {
+    const { searchUser } = req.params;
+
+    if (!searchUser) {
+      return res.status(400).json({
+        success: false,
+        msg: "contact number not provided",
+      });
+    }
+
+    const existingUser = await User.findOne({ contactNo: searchUser });
+
+    if (!existingUser) {
+      return res.status(404).json({
+        success: false,
+        msg: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Client found successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// update walkin clients data
+const getParticularClientDataByContactNoContoller = async (req, res) => {
+  try {
+    const { searchUser } = req.params;
+
+    if (!searchUser) {
+      return res.status(400).json({
+        success: false,
+        msg: "contact number is missing",
+      });
+    }
+
+    const existingUser = await User.findOne({ contactNo: searchUser }).select(
+      "-password"
+    );
+
+    if (!existingUser) {
+      return res.status(404).json({
+        success: false,
+        msg: "No such user",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "User already exists",
+      user: existingUser,
     });
   } catch (err) {
     return res.status(500).json({
@@ -1644,4 +1718,6 @@ module.exports = {
   updateUserQualificationController,
   updateUserTimingsController,
   updateAnnouncementController,
+  checkWalkinClientAvailabilityController,
+  getParticularClientDataByContactNoContoller,
 };

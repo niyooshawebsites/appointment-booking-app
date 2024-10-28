@@ -35,6 +35,8 @@ const {
   updateUserQualificationController,
   updateUserTimingsController,
   updateAnnouncementController,
+  checkWalkinClientAvailabilityController,
+  getParticularClientDataByContactNoContoller,
 } = require("../controllers/user.controller");
 
 const {
@@ -57,6 +59,7 @@ const {
   getAllAppointmentsControllerForClient,
   checkAppointmentAvailability,
   getNoOfAppointmentsPerUserController,
+  bookApponitmentForWalkinClientsController,
 } = require("../controllers/appointment.controller");
 
 const isServiceProvider = require("../middlewares/isServiceProvider.middleware");
@@ -380,6 +383,30 @@ router.put(
   auth,
   isServiceProvider,
   updateAnnouncementController
+);
+
+// get walkin client route
+router.get(
+  "/check-wallkin-client-availability/:searchUser",
+  auth,
+  isServiceProvider,
+  checkWalkinClientAvailabilityController
+);
+
+// get a particular walk in customer by contact number
+router.get(
+  "/get-particular-client-data-by-contactNo/:searchUser",
+  auth,
+  isServiceProvider,
+  getParticularClientDataByContactNoContoller
+);
+
+// book appointment for walkin client
+router.post(
+  "/book-appointment-for-walkin-client/:searchUser",
+  auth,
+  isServiceProvider,
+  bookApponitmentForWalkinClientsController
 );
 
 module.exports = router;

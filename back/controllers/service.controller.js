@@ -45,10 +45,11 @@ const updateServiceController = async (req, res) => {
       success: true,
       msg: "Service updated successfully",
     });
-  } catch {
+  } catch (err) {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -56,14 +57,14 @@ const updateServiceController = async (req, res) => {
 const deleteServiceController = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findOne({ email: req.user.email });
+    const user = await User.findOne({ username: req.user.username });
 
     const userServices = user.services.filter(
       (service) => service.serviceId != id
     );
 
     await User.findOneAndUpdate(
-      { email: req.user.email },
+      { username: req.user.username },
       { services: userServices },
       { new: true }
     );
@@ -72,10 +73,11 @@ const deleteServiceController = async (req, res) => {
       success: true,
       msg: "Service deleted successfully",
     });
-  } catch {
+  } catch (err) {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
@@ -97,10 +99,11 @@ const getAllServicesController = async (req, res) => {
       msg: "user and services found",
       services: user.services,
     });
-  } catch {
+  } catch (err) {
     return res.status(500).json({
       success: false,
       msg: "Internal server error",
+      err: err.message,
     });
   }
 };
