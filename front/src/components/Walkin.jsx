@@ -161,6 +161,30 @@ const Walkin = () => {
       }
     } catch (err) {
       toast.error(err.response.data.msg);
+      setCustDetails((prevDetails) => {
+        return {
+          ...prevDetails,
+          service: "",
+          date: "",
+          time: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          username: "",
+          password: "12345",
+          contactNo: "",
+          age: "",
+          gender: "",
+          address: "",
+          city: "",
+          state: "",
+          pinCode: "",
+          paymentMethod: "",
+          transactionID: "",
+          localPay: "N/A",
+          serviceProvider: username,
+        };
+      });
     }
   };
 
@@ -209,7 +233,7 @@ const Walkin = () => {
                 <div className="w-3/12">
                   <button
                     type="submit"
-                    className="rounded-md bg-pink-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+                    className="rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                   >
                     Search and Poplulate
                   </button>
@@ -243,7 +267,7 @@ const Walkin = () => {
                             value={service.serviceName}
                             key={service.serviceId}
                           >
-                            {`${service.serviceName} - Rs${service.fee}`}
+                            {`${service.serviceName} - Rs ${service.fee}`}
                           </option>
                         ))}
                       </select>

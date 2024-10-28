@@ -1628,7 +1628,7 @@ const checkWalkinClientAvailabilityController = async (req, res) => {
     if (!existingUser) {
       return res.status(404).json({
         success: false,
-        msg: "User not found",
+        msg: "Client not found",
       });
     }
 
