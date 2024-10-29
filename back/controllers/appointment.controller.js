@@ -44,7 +44,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if fee is not selected
     if (!fee) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide the fee",
       });
@@ -52,7 +52,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if date is not selected
     if (!date) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please select the date",
       });
@@ -60,7 +60,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if time is not selected
     if (!time) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please select the time",
       });
@@ -68,7 +68,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if time is not selected
     if (!patientUsername) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide Patient username",
       });
@@ -76,7 +76,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if firstname is not provided
     if (!firstName) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your first name",
       });
@@ -84,7 +84,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if lastName is not provided
     if (!lastName) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your last name",
       });
@@ -92,7 +92,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if email is not provided
     if (!email) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your email",
       });
@@ -100,7 +100,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if contactNo is not provided
     if (!contactNo) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your contact number",
       });
@@ -108,7 +108,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if age is not provided
     if (!age) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your age",
       });
@@ -116,7 +116,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if gender is not selected
     if (!gender) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please select your gender",
       });
@@ -124,7 +124,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if address is not provided
     if (!address) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your address",
       });
@@ -132,7 +132,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if city is not provided
     if (!city) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your city",
       });
@@ -140,7 +140,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if state is not provided
     if (!state) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your state",
       });
@@ -148,7 +148,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if pinCode is not provided
     if (!pinCode) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your pincode",
       });
@@ -156,7 +156,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if paymentMethod is not selected
     if (!paymentMethod) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please select your payment method",
       });
@@ -164,7 +164,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if transaction ID is not provided
     if (!transactionID) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide the tranaction ID",
       });
@@ -172,7 +172,7 @@ const bookAppointmnentController = async (req, res) => {
 
     // if Service provider is not selected
     if (!serviceProvider) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Service provider is missing",
       });
@@ -284,7 +284,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if service is not selected
     if (!service) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please select the service",
       });
@@ -292,7 +292,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if fee is not selected
     if (!fee) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide the fee",
       });
@@ -300,7 +300,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if date is not selected
     if (!date) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please select the date",
       });
@@ -308,7 +308,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if time is not selected
     if (!time) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please select the time",
       });
@@ -316,7 +316,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if firstname is not provided
     if (!firstName) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your first name",
       });
@@ -324,7 +324,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if lastName is not provided
     if (!lastName) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your last name",
       });
@@ -332,7 +332,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if email is not provided
     if (!email) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your email",
       });
@@ -340,7 +340,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if contactNo is not provided
     if (!contactNo) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your contact number",
       });
@@ -348,7 +348,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if age is not provided
     if (!age) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your age",
       });
@@ -356,7 +356,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if gender is not selected
     if (!gender) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please select your gender",
       });
@@ -364,7 +364,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if address is not provided
     if (!address) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your address",
       });
@@ -372,7 +372,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if city is not provided
     if (!city) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your city",
       });
@@ -380,7 +380,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if state is not provided
     if (!state) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your state",
       });
@@ -388,7 +388,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if pinCode is not provided
     if (!pinCode) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide your pincode",
       });
@@ -396,7 +396,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if paymentMethod is not selected
     if (!paymentMethod) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please select your payment method",
       });
@@ -404,7 +404,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if paymentMethod is not selected
     if (!transactionID) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Please provide the transaction ID",
       });
@@ -412,7 +412,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
 
     // if Service provider is not selected
     if (!serviceProvider) {
-      return res.status(401).json({
+      return res.status(400).json({
         succss: false,
         msg: "Service provider is missing",
       });
@@ -516,8 +516,8 @@ const getAllAppointmentsController = async (req, res) => {
     });
 
     // fetching unsuccessful
-    if (!appointments) {
-      return res.status(409).json({
+    if (appointments.length == 0) {
+      return res.status(404).json({
         success: false,
         msg: "Appointments fetching falied",
       });
@@ -559,8 +559,8 @@ const getAllAppointmentsControllerForClient = async (req, res) => {
     const totalAppointments = await Appointment.countDocuments({ email });
 
     // fetching unsuccessful
-    if (!appointments) {
-      return res.status(409).json({
+    if (appointments.length == 0) {
+      return res.status(404).json({
         success: false,
         msg: "Appointments fetching falied",
       });
@@ -584,6 +584,8 @@ const getAllAppointmentsControllerForClient = async (req, res) => {
     });
   }
 };
+
+// -----------------------------------------------------------------------------------------
 
 // get today's appointments filter by userId - for service provider
 const getTodayAppointmentsByUsernameController = async (req, res) => {

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const serviceProviderSlice = createSlice({
   name: "service_Provider_Slice",
   initialState: {
+    username: "",
     name: "",
     businessName: "",
     isVerified: false,
@@ -62,6 +63,7 @@ const serviceProviderSlice = createSlice({
   },
   reducers: {
     serviceProviderDetails: (state, action) => {
+      state.username = action.payload.username;
       state.name = action.payload.name;
       state.businessName = action.payload.businessName;
       state.isVerified = action.payload.isVerified;

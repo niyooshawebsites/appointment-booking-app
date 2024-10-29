@@ -254,6 +254,7 @@ const DisplayInfo = () => {
                       <Link
                         onClick={() => {
                           handleDelete(user._id);
+
                           dispatch(
                             usersDataSliceActions.getUsersData({
                               allUsers: null, // this value needs to be fixed

@@ -1,81 +1,11 @@
 import Layout from "../components/Layout";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import axios from "axios";
-import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
+import { useSelector } from "react-redux";
 import Unverified from "../components/Unverified";
-import { toast } from "react-toastify";
 
 const Contact = () => {
   const { businessName, email, contactNo, contact, isVerified } = useSelector(
     (state) => state.service_Provider_Slice
   );
-
-  const dispatch = useDispatch();
-
-  // getting the username from url
-  const path = window.location.pathname;
-  let username = path.split("/")[1];
-
-  if (
-    username == "register" ||
-    username == "login" ||
-    username == "about" ||
-    username == "contact" ||
-    username == "verify-email" ||
-    username == "forgot-password" ||
-    username == "reset-password" ||
-    username == ""
-  ) {
-    username = "abs";
-  }
-
-  const checkUser = async () => {
-    try {
-      const res = await axios.get(
-        `http://localhost:8000/api/v1/checkUser/${username}`
-      );
-
-      if (res.data.success) {
-        // dispatch(
-        //   serviceProviderSliceActons.serviceProviderDetails({
-        //     username: username,
-        //     businessName: res.data.contact.businessName,
-        //     isVerified: res.data.isVerified,
-        //     about: res.data.about,
-        //     email: res.data.email,
-        //     contactNo: res.data.contactNo,
-        //     services: res.data.services,
-        //     contact: res.data.contact,
-        //     socialProfiles: res.data.socialProfiles,
-        //     announcement: res.data.announcement,
-        //   })
-        // );
-
-        dispatch(
-          serviceProviderSliceActons.serviceProviderDetails({
-            username: username,
-            businessName: res.data.contact.businessName,
-            isVerified: res.data.isVerified,
-            timings: res.data.timings.days,
-            about: res.data.about,
-            email: res.data.email,
-            contactNo: res.data.contactNo,
-            services: res.data.services,
-            contact: res.data.contact,
-            socialProfiles: res.data.socialProfiles,
-            announcement: res.data.announcement || "",
-          })
-        );
-      }
-    } catch (err) {
-      toast.error(err.response.data.msg);
-    }
-  };
-
-  useEffect(() => {
-    checkUser();
-  }, [username]);
 
   const mapUrl =
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.986330002446!2d77.2619868!3d28.540130599999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3de6aa6e483%3A0xc435a553bf3c0448!2sSaroj%20Tower%2C%20Guru%20Ravidas%20Marg%2C%20Block%20K%2C%20Kalkaji%2C%20New%20Delhi%2C%20Delhi%20110019!5e0!3m2!1sen!2sin!4v1729495744711!5m2!1sen!2sin";

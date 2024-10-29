@@ -9,7 +9,7 @@ import OnlinePayment from "./OnlinePayment";
 const Walkin = () => {
   const { showWalkinModal } = useSelector((state) => state.walkin_Slice);
   const [services, setServices] = useState([]);
-  const { userId, username } = useSelector((state) => state.user_Slice);
+  const { username } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
   const [activateTID, setActivateTID] = useState(false);
   const [searchUser, setSearchUser] = useState("");

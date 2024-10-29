@@ -1,64 +1,8 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
-import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const NotFoundMsg = () => {
-  const dispatch = useDispatch();
-  const [realUser, setRealUser] = useState(false);
-
-  // getting the username from url
-  const path = window.location.pathname;
-  let username = path.split("/")[1];
-
-  if (
-    username == "register" ||
-    username == "login" ||
-    username == "about" ||
-    username == "contact" ||
-    username == "verify-email" ||
-    username == "forgot-password" ||
-    username == "reset-password" ||
-    username == ""
-  ) {
-    username = "abs";
-  }
-
-  const checkUser = async () => {
-    try {
-      const res = await axios.get(
-        `http://localhost:8000/api/v1/checkUser/${username}`
-      );
-
-      if (res.data.success) {
-        setRealUser(res.data.success);
-
-        dispatch(
-          serviceProviderSliceActons.serviceProviderDetails({
-            username: username,
-            businessName: res.data.contact.businessName,
-            isVerified: res.data.isVerified,
-            timings: res.data.timings.days,
-            about: res.data.about,
-            email: res.data.email,
-            contactNo: res.data.contactNo,
-            services: res.data.services,
-            contact: res.data.contact,
-            socialProfiles: res.data.socialProfiles,
-            announcement: res.data.announcement || "",
-          })
-        );
-      }
-    } catch (err) {
-      toast.error(err.response.data.msg);
-    }
-  };
-
-  useEffect(() => {
-    checkUser();
-  }, [username]);
+  const { username } = useSelector((state) => state.service_Provider_Slice);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -69,7 +13,7 @@ const NotFoundMsg = () => {
       <div className="flex justify-center items-center">
         <Link
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          to={realUser ? `/${username}` : "/"}
+          to={username != "abs" ? `/${username}` : "/"}
         >
           Back to Home
         </Link>

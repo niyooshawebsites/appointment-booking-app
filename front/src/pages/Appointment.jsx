@@ -9,14 +9,27 @@ import Unverified from "../components/Unverified";
 import { toast } from "react-toastify";
 
 const Appointment = ({ serviceProvider }) => {
+  // getting the username from url
+  const path = window.location.pathname;
+  let username = path.split("/")[1];
+
+  if (
+    username == "register" ||
+    username == "login" ||
+    username == "about" ||
+    username == "contact" ||
+    username == "verify-email" ||
+    username == "forgot-password" ||
+    username == "reset-password" ||
+    username == ""
+  ) {
+    username = "abs";
+  }
+
   const { announcement, isVerified } = useSelector(
     (state) => state.service_Provider_Slice
   );
   const dispatch = useDispatch();
-
-  // getting the username from url
-  const path = window.location.pathname;
-  const username = path.split("/")[1] || "abs";
 
   const checkUser = async () => {
     try {
@@ -25,21 +38,6 @@ const Appointment = ({ serviceProvider }) => {
       );
 
       if (res.data.success) {
-        // dispatch(
-        //   serviceProviderSliceActons.serviceProviderDetails({
-        //     username: username,
-        //     businessName: res.data.contact.businessName,
-        //     isVerified: res.data.isVerified,
-        //     about: res.data.about,
-        //     email: res.data.email,
-        //     contactNo: res.data.contactNo,
-        //     services: res.data.services,
-        //     contact: res.data.contact,
-        //     socialProfiles: res.data.socialProfiles,
-        //     announcement: res.data.announcement,
-        //   })
-        // );
-
         dispatch(
           serviceProviderSliceActons.serviceProviderDetails({
             username: username,

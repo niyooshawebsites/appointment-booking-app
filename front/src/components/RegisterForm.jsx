@@ -1,32 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { serviceProviderSliceActons } from "../store/slices/ServiceProviderSlice";
+import { useSelector } from "react-redux";
 import Unverified from "./Unverified";
 
 const RegisterForm = () => {
-  // getting the username from url
-  const path = window.location.pathname;
-  let username = path.split("/")[1];
-
-  if (
-    username == "register" ||
-    username == "login" ||
-    username == "about" ||
-    username == "contact" ||
-    username == "verify-email" ||
-    username == "forgot-password" ||
-    username == "reset-password" ||
-    username == ""
-  ) {
-    username = "abs";
-  }
-
-  const { isVerified } = useSelector((state) => state.service_Provider_Slice);
+  const { username, isVerified } = useSelector(
+    (state) => state.service_Provider_Slice
+  );
   const [showPassword, setShowPassword] = useState(false);
   const [showSpecialization, setShowSpecialization] = useState(true);
 
@@ -39,40 +23,6 @@ const RegisterForm = () => {
       password: "",
     };
   });
-
-  const dispatch = useDispatch();
-
-  const checkUser = async () => {
-    try {
-      const res = await axios.get(
-        `http://localhost:8000/api/v1/checkUser/${username}`
-      );
-
-      if (res.data.success) {
-        dispatch(
-          serviceProviderSliceActons.serviceProviderDetails({
-            username: username,
-            businessName: res.data.contact.businessName,
-            isVerified: res.data.isVerified,
-            timings: res.data.timings.days,
-            about: res.data.about,
-            email: res.data.email,
-            contactNo: res.data.contactNo,
-            services: res.data.services,
-            contact: res.data.contact,
-            socialProfiles: res.data.socialProfiles,
-            announcement: res.data.announcement || "",
-          })
-        );
-      }
-    } catch (err) {
-      toast.error(err.response.data.msg);
-    }
-  };
-
-  useEffect(() => {
-    checkUser();
-  }, [username]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -116,6 +66,27 @@ const RegisterForm = () => {
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  if (!username) {
+    // getting the username from url
+    const path = window.location.pathname;
+    let userName = path.split("/")[1];
+
+    if (
+      userName == "register" ||
+      userName == "login" ||
+      userName == "about" ||
+      userName == "contact" ||
+      userName == "verify-email" ||
+      userName == "forgot-password" ||
+      userName == "reset-password" ||
+      userName == ""
+    ) {
+      userName = "abs";
+    }
+
+    return <Navigate to={userName != "abs" ? `/${userName}` : "/"} />;
+  }
 
   if (!isVerified) {
     return <Unverified />;
