@@ -9,7 +9,7 @@ import OnlinePayment from "./OnlinePayment";
 const Walkin = () => {
   const { showWalkinModal } = useSelector((state) => state.walkin_Slice);
   const [services, setServices] = useState([]);
-  const { username } = useSelector((state) => state.user_Slice);
+  const { userId, username } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
   const [activateTID, setActivateTID] = useState(false);
   const [searchUser, setSearchUser] = useState("");
@@ -22,8 +22,6 @@ const Walkin = () => {
       firstName: "",
       lastName: "",
       email: "",
-      walkinUsername: "N/A",
-      walkinPassword: "N/A",
       contactNo: "",
       age: "",
       gender: "",
@@ -71,6 +69,56 @@ const Walkin = () => {
   const handleSubmit = async function (e) {
     e.preventDefault();
 
+    // check for exsisting client and register the same
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/check-wallkin-client-availability/${searchUser}`,
+        { withCredentials: true }
+      );
+
+      if (!res.data.success) {
+        const res = await axios.post("http://localhost:8000/api/v1/register", {
+          role: "0",
+          specialization: "N/A",
+          username: custDetails.email,
+          email: custDetails.email,
+          password: "12345",
+        });
+
+        if (res.data.success) {
+          toast.success(res.data.msg);
+        }
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+
+    // updating the walkin client
+    try {
+      const res = await axios.patch(
+        `http://localhost:8000/api/v1/update-walkin-client-details/${custDetails.email}`,
+        {
+          firstName: custDetails.firstName,
+          lastName: custDetails.lastName,
+          contactNo: custDetails.contactNo,
+          age: custDetails.age,
+          gender: custDetails.gender,
+          address: custDetails.address,
+          city: custDetails.city,
+          state: custDetails.state,
+          pinCode: custDetails.pinCode,
+        },
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response.data.msg);
+    }
+
     // api for booking walkin appointment
     try {
       const res = await axios.post(
@@ -103,8 +151,6 @@ const Walkin = () => {
         firstName: "",
         lastName: "",
         email: "",
-        walkinUsername: "N/A",
-        walkinPassword: "N/A",
         contactNo: "",
         age: "",
         gender: "",
@@ -156,8 +202,35 @@ const Walkin = () => {
           toast.error(err.response.data.msg);
         }
       }
+
+      if (!res.data.success) {
+        toast.error(res.data.msg);
+        setCustDetails((prevDetails) => {
+          return {
+            ...prevDetails,
+            service: "",
+            fee: "",
+            date: "",
+            time: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            contactNo: "",
+            age: "",
+            gender: "",
+            address: "",
+            city: "",
+            state: "",
+            pinCode: "",
+            paymentMethod: "",
+            transactionID: "",
+            localPay: "N/A",
+          };
+        });
+      }
     } catch (err) {
       toast.error(err.response.data.msg);
+
       setCustDetails((prevDetails) => {
         return {
           ...prevDetails,
@@ -168,8 +241,6 @@ const Walkin = () => {
           firstName: "",
           lastName: "",
           email: "",
-          walkinUsername: "N/A",
-          walkinPassword: "N/A",
           contactNo: "",
           age: "",
           gender: "",
@@ -232,7 +303,7 @@ const Walkin = () => {
                     type="submit"
                     className="rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                   >
-                    Search and Poplulate
+                    Search and Auto Fill
                   </button>
                 </div>
               </div>

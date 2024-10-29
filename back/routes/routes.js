@@ -37,6 +37,7 @@ const {
   updateAnnouncementController,
   checkWalkinClientAvailabilityController,
   getParticularClientDataByContactNoContoller,
+  updateWalkinClientDataController,
 } = require("../controllers/user.controller");
 
 const {
@@ -403,10 +404,18 @@ router.get(
 
 // book appointment for walkin client
 router.post(
-  "/book-appointment-for-walkin-client/:searchUser",
+  "/book-appointment-for-walkin-client/:username",
   auth,
   isServiceProvider,
   bookApponitmentForWalkinClientsController
+);
+
+// update walkin client
+router.patch(
+  "/update-walkin-client-details/:email",
+  auth,
+  isServiceProvider,
+  updateWalkinClientDataController
 );
 
 module.exports = router;

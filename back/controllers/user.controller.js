@@ -1626,7 +1626,7 @@ const checkWalkinClientAvailabilityController = async (req, res) => {
     const existingUser = await User.findOne({ contactNo: searchUser });
 
     if (!existingUser) {
-      return res.status(404).json({
+      return res.status(200).json({
         success: false,
         msg: "Client not found",
       });
@@ -1645,7 +1645,7 @@ const checkWalkinClientAvailabilityController = async (req, res) => {
   }
 };
 
-// update walkin clients data
+// get walkin clients data
 const getParticularClientDataByContactNoContoller = async (req, res) => {
   try {
     const { searchUser } = req.params;
@@ -1672,6 +1672,75 @@ const getParticularClientDataByContactNoContoller = async (req, res) => {
       success: true,
       msg: "User already exists",
       user: existingUser,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// update walkin clients data
+const updateWalkinClientDataController = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const {
+      firstName,
+      lastName,
+      contactNo,
+      age,
+      gender,
+      address,
+      city,
+      state,
+      pinCode,
+    } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        msg: "Email not provided",
+      });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(200).json({
+        success: false,
+        msg: "user not found",
+      });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email },
+      {
+        firstName,
+        lastName,
+        contactNo,
+        age,
+        gender,
+        address,
+        city,
+        state,
+        pinCode,
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(409).json({
+        success: false,
+        msg: "Something went wrong. Please try again",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Client updated successfully",
     });
   } catch (err) {
     return res.status(500).json({
@@ -1720,4 +1789,5 @@ module.exports = {
   updateAnnouncementController,
   checkWalkinClientAvailabilityController,
   getParticularClientDataByContactNoContoller,
+  updateWalkinClientDataController,
 };

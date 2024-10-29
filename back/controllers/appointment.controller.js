@@ -5,6 +5,7 @@ const moment = require("moment");
 const {
   generateUniqueAppointmentID,
   generateUniqueInvoiceID,
+  generateUniqueUserID,
 } = require("../utils/uniqueID");
 
 // book appointment controller
@@ -866,8 +867,6 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       time,
       firstName,
       lastName,
-      walkinUsername,
-      walkinPassword,
       email,
       contactNo,
       age,
@@ -925,22 +924,6 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       return res.status(401).json({
         succss: false,
         msg: "Please provide your last name",
-      });
-    }
-
-    // if username is not provided
-    if (!walkinUsername) {
-      return res.status(401).json({
-        succss: false,
-        msg: "Please provide walkin username",
-      });
-    }
-
-    // if pasword is not provided
-    if (!walkinPassword) {
-      return res.status(401).json({
-        succss: false,
-        msg: "Please provide walkin password",
       });
     }
 
@@ -1024,36 +1007,21 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       });
     }
 
-    // if Service provider is not selected
-    if (!serviceProvider) {
-      return res.status(401).json({
-        succss: false,
-        msg: "Service provider is missing",
-      });
-    }
-
     // checking for existig client for unique ID
     const client = await User.findOne({ contactNo });
-    const clientID = client.userID;
-
-    console.log(`clientID`);
+    console.log(client.userID);
 
     const serviceProvider = await User.findOne({ username });
-    const serviceProviderID = serviceProvider._id;
-
-    console.log(`serviceproviderID`, serviceProvider);
 
     // if all the information is provided
     const newAppointment = new Appointment({
       appointmentID: await generateUniqueAppointmentID(),
       service: service.split(" ")[0],
       invoiceID: await generateUniqueInvoiceID(),
-      patientID: clientID,
+      patientID: client ? client.userID : await generateUniqueUserID(),
       fee,
       date,
       time,
-      walkinUsername: email,
-      walkinPassword: "12345",
       firstName,
       lastName,
       email,
@@ -1066,7 +1034,7 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       pinCode,
       paymentMethod,
       transactionID,
-      user: serviceProviderID,
+      user: serviceProvider._id,
     });
 
     const result = await newAppointment.save();
@@ -1095,7 +1063,6 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       msg: "Appointment booked successfully",
     });
   } catch (err) {
-    console.log(err.message);
     return res.status(500).json({
       success: false,
       msg: "Internal Server Error",
