@@ -16,13 +16,14 @@ const Walkin = () => {
   const [custDetails, setCustDetails] = useState(() => {
     return {
       service: "",
+      fee: "",
       date: "",
       time: "",
       firstName: "",
       lastName: "",
       email: "",
-      username: "",
-      password: "12345",
+      walkinUsername: "N/A",
+      walkinPassword: "N/A",
       contactNo: "",
       age: "",
       gender: "",
@@ -33,7 +34,6 @@ const Walkin = () => {
       paymentMethod: "",
       transactionID: "",
       localPay: "N/A",
-      serviceProvider: username,
     };
   });
 
@@ -74,8 +74,11 @@ const Walkin = () => {
     // api for booking walkin appointment
     try {
       const res = await axios.post(
-        `http://localhost:8000/api/v1/book-appointment-for-walkin-client/${searchUser}`,
-        { ...custDetails, username: custDetails.email.split("@")[0] },
+        `http://localhost:8000/api/v1/book-appointment-for-walkin-client/${username}`,
+        {
+          ...custDetails,
+          fee: custDetails.service.split("-")[1].slice(4),
+        },
         { withCredentials: true }
       );
 
@@ -95,12 +98,13 @@ const Walkin = () => {
         ...prevDetails,
         service: "",
         date: "",
+        fee: "",
         time: "",
         firstName: "",
         lastName: "",
         email: "",
-        username: "",
-        password: "12345",
+        walkinUsername: "N/A",
+        walkinPassword: "N/A",
         contactNo: "",
         age: "",
         gender: "",
@@ -111,15 +115,8 @@ const Walkin = () => {
         paymentMethod: "",
         transactionID: "",
         localPay: "N/A",
-        serviceProvider: username,
       };
     });
-
-    dispatch(
-      walkinSliceActions.changeWalkinStatus({
-        showWalkinModal: false,
-      })
-    );
   };
 
   const handleSearchAndPopulate = async (e) => {
@@ -165,13 +162,14 @@ const Walkin = () => {
         return {
           ...prevDetails,
           service: "",
+          fee: "",
           date: "",
           time: "",
           firstName: "",
           lastName: "",
           email: "",
-          username: "",
-          password: "12345",
+          walkinUsername: "N/A",
+          walkinPassword: "N/A",
           contactNo: "",
           age: "",
           gender: "",
@@ -182,7 +180,6 @@ const Walkin = () => {
           paymentMethod: "",
           transactionID: "",
           localPay: "N/A",
-          serviceProvider: username,
         };
       });
     }
@@ -264,7 +261,7 @@ const Walkin = () => {
                         <option value="">Select service</option>
                         {services.map((service) => (
                           <option
-                            value={service.serviceName}
+                            value={`${service.serviceName} - Rs ${service.fee}`}
                             key={service.serviceId}
                           >
                             {`${service.serviceName} - Rs ${service.fee}`}

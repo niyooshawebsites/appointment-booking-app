@@ -857,7 +857,7 @@ const getNoOfAppointmentsPerUserController = async (req, res) => {
 // book appointment for walk in clients - service provider
 const bookApponitmentForWalkinClientsController = async (req, res) => {
   try {
-    const { searchUser } = req.params;
+    const { username } = req.params;
 
     const {
       service,
@@ -866,8 +866,8 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       time,
       firstName,
       lastName,
-      username,
-      password,
+      walkinUsername,
+      walkinPassword,
       email,
       contactNo,
       age,
@@ -878,7 +878,6 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       pinCode,
       paymentMethod,
       transactionID,
-      serviceProvider,
     } = req.body;
 
     // if service is not selected
@@ -930,18 +929,18 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
     }
 
     // if username is not provided
-    if (!username) {
+    if (!walkinUsername) {
       return res.status(401).json({
         succss: false,
-        msg: "Please provide username",
+        msg: "Please provide walkin username",
       });
     }
 
     // if pasword is not provided
-    if (!password) {
+    if (!walkinPassword) {
       return res.status(401).json({
         succss: false,
-        msg: "Please provide password",
+        msg: "Please provide walkin password",
       });
     }
 
@@ -1033,12 +1032,19 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       });
     }
 
-    const client = await User.findOne({ contact: searchUser });
-
+    // checking for existig client for unique ID
+    const client = await User.findOne({ contactNo });
     const clientID = client.userID;
 
+    console.log(`clientID`);
+
+    const serviceProvider = await User.findOne({ username });
+    const serviceProviderID = serviceProvider._id;
+
+    console.log(`serviceproviderID`, serviceProvider);
+
     // if all the information is provided
-    const existingCustomer = new Appointment({
+    const newAppointment = new Appointment({
       appointmentID: await generateUniqueAppointmentID(),
       service: service.split(" ")[0],
       invoiceID: await generateUniqueInvoiceID(),
@@ -1046,8 +1052,8 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       fee,
       date,
       time,
-      username,
-      password,
+      walkinUsername: email,
+      walkinPassword: "12345",
       firstName,
       lastName,
       email,
@@ -1060,9 +1066,10 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       pinCode,
       paymentMethod,
       transactionID,
+      user: serviceProviderID,
     });
 
-    const result = await existingCustomer.save();
+    const result = await newAppointment.save();
 
     if (!result) {
       return res.status(500).json({
@@ -1077,7 +1084,7 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       email,
       "Appointment confirmed",
       fullName,
-      user.businessName,
+      serviceProvider.businessName,
       service,
       date,
       time
