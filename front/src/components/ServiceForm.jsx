@@ -134,7 +134,7 @@ const ServiceForm = () => {
       </form>
 
       {/* Table Section */}
-      <table className="w-8/12 mx-auto bg-white shadow-md rounded-lg mt-10">
+      <table className="w-8/12 mx-auto bg-white shadow-md rounded-lg mt-10 text-sm">
         <thead className="bg-pink-600 text-white">
           <tr className=" text-left text-sm font-semibold">
             <th className="py-2 px-3">#</th>

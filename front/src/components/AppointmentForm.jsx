@@ -170,50 +170,54 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       if (res.data.success) {
         toast.success(res.data.msg);
 
-        // book apponitment only when account creation succeeds....
-        const response = await axios.post(
-          `http://localhost:8000/api/v1/book-appointment/${username}`,
-          {
-            ...custDetails,
-            transactionID: activateTID
-              ? custDetails.transactionID
-              : custDetails.localPay,
-            fee: custDetails.service.split("-")[1].slice(4),
+        try {
+          // book apponitment only when account creation succeeds....
+          const response = await axios.post(
+            `http://localhost:8000/api/v1/book-appointment/${username}`,
+            {
+              ...custDetails,
+              transactionID: activateTID
+                ? custDetails.transactionID
+                : custDetails.localPay,
+              fee: custDetails.service.split("-")[1].slice(4),
+            }
+          );
+
+          // appointment booking is successful
+          if (response.data.success) {
+            toast.success(response.data.msg);
           }
-        );
 
-        // appointment booking is successful
-        if (response.data.success) {
-          toast.success(response.data.msg);
+          // reseting everyting
+          setCustDetails((prevDetails) => {
+            return {
+              ...prevDetails,
+              service: "",
+              fee: "",
+              date: "",
+              time: "",
+              patientUsername: "",
+              password: "",
+              firstName: "",
+              lastName: "",
+              email: "",
+              contactNo: "",
+              age: "",
+              gender: "",
+              address: "",
+              city: "",
+              state: "",
+              pinCode: "",
+              paymentMethod: "",
+              transactionID: "",
+              localPay: "N/A",
+              spUsername: username || "",
+              timeOfDay: "",
+            };
+          });
+        } catch (err) {
+          toast.error(err.response.data.msg);
         }
-
-        // reseting everyting
-        setCustDetails((prevDetails) => {
-          return {
-            ...prevDetails,
-            service: "",
-            fee: "",
-            date: "",
-            time: "",
-            patientUsername: "",
-            password: "",
-            firstName: "",
-            lastName: "",
-            email: "",
-            contactNo: "",
-            age: "",
-            gender: "",
-            address: "",
-            city: "",
-            state: "",
-            pinCode: "",
-            paymentMethod: "",
-            transactionID: "",
-            localPay: "N/A",
-            spUsername: username || "",
-            timeOfDay: "",
-          };
-        });
       }
     } catch (err) {
       toast.error(err.response.data.msg);

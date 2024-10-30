@@ -34,8 +34,6 @@ const bookAppointmnentController = async (req, res) => {
       serviceProvider,
     } = req.body;
 
-    console.log(req.body);
-
     // if service is not selected
     if (!service) {
       return res.status(401).json({
@@ -202,7 +200,7 @@ const bookAppointmnentController = async (req, res) => {
     const clientID = client.userID;
 
     // if all the information is provided
-    const existingClient = new Appointment({
+    const newAppointment = new Appointment({
       appointmentID: await generateUniqueAppointmentID(),
       service: service.split(" ")[0],
       invoiceID: await generateUniqueInvoiceID(),
@@ -225,7 +223,7 @@ const bookAppointmnentController = async (req, res) => {
       user: user._id,
     });
 
-    const result = await existingClient.save();
+    const result = await newAppointment.save();
 
     if (!result) {
       return res.status(500).json({

@@ -62,7 +62,13 @@ const appointmentConfirmationEmail = async (
     from: process.env.ADMIN_EMAIL,
     to: email,
     subject,
-    html: appointmentConfEmailTemplate(name, serviceProvider, date, time),
+    html: appointmentConfEmailTemplate(
+      name,
+      serviceProvider,
+      service,
+      date,
+      time
+    ),
   };
 
   // trigger the email

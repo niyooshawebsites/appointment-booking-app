@@ -173,7 +173,8 @@ const LetterHead = () => {
           </header>
           <hr className="mb-3" />
           <p className="mt-3 text-center">
-            Date: {date} | Time: {time} | Appointment ID: {appointmentID}
+            Date: {date.split("-").reverse().join("-")} | Time: {time} |
+            Appointment ID: {appointmentID}
           </p>
           <section>
             <h1 className="mt-3 text-center text-2xl underline">
