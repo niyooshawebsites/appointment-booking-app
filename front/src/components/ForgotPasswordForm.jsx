@@ -2,8 +2,10 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ForgotPasswordForm = () => {
+  const { username } = useSelector((state) => state.service_Provider_Slice);
   const [email, setEmail] = useState("");
 
   const handleChange = (e) => {
@@ -50,7 +52,10 @@ const ForgotPasswordForm = () => {
       </form>
 
       <p className="text-center text-gray-500 mt-5">
-        <Link to="/" className="text-indigo-600">
+        <Link
+          to={username != "abs" ? `/${username}/` : "/"}
+          className="text-indigo-600"
+        >
           Go back to home
         </Link>
       </p>

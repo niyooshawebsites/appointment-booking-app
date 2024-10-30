@@ -97,8 +97,6 @@ const appointmentSchema = new mongoose.Schema(
     transactionID: {
       type: String,
       required: true,
-      unique: true,
-      default: "N/A",
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

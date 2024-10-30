@@ -39,7 +39,7 @@ const VerificationOutcome = ({ outCome }) => {
             <h2 className="text-2xl font-bold mb-6 text-center text-red-500">
               Email verfication failed
             </h2>
-            <Link to={username != "abs" ? `/${username}` : "/"}>
+            <Link to={username != "abs" ? `/${username}/login` : "/"}>
               <button className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-center">
                 Return to home
               </button>

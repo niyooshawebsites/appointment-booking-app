@@ -163,7 +163,14 @@ const LoginForm = () => {
           </button>
         </form>
         <p className="text-center text-gray-500 mt-5">
-          <Link to="/forgot-password" className="text-pink-600">
+          <Link
+            to={
+              username != "abs"
+                ? `/${username}/forgot-password`
+                : "/forgot-password"
+            }
+            className="text-pink-600"
+          >
             Forgot password ?
           </Link>
         </p>

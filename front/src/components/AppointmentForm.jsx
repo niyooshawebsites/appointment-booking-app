@@ -17,21 +17,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const path = window.location.pathname;
   let username = path.split("/")[1];
 
-  // getting today's day
-  const getTodayDay = () => {
-    const today = new Date();
-
-    // Get the year, month, and day
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-based
-    const day = String(today.getDate()).padStart(2, "0");
-
-    // Format to yyyy-mm-dd
-    const todayDate = `${year}-${month}-${day}`;
-
-    return new Date(todayDate).toLocaleDateString("en-US", { weekday: "long" });
-  };
-
   const [custDetails, setCustDetails] = useState(() => {
     return {
       role: "0",
@@ -39,7 +24,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       service: "",
       fee: "",
       date: "",
-      time: null,
+      time: "",
       patientUsername: "",
       password: "",
       firstName: "",
@@ -56,7 +41,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       transactionID: "",
       localPay: "N/A",
       serviceProvider,
-      day: getTodayDay(),
       timeOfDay: "",
     };
   });
@@ -65,10 +49,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const { specialization, usersBySpecialization } = useSelector(
     (state) => state.specialization_Slice
   );
-
-  // const { timings } = useSelector((state) => state.service_Provider_Slice);
-  // const { morningFrom, morningTo, eveningFrom, eveningTo } =
-  //   timings[custDetails.day[0].toLowerCase() + custDetails.day.slice(1)];
 
   const [activateTID, setActivateTID] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -193,7 +173,13 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
         // book apponitment only when account creation succeeds....
         const response = await axios.post(
           `http://localhost:8000/api/v1/book-appointment/${username}`,
-          { ...custDetails, fee: custDetails.service.split("-")[1].slice(4) }
+          {
+            ...custDetails,
+            transactionID: activateTID
+              ? custDetails.transactionID
+              : custDetails.localPay,
+            fee: custDetails.service.split("-")[1].slice(4),
+          }
         );
 
         // appointment booking is successful
@@ -225,7 +211,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
             transactionID: "",
             localPay: "N/A",
             spUsername: username || "",
-            day: getTodayDay(),
             timeOfDay: "",
           };
         });
@@ -257,21 +242,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       toast.error(err.response.data.msg);
     }
   };
-
-  // if (custDetails.timeOfDay == "morning") {
-  //   if (custDetails.time < morningFrom || custDetails.time > morningTo) {
-  //     alert(
-  //       `Please select the timings between ${morningFrom} and ${morningTo}`
-  //     );
-
-  //     setCustDetails((prevDetails) => {
-  //       return {
-  //         ...prevDetails,
-  //         ["time"]: null,
-  //       };
-  //     });
-  //   }
-  // }
 
   // if the client is logged in
   if (customerDashboard) {

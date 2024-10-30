@@ -34,6 +34,8 @@ const bookAppointmnentController = async (req, res) => {
       serviceProvider,
     } = req.body;
 
+    console.log(req.body);
+
     // if service is not selected
     if (!service) {
       return res.status(401).json({

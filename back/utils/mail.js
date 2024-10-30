@@ -1,6 +1,8 @@
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
-const verificationEmailTemplate = require;
+const verificationEmailTemplate = require("../mail_templates/verificationEmail");
+const appointmentConfEmailTemplate = require("../mail_templates/appointmentConfEmail");
+const forgotPasswordEmailTemplate = require("../mail_templates/forgotPasswordEmail");
 
 const sendverificationEmail = (email, subject, text) => {
   // creating the transporter
@@ -18,19 +20,7 @@ const sendverificationEmail = (email, subject, text) => {
     from: process.env.ADMIN_EMAIL,
     to: email,
     subject,
-    html: `
-      <div style={{}} fontfamily:="" "arial,="" sans-serif",="" maxwidth:="" 600,="" margin:="" "auto",="" padding:="" 20,="" border:="" "1px="" solid="" #ddd",="" borderradius:="" 8,="" backgroundcolor:="" "#f9f9f9"="" }}="">
-        <h2 style={{}} color:="" "#333"="" }}="">Hello there,</h2>
-        <p style={{}} fontsize:="" 16,="" color:="" "#555"="" }}="">
-          Please click the link below to verify your email address:
-        </p>
-        <a href="#" target="_blank" style={{}} display:="" "inline-block",="" margin:="" "20px="" 0",="" padding:="" "10px="" 20px",="" backgroundcolor:="" "#007bff",="" color:="" "#fff",="" textdecoration:="" "none",="" borderradius:="" 5="" }}="">Verify Email</a>
-        <p style={{}} fontsize:="" 14,="" color:="" "#555"="" }}="">
-          Thank you and regards,<br />
-          <strong>Team - ABS</strong>
-        </p>
-      </div>
-    `,
+    html: verificationEmailTemplate(text),
   };
 
   // triggering the mail
@@ -72,16 +62,7 @@ const appointmentConfirmationEmail = async (
     from: process.env.ADMIN_EMAIL,
     to: email,
     subject,
-    html: `Hello Mr./Miss. ${name}. 
-    <br> 
-    Your appointment with ${serviceProvider} for ${service} on ${date} at ${time} is confirmed. 
-    <br> 
-    Thaks and regards,
-    <br>
-    ${serviceProvider}
-    <br>
-    Team - ABS
-    `,
+    html: appointmentConfEmailTemplate(name, serviceProvider, date, time),
   };
 
   // trigger the email
@@ -104,15 +85,7 @@ const forgotPasswordEmail = async (email, subject, text) => {
     from: process.env.ADMIN_EMAIL,
     to: email,
     subject,
-    html: `
-    Hello there,
-    <br> 
-    Please click the link to reset your passoword: <a href="${text}" target="_blank">Reset Password</a>
-    <br> 
-    Thaks and regards,
-    <br>
-    Team - ABS
-    `,
+    html: forgotPasswordEmailTemplate(text),
   };
 
   transporter.sendMail(mailOptions, (err, info) => {
