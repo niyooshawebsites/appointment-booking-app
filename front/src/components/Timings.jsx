@@ -90,9 +90,9 @@ const Timings = () => {
       className="w-5/12 mx-auto p-4 bg-white shadow-lg rounded-lg overflow-y-auto mt-5"
       style={{ height: "600px" }}
     >
-      <h2 className="text-3xl font-bold mb-4 text-pink-600 text-center">
-        Timings
-      </h2>
+      <h1 className="text-center text-3xl my-3 text-pink-500">
+        Timings - 24 hours clock
+      </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         {Object.keys(timings.days).map((day) => (
           <div key={day} className="odd:bg-gray-200 even:bg-white p-3">

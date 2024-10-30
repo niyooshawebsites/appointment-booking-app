@@ -155,7 +155,9 @@ const Header = () => {
                 to={user !== "abs" ? `/${user}` : "/"}
                 className="text-white text-3xl"
               >
-                {businessName}
+                {businessName
+                  ? businessName
+                  : "No Healthcare center name found"}
               </Link>
             </div>
             <div className="hidden sm:ml-6 sm:block ml-auto">

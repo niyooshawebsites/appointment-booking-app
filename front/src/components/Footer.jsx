@@ -23,16 +23,23 @@ const Footer = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-evenly">
             <div className="w-full flex flex-col justify-start items-center sm:w-3/12 mb-6 sm:mb-0">
-              <h3 className="text-lg font-semibold mb-4">About Us</h3>
+              <h3 className="text-lg font-semibold mb-4">About</h3>
               <p className="text-gray-400 mb-4">
-                {about.substring(0, 100) + "..."}
-                <Link
-                  to={username == "abs" ? "/about" : `/${username}/about`}
-                  className="text-white"
-                >
-                  {" "}
-                  More
-                </Link>
+                {about.length > 0
+                  ? about.substring(0, 100) + "..."
+                  : "No about content found"}
+
+                {about.length > 120 ? (
+                  <Link
+                    to={username == "abs" ? "/about" : `/${username}/about`}
+                    className="text-white"
+                  >
+                    {" "}
+                    More
+                  </Link>
+                ) : (
+                  ""
+                )}
               </p>
               <div className="flex space-x-4 mt-4">
                 <Link
@@ -75,22 +82,31 @@ const Footer = () => {
 
             <div className="w-full sm:w-2/12 mb-6 sm:mb-0">
               <h3 className="text-lg font-semibold mb-4">Services</h3>
-              <ul>
-                {services.map((service) => {
-                  return (
-                    <li key={service.serviceId}>
-                      {""}
-                      <Link href="#" className="text-gray-400 hover:text-white">
-                        {service.serviceName}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+              {services.length > 0 ? (
+                <ul>
+                  {services.map((service) => {
+                    return (
+                      <li key={service.serviceId}>
+                        {""}
+                        <Link
+                          href="#"
+                          className="text-gray-400 hover:text-white"
+                        >
+                          {service.serviceName}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <p className="text-gray-400">No sevices found</p>
+              )}
             </div>
 
             <div className="w-full flex flex-col justify-start items-center sm:w-4/12 mb-6 sm:mb-0">
-              <h3 className="text-lg font-semibold mb-4">Timings</h3>
+              <h3 className="text-lg font-semibold mb-4">
+                Timings (Morning & Evening)
+              </h3>
               <ul>
                 {timings &&
                 typeof timings === "object" &&
@@ -102,11 +118,15 @@ const Footer = () => {
                         <span className="text-white">{" >> "}</span>
                       </span>
                       <span className="text-gray-400">
-                        {times.morningFrom} - {times.morningTo}
+                        {times.morningFrom == "Off" && times.morningTo == "Off"
+                          ? "Not set"
+                          : `${times.morningFrom} - ${times.morningTo}`}
                       </span>
                       {" & "}
                       <span className="text-gray-400">
-                        {times.eveningFrom} - {times.eveningTo}
+                        {times.eveningFrom == "Off" && times.eveningTo == "Off"
+                          ? "Not set"
+                          : `${times.eveningFrom} - ${times.eveningTo}`}
                       </span>
                     </div>
                   ))
@@ -118,19 +138,30 @@ const Footer = () => {
 
             <div className="w-full sm:w-3/12">
               <h3 className="text-lg font-semibold mb-4">Contact Details</h3>
-              <p className="text-gray-400">{businessName},</p>
               <p className="text-gray-400">
-                {contact.office}, {contact.floor}, {contact.building}
+                {businessName ? businessName : "No Heathcare center name found"}
+                ,
               </p>
               <p className="text-gray-400">
-                {contact.street}, {contact.locality},
+                {contact.office || contact.floor || contact.building
+                  ? `${contact.office}, ${contact.floor}, ${contact.building}`
+                  : ""}
               </p>
               <p className="text-gray-400">
-                {contact.district}, {contact.state} - {contact.pinCode}
+                {contact.street || contact.locality
+                  ? `${contact.street}, ${contact.locality}`
+                  : ""}
+              </p>
+              <p className="text-gray-400">
+                {contact.district || contact.state || contact.pinCode
+                  ? `${contact.district}, ${contact.state} - ${contact.pinCode}`
+                  : ""}
               </p>
               <br />
               <p className="text-gray-400">Email: {email}</p>
-              <p className="text-gray-400">Phone: {contactNo}</p>
+              <p className="text-gray-400">
+                Phone: {contactNo.length > 10 ? "No contact no set" : contactNo}
+              </p>
             </div>
           </div>
         </div>

@@ -133,38 +133,41 @@ const ServiceForm = () => {
         </div>
       </form>
 
-      {/* Table Section */}
-      <table className="w-8/12 mx-auto bg-white shadow-md rounded-lg mt-10 text-sm">
-        <thead className="bg-pink-600 text-white">
-          <tr className=" text-left text-sm font-semibold">
-            <th className="py-2 px-3">#</th>
-            <th className="py-2 px-3">Service</th>
-            <th className="py-2 px-3">Fee</th>
-            <th className="py-2 px-3">Delete</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {allServices.map((service, index) => (
-            <tr
-              key={service.serviceId}
-              className="border-b odd:bg-gray-200 even:bg-white"
-            >
-              <td className="px-3 py-2">{index + 1}</td>
-              <td className="px-3 py-2">{service.serviceName}</td>
-              <td className="px-3 py-2">Rs {service.fee}</td>
-              <td className="px-3 py-2">
-                <Link
-                  className="text-red-600 text-xl rounded-md hover:text-red-800 transition-colors"
-                  onClick={() => handleDelete(service.serviceId)}
-                >
-                  <RxCross2 />
-                </Link>
-              </td>
+      {allServices.length > 0 ? (
+        <table className="w-8/12 mx-auto bg-white shadow-md rounded-lg mt-10 text-sm">
+          <thead className="bg-pink-600 text-white">
+            <tr className=" text-left text-sm font-semibold">
+              <th className="py-2 px-3">#</th>
+              <th className="py-2 px-3">Service</th>
+              <th className="py-2 px-3">Fee</th>
+              <th className="py-2 px-3">Delete</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {allServices.map((service, index) => (
+              <tr
+                key={service.serviceId}
+                className="border-b odd:bg-gray-200 even:bg-white"
+              >
+                <td className="px-3 py-2">{index + 1}</td>
+                <td className="px-3 py-2">{service.serviceName}</td>
+                <td className="px-3 py-2">Rs {service.fee}</td>
+                <td className="px-3 py-2">
+                  <Link
+                    className="text-red-600 text-xl rounded-md hover:text-red-800 transition-colors"
+                    onClick={() => handleDelete(service.serviceId)}
+                  >
+                    <RxCross2 />
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p className="text-center text-gray-400 mt-5">No services found</p>
+      )}
     </div>
   );
 };

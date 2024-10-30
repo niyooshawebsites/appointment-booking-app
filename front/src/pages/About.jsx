@@ -42,9 +42,15 @@ const About = () => {
     <Layout>
       <div className="max-w-4xl mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-center mb-6 text-pink-600">
-          About Us
+          About
         </h1>
-        <p className="text-lg text-gray-700 mb-8 text-justify">{about}</p>
+        <p className="text-lg text-gray-700 mb-8 text-justify">
+          {about.length > 0 ? (
+            about
+          ) : (
+            <p className="text-center">No 'about' content found</p>
+          )}
+        </p>
         <div className="flex justify-center items-center">
           {username != "abs" ? (
             <Link

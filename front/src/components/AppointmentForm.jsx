@@ -394,7 +394,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       value={custDetails.service}
                       onChange={handleChange}
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     >
                       <option value="No slection">Select service</option>
                       {services.map((service) => {
@@ -419,7 +419,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       value={custDetails.timeOfDay}
                       onChange={handleChange}
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     >
                       <option value="No slection">Select service</option>
                       <option value="morning">Morning</option>
@@ -438,7 +438,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       autoComplete="on"
                       value={custDetails.date}
                       onChange={handleChange}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                 </div>
@@ -453,7 +453,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       placeholder="HH:MM"
                       value={custDetails.time}
                       onChange={handleChange}
-                      className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 ml-2"
+                      className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 ml-2"
                       required
                     />
                   </div>
@@ -483,7 +483,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       onChange={handleChange}
                       placeholder="First name"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                 </div>
@@ -499,7 +499,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       onChange={handleChange}
                       placeholder="Last name"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                 </div>
@@ -514,7 +514,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       value={custDetails.email}
                       onChange={handleChange}
                       placeholder="Email"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                       required
                     />
                   </div>
@@ -533,7 +533,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       onChange={handleChange}
                       placeholder="Contact number"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                 </div>
@@ -550,7 +550,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       onChange={handleChange}
                       placeholder="Age"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                 </div>
@@ -563,7 +563,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       value={custDetails.gender}
                       onChange={handleChange}
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     >
                       <option value="No selection">Select gender</option>
                       <option value="Male">Male</option>
@@ -584,7 +584,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       onChange={handleChange}
                       placeholder="Address"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                 </div>
@@ -600,7 +600,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       onChange={handleChange}
                       placeholder="City"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                 </div>
@@ -616,7 +616,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       onChange={handleChange}
                       placeholder="State"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                 </div>
@@ -634,7 +634,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       onChange={handleChange}
                       placeholder="Pin code"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                 </div>
@@ -654,7 +654,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       value={custDetails.paymentMethod}
                       onChange={handleChange}
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     >
                       <option value="">Select payment method</option>
                       <option value="Pay locally">Pay locally</option>
@@ -677,7 +677,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       }
                       onChange={handleChange}
                       placeholder="Online Payment - Enter Transtaction ID"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                       required
                     />
                   </div>
@@ -700,7 +700,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       onChange={handleChange}
                       placeholder="username"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                 </div>
@@ -715,7 +715,7 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       onChange={handleChange}
                       placeholder="Password"
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     />
                   </div>
                   <div className="w-1/12 flex justify-center items-center text-gray-400">

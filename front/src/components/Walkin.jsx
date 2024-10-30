@@ -295,7 +295,7 @@ const Walkin = () => {
                     onChange={handleSearchChange}
                     required
                     placeholder="Search a patient using contact number..."
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    className="block w-full rounded-md py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                   />
                 </div>
                 <div className="w-3/12">
@@ -315,7 +315,7 @@ const Walkin = () => {
             >
               <div className="space-y-2 h-full flex flex-col justify-start">
                 {/* Appointment Details */}
-                <div className="border-b pb-4">
+                <div className="pb-4">
                   <h2 className="text-lg font-semibold mb-2 text-pink-600">
                     Appointment Details
                   </h2>
@@ -327,7 +327,7 @@ const Walkin = () => {
                         value={custDetails.service}
                         onChange={handleChange}
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       >
                         <option value="">Select service</option>
                         {services.map((service) => (
@@ -351,7 +351,7 @@ const Walkin = () => {
                         value={custDetails.date}
                         onChange={handleChange}
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       />
                     </div>
 
@@ -365,7 +365,7 @@ const Walkin = () => {
                         name="time"
                         value={custDetails.time}
                         onChange={handleChange}
-                        className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 "
+                        className="w-full rounded-md py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 "
                         required
                       />
                     </div>
@@ -388,7 +388,7 @@ const Walkin = () => {
                         onChange={handleChange}
                         placeholder="First name"
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       />
                     </div>
 
@@ -402,7 +402,7 @@ const Walkin = () => {
                         onChange={handleChange}
                         placeholder="Last name"
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       />
                     </div>
 
@@ -416,7 +416,7 @@ const Walkin = () => {
                         onChange={handleChange}
                         placeholder="Email"
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       />
                     </div>
 
@@ -432,7 +432,7 @@ const Walkin = () => {
                         onChange={handleChange}
                         placeholder="Contact number"
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       />
                     </div>
 
@@ -447,7 +447,7 @@ const Walkin = () => {
                         onChange={handleChange}
                         placeholder="Age"
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       />
                     </div>
 
@@ -458,7 +458,7 @@ const Walkin = () => {
                         value={custDetails.gender}
                         onChange={handleChange}
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       >
                         <option value="">Select gender</option>
                         <option value="Male">Male</option>
@@ -477,7 +477,7 @@ const Walkin = () => {
                         onChange={handleChange}
                         placeholder="Address"
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       />
                     </div>
 
@@ -491,7 +491,7 @@ const Walkin = () => {
                         onChange={handleChange}
                         placeholder="City"
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       />
                     </div>
 
@@ -505,7 +505,7 @@ const Walkin = () => {
                         onChange={handleChange}
                         placeholder="State"
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       />
                     </div>
 
@@ -521,7 +521,7 @@ const Walkin = () => {
                         onChange={handleChange}
                         placeholder="Pin code"
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       />
                     </div>
                   </div>
@@ -540,7 +540,7 @@ const Walkin = () => {
                         value={custDetails.paymentMethod}
                         onChange={handleChange}
                         required
-                        className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                       >
                         <option value="Select payment method">
                           Select payment method
@@ -574,7 +574,7 @@ const Walkin = () => {
                           }
                           onChange={handleChange}
                           placeholder="Online Payment - Enter Transtaction ID"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                          className="block w-full rounded-md py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                           required
                         />
                       </div>

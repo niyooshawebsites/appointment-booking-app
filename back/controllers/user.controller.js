@@ -82,7 +82,7 @@ const registerController = async (req, res) => {
       );
 
       // generate the email verification link
-      const verficationURI = `http://localhost:5173/verify-email?token=${verficationToken}`;
+      const verficationURI = `http://localhost:5173/${username}/verify-email?token=${verficationToken}`;
 
       // Send the verfication link to customer email account
       await sendverificationEmail(
@@ -646,12 +646,12 @@ const getContactDetailsController = async (req, res) => {
 const checkUserController = async (req, res) => {
   try {
     const { username } = req.params;
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username, role: 1 });
 
     if (!user) {
       return res.status(404).json({
         success: false,
-        msg: "user does not exist",
+        msg: "Doctor does not exist",
       });
     }
 

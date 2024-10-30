@@ -245,7 +245,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   value={custDetails.service}
                   onChange={handleChange}
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 >
                   <option value="">Select service</option>
                   {services.map((service) => (
@@ -269,7 +269,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   value={custDetails.date}
                   onChange={handleChange}
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
               </div>
 
@@ -285,7 +285,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   max="18:00"
                   value={custDetails.time}
                   onChange={handleChange}
-                  className="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 "
+                  className="w-full rounded-md py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 "
                   required
                 />
               </div>
@@ -314,7 +314,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   onChange={handleChange}
                   placeholder="First name"
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
               </div>
 
@@ -328,7 +328,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   onChange={handleChange}
                   placeholder="Last name"
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
               </div>
 
@@ -343,7 +343,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   placeholder="Email"
                   required
                   readOnly
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
               </div>
 
@@ -359,7 +359,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   onChange={handleChange}
                   placeholder="Contact number"
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
               </div>
 
@@ -374,7 +374,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   onChange={handleChange}
                   placeholder="Age"
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
               </div>
 
@@ -385,7 +385,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   value={custDetails.gender}
                   onChange={handleChange}
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 >
                   <option value="">Select gender</option>
                   <option value="Male">Male</option>
@@ -404,7 +404,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   onChange={handleChange}
                   placeholder="Address"
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
               </div>
 
@@ -418,7 +418,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   onChange={handleChange}
                   placeholder="City"
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
               </div>
 
@@ -432,7 +432,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   onChange={handleChange}
                   placeholder="State"
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
               </div>
 
@@ -448,7 +448,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   onChange={handleChange}
                   placeholder="Pin code"
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
               </div>
             </div>
@@ -467,7 +467,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   value={custDetails.paymentMethod}
                   onChange={handleChange}
                   required
-                  className="block w-full p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 >
                   <option value="Select payment method">
                     Select payment method
@@ -498,7 +498,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                     }
                     onChange={handleChange}
                     placeholder="Online Payment - Enter Transtaction ID"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                    className="block w-full rounded-md py-1.5 text-gray-900 shadow-sm ring-1 ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                     required
                   />
                 </div>

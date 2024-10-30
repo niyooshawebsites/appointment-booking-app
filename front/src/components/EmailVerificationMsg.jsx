@@ -28,7 +28,7 @@ const VerificationOutcome = ({ outCome }) => {
             </h2>
             <Link to={username != "abs" ? `/${username}/login` : "/login"}>
               <button className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 text-center">
-                Log In
+                Check your site & Log In
               </button>
             </Link>
           </div>

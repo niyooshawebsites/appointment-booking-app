@@ -41,6 +41,12 @@ const DisplayInfo = () => {
       if (res.data.success) {
         toast.success(res.data.msg);
         setUserDeleted((prevState) => !prevState);
+
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: allUsers.filter((singleUser) => singleUser._id != id),
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -180,10 +186,10 @@ const DisplayInfo = () => {
   };
 
   useEffect(() => {
-    if (role == 1 && isAdmin && allUsers.length) {
+    if (role == 1 && isAdmin && allUsers.length > 0) {
       fetchAppointmentsCount();
     }
-  }, [allUsers]);
+  }, [allUsers.length, userDeleted]);
 
   // show admin info...
   if (role == 1 && isAdmin) {
@@ -251,21 +257,15 @@ const DisplayInfo = () => {
                       )}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      <Link
+                      <button
                         onClick={() => {
                           handleDelete(user._id);
-
-                          dispatch(
-                            usersDataSliceActions.getUsersData({
-                              allUsers: null, // this value needs to be fixed
-                            })
-                          );
                         }}
                         title="Delete"
                         className="text-red-500"
                       >
                         <RxCross2 />
-                      </Link>
+                      </button>
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       <Link
