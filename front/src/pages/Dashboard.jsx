@@ -19,6 +19,8 @@ import Walkin from "../components/Walkin";
 import Invoice from "../components/Invoice";
 
 const Dashboard = () => {
+  const { authenticated } = useSelector((state) => state.user_Slice);
+
   const {
     showHighlights,
     showInfo,

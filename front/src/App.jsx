@@ -1,20 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Appointment from "./pages/Appointment";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import VeriryEmail from "./pages/VeriryEmail";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import NotFound from "./pages/NotFound";
+const Appointment = lazy(() => import("./pages/Appointment"));
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const VeriryEmail = lazy(() => import("./pages/VeriryEmail"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 import GlobalStore from "./store/GlobalStore";
 import { Provider } from "react-redux";
-import ProtectedContent from "./components/ProtectedContent";
+// import ProtectedContent from "./components/ProtectedContent";
+const ProtectedContent = lazy(() => import("./components/ProtectedContent"));
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loader from "./components/Loader";
 
 const App = () => {
   const [serviceProvider, setServiceProvider] = useState(false);
@@ -58,7 +60,14 @@ const App = () => {
     <Provider store={GlobalStore}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Home />
+              </Suspense>
+            }
+          />
 
           {username != "abs" ? (
             <>
@@ -66,70 +75,169 @@ const App = () => {
                 path={`/${username}`}
                 element={
                   serviceProvider ? (
-                    <Appointment serviceProvider={serviceProvider} />
+                    <Suspense fallback={<Loader />}>
+                      <Appointment serviceProvider={serviceProvider} />
+                    </Suspense>
                   ) : (
-                    <NotFound />
+                    <Suspense fallback={<Loader />}>
+                      <NotFound />
+                    </Suspense>
                   )
                 }
               />
               <Route
                 path={`/${username}/about`}
-                element={serviceProvider ? <About /> : <NotFound />}
+                element={
+                  serviceProvider ? (
+                    <Suspense fallback={<Loader />}>
+                      <About />
+                    </Suspense>
+                  ) : (
+                    <Suspense fallback={<Loader />}>
+                      <NotFound />
+                    </Suspense>
+                  )
+                }
               />
 
-              <Route path={`/${username}/*`} element={<NotFound />} />
+              <Route
+                path={`/${username}/*`}
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <NotFound />
+                  </Suspense>
+                }
+              />
             </>
           ) : (
             <>
               <Route
                 path={`/about`}
-                element={serviceProvider ? <About /> : <NotFound />}
+                element={
+                  serviceProvider ? (
+                    <Suspense fallback={<Loader />}>
+                      <About />
+                    </Suspense>
+                  ) : (
+                    <Suspense fallback={<Loader />}>
+                      <NotFound />
+                    </Suspense>
+                  )
+                }
               />
             </>
           )}
 
-          <Route path="/login" element={<Login />} />
-          <Route path={`/${username}/login`} element={<Login />} />
-
-          <Route path="/register" element={<Register />} />
           <Route
-            path={username != "abs" ? `/${username}/register` : "/register"}
-            element={<Register />}
+            path="/login"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Login />
+              </Suspense>
+            }
+          />
+          <Route
+            path={`/${username}/login`}
+            element={
+              <Suspense fallback={<Loader />}>
+                <Login />
+              </Suspense>
+            }
           />
 
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/register"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Register />
+              </Suspense>
+            }
+          />
+          <Route
+            path={username != "abs" ? `/${username}/register` : "/register"}
+            element={
+              <Suspense fallback={<Loader />}>
+                <Register />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/forgot-password"
+            element={
+              <Suspense fallback={<Loader />}>
+                <ForgotPassword />
+              </Suspense>
+            }
+          />
           <Route
             path={
               username != "abs"
                 ? `/${username}/forgot-password`
                 : "/forgot-password"
             }
-            element={<ForgotPassword />}
+            element={
+              <Suspense fallback={<Loader />}>
+                <ForgotPassword />
+              </Suspense>
+            }
           />
 
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route
+            path="/reset-password"
+            element={
+              <Suspense fallback={<Loader />}>
+                <ResetPassword />
+              </Suspense>
+            }
+          />
           <Route
             path={
               username != "abs"
                 ? `/${username}/reset-password`
                 : "/reset-password"
             }
-            element={<ResetPassword />}
+            element={
+              <Suspense fallback={<Loader />}>
+                <ResetPassword />
+              </Suspense>
+            }
           />
 
-          <Route path="/verify-email" element={<VeriryEmail />} />
+          <Route
+            path="/verify-email"
+            element={
+              <Suspense fallback={<Loader />}>
+                <VeriryEmail />
+              </Suspense>
+            }
+          />
           <Route
             path={
               username != "abs" ? `/${username}/verify-email` : "/verify-email"
             }
-            element={<VeriryEmail />}
+            element={
+              <Suspense fallback={<Loader />}>
+                <VeriryEmail />
+              </Suspense>
+            }
           />
 
-          <Route element={<ProtectedContent />}>
+          <Route
+            element={
+              <Suspense fallback={<Loader />}>
+                <ProtectedContent />
+              </Suspense>
+            }
+          >
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route
               path={username != "abs" ? `/${username}/dashboard` : "/dashboard"}
-              element={<Dashboard />}
+              element={
+                <Suspense fallback={<Loader />}>
+                  <Dashboard />
+                </Suspense>
+              }
             />
           </Route>
         </Routes>
