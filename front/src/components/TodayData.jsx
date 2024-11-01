@@ -235,6 +235,7 @@ const TodayData = () => {
                                 state: appointment.state,
                                 pinCode: appointment.pinCode,
                                 paymentMethod: appointment.paymentMethod,
+                                transactionID: appointment.transactionID,
                               })
                             );
                           }}

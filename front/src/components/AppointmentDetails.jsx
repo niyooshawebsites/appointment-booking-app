@@ -20,6 +20,7 @@ const AppointmentDetails = () => {
     state,
     pinCode,
     paymentMethod,
+    transactionID,
   } = useSelector((state) => state.appointment_Slice);
 
   // go back function
@@ -243,11 +244,22 @@ const AppointmentDetails = () => {
             Payment Details
           </h2>
           <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
-            <div className="col-span-full">
+            <div className="col-span-3">
               <div className="mt-2">
                 <input
                   type="text"
                   value={paymentMethod}
+                  readOnly
+                  disabled
+                  className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                />
+              </div>
+            </div>
+            <div className="col-span-3">
+              <div className="mt-2">
+                <input
+                  type="text"
+                  value={transactionID}
                   readOnly
                   disabled
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"

@@ -22,6 +22,7 @@ const appointmentSlice = createSlice({
     state: "",
     pinCode: "",
     paymentMethod: "",
+    transactionID: "",
   },
   reducers: {
     appointmentDetails: (state, action) => {
@@ -44,6 +45,7 @@ const appointmentSlice = createSlice({
       state.state = action.payload.state;
       state.pinCode = action.payload.pinCode;
       state.paymentMethod = action.payload.paymentMethod;
+      state.transactionID = action.payload.transactionID;
     },
   },
 });

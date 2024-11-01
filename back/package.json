@@ -10,6 +10,7 @@
   "author": "Babai Bose",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.682.0",
     "bcrypt": "^5.1.1",
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.6",

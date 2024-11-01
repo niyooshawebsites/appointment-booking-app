@@ -92,6 +92,7 @@ const DisplayInfo = () => {
             state: res.data.appointment.state,
             pinCode: res.data.appointment.pinCode,
             paymentMethod: res.data.appointment.paymentMethod,
+            transactionID: res.data.appointment.transactionID,
           })
         );
       }
@@ -321,6 +322,7 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left">Time</th>
               <th className="py-2 px-4 text-left">Gender</th>
               <th className="py-2 px-4 text-left">Payment</th>
+              <th className="py-2 px-4 text-left">TRNX ID</th>
               <th className="py-2 px-4 text-left">Details</th>
               <th className="py-2 px-4 text-left">Print</th>
             </tr>
@@ -375,6 +377,9 @@ const DisplayInfo = () => {
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.paymentMethod}
+                    </td>
+                    <td className="py-2 px-4 text-gray-700">
+                      {appointment.transactionID || "Null"}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       <Link
@@ -442,6 +447,7 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left">Date</th>
               <th className="py-2 px-4 text-left">Time</th>
               <th className="py-2 px-4 text-left">Payment</th>
+              <th className="py-2 px-4 text-left">TRNX ID</th>
               <th className="py-2 px-4 text-left">Dr. Profile</th>
             </tr>
           </thead>
@@ -483,6 +489,9 @@ const DisplayInfo = () => {
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.paymentMethod}
+                    </td>
+                    <td className="py-2 px-4 text-gray-700">
+                      {appointment.transactionID}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       <Link
