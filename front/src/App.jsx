@@ -1,6 +1,6 @@
 import { useState, useEffect, Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-const Appointment = lazy(() => import("./pages/Appointment"));
+// const Appointment = lazy(() => import("./pages/Appointment"));
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -12,7 +12,6 @@ const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 import GlobalStore from "./store/GlobalStore";
 import { Provider } from "react-redux";
-// import ProtectedContent from "./components/ProtectedContent";
 const ProtectedContent = lazy(() => import("./components/ProtectedContent"));
 import axios from "axios";
 import { toast } from "react-toastify";

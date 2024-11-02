@@ -1,10 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { walkinSliceActions } from "../store/slices/WalkinSlice";
-import { onlinePaymentSliceActions } from "../store/slices/OnlinePyamentSlice";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import OnlinePayment from "./OnlinePayment";
 
 const Walkin = () => {
   const { showWalkinModal } = useSelector((state) => state.walkin_Slice);
@@ -30,9 +28,6 @@ const Walkin = () => {
       pinCode: "",
     };
   });
-
-  // const [activateTID, setActivateTID] = useState(false);
-  // const [payOnline, setPayOnline] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -548,7 +543,6 @@ const Walkin = () => {
                 </div>
               </div>
             </form>
-            <OnlinePayment />
           </div>
         </div>
       </>

@@ -147,11 +147,6 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    // client
-    paymentMethod: {
-      type: Array,
-      default: "",
-    },
     // service provider
     socialProfiles: {
       facebookUrl: {

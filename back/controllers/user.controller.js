@@ -1236,7 +1236,7 @@ const getAllUsersBySpecificSpecializationController = async (req, res) => {
       role: 1,
     })
       .select(
-        "-password -socialProfiles -firstName -lastName -gender -address -city -paymentMethod -email -role -isVerified -isAdmin -office -floor -building -street -locality -district -state -pinCode -about -services -gst -createdAt -updatedAt -contactNo"
+        "-password -socialProfiles -firstName -lastName -gender -address -city -email -role -isVerified -isAdmin -office -floor -building -street -locality -district -state -pinCode -about -services -gst -createdAt -updatedAt -contactNo"
       )
       .skip(skip)
       .limit(limit);

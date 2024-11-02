@@ -228,24 +228,24 @@ const Header = () => {
                   <>
                     {user !== "abs" ? (
                       <>
-                        <NavLink
+                        {/* <NavLink
                           to={`/${user}`}
                           className="rounded-md bg-pink-600 px-3 py-2 text-sm font-medium text-white"
                           aria-current="page"
                         >
-                          Book Appointment
+                          Book Appointments
+                        </NavLink> */}
+                        <NavLink
+                          to={`/${user}/login`}
+                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
+                        >
+                          Login
                         </NavLink>
                         <NavLink
                           to={`/${user}/about`}
                           className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
                         >
                           About
-                        </NavLink>
-                        <NavLink
-                          to={`/${user}/login`}
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                        >
-                          login
                         </NavLink>
                       </>
                     ) : (

@@ -10,7 +10,6 @@ import { specializationSliceActions } from "../store/slices/SpecializationSlice"
 import Pagination from "../components/Pagination";
 import { RxLink2, RxBookmarkFilled } from "react-icons/rx";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import OnlinePayment from "./OnlinePayment";
 
 const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const path = window.location.pathname;
@@ -677,7 +676,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
             </button>
           </div>
         </form>
-        <OnlinePayment />
       </>
     );
   }

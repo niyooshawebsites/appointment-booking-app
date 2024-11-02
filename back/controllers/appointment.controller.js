@@ -9,253 +9,233 @@ const {
 } = require("../utils/uniqueID");
 
 // book appointment controller
-const bookAppointmnentController = async (req, res) => {
-  try {
-    const { username } = req.params;
+// const bookAppointmnentController = async (req, res) => {
+//   try {
+//     const { username } = req.params;
 
-    const {
-      service,
-      fee,
-      date,
-      time,
-      patientUsername,
-      firstName,
-      lastName,
-      email,
-      contactNo,
-      age,
-      gender,
-      address,
-      city,
-      state,
-      pinCode,
-      paymentMethod,
-      transactionID,
-      serviceProvider,
-    } = req.body;
+//     const {
+//       service,
+//       fee,
+//       date,
+//       time,
+//       patientUsername,
+//       firstName,
+//       lastName,
+//       email,
+//       contactNo,
+//       age,
+//       gender,
+//       address,
+//       city,
+//       state,
+//       pinCode,
+//       serviceProvider,
+//     } = req.body;
 
-    // if service is not selected
-    if (!service) {
-      return res.status(401).json({
-        succss: false,
-        msg: "Please select the service",
-      });
-    }
+//     // if service is not selected
+//     if (!service) {
+//       return res.status(401).json({
+//         succss: false,
+//         msg: "Please select the service",
+//       });
+//     }
 
-    // if fee is not selected
-    if (!fee) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide the fee",
-      });
-    }
+//     // if fee is not selected
+//     if (!fee) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide the fee",
+//       });
+//     }
 
-    // if date is not selected
-    if (!date) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please select the date",
-      });
-    }
+//     // if date is not selected
+//     if (!date) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please select the date",
+//       });
+//     }
 
-    // if time is not selected
-    if (!time) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please select the time",
-      });
-    }
+//     // if time is not selected
+//     if (!time) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please select the time",
+//       });
+//     }
 
-    // if time is not selected
-    if (!patientUsername) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide Patient username",
-      });
-    }
+//     // if time is not selected
+//     if (!patientUsername) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide Patient username",
+//       });
+//     }
 
-    // if firstname is not provided
-    if (!firstName) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide your first name",
-      });
-    }
+//     // if firstname is not provided
+//     if (!firstName) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide your first name",
+//       });
+//     }
 
-    // if lastName is not provided
-    if (!lastName) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide your last name",
-      });
-    }
+//     // if lastName is not provided
+//     if (!lastName) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide your last name",
+//       });
+//     }
 
-    // if email is not provided
-    if (!email) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide your email",
-      });
-    }
+//     // if email is not provided
+//     if (!email) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide your email",
+//       });
+//     }
 
-    // if contactNo is not provided
-    if (!contactNo) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide your contact number",
-      });
-    }
+//     // if contactNo is not provided
+//     if (!contactNo) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide your contact number",
+//       });
+//     }
 
-    // if age is not provided
-    if (!age) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide your age",
-      });
-    }
+//     // if age is not provided
+//     if (!age) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide your age",
+//       });
+//     }
 
-    // if gender is not selected
-    if (!gender) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please select your gender",
-      });
-    }
+//     // if gender is not selected
+//     if (!gender) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please select your gender",
+//       });
+//     }
 
-    // if address is not provided
-    if (!address) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide your address",
-      });
-    }
+//     // if address is not provided
+//     if (!address) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide your address",
+//       });
+//     }
 
-    // if city is not provided
-    if (!city) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide your city",
-      });
-    }
+//     // if city is not provided
+//     if (!city) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide your city",
+//       });
+//     }
 
-    // if state is not provided
-    if (!state) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide your state",
-      });
-    }
+//     // if state is not provided
+//     if (!state) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide your state",
+//       });
+//     }
 
-    // if pinCode is not provided
-    if (!pinCode) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide your pincode",
-      });
-    }
+//     // if pinCode is not provided
+//     if (!pinCode) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Please provide your pincode",
+//       });
+//     }
 
-    // if paymentMethod is not selected
-    if (!paymentMethod) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please select your payment method",
-      });
-    }
+//     // if Service provider is not selected
+//     if (!serviceProvider) {
+//       return res.status(400).json({
+//         succss: false,
+//         msg: "Service provider is missing",
+//       });
+//     }
 
-    // if transaction ID is not provided
-    if (!transactionID) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide the tranaction ID",
-      });
-    }
+//     const user = await User.findOne({ username });
 
-    // if Service provider is not selected
-    if (!serviceProvider) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Service provider is missing",
-      });
-    }
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         msg: `No service provider with the username ${username} found`,
+//       });
+//     }
 
-    const user = await User.findOne({ username });
+//     // get patient details
+//     const client = await User.findOne({ username: patientUsername });
 
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        msg: `No service provider with the username ${username} found`,
-      });
-    }
+//     if (!client) {
+//       return res.status(404).json({
+//         success: false,
+//         msg: "Client not found",
+//       });
+//     }
 
-    // get patient details
-    const client = await User.findOne({ username: patientUsername });
+//     const clientID = client.userID;
 
-    if (!client) {
-      return res.status(404).json({
-        success: false,
-        msg: "Client not found",
-      });
-    }
+//     // if all the information is provided
+//     const newAppointment = new Appointment({
+//       appointmentID: await generateUniqueAppointmentID(),
+//       service: service.split(" ")[0],
+//       invoiceID: await generateUniqueInvoiceID(),
+//       patientID: clientID,
+//       fee,
+//       date,
+//       time,
+//       firstName,
+//       lastName,
+//       email,
+//       contactNo,
+//       age,
+//       gender,
+//       address,
+//       city,
+//       state,
+//       pinCode,
+//       user: user._id,
+//     });
 
-    const clientID = client.userID;
+//     const result = await newAppointment.save();
 
-    // if all the information is provided
-    const newAppointment = new Appointment({
-      appointmentID: await generateUniqueAppointmentID(),
-      service: service.split(" ")[0],
-      invoiceID: await generateUniqueInvoiceID(),
-      patientID: clientID,
-      fee,
-      date,
-      time,
-      firstName,
-      lastName,
-      email,
-      contactNo,
-      age,
-      gender,
-      address,
-      city,
-      state,
-      pinCode,
-      paymentMethod,
-      transactionID,
-      user: user._id,
-    });
+//     if (!result) {
+//       return res.status(500).json({
+//         success: false,
+//         msg: "Appointment booking failed. Please try again",
+//       });
+//     }
 
-    const result = await newAppointment.save();
+//     const fullName = `${firstName} ${lastName}`;
 
-    if (!result) {
-      return res.status(500).json({
-        success: false,
-        msg: "Appointment booking failed. Please try again",
-      });
-    }
+//     await appointmentConfirmationEmail(
+//       email,
+//       "Appointment confirmed",
+//       fullName,
+//       user.businessName,
+//       service,
+//       date,
+//       time
+//     );
 
-    const fullName = `${firstName} ${lastName}`;
-
-    await appointmentConfirmationEmail(
-      email,
-      "Appointment confirmed",
-      fullName,
-      user.businessName,
-      service,
-      date,
-      time
-    );
-
-    return res.status(201).json({
-      success: true,
-      msg: "Appointment booked successfully",
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      msg: "Internal Server Error",
-      err: err.message,
-    });
-  }
-};
+//     return res.status(201).json({
+//       success: true,
+//       msg: "Appointment booked successfully",
+//     });
+//   } catch (err) {
+//     return res.status(500).json({
+//       success: false,
+//       msg: "Internal Server Error",
+//       err: err.message,
+//     });
+//   }
+// };
 
 // book appointment controller
 const bookAppointmnentByLoginController = async (req, res) => {
@@ -277,9 +257,6 @@ const bookAppointmnentByLoginController = async (req, res) => {
       city,
       state,
       pinCode,
-      paymentMethod,
-      transactionID,
-      serviceProvider,
     } = req.body;
 
     // if service is not selected
@@ -394,31 +371,7 @@ const bookAppointmnentByLoginController = async (req, res) => {
       });
     }
 
-    // if paymentMethod is not selected
-    if (!paymentMethod) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please select your payment method",
-      });
-    }
-
-    // if paymentMethod is not selected
-    if (!transactionID) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Please provide the transaction ID",
-      });
-    }
-
-    // if Service provider is not selected
-    if (!serviceProvider) {
-      return res.status(400).json({
-        succss: false,
-        msg: "Service provider is missing",
-      });
-    }
-
-    const user = await User.findOne({ username: serviceProvider });
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(404).json({
@@ -457,8 +410,6 @@ const bookAppointmnentByLoginController = async (req, res) => {
       city,
       state,
       pinCode,
-      paymentMethod,
-      transactionID,
       user: user._id,
     });
 
@@ -877,8 +828,6 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       city,
       state,
       pinCode,
-      paymentMethod,
-      transactionID,
     } = req.body;
 
     // if service is not selected
@@ -993,22 +942,6 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       });
     }
 
-    // if paymentMethod is not selected
-    if (!paymentMethod) {
-      return res.status(401).json({
-        succss: false,
-        msg: "Please select your payment method",
-      });
-    }
-
-    // if paymentMethod is not selected
-    if (!transactionID) {
-      return res.status(401).json({
-        succss: false,
-        msg: "Please provide the transaction ID",
-      });
-    }
-
     // checking for existig client for unique ID
     const client = await User.findOne({ contactNo });
     console.log(client.userID);
@@ -1034,8 +967,6 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
       city,
       state,
       pinCode,
-      paymentMethod,
-      transactionID,
       user: serviceProvider._id,
     });
 
@@ -1129,7 +1060,7 @@ const changeAppointmentStausController = async (req, res) => {
 };
 
 module.exports = {
-  bookAppointmnentController,
+  // bookAppointmnentController,
   bookAppointmnentByLoginController,
   getAllAppointmentsController,
   getTodayAppointmentsByUsernameController,

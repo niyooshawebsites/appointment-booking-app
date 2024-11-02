@@ -4,7 +4,6 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
-import OnlinePayment from "./OnlinePayment";
 
 const LoginAppointmentForm = ({ customerDashboard }) => {
   const [services, setServices] = useState([]);
@@ -29,7 +28,6 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
       city: "",
       state: "",
       pinCode: "",
-      serviceProvider: username,
     };
   });
 
@@ -46,8 +44,6 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
 
   const handleSubmit = async function (e) {
     e.preventDefault();
-
-    console.log(custDetails);
 
     try {
       // api for booking appointment...
@@ -446,7 +442,6 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
           </div>
         </div>
       </form>
-      <OnlinePayment />
     </>
   );
 };

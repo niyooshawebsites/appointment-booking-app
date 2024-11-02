@@ -47,7 +47,7 @@ const {
 } = require("../controllers/service.controller");
 
 const {
-  bookAppointmnentController,
+  //bookAppointmnentController,
   bookAppointmnentByLoginController,
   getAllAppointmentsController,
   getTodayAppointmentsByUsernameController,
@@ -97,7 +97,7 @@ router.patch(
 router.get("/get-services/:username", getAllServicesController);
 
 // book appointment route - without login
-router.post("/book-appointment/:username", bookAppointmnentController);
+// router.post("/book-appointment/:username", bookAppointmnentController);
 
 // book appointment route - by login - for client
 router.post(

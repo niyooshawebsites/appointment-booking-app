@@ -336,8 +336,6 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left">Contact</th>
               <th className="py-2 px-4 text-left">Date</th>
               <th className="py-2 px-4 text-left">Time</th>
-              {/* <th className="py-2 px-4 text-left">Payment</th>
-              <th className="py-2 px-4 text-left">TRNX ID</th> */}
               <th className="py-2 px-4 text-left">Details</th>
               <th className="py-2 px-4 text-left">Status</th>
               <th className="py-2 px-4 text-left">Actions</th>
@@ -392,7 +390,9 @@ const DisplayInfo = () => {
                         <TbListDetails />
                       </Link>
                     </td>
-                    <td className="py-2 px-4 text-gray-700">{"Pending"}</td>
+                    <td className="py-2 px-4 text-gray-700">
+                      {appointment.appointmentStatus}
+                    </td>
                     <td className="py-2 px-4 text-gray-700">
                       <div className="flex flex-">
                         <button
