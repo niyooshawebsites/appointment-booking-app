@@ -52,7 +52,6 @@ const Invoice = () => {
     city,
     state,
     pinCode,
-    paymentMethod,
   } = useSelector((state) => state.appointment_Slice);
 
   const { username } = useSelector((state) => state.user_Slice);
@@ -178,7 +177,7 @@ const Invoice = () => {
             <h1 className="mt-3 text-center text-2xl underline">INVOICE</h1>
             <p className="mt-3 text-center">
               Date: {date.split("-").reverse().join("-")} | Time: {time} | GST:
-              {serviceProviderDetails.gst} | Payment Mode: Online
+              {serviceProviderDetails.gst}
             </p>
             <p className="mt-3 text-center">
               Patient ID: {patientID} | Appointment ID: {appointmentID} |
@@ -233,11 +232,6 @@ const Invoice = () => {
               <span>
                 <span className="font-bold">Service: </span>
                 {service}
-              </span>
-              &nbsp;
-              <span>
-                <span className="font-bold">Payment: </span>
-                {paymentMethod}
               </span>
             </div>
           </section>

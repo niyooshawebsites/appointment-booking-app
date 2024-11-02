@@ -150,7 +150,6 @@ const TodayData = () => {
                 <th className="py-2 px-4 text-left text-gray-600">Date</th>
                 <th className="py-2 px-4 text-left text-gray-600">Time</th>
                 <th className="py-2 px-4 text-left text-gray-600">Gender</th>
-                <th className="py-2 px-4 text-left text-gray-600">Payment</th>
                 <th className="py-2 px-4 text-left text-gray-600">Details</th>
               </tr>
             </thead>
@@ -189,9 +188,6 @@ const TodayData = () => {
                       </td>
                       <td className="py-2 px-4 text-gray-700">
                         {appointment.gender}
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">
-                        {appointment.paymentMethod}
                       </td>
                       <td className="py-2 px-4 text-gray-700">
                         <Link
@@ -234,8 +230,6 @@ const TodayData = () => {
                                 city: appointment.city,
                                 state: appointment.state,
                                 pinCode: appointment.pinCode,
-                                paymentMethod: appointment.paymentMethod,
-                                transactionID: appointment.transactionID,
                               })
                             );
                           }}

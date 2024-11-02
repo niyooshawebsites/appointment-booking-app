@@ -7,7 +7,6 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import { specializationSliceActions } from "../store/slices/SpecializationSlice";
-import { onlinePaymentSliceActions } from "../store/slices/OnlinePyamentSlice";
 import Pagination from "../components/Pagination";
 import { RxLink2, RxBookmarkFilled } from "react-icons/rx";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
@@ -37,9 +36,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
       city: "",
       state: "",
       pinCode: "",
-      paymentMethod: "",
-      transactionID: "",
-      localPay: "N/A",
       serviceProvider,
       timeOfDay: "",
     };
@@ -50,12 +46,9 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
     (state) => state.specialization_Slice
   );
 
-  const [activateTID, setActivateTID] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
   const dispatch = useDispatch();
   const [services, setServices] = useState([]);
-
   const [isSpecializationChnaged, setIsSpecializationChnaged] = useState(false);
 
   const togglePassword = () => {
@@ -132,20 +125,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name == "paymentMethod" && value == "Pay online") {
-      setActivateTID(true);
-
-      dispatch(
-        onlinePaymentSliceActions.changeOnlinePaymentStatus({
-          payOnline: true,
-        })
-      );
-    }
-
-    if (name == "paymentMethod" && value == "Pay locally") {
-      setActivateTID(false);
-    }
-
     setCustDetails((prevDetails) => {
       return {
         ...prevDetails,
@@ -176,9 +155,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
             `http://localhost:8000/api/v1/book-appointment/${username}`,
             {
               ...custDetails,
-              transactionID: activateTID
-                ? custDetails.transactionID
-                : custDetails.localPay,
               fee: custDetails.service.split("-")[1].slice(4),
             }
           );
@@ -208,9 +184,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
               city: "",
               state: "",
               pinCode: "",
-              paymentMethod: "",
-              transactionID: "",
-              localPay: "N/A",
               spUsername: username || "",
               timeOfDay: "",
             };
@@ -635,50 +608,6 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                       placeholder="Pin code"
                       required
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="border-b border-gray-900/10 pb-12">
-              <h2 className="text-base font-semibold leading-7 text-pink-600">
-                Payment Details
-              </h2>
-              <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-3">
-                  <div className="mt-2">
-                    <select
-                      name="paymentMethod"
-                      id="paymentMethod"
-                      value={custDetails.paymentMethod}
-                      onChange={handleChange}
-                      required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                    >
-                      <option value="">Select payment method</option>
-                      <option value="Pay locally">Pay locally</option>
-                      <option value="Pay online">Pay online</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <div className="mt-2">
-                    <input
-                      id="transactionID"
-                      name="transactionID"
-                      type="text"
-                      autoComplete="on"
-                      value={
-                        activateTID
-                          ? custDetails.transactionID
-                          : custDetails.localPay
-                      }
-                      onChange={handleChange}
-                      placeholder="Online Payment - Enter Transtaction ID"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                      required
                     />
                   </div>
                 </div>

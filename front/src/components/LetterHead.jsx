@@ -46,7 +46,6 @@ const LetterHead = () => {
     city,
     state,
     pinCode,
-    paymentMethod,
   } = useSelector((state) => state.appointment_Slice);
 
   const { username } = useSelector((state) => state.user_Slice);

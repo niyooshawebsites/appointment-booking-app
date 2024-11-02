@@ -76,7 +76,8 @@ const App = () => {
                 element={
                   serviceProvider ? (
                     <Suspense fallback={<Loader />}>
-                      <Appointment serviceProvider={serviceProvider} />
+                      {/* <Appointment serviceProvider={serviceProvider} /> */}
+                      <Home />
                     </Suspense>
                   ) : (
                     <Suspense fallback={<Loader />}>

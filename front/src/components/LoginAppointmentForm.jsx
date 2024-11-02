@@ -4,7 +4,6 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
-import { onlinePaymentSliceActions } from "../store/slices/OnlinePyamentSlice";
 import OnlinePayment from "./OnlinePayment";
 
 const LoginAppointmentForm = ({ customerDashboard }) => {
@@ -12,8 +11,6 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
   const { username } = useSelector((state) => state.appointment_Slice);
   const { userId } = useSelector((state) => state.user_Slice);
   const dispatch = useDispatch();
-
-  const [activateTID, setActivateTID] = useState(false);
 
   const [custDetails, setCustDetails] = useState(() => {
     return {
@@ -32,31 +29,12 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
       city: "",
       state: "",
       pinCode: "",
-      paymentMethod: "",
-      transactionID: "",
-      localPay: "N/A",
       serviceProvider: username,
     };
   });
 
-  const [payOnline, setPayOnline] = useState(false);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name == "paymentMethod" && value == "Pay online") {
-      setActivateTID(true);
-
-      dispatch(
-        onlinePaymentSliceActions.changeOnlinePaymentStatus({
-          payOnline: true,
-        })
-      );
-    }
-
-    if (name == "paymentMethod" && value == "Pay locally") {
-      setActivateTID(false);
-    }
 
     setCustDetails((prevDetails) => {
       return {
@@ -131,9 +109,6 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
         city: "",
         state: "",
         pinCode: "",
-        paymentMethod: "",
-        transactionID: "",
-        localPay: "N/A",
         serviceProvider: username,
       };
     });
@@ -450,58 +425,6 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
                   required
                   className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
                 />
-              </div>
-            </div>
-          </div>
-
-          {/* Payment Details */}
-          <div className="border-b pb-4">
-            <h2 className="text-lg font-semibold mb-2 text-pink-600">
-              Payment Details
-            </h2>
-            <div className="flex justify-between align-middle ">
-              <div className="w-6/12 pr-1">
-                <select
-                  name="paymentMethod"
-                  id="paymentMethod"
-                  value={custDetails.paymentMethod}
-                  onChange={handleChange}
-                  required
-                  className="block w-full p-2 rounded-md shadow-sm ring-2 ring-indigo-700"
-                >
-                  <option value="Select payment method">
-                    Select payment method
-                  </option>
-                  <option
-                    value="Pay locally"
-                    onClick={() => setPayOnline(false)}
-                  >
-                    Pay locally
-                  </option>
-                  <option value="Pay online" onClick={() => setPayOnline(true)}>
-                    Pay online
-                  </option>
-                </select>
-              </div>
-
-              <div className="w-6/12 pl-1">
-                <div className="m-1">
-                  <input
-                    id="transactionID"
-                    name="transactionID"
-                    type="text"
-                    autoComplete="on"
-                    value={
-                      activateTID
-                        ? custDetails.transactionID
-                        : custDetails.localPay
-                    }
-                    onChange={handleChange}
-                    placeholder="Online Payment - Enter Transtaction ID"
-                    className="block w-full rounded-md py-1.5 text-gray-900 shadow-sm ring-1 ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-                    required
-                  />
-                </div>
               </div>
             </div>
           </div>

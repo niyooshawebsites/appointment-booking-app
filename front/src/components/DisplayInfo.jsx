@@ -59,7 +59,7 @@ const DisplayInfo = () => {
   };
 
   const filterAppointments = (e) => {
-    setSearchAppointment(() => e.target.value);
+    setSearchAppointment(() => e.target.value.toUpperCase());
   };
 
   // get a particular appointment details
@@ -92,8 +92,6 @@ const DisplayInfo = () => {
             city: res.data.appointment.city,
             state: res.data.appointment.state,
             pinCode: res.data.appointment.pinCode,
-            paymentMethod: res.data.appointment.paymentMethod,
-            transactionID: res.data.appointment.transactionID,
           })
         );
       }
@@ -338,8 +336,8 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left">Contact</th>
               <th className="py-2 px-4 text-left">Date</th>
               <th className="py-2 px-4 text-left">Time</th>
-              <th className="py-2 px-4 text-left">Payment</th>
-              <th className="py-2 px-4 text-left">TRNX ID</th>
+              {/* <th className="py-2 px-4 text-left">Payment</th>
+              <th className="py-2 px-4 text-left">TRNX ID</th> */}
               <th className="py-2 px-4 text-left">Details</th>
               <th className="py-2 px-4 text-left">Status</th>
               <th className="py-2 px-4 text-left">Actions</th>
@@ -351,13 +349,13 @@ const DisplayInfo = () => {
               .filter(
                 (appointment) =>
                   appointment.appointmentID
-                    .toLowerCase()
+                    .toUpperCase()
                     .includes(searchAppointment) ||
                   appointment.patientID
-                    .toLowerCase()
+                    .toUpperCase()
                     .includes(searchAppointment) ||
                   appointment.firstName
-                    .toLowerCase()
+                    .toUpperCase()
                     .includes(searchAppointment)
               )
               .map((appointment, index) => {
@@ -384,12 +382,6 @@ const DisplayInfo = () => {
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.time}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.paymentMethod}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.transactionID || "Null"}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       <Link
@@ -482,8 +474,6 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left">Service</th>
               <th className="py-2 px-4 text-left">Date</th>
               <th className="py-2 px-4 text-left">Time</th>
-              <th className="py-2 px-4 text-left">Payment</th>
-              <th className="py-2 px-4 text-left">TRNX ID</th>
               <th className="py-2 px-4 text-left">Dr. Profile</th>
             </tr>
           </thead>
@@ -522,12 +512,6 @@ const DisplayInfo = () => {
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.time}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.paymentMethod}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.transactionID}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       <Link

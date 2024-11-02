@@ -1,5 +1,6 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Ticker from "./Ticker";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -9,6 +10,7 @@ const Layout = ({ children }) => {
     <>
       <Header />
       <ToastContainer />
+      <Ticker />
       {children}
       <Footer />
     </>

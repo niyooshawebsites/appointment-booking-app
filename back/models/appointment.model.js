@@ -89,15 +89,6 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    paymentMethod: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    transactionID: {
-      type: String,
-      required: true,
-    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
