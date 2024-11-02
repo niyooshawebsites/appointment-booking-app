@@ -1073,6 +1073,61 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
   }
 };
 
+const changeAppointmentStausController = async (req, res) => {
+  try {
+    const { appId } = req.params;
+    const { appointmentStatus, rejectReason } = req.body;
+
+    if (!appId) {
+      return res.status(400).json({
+        success: false,
+        msg: "No appointment ID",
+      });
+    }
+
+    if (!appointmentStatus) {
+      return res.status(400).json({
+        success: false,
+        msg: "No appointment status",
+      });
+    }
+
+    if (!rejectReason) {
+      return res.status(400).json({
+        success: false,
+        msg: "No rejection reason",
+      });
+    }
+
+    const appointment = await Appointment.findOneAndUpdate(
+      { _id: appId },
+      {
+        status: appointmentStatus,
+        rejectReason,
+      },
+      { new: true }
+    );
+
+    if (!appointment) {
+      return res.status(409).json({
+        success: false,
+        msg: "Something went wrong. Please try again",
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      msg: "Appointment status changes successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
 module.exports = {
   bookAppointmnentController,
   bookAppointmnentByLoginController,
@@ -1088,4 +1143,5 @@ module.exports = {
   checkAppointmentAvailability,
   getNoOfAppointmentsPerUserController,
   bookApponitmentForWalkinClientsController,
+  changeAppointmentStausController,
 };

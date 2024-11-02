@@ -10,6 +10,7 @@ import specializationSliceReducers from "./slices/SpecializationSlice";
 import announcementSliceReducers from "./slices/AnnouncementSlice";
 import walkinSliceReducers from "./slices/WalkinSlice";
 import onlinePaymentSliceReducers from "./slices/OnlinePyamentSlice";
+import changeApponitmentStatusSliceReducers from "./slices/ChangeAppointmentStatusSlice";
 
 const GlobalStore = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const GlobalStore = configureStore({
     announcement_Slice: announcementSliceReducers,
     walkin_Slice: walkinSliceReducers,
     online_Payment_Slice: onlinePaymentSliceReducers,
+    change_Appointment_Status_Slice: changeApponitmentStatusSliceReducers,
   },
 });
 

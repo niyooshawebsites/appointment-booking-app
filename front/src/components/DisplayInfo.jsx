@@ -6,6 +6,7 @@ import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
+import { changeApponitmentStatusSliceActions } from "../store/slices/ChangeAppointmentStatusSlice";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import Pagination from "./Pagination";
 import { FaPrint } from "react-icons/fa";
@@ -18,6 +19,7 @@ import {
 } from "react-icons/rx";
 
 const DisplayInfo = () => {
+  const dispatch = useDispatch();
   const { role, isAdmin } = useSelector((state) => state.user_Slice);
   const { allUsers } = useSelector((state) => state.users_Data_Slice);
   const { allAppointments } = useSelector(
@@ -27,7 +29,6 @@ const DisplayInfo = () => {
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
-  const dispatch = useDispatch();
 
   const handleDelete = async (id) => {
     try {
@@ -186,6 +187,25 @@ const DisplayInfo = () => {
     );
   };
 
+  const changeStatus = async (appId) => {
+    try {
+      const res = await axios.patch(
+        `http://localhost:8000/api/v1/change-appointment-status/${appId}`,
+        {
+          appointmentStatus: "Accept",
+          rejectReason: "",
+        },
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.msg);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
   useEffect(() => {
     if (role == 1 && isAdmin && allUsers.length > 0) {
       fetchAppointmentsCount();
@@ -315,15 +335,14 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left">AID</th>
               <th className="py-2 px-4 text-left">PID</th>
               <th className="py-2 px-4 text-left">Name</th>
-              <th className="py-2 px-4 text-left">Age</th>
               <th className="py-2 px-4 text-left">Contact</th>
-              <th className="py-2 px-4 text-left">Service</th>
               <th className="py-2 px-4 text-left">Date</th>
               <th className="py-2 px-4 text-left">Time</th>
-              <th className="py-2 px-4 text-left">Gender</th>
               <th className="py-2 px-4 text-left">Payment</th>
               <th className="py-2 px-4 text-left">TRNX ID</th>
               <th className="py-2 px-4 text-left">Details</th>
+              <th className="py-2 px-4 text-left">Status</th>
+              <th className="py-2 px-4 text-left">Actions</th>
               <th className="py-2 px-4 text-left">Print</th>
             </tr>
           </thead>
@@ -358,22 +377,13 @@ const DisplayInfo = () => {
                       {appointment.firstName}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      {appointment.age}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
                       {appointment.contactNo}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.service}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.date.split("-").reverse().join("-")}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.time}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.gender}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.paymentMethod}
@@ -389,6 +399,32 @@ const DisplayInfo = () => {
                       >
                         <TbListDetails />
                       </Link>
+                    </td>
+                    <td className="py-2 px-4 text-gray-700">{"Pending"}</td>
+                    <td className="py-2 px-4 text-gray-700">
+                      <div className="flex flex-">
+                        <button
+                          className="bg-red-500 px-2 py-1 text-white rounded mr-2 hover:bg-red-600"
+                          onClick={() => {
+                            dispatch(
+                              changeApponitmentStatusSliceActions.changeAppointmentStatus(
+                                {
+                                  appointmentId: appointment._id,
+                                  appointmentStatus: true,
+                                }
+                              )
+                            );
+                          }}
+                        >
+                          Reject
+                        </button>{" "}
+                        <button
+                          className="bg-green-500 px-2 py-1 text-white rounded hover:bg-green-600"
+                          onClick={changeStatus(appointment._id)}
+                        >
+                          Accept
+                        </button>
+                      </div>
                     </td>
                     <td className="py-2 px-4 text-gray-700 flex">
                       <Link

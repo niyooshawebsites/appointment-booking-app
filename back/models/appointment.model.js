@@ -103,6 +103,15 @@ const appointmentSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    appointmentStatus: {
+      type: String,
+      enum: ["Pending", "Accepted", "Rejected"],
+      default: "Pending",
+    },
+    rejectReason: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

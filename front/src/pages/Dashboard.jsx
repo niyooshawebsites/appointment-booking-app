@@ -15,6 +15,7 @@ import LetterHead from "../components/LetterHead";
 import Qualifications from "../components/Qualifications";
 import Timings from "../components/Timings";
 import Announcement from "../components/Announcement";
+import RejectionReason from "../components/RejectionReason";
 import Walkin from "../components/Walkin";
 import Invoice from "../components/Invoice";
 
@@ -60,6 +61,7 @@ const Dashboard = () => {
           <DisplayInfo />
           <Announcement />
           <Walkin />
+          <RejectionReason />
         </div>
       </Layout>
     );
