@@ -1628,13 +1628,13 @@ const checkWalkinClientAvailabilityController = async (req, res) => {
     if (!existingUser) {
       return res.status(200).json({
         success: false,
-        msg: "Client not found",
+        msg: "Patient not found",
       });
     }
 
     return res.status(200).json({
       success: true,
-      msg: "Client found successfully",
+      msg: "Patient found successfully",
     });
   } catch (err) {
     return res.status(500).json({

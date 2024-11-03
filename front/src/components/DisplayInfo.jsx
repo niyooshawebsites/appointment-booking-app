@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import { changeApponitmentStatusSliceActions } from "../store/slices/ChangeAppointmentStatusSlice";
+import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
 import Pagination from "./Pagination";
 import { FaPrint } from "react-icons/fa";
@@ -20,7 +21,7 @@ import {
 
 const DisplayInfo = () => {
   const dispatch = useDispatch();
-  const { role, isAdmin } = useSelector((state) => state.user_Slice);
+  const { role, isAdmin, userId } = useSelector((state) => state.user_Slice);
   const { allUsers } = useSelector((state) => state.users_Data_Slice);
   const { allAppointments } = useSelector(
     (state) => state.appointments_Data_Slice
@@ -190,14 +191,32 @@ const DisplayInfo = () => {
       const res = await axios.patch(
         `http://localhost:8000/api/v1/change-appointment-status/${appId}`,
         {
-          appointmentStatus: "Accept",
-          rejectReason: "",
+          appointmentStatus: "Accepted",
         },
         { withCredentials: true }
       );
 
       if (res.data.success) {
         toast.success(res.data.msg);
+
+        try {
+          const res = await axios.get(
+            `http://localhost:8000/api/v1/get-all-appointments-by-userId/${userId}/1`,
+            {
+              withCredentials: true,
+            }
+          );
+
+          if (res.data.success) {
+            dispatch(
+              appointmentsDataSliceActions.getAppointmentsData({
+                allAppointments: res.data.appointments,
+              })
+            );
+          }
+        } catch (err) {
+          toast.error(err.response.data.msg);
+        }
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -261,40 +280,46 @@ const DisplayInfo = () => {
                     <td className="py-2 px-4 text-gray-700">
                       {moment(user.createdAt).format("DD-MM-YYYY")}
                     </td>
-                    <td className="py-2 px-4 text-gray-700">
+                    <td className="py-2 px-4 text-gray-700 text-center">
                       {appointmentsCountPerUser[user._id] || 0}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      {user.isVerified ? (
-                        <span className="text-green-500">
-                          <RxCheckCircled />
-                        </span>
-                      ) : (
-                        <span className="text-red-500">
-                          <RxCrossCircled />
-                        </span>
-                      )}
+                      <div className="flex justify-center items-center">
+                        {user.isVerified ? (
+                          <span className="text-green-500">
+                            <RxCheckCircled />
+                          </span>
+                        ) : (
+                          <span className="text-red-500">
+                            <RxCrossCircled />
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      <button
-                        onClick={() => {
-                          handleDelete(user._id);
-                        }}
-                        title="Delete"
-                        className="text-red-500"
-                      >
-                        <RxCross2 />
-                      </button>
+                      <div className="flex justify-center items-center">
+                        <button
+                          onClick={() => {
+                            handleDelete(user._id);
+                          }}
+                          title="Delete"
+                          className="text-red-500"
+                        >
+                          <RxCross2 />
+                        </button>
+                      </div>
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      <Link
-                        to={`http://localhost:5173/${user.username}`}
-                        target="_blank"
-                        title="View Profile"
-                        className="text-blue-500"
-                      >
-                        <RxLink2 />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link
+                          to={`http://localhost:5173/${user.username}`}
+                          target="_blank"
+                          title="View Profile"
+                          className="text-blue-500"
+                        >
+                          <RxLink2 />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 );
@@ -396,7 +421,11 @@ const DisplayInfo = () => {
                     <td className="py-2 px-4 text-gray-700">
                       <div className="flex flex-">
                         <button
-                          className="bg-red-500 px-2 py-1 text-white rounded mr-2 hover:bg-red-600"
+                          className={
+                            appointment.appointmentStatus != "Pending"
+                              ? `hidden`
+                              : `bg-red-500 px-2 py-1 text-white rounded mr-2 hover:bg-red-600`
+                          }
                           onClick={() => {
                             dispatch(
                               changeApponitmentStatusSliceActions.changeAppointmentStatus(
@@ -411,11 +440,24 @@ const DisplayInfo = () => {
                           Reject
                         </button>{" "}
                         <button
-                          className="bg-green-500 px-2 py-1 text-white rounded hover:bg-green-600"
-                          onClick={changeStatus(appointment._id)}
+                          className={
+                            appointment.appointmentStatus != "Pending"
+                              ? `hidden`
+                              : `bg-green-500 px-2 py-1 text-white rounded mr-2 hover:bg-green-600`
+                          }
+                          onClick={() => changeStatus(appointment._id)}
                         >
                           Accept
                         </button>
+                        <p
+                          className={
+                            appointment.appointmentStatus != "Pending"
+                              ? `block`
+                              : `hidden`
+                          }
+                        >
+                          N/A
+                        </p>
                       </div>
                     </td>
                     <td className="py-2 px-4 text-gray-700 flex">
@@ -474,6 +516,7 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left">Service</th>
               <th className="py-2 px-4 text-left">Date</th>
               <th className="py-2 px-4 text-left">Time</th>
+              <th className="py-2 px-4 text-left">Status</th>
               <th className="py-2 px-4 text-left">Dr. Profile</th>
             </tr>
           </thead>
@@ -514,14 +557,19 @@ const DisplayInfo = () => {
                       {appointment.time}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      <Link
-                        className="text-indigo-800"
-                        to={`http://localhost:5173/${appointment.user.username}`}
-                        title="View Profile"
-                        target="_blank"
-                      >
-                        <RxLink2 />
-                      </Link>
+                      {appointment.appointmentStatus}
+                    </td>
+                    <td className="py-2 px-4 text-gray-700">
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800"
+                          to={`http://localhost:5173/${appointment.user.username}`}
+                          title="View Profile"
+                          target="_blank"
+                        >
+                          <RxLink2 />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 );

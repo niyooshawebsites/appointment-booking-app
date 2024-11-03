@@ -687,10 +687,8 @@ const Highlights = () => {
               <table className="min-w-full bg-white border border-gray-200 shadow-md text-center">
                 <thead className="bg-pink-600 text-white">
                   <tr>
-                    <th className="text-left py-2 px-4 border-b">
-                      Service Providers
-                    </th>
-                    <th className="text-left py-2 px-4 border-b">Entries</th>
+                    <th className="text-left py-2 px-4 border-b">Doctors</th>
+                    <th className="py-2 px-4 border-b text-center">Entries</th>
                     <th className="text-left py-2 px-4 border-b">View</th>
                   </tr>
                 </thead>
@@ -703,13 +701,15 @@ const Highlights = () => {
                         : totalNumOfUsers}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <Link
-                        className="text-indigo-800"
-                        title="More details"
-                        onClick={getAndPassAllUsers}
-                      >
-                        <TbListDetails />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800"
+                          title="More details"
+                          onClick={getAndPassAllUsers}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                   <tr>
@@ -720,13 +720,15 @@ const Highlights = () => {
                         : totalNumOfVerifiedUsers}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <Link
-                        className="text-indigo-800"
-                        title="More details"
-                        onClick={getAndPassAllVerifiedUsers}
-                      >
-                        <TbListDetails />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800"
+                          title="More details"
+                          onClick={getAndPassAllVerifiedUsers}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                   <tr>
@@ -737,13 +739,15 @@ const Highlights = () => {
                         : totalNumOfUnverifiedUsers}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <Link
-                        className="text-indigo-800"
-                        title="More details"
-                        onClick={getAndPassAllUnverifiedUsers}
-                      >
-                        <TbListDetails />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800"
+                          title="More details"
+                          onClick={getAndPassAllUnverifiedUsers}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                   <tr>
@@ -756,9 +760,11 @@ const Highlights = () => {
                         : totalNumOfAppointments}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <Link className="text-indigo-800">
-                        <TbListDetails />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link className="text-indigo-800">
+                          <TbListDetails />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -771,11 +777,9 @@ const Highlights = () => {
               <table className="min-w-full bg-white border border-gray-200 shadow-md text-center">
                 <thead className="bg-pink-600 text-white">
                   <tr>
-                    <th className="text-left py-2 px-4 border-b">
-                      Service Providers
-                    </th>
+                    <th className="text-left py-2 px-4 border-b">Doctors</th>
                     <th className="py-2 px-4 border-b">Entries</th>
-                    <th className="py-2 px-4 border-b">View</th>
+                    <th className="py-2 px-4 border-b text-center">View</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -787,13 +791,15 @@ const Highlights = () => {
                         : todayTotalNumOfUsers}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <Link
-                        className="text-indigo-800"
-                        title="More details"
-                        onClick={getAndPassTodayUsers}
-                      >
-                        <TbListDetails />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800"
+                          title="More details"
+                          onClick={getAndPassTodayUsers}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                   <tr>
@@ -804,13 +810,15 @@ const Highlights = () => {
                         : todayTotalNumOfVerifiedUsers}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <Link
-                        className="text-indigo-800"
-                        title="More details"
-                        onClick={getAndPassTodayVerifiedUsers}
-                      >
-                        <TbListDetails />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800"
+                          title="More details"
+                          onClick={getAndPassTodayVerifiedUsers}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                   <tr>
@@ -821,13 +829,15 @@ const Highlights = () => {
                         : todayTotalNumOfUnverifiedUsers}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <Link
-                        className="text-indigo-800"
-                        title="More details"
-                        onClick={getAndPassTodayUnverifiedUsers}
-                      >
-                        <TbListDetails />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800"
+                          title="More details"
+                          onClick={getAndPassTodayUnverifiedUsers}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                   <tr>
@@ -840,9 +850,11 @@ const Highlights = () => {
                         : todayTotalNumOfAppointments}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <Link className="text-indigo-800">
-                        <TbListDetails />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link className="text-indigo-800">
+                          <TbListDetails />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -878,13 +890,15 @@ const Highlights = () => {
                       : totalAppointmentsCountFilterByUsername}
                   </td>
                   <td className="py-2 px-4 border-b text-center">
-                    <Link
-                      className="text-indigo-500"
-                      title="More details"
-                      onClick={getAndPassAllAppointmentsByUserId}
-                    >
-                      <TbListDetails />
-                    </Link>
+                    <div className="flex justify-center items-center">
+                      <Link
+                        className="text-indigo-500"
+                        title="More details"
+                        onClick={getAndPassAllAppointmentsByUserId}
+                      >
+                        <TbListDetails />
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -909,13 +923,15 @@ const Highlights = () => {
                       : todayAppointmentCountsByUsername}
                   </td>
                   <td className="py-2 px-4 border-b">
-                    <Link
-                      className="text-indigo-500"
-                      title="More details"
-                      onClick={getAndPassTodaysAppointmentsByUserId}
-                    >
-                      <TbListDetails />
-                    </Link>
+                    <div className="flex justify-center items-center">
+                      <Link
+                        className="text-indigo-500"
+                        title="More details"
+                        onClick={getAndPassTodaysAppointmentsByUserId}
+                      >
+                        <TbListDetails />
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -937,7 +953,7 @@ const Highlights = () => {
           <div className="flex space-x-8 p-8 mx-auto w-6/12">
             {/* Column 1 */}
             <div className=" mx-auto">
-              <h2 className="text-xl mb-4 text-center">Your Appointments</h2>
+              <h2 className="text-xl mb-4 text-center">My Appointments</h2>
               {/* <h2 className="text-xl font-bold mb-4">Total</h2> */}
               <table className="min-w-full bg-white border border-gray-200 shadow-md">
                 <thead className="bg-pink-600 text-white">
@@ -958,13 +974,15 @@ const Highlights = () => {
                         : totalNumOfAppointmentsForClient}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <Link
-                        className="text-indigo-800"
-                        title="More details"
-                        onClick={getAndAllPassApponitmentsForClient}
-                      >
-                        <TbListDetails />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800"
+                          title="More details"
+                          onClick={getAndAllPassApponitmentsForClient}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 </tbody>

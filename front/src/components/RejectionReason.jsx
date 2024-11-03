@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { changeApponitmentStatusSliceActions } from "../store/slices/ChangeAppointmentStatusSlice";
+import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
 
 const RejectionReason = () => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const RejectionReason = () => {
   const { appointmentId, appointmentStatus } = useSelector(
     (state) => state.change_Appointment_Status_Slice
   );
+  const { userId } = useSelector((state) => state.user_Slice);
 
   const handleSubmit = async (e, appId) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ const RejectionReason = () => {
     try {
       const res = await axios.patch(
         `http://localhost:8000/api/v1/change-appointment-status/${appId}`,
-        { rejectReason, appointmentStatus: "Reject" },
+        { rejectReason, appointmentStatus: "Rejected" },
         { withCredentials: true }
       );
 
@@ -29,6 +31,25 @@ const RejectionReason = () => {
             appointmentStatus: false,
           })
         );
+
+        try {
+          const res = await axios.get(
+            `http://localhost:8000/api/v1/get-all-appointments-by-userId/${userId}/1`,
+            {
+              withCredentials: true,
+            }
+          );
+
+          if (res.data.success) {
+            dispatch(
+              appointmentsDataSliceActions.getAppointmentsData({
+                allAppointments: res.data.appointments,
+              })
+            );
+          }
+        } catch (err) {
+          toast.error(err.response.data.msg);
+        }
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -50,8 +71,8 @@ const RejectionReason = () => {
             Rejection reason
           </h2>
           <form
-            onSubmit={() => {
-              handleSubmit(appointmentId);
+            onSubmit={(e) => {
+              handleSubmit(e, appointmentId);
             }}
           >
             <div className="mb-4">

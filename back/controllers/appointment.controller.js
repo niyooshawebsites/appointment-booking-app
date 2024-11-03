@@ -1007,7 +1007,7 @@ const bookApponitmentForWalkinClientsController = async (req, res) => {
 const changeAppointmentStausController = async (req, res) => {
   try {
     const { appId } = req.params;
-    const { appointmentStatus, rejectReason } = req.body;
+    const { appointmentStatus } = req.body;
 
     if (!appId) {
       return res.status(400).json({
@@ -1023,18 +1023,10 @@ const changeAppointmentStausController = async (req, res) => {
       });
     }
 
-    if (!rejectReason) {
-      return res.status(400).json({
-        success: false,
-        msg: "No rejection reason",
-      });
-    }
-
     const appointment = await Appointment.findOneAndUpdate(
       { _id: appId },
       {
-        status: appointmentStatus,
-        rejectReason,
+        appointmentStatus,
       },
       { new: true }
     );
