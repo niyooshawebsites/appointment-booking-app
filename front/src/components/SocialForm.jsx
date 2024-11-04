@@ -55,7 +55,7 @@ const SocialForm = () => {
           value={socialProfiles.facebookUrl}
           onChange={onChangeHandler}
           placeholder="https://facebook.com/#"
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
         />
       </div>
       <div className="mt-4">
@@ -69,7 +69,7 @@ const SocialForm = () => {
           value={socialProfiles.xUrl}
           onChange={onChangeHandler}
           placeholder="https://x.com/#"
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
         />
       </div>
       <div className="mt-4">
@@ -83,7 +83,7 @@ const SocialForm = () => {
           value={socialProfiles.instagramUrl}
           onChange={onChangeHandler}
           placeholder="https://instagram.com/#"
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
         />
       </div>
       <div className="mt-4">
@@ -97,7 +97,7 @@ const SocialForm = () => {
           value={socialProfiles.linkedInUrl}
           onChange={onChangeHandler}
           placeholder="https://instagram.com/#"
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
         />
       </div>
       <div className="mt-4">
@@ -111,7 +111,7 @@ const SocialForm = () => {
           value={socialProfiles.youtubeUrl}
           onChange={onChangeHandler}
           placeholder="https://youtube.com/#"
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
         />
       </div>
       <div className="mt-4">

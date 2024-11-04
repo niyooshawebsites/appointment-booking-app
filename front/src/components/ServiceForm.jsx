@@ -96,7 +96,7 @@ const ServiceForm = () => {
   }, [currentService, serivceDeleted]);
 
   return (
-    <div className="w-6/12  mx-auto p-2">
+    <div className="w-10/12 md:w-6/12  mx-auto p-2">
       <h2 className="mt-10 mb-4 text-center text-3xl text-pink-600">
         Services
       </h2>
@@ -105,14 +105,14 @@ const ServiceForm = () => {
         className="bg-white shadow-md rounded-lg p-6 mb-6"
         onSubmit={handleSubmit}
       >
-        <div className="flex space-x-4 mb-4">
+        <div className="flex flex-col md:flex-row md:space-x-4 mb-4">
           <input
             type="text"
             name="serviceName"
             value={currentService.serviceName}
             onChange={handleChange}
             placeholder="Service Name"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full mb-3 md:mb-0 px-4 py-2 border rounded-md focus:outline-none ring-2 ring-indigo-700"
             required
           />
           <input
@@ -121,7 +121,7 @@ const ServiceForm = () => {
             value={currentService.fee}
             onChange={handleChange}
             placeholder="Fee"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full mb-3 md:mb-0 px-4 py-2 border rounded-md focus:outline-none ring-2 ring-indigo-700"
             required
           />
           <button
@@ -134,7 +134,7 @@ const ServiceForm = () => {
       </form>
 
       {allServices.length > 0 ? (
-        <table className="w-8/12 mx-auto bg-white shadow-md rounded-lg mt-10 text-sm">
+        <table className="w-10/12 md:w-8/12 mx-auto bg-white shadow-md rounded-lg mt-10 text-sm">
           <thead className="bg-pink-600 text-white">
             <tr className=" text-left text-sm font-semibold">
               <th className="py-2 px-3">#</th>
@@ -154,12 +154,14 @@ const ServiceForm = () => {
                 <td className="px-3 py-2">{service.serviceName}</td>
                 <td className="px-3 py-2">Rs {service.fee}</td>
                 <td className="px-3 py-2">
-                  <Link
-                    className="text-red-600 text-xl rounded-md hover:text-red-800 transition-colors"
-                    onClick={() => handleDelete(service.serviceId)}
-                  >
-                    <RxCross2 />
-                  </Link>
+                  <div className="flex justify-center items-center">
+                    <Link
+                      className="text-red-600 text-xl rounded-md hover:text-red-800 transition-colors"
+                      onClick={() => handleDelete(service.serviceId)}
+                    >
+                      <RxCross2 />
+                    </Link>
+                  </div>
                 </td>
               </tr>
             ))}

@@ -253,7 +253,7 @@ const Walkin = () => {
           id="modal"
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
         >
-          <div className="bg-white rounded-lg shadow-lg w-6/12 p-6">
+          <div className="bg-white rounded-lg shadow-lg w-11/12 md:w-6/12 p-6 border">
             <form onSubmit={handleSearchAndPopulate}>
               <div className="flex justify-center items-center">
                 <div className="w-8/12 mr-2">
@@ -288,7 +288,7 @@ const Walkin = () => {
                   <h2 className="text-lg font-semibold mb-2 text-pink-600">
                     Appointment Details
                   </h2>
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <div className="grid grid-cols-3 gap-4 sm:grid-cols-3">
                     <div>
                       <select
                         name="service"
@@ -346,7 +346,7 @@ const Walkin = () => {
                   <h2 className="text-lg font-semibold mb-2 text-pink-600">
                     Personal Details
                   </h2>
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <div className="grid grid-cols-3 gap-4 sm:grid-cols-3">
                     <div>
                       <input
                         id="firstName"

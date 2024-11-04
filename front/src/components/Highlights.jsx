@@ -871,9 +871,9 @@ const Highlights = () => {
     return (
       <div className="w-full flex flex-col border">
         <h1 className="text-center text-3xl my-3 text-pink-500">Highlights</h1>
-        <div className="flex space-x-8 p-8 mx-auto w-6/12">
+        <div className="w-10/12 flex flex-col md:flex-row md:space-x-8 md:p-8 mx-auto md:w-6/12">
           {/* Column 1 */}
-          <div className="w-1/2">
+          <div className="w-10/12 md:w-1/2 my-8 md:my-0">
             <h2 className="text-xl mb-4 text-center">All Appointments</h2>
             <table className="min-w-full bg-white border border-gray-200 shadow-md">
               <thead className="bg-pink-600 text-white">
@@ -906,7 +906,7 @@ const Highlights = () => {
           </div>
 
           {/* Column 2 */}
-          <div className="w-1/2">
+          <div className="w-10/12 md:w-1/2">
             <h2 className="text-xl mb-4 text-center">Today's Appointments</h2>
             <table className="min-w-full bg-white border border-gray-200 shadow-md">
               <thead className="bg-pink-600 text-white">
@@ -950,11 +950,10 @@ const Highlights = () => {
           <h1 className="text-center text-3xl my-3 text-pink-500">
             Highlights
           </h1>
-          <div className="flex space-x-8 p-8 mx-auto w-6/12">
+          <div className="flex space-x-8 p-8 mx-auto w-10/12 md:w-6/12">
             {/* Column 1 */}
-            <div className=" mx-auto">
+            <div className="w-full mx-auto">
               <h2 className="text-xl mb-4 text-center">My Appointments</h2>
-              {/* <h2 className="text-xl font-bold mb-4">Total</h2> */}
               <table className="min-w-full bg-white border border-gray-200 shadow-md">
                 <thead className="bg-pink-600 text-white">
                   <tr>
@@ -962,7 +961,7 @@ const Highlights = () => {
                       Appointments
                     </th>
                     <th className="py-2 text-center px-4  border-b">Entries</th>
-                    <th className="py-2 text-left px-4 border-b">Action</th>
+                    <th className="py-2 text-center px-4 border-b">Action</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -52,7 +52,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="w-4/12 mx-auto">
+    <div className="w-10/12 md:w-4/12 mx-auto">
       <h2 className="mt-10 mb-4 text-center text-3xl text-pink-600">
         Update Profile
       </h2>
@@ -68,7 +68,7 @@ const Profile = () => {
                 value={newPassword}
                 onChange={handleChangeNewPassword}
                 placeholder="New Password"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
 
@@ -94,7 +94,7 @@ const Profile = () => {
                 value={newConfirmPassword}
                 onChange={handleChangeNewConfirmPassword}
                 placeholder="Confirm New Password"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
 

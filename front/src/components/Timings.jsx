@@ -87,7 +87,7 @@ const Timings = () => {
 
   return (
     <div
-      className="w-5/12 mx-auto p-4 bg-white shadow-lg rounded-lg overflow-y-auto mt-5"
+      className="w-full md:w-5/12 mx-auto p-4 bg-white shadow-lg rounded-lg overflow-y-auto mt-5"
       style={{ height: "600px" }}
     >
       <h1 className="text-center text-3xl my-3 text-pink-500">
@@ -106,7 +106,7 @@ const Timings = () => {
                 name={`${day}MorningFrom`}
                 value={timings.days[day].morningFrom}
                 onChange={(e) => handleInputChange(e, day, `morningFrom`)}
-                className="border border-gray-300 rounded-md p-1 text-sm"
+                className="border border-gray-300 rounded-md p-1 text-sm ring-2 ring-indigo-700"
               />
               <span className="text-xs text-center">to</span>
               <input
@@ -114,7 +114,7 @@ const Timings = () => {
                 name={`${day}MorningTo`}
                 value={timings.days[day].morningTo}
                 onChange={(e) => handleInputChange(e, day, `morningTo`)}
-                className="border border-gray-300 rounded-md p-1 text-sm"
+                className="border border-gray-300 rounded-md p-1 text-sm ring-2 ring-indigo-700"
               />
             </div>
 
@@ -125,7 +125,7 @@ const Timings = () => {
                 name={`${day}EveningFrom`}
                 value={timings.days[day].eveningFrom}
                 onChange={(e) => handleInputChange(e, day, `eveningFrom`)}
-                className="border border-gray-300 rounded-md p-1 text-sm"
+                className="border border-gray-300 rounded-md p-1 text-sm ring-2 ring-indigo-700"
               />
               <span className="text-xs text-center">to</span>
               <input
@@ -133,7 +133,7 @@ const Timings = () => {
                 name={`${day}EveningTo`}
                 value={timings.days[day].eveningTo}
                 onChange={(e) => handleInputChange(e, day, `eveningTo`)}
-                className="border border-gray-300 rounded-md p-1 text-sm"
+                className="border border-gray-300 rounded-md p-1 text-sm ring-2 ring-indigo-700"
               />
             </div>
           </div>

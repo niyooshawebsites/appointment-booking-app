@@ -20,7 +20,8 @@ const Home = () => {
     username == "verify-email" ||
     username == "forgot-password" ||
     username == "reset-password" ||
-    username == ""
+    username == "" ||
+    username == null
   ) {
     username = "abs";
   }

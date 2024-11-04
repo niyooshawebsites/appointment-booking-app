@@ -64,7 +64,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="w-8/12 mx-auto">
+    <div className="w-10/12 md:w-8/12 mx-auto">
       <h2 className="mt-10 mb-4 text-center text-3xl text-pink-600">
         Contact Details
       </h2>
@@ -82,7 +82,7 @@ const ContactForm = () => {
                 value={contactDetails.name}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
             <div>
@@ -95,7 +95,7 @@ const ContactForm = () => {
                 value={contactDetails.businessName}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
             <div>
@@ -110,7 +110,7 @@ const ContactForm = () => {
                 minLength={10}
                 maxLength={10}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
             <div>
@@ -123,7 +123,7 @@ const ContactForm = () => {
                 value={contactDetails.gst}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
             <div>
@@ -136,7 +136,7 @@ const ContactForm = () => {
                 value={contactDetails.office}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
             <div>
@@ -149,7 +149,7 @@ const ContactForm = () => {
                 value={contactDetails.floor}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
           </div>
@@ -166,7 +166,7 @@ const ContactForm = () => {
                 value={contactDetails.building}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
             <div>
@@ -179,7 +179,7 @@ const ContactForm = () => {
                 value={contactDetails.street}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
             <div>
@@ -192,7 +192,7 @@ const ContactForm = () => {
                 value={contactDetails.locality}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
             <div>
@@ -205,7 +205,7 @@ const ContactForm = () => {
                 value={contactDetails.district}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
             <div>
@@ -218,7 +218,7 @@ const ContactForm = () => {
                 value={contactDetails.state}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
             <div>
@@ -233,7 +233,7 @@ const ContactForm = () => {
                 value={contactDetails.pinCode}
                 onChange={handleChange}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-2 ring-indigo-700 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
               />
             </div>
           </div>

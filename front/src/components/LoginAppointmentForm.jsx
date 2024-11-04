@@ -208,7 +208,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
             <h2 className="text-lg font-semibold mb-2 text-pink-600">
               Appointment Details
             </h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="grid grid-cols-3 gap-4 sm:grid-cols-3">
               <div>
                 <select
                   name="service"
@@ -274,7 +274,7 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
             <h2 className="text-lg font-semibold mb-2 text-pink-600">
               Personal Details
             </h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="grid grid-cols-3 gap-4 sm:grid-cols-3">
               <div>
                 <input
                   id="firstName"

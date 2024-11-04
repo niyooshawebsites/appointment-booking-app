@@ -32,15 +32,15 @@ const AboutForm = () => {
   };
 
   return (
-    <div className="w-full flex  justify-center min-h-screen px-10">
-      <div className="w-5/12 mx-auto">
+    <div className="w-full flex flex-col md:flex-row justify-center min-h-screen px-10">
+      <div className="w-full md:w-5/12 mx-auto md:h-52">
         <h2 className="mt-12 text-center text-3xl text-pink-600">
           Social Media Links
         </h2>
         <SocialForm />
       </div>
 
-      <div className="w-7/12 max-w-screen-lg p-6 mx-auto rounded-lg">
+      <div className="w-full md:w-7/12 max-w-screen-lg p-6 mx-auto rounded-lg">
         <h2 className="mt-4 mb-4 text-center text-3xl text-pink-600">
           About us Details
         </h2>
@@ -48,7 +48,7 @@ const AboutForm = () => {
           <div className="mb-6">
             <textarea
               id="message"
-              className="block w-full p-2 border border-gray-300 rounded-md  focus:border-gray-500"
+              className="block w-full p-2 border border-gray-300 rounded-md ring-2 ring-indigo-700 focus:border-gray-500"
               placeholder="Write your about us here..."
               value={about}
               onChange={handleChange}

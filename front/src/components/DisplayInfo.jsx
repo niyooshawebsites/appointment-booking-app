@@ -338,7 +338,7 @@ const DisplayInfo = () => {
   // show service provider info
   if (role == 1 && isAdmin == false) {
     return allAppointments.length > 0 ? (
-      <div className="mx-auto">
+      <div className="overflow-x-auto mx-auto px-5">
         <h1 className="mt-10 text-3xl text-center text-pink-600">
           Appointments
         </h1>
@@ -351,7 +351,7 @@ const DisplayInfo = () => {
           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 mt-5"
         />
 
-        <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5 text-sm">
+        <table className="w-12/12 min-w-ful mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5 text-sm">
           <thead className="bg-pink-600 text-white border-b border-gray-300">
             <tr>
               <th className="py-2 px-4 text-left">#</th>
@@ -493,7 +493,7 @@ const DisplayInfo = () => {
   // show client info
   if (role == 0 && isAdmin == false) {
     return allAppointments.length > 0 ? (
-      <div className="mx-auto">
+      <div className="overflow-x-auto mx-auto px-5">
         <h1 className="mt-10 text-3xl text-center text-pink-600">
           Appointments
         </h1>
