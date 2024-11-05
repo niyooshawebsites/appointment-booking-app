@@ -7,8 +7,10 @@ import { FaRegSmile } from "react-icons/fa";
 import { announcementSliceActions } from "../store/slices/AnnouncementSlice";
 import { walkinSliceActions } from "../store/slices/WalkinSlice";
 import { HiSpeakerphone } from "react-icons/hi";
+import { CgMenuGridR } from "react-icons/cg";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -39,6 +41,12 @@ const Header = () => {
   const { businessName } = useSelector((state) => state.service_Provider_Slice);
 
   const dispatch = useDispatch();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsOpen((prevState) => !prevState);
+  };
 
   const logout = async () => {
     try {
@@ -96,277 +104,255 @@ const Header = () => {
   }
 
   return (
-    <nav className="bg-indigo-900">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            {/* Mobile menu button*/}
-            <button
-              type="button"
-              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-pink-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-              aria-controls="mobile-menu"
-              aria-expanded="false"
-            >
-              <span className="absolute -inset-0.5" />
-              <span className="sr-only">Open main menu</span>
-              {/*
-      Icon when menu is closed.
-
-      Menu open: "hidden", Menu closed: "block"
-    */}
-              <svg
-                className="block h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
+    <>
+      <nav className="bg-indigo-900">
+        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="relative flex h-16 items-center justify-between">
+            <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-between">
+              <button
+                className="md:hidden p-1 text-whiterounded text-white mr-5"
+                onClick={handleToggle}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
-              {/*
-      Icon when menu is open.
+                <CgMenuGridR style={{ fontSize: "1.5rem" }} />
+              </button>
 
-      Menu open: "block", Menu closed: "hidden"
-    */}
-              <svg
-                className="hidden h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-between">
-            <div className="flex flex-shrink-0 items-center">
-              <Link
-                to={user !== "abs" ? `/${user}` : "/"}
-                className="text-white text-3xl"
-              >
-                {businessName
-                  ? businessName
-                  : "No Healthcare center name found"}
-              </Link>
-            </div>
-            <div className="hidden sm:ml-6 sm:block ml-auto">
-              <div className="flex space-x-4 ">
-                {authenticated ? (
-                  <>
-                    {role == 1 && authenticated ? (
-                      <>
-                        <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
-                          <Link
-                            className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
-                            title="New Announcement"
-                            onClick={() => {
-                              dispatch(
-                                announcementSliceActions.changeAnnouncementStatus(
-                                  {
-                                    showAnnouncementModal: true,
-                                  }
-                                )
-                              );
-                            }}
-                          >
-                            <HiSpeakerphone />
-                          </Link>
-                        </NavLink>
+              <div className="flex flex-shrink-0 items-center">
+                <Link
+                  to={user !== "abs" ? `/${user}` : "/"}
+                  className="text-white text-3xl"
+                >
+                  {businessName
+                    ? businessName
+                    : "No Healthcare center name found"}
+                </Link>
+              </div>
 
-                        {/* only available for service providers */}
-
-                        {!isAdmin ? (
+              {/* tablet and Laptop main menu (md and up) */}
+              <div className="hidden sm:ml-6 sm:block ml-auto">
+                <div className="flex space-x-4 ">
+                  {authenticated ? (
+                    <>
+                      {role == 1 && authenticated ? (
+                        <>
                           <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
                             <Link
                               className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
-                              title="Register walkins"
+                              title="New Announcement"
                               onClick={() => {
                                 dispatch(
-                                  walkinSliceActions.changeWalkinStatus({
-                                    showWalkinModal: true,
-                                  })
+                                  announcementSliceActions.changeAnnouncementStatus(
+                                    {
+                                      showAnnouncementModal: true,
+                                    }
+                                  )
                                 );
                               }}
                             >
-                              Capture Walkins
+                              <HiSpeakerphone />
                             </Link>
                           </NavLink>
-                        ) : (
-                          ""
-                        )}
-                      </>
-                    ) : (
-                      ""
-                    )}
 
-                    <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
-                      {myID}
-                    </NavLink>
-                    <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
-                      <FaRegSmile /> &nbsp; Hello, {username}
-                    </NavLink>
-                    <NavLink
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white flex items-center"
-                      onClick={logout}
-                    >
-                      <AiOutlineLogout style={{ color: "white" }} /> &nbsp;
-                      logout
-                    </NavLink>
-                  </>
-                ) : (
-                  <>
-                    {user !== "abs" ? (
-                      <>
-                        {/* <NavLink
-                          to={`/${user}`}
-                          className="rounded-md bg-pink-600 px-3 py-2 text-sm font-medium text-white"
-                          aria-current="page"
-                        >
-                          Book Appointments
-                        </NavLink> */}
-                        <NavLink
-                          to={`/${user}/login`}
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                        >
-                          Login
-                        </NavLink>
-                        <NavLink
-                          to={`/${user}/about`}
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                        >
-                          About
-                        </NavLink>
-                      </>
-                    ) : (
-                      <>
-                        <NavLink
-                          to={`/about`}
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                        >
-                          About
-                        </NavLink>
-                        <NavLink
-                          to="/register"
-                          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                        >
-                          Register
-                        </NavLink>
-                      </>
-                    )}
-                  </>
-                )}
+                          {/* only available for service providers */}
+
+                          {!isAdmin ? (
+                            <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                              <Link
+                                className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
+                                title="Register walkins"
+                                onClick={() => {
+                                  dispatch(
+                                    walkinSliceActions.changeWalkinStatus({
+                                      showWalkinModal: true,
+                                    })
+                                  );
+                                }}
+                              >
+                                Capture Walkins
+                              </Link>
+                            </NavLink>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      ) : (
+                        ""
+                      )}
+
+                      <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                        {myID}
+                      </NavLink>
+                      <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
+                        <FaRegSmile /> &nbsp; Hello, {username}
+                      </NavLink>
+                      <NavLink
+                        className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white flex items-center"
+                        onClick={logout}
+                      >
+                        <AiOutlineLogout style={{ color: "white" }} /> &nbsp;
+                        logout
+                      </NavLink>
+                    </>
+                  ) : (
+                    <>
+                      {user !== "abs" ? (
+                        <>
+                          <NavLink
+                            to={`/${user}/login`}
+                            className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
+                          >
+                            Login
+                          </NavLink>
+                          <NavLink
+                            to={`/${user}/about`}
+                            className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
+                          >
+                            About
+                          </NavLink>
+                        </>
+                      ) : (
+                        <>
+                          <NavLink
+                            to={`/about`}
+                            className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
+                          >
+                            About
+                          </NavLink>
+                          <NavLink
+                            to="/register"
+                            className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
+                          >
+                            Register
+                          </NavLink>
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Mobile menu (md:hidden) */}
+              <div className="md:hidden">
+                {/* Overlay for mobile */}
+                <div
+                  className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity ${
+                    isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+                  }`}
+                  onClick={handleToggle}
+                ></div>
+
+                {/* Mobile Menu */}
+                <div
+                  className={`fixed top-0 left-0 w-64 h-full bg-indigo-800 text-white transition-transform transform ${
+                    isOpen ? "translate-x-0" : "-translate-x-full"
+                  }`}
+                >
+                  <h1 className="text-xl font-semibold mb-6 bg-pink-600 p-2 rounded">
+                    Menu
+                  </h1>
+
+                  {/* ------------------------------------------------------------------------------------------------------------------ */}
+
+                  {authenticated ? (
+                    <>
+                      {role == 1 && authenticated ? (
+                        <>
+                          <ul>
+                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
+                              <NavLink>Hello, {username}</NavLink>
+                            </li>
+                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
+                              <NavLink>{myID}</NavLink>
+                            </li>
+                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
+                              <NavLink>
+                                <Link
+                                  title="New Announcement"
+                                  onClick={() => {
+                                    dispatch(
+                                      announcementSliceActions.changeAnnouncementStatus(
+                                        {
+                                          showAnnouncementModal: true,
+                                        }
+                                      )
+                                    );
+                                  }}
+                                >
+                                  New Announcement
+                                </Link>
+                              </NavLink>
+                            </li>
+                            {/* only available for service providers */}
+
+                            {!isAdmin ? (
+                              <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
+                                <NavLink>
+                                  <Link
+                                    title="Register walkins"
+                                    onClick={() => {
+                                      dispatch(
+                                        walkinSliceActions.changeWalkinStatus({
+                                          showWalkinModal: true,
+                                        })
+                                      );
+                                    }}
+                                  >
+                                    Capture Walkins
+                                  </Link>
+                                </NavLink>
+                              </li>
+                            ) : (
+                              ""
+                            )}
+                          </ul>
+                        </>
+                      ) : (
+                        ""
+                      )}
+
+                      <ul>
+                        <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
+                          <NavLink onClick={logout}>logout</NavLink>
+                        </li>
+                      </ul>
+                    </>
+                  ) : (
+                    <>
+                      {user !== "abs" ? (
+                        <>
+                          <ul>
+                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
+                              <NavLink to={`/${user}/login`}>Login</NavLink>
+                            </li>
+
+                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
+                              <NavLink to={`/${user}/about`}>About</NavLink>
+                            </li>
+                          </ul>
+                        </>
+                      ) : (
+                        <>
+                          <ul>
+                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
+                              <NavLink to={`/about`}>About</NavLink>
+                            </li>
+
+                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
+                              <NavLink to={`/register`}>Register</NavLink>
+                            </li>
+                          </ul>
+                        </>
+                      )}
+                    </>
+                  )}
+
+                  {/* ------------------------------------------------------------------------------------------------------------------- */}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Mobile menu, show/hide based on menu state. */}
-      {/* <div className="sm:hidden" id="mobile-menu">
-        <div className="space-y-1 px-2 pb-3 pt-2">
-          {authenticated ? (
-            <>
-              {role == 1 && authenticated ? (
-                <>
-                  <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
-                    <Link
-                      className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
-                      onClick={() => {
-                        dispatch(
-                          announcementSliceActions.changeAnnouncementStatus({
-                            showAnnouncementModal: true,
-                          })
-                        );
-                      }}
-                    >
-                      <HiSpeakerphone />
-                    </Link>
-                  </NavLink>
-
-                  <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 flex items-center">
-                    <Link
-                      className="bg-pink-600 px-3 py-2 rounded hover:bg-pink-700"
-                      onClick={() => {
-                        dispatch(
-                          announcementSliceActions.changeAnnouncementStatus({
-                            showAnnouncementModal: true,
-                          })
-                        );
-                      }}
-                    >
-                      Walkin
-                    </Link>
-                  </NavLink>
-                </>
-              ) : (
-                ""
-              )}
-              <NavLink className="rounded-md px-3 py-2 text-sm font-medium text-gray-300">
-                <FaRegSmile /> &nbsp; Hello, {username}
-              </NavLink>
-              <NavLink
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                onClick={logout}
-              >
-                logout
-              </NavLink>
-            </>
-          ) : (
-            <>
-              {user !== "abs" ? (
-                <>
-                  <NavLink
-                    to={`/${user}`}
-                    className="rounded-md bg-pink-600 px-3 py-2 text-sm font-medium text-white"
-                    aria-current="page"
-                  >
-                    Book Appointment
-                  </NavLink>
-                  <NavLink
-                    to={`/${user}/about`}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                  >
-                    About
-                  </NavLink>
-                </>
-              ) : (
-                <>
-                  <NavLink
-                    to={`/about`}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                  >
-                    About
-                  </NavLink>
-                  <NavLink
-                    to="/register"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                  >
-                    Register
-                  </NavLink>
-                  <NavLink
-                    to="/login"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-pink-600 hover:text-white"
-                  >
-                    Login
-                  </NavLink>
-                </>
-              )}
-            </>
-          )}
-        </div>
-      </div> */}
-    </nav>
+      </nav>
+    </>
   );
 };
 

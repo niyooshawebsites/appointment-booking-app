@@ -22,7 +22,7 @@ const Footer = () => {
       {isVerified ? (
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-evenly">
-            <div className="w-full flex flex-col justify-start items-center sm:w-3/12 mb-6 sm:mb-0">
+            <div className="w-full sm:w-3/12 mb-6 sm:mb-0">
               <h3 className="text-lg font-semibold mb-4">About</h3>
               <p className="text-gray-400 mb-4">
                 {about.length > 0
@@ -103,7 +103,7 @@ const Footer = () => {
               )}
             </div>
 
-            <div className="w-full flex flex-col justify-start items-center sm:w-4/12 mb-6 sm:mb-0">
+            <div className="w-full sm:w-4/12 mb-6 sm:mb-0">
               <h3 className="text-lg font-semibold mb-4">
                 Timings (Morning & Evening)
               </h3>
