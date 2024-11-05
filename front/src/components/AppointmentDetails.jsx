@@ -42,7 +42,7 @@ const AppointmentDetails = () => {
   };
 
   return (
-    <div className="w-8/12 mx-auto">
+    <div className="w-10/12 md:w-8/12 mx-auto mt-5">
       <div className="flex justify-between mt-2">
         <Link
           onClick={goback}
@@ -98,12 +98,12 @@ const AppointmentDetails = () => {
           </div>
         </div>
 
-        <div className="border-b border-gray-900/10 py-6">
+        <div className=" py-6">
           <h2 className="text-base font-semibold leading-7 text-pink-600">
             Personal Details
           </h2>
 
-          <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-5">
+          <div className="mt-2 grid grid-cols-3 gap-x-6 gap-y-4 sm:grid-cols-5">
             <div className="sm:col-span-1">
               <div className="mt-2">
                 <label>First Name</label>
