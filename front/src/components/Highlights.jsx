@@ -680,9 +680,9 @@ const Highlights = () => {
           <h1 className="text-center text-3xl mt-10 text-pink-600">
             Highlights
           </h1>
-          <div className="flex space-x-8 p-8 mx-auto w-6/12">
+          <div className="flex flex-col md:flex-row md:space-x-8 p-8 mx-auto md:w-6/12">
             {/* Column 1 */}
-            <div className="w-1/2">
+            <div className="w-full flex flex-col mb-3 md:mb-0">
               <h2 className="text-xl text-center mb-4">All Data</h2>
               <table className="min-w-full bg-white border border-gray-200 shadow-md text-center">
                 <thead className="bg-pink-600 text-white">
@@ -772,7 +772,7 @@ const Highlights = () => {
             </div>
 
             {/* Column 2 */}
-            <div className="w-1/2">
+            <div className="w-full flex flex-col mb-3 md:mb-0">
               <h2 className="text-xl text-center mb-4">Today's Data</h2>
               <table className="min-w-full bg-white border border-gray-200 shadow-md text-center">
                 <thead className="bg-pink-600 text-white">

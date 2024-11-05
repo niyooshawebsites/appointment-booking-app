@@ -232,7 +232,7 @@ const DisplayInfo = () => {
   // show admin info...
   if (role == 1 && isAdmin) {
     return allUsers.length > 0 ? (
-      <div className="mx-auto">
+      <div className="overflow-x-auto mx-auto px-5">
         <h1 className="mt-10 text-3xl text-center text-pink-600">Users</h1>
         <input
           type="text"

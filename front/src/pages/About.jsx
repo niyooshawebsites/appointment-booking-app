@@ -40,7 +40,7 @@ const About = () => {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-8 md:px-4 py-8">
         <h1 className="text-4xl font-bold text-center mb-6 text-pink-600">
           About
         </h1>

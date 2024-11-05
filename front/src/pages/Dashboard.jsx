@@ -44,7 +44,7 @@ const Dashboard = () => {
   if (showHighlights) {
     return (
       <Layout>
-        <div className="w-full h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
           <Highlights />
           <Announcement />
@@ -57,7 +57,7 @@ const Dashboard = () => {
   if (showInfo) {
     return (
       <Layout>
-        <div className="w-full h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
           <Suspense fallback={<Loader />}>
             <DisplayInfo />
@@ -73,7 +73,7 @@ const Dashboard = () => {
   if (showBookAppointment) {
     return (
       <Layout>
-        <div className="w-full h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
           {loginBooking ? (
             <LoginAppointmentForm />
@@ -88,7 +88,7 @@ const Dashboard = () => {
   if (showAppointmentDetails) {
     return (
       <Layout>
-        <div className="w-full h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
           <AppointmentDetails />
           <Announcement />
@@ -101,7 +101,7 @@ const Dashboard = () => {
   if (showServices) {
     return (
       <Layout>
-        <div className="w-full h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
           <ServiceForm />
           <Announcement />
@@ -114,7 +114,7 @@ const Dashboard = () => {
   if (showProfile) {
     return (
       <Layout>
-        <div className="w-full h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
           <Profile />
           <Announcement />
@@ -127,7 +127,7 @@ const Dashboard = () => {
   if (showAbout) {
     return (
       <Layout>
-        <div className="w-full h-[1100px] md:h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen md:h-screen flex bg-gray-100">
           <Sidebar />
           <AboutForm />
           <Announcement />
@@ -140,7 +140,7 @@ const Dashboard = () => {
   if (showContact) {
     return (
       <Layout>
-        <div className="w-full h-[800px] md:h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen md:h-screen flex bg-gray-100">
           <Sidebar />
           <ContactForm />
           <Announcement />
@@ -153,7 +153,7 @@ const Dashboard = () => {
   if (showLetterHead) {
     return (
       <Layout>
-        <div className="w-full h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
           <LetterHead />
           <Announcement />
@@ -166,7 +166,7 @@ const Dashboard = () => {
   if (showInvoice) {
     return (
       <Layout>
-        <div className="w-full h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
           <Invoice />
           <Announcement />
@@ -179,7 +179,7 @@ const Dashboard = () => {
   if (showQaulifications) {
     return (
       <Layout>
-        <div className="w-full h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
           <Qualifications />
           <Announcement />
@@ -192,7 +192,7 @@ const Dashboard = () => {
   if (showTimings) {
     return (
       <Layout>
-        <div className="w-full h-screen flex bg-gray-100">
+        <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
           <Timings />
           <Announcement />

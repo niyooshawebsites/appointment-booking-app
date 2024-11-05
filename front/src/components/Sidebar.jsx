@@ -29,62 +29,144 @@ const Sidebar = () => {
     dispatch(dashboardOptionsSliceActions.toggleDashboardOptions(options));
   };
 
-  // admin sidebar optoins
+  // admin sidebar menu
   if (role == 1 && isAdmin) {
     return (
-      <div className="w-2/12 bg-indigo-800 text-white h-full p-4">
-        <h1 className="text-xl font-semibold mb-6 bg-pink-600 p-2 rounded">
-          My Dashboard
-        </h1>
-        <ul>
-          <li
-            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
-            onClick={() => {
-              dispatch(
-                dashboardOptionsSliceActions.toggleDashboardOptions({
-                  showHighlights: true,
-                  showInfo: false,
-                  showServices: false,
-                  showProfile: false,
-                  showAbout: false,
-                  showContact: false,
-                  showAppointmentDetails: false,
-                  showBookAppointment: false,
-                  showLetterHead: false,
-                  showInvoice: false,
-                  showQaulifications: false,
-                  showTimings: false,
-                })
-              );
-            }}
+      <>
+        {/* Tablet and Laptop Sidebar (md and up) */}
+        <div className="hidden md:block w-2/12 bg-indigo-800 text-white h-auto p-4">
+          <h1 className="text-xl font-semibold mb-6 bg-pink-600 p-2 rounded">
+            My Dashboard
+          </h1>
+          <ul>
+            <li
+              className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+              onClick={() => {
+                dispatch(
+                  dashboardOptionsSliceActions.toggleDashboardOptions({
+                    showHighlights: true,
+                    showInfo: false,
+                    showServices: false,
+                    showProfile: false,
+                    showAbout: false,
+                    showContact: false,
+                    showAppointmentDetails: false,
+                    showBookAppointment: false,
+                    showLetterHead: false,
+                    showInvoice: false,
+                    showQaulifications: false,
+                    showTimings: false,
+                  })
+                );
+              }}
+            >
+              <RxStar style={{ color: "white" }} /> &nbsp; Highlights
+            </li>
+            <li
+              className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+              onClick={() => {
+                dispatch(
+                  dashboardOptionsSliceActions.toggleDashboardOptions({
+                    showHighlights: false,
+                    showInfo: false,
+                    showServices: false,
+                    showProfile: true,
+                    showAbout: false,
+                    showContact: false,
+                    showAppointmentDetails: false,
+                    showBookAppointment: false,
+                    showLetterHead: false,
+                    showInvoice: false,
+                    showQaulifications: false,
+                    showTimings: false,
+                  })
+                );
+              }}
+            >
+              <FaUserCog style={{ color: "white" }} /> &nbsp; Profile
+            </li>
+          </ul>
+        </div>
+
+        {/* Mobile Sidebar (md:hidden) */}
+        <div className="md:hidden">
+          <div className="flex flex-col justify-start bg-indigo-800 h-auto">
+            <button
+              className="md:hidden p-1 text-whiterounded text-white"
+              onClick={handleToggle}
+            >
+              <CgMenuGridR style={{ fontSize: "1.5rem" }} />
+            </button>
+          </div>
+
+          {/* Overlay for mobile */}
+          <div
+            className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity ${
+              isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+            onClick={handleToggle}
+          ></div>
+
+          {/* Mobile Sidebar */}
+          <div
+            className={`fixed top-0 left-0 w-64 h-full bg-indigo-800 text-white transition-transform transform ${
+              isOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
           >
-            <RxStar style={{ color: "white" }} /> &nbsp; Highlights
-          </li>
-          <li
-            className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
-            onClick={() => {
-              dispatch(
-                dashboardOptionsSliceActions.toggleDashboardOptions({
-                  showHighlights: false,
-                  showInfo: false,
-                  showServices: false,
-                  showProfile: true,
-                  showAbout: false,
-                  showContact: false,
-                  showAppointmentDetails: false,
-                  showBookAppointment: false,
-                  showLetterHead: false,
-                  showInvoice: false,
-                  showQaulifications: false,
-                  showTimings: false,
-                })
-              );
-            }}
-          >
-            <FaUserCog style={{ color: "white" }} /> &nbsp; Profile
-          </li>
-        </ul>
-      </div>
+            <h1 className="text-xl font-semibold mb-6 bg-pink-600 p-2 rounded">
+              My Dashboard
+            </h1>
+            <ul>
+              <li
+                className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+                onClick={() => {
+                  dispatch(
+                    dashboardOptionsSliceActions.toggleDashboardOptions({
+                      showHighlights: true,
+                      showInfo: false,
+                      showServices: false,
+                      showProfile: false,
+                      showAbout: false,
+                      showContact: false,
+                      showAppointmentDetails: false,
+                      showBookAppointment: false,
+                      showLetterHead: false,
+                      showInvoice: false,
+                      showQaulifications: false,
+                      showTimings: false,
+                    })
+                  );
+                }}
+              >
+                <RxStar style={{ color: "white" }} /> &nbsp; Highlights
+              </li>
+              <li
+                className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+                onClick={() => {
+                  dispatch(
+                    dashboardOptionsSliceActions.toggleDashboardOptions({
+                      showHighlights: false,
+                      showInfo: false,
+                      showServices: false,
+                      showProfile: true,
+                      showAbout: false,
+                      showContact: false,
+                      showAppointmentDetails: false,
+                      showBookAppointment: false,
+                      showLetterHead: false,
+                      showInvoice: false,
+                      showQaulifications: false,
+                      showTimings: false,
+                    })
+                  );
+                }}
+              >
+                <FaUserCog style={{ color: "white" }} /> &nbsp; Profile
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>
     );
   }
 
@@ -264,7 +346,7 @@ const Sidebar = () => {
         </div>
 
         {/* Mobile Sidebar (md:hidden) */}
-        <div className="md:hidden">
+        <div className="md:hidden" style={{ zIndex: 50 }}>
           <div className="flex flex-col justify-start bg-indigo-800 h-auto">
             <button
               className="md:hidden p-1 text-whiterounded text-white"

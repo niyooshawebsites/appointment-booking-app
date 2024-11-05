@@ -113,7 +113,7 @@ const Header = () => {
                 className="md:hidden p-1 text-whiterounded text-white mr-5"
                 onClick={handleToggle}
               >
-                <CgMenuGridR style={{ fontSize: "1.5rem" }} />
+                <CgMenuGridR style={{ fontSize: "2.2rem" }} />
               </button>
 
               <div className="flex flex-shrink-0 items-center">
@@ -245,12 +245,11 @@ const Header = () => {
                   className={`fixed top-0 left-0 w-64 h-full bg-indigo-800 text-white transition-transform transform ${
                     isOpen ? "translate-x-0" : "-translate-x-full"
                   }`}
+                  style={{ zIndex: 100 }}
                 >
                   <h1 className="text-xl font-semibold mb-6 bg-pink-600 p-2 rounded">
                     Menu
                   </h1>
-
-                  {/* ------------------------------------------------------------------------------------------------------------------ */}
 
                   {authenticated ? (
                     <>
@@ -310,9 +309,12 @@ const Header = () => {
                       )}
 
                       <ul>
-                        <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
-                          <NavLink onClick={logout}>logout</NavLink>
-                        </li>
+                        <NavLink
+                          onClick={logout}
+                          className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+                        >
+                          <li>logout</li>
+                        </NavLink>
                       </ul>
                     </>
                   ) : (
@@ -320,32 +322,42 @@ const Header = () => {
                       {user !== "abs" ? (
                         <>
                           <ul>
-                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
-                              <NavLink to={`/${user}/login`}>Login</NavLink>
-                            </li>
+                            <NavLink
+                              to={`/${user}/login`}
+                              className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+                            >
+                              <li>Login</li>
+                            </NavLink>
 
-                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
-                              <NavLink to={`/${user}/about`}>About</NavLink>
-                            </li>
+                            <NavLink
+                              to={`/${user}/about`}
+                              className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+                            >
+                              <li>About</li>
+                            </NavLink>
                           </ul>
                         </>
                       ) : (
                         <>
                           <ul>
-                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
-                              <NavLink to={`/about`}>About</NavLink>
-                            </li>
+                            <NavLink
+                              to={`/about`}
+                              className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+                            >
+                              <li>About</li>
+                            </NavLink>
 
-                            <li className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center">
-                              <NavLink to={`/register`}>Register</NavLink>
-                            </li>
+                            <NavLink
+                              to={`/register`}
+                              className="py-2 px-4 hover:bg-pink-600 rounded link flex items-center"
+                            >
+                              <li>Register</li>
+                            </NavLink>
                           </ul>
                         </>
                       )}
                     </>
                   )}
-
-                  {/* ------------------------------------------------------------------------------------------------------------------- */}
                 </div>
               </div>
             </div>
