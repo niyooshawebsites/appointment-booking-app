@@ -33,7 +33,6 @@ const DisplayInfo = () => {
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
   const [isSearchAppointment, setIsSearchAppointment] = useState(false);
-  const [isReset, setIsReset] = useState(false);
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
 
   const handleDelete = async (id) => {
