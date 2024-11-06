@@ -1190,7 +1190,7 @@ const getTodayTotalVerifiedUsersCountController = async (req, res) => {
   }
 };
 
-// get today's total verifed users count controller
+// get today's total unverifed users count controller
 const getTodayTotalUnverifiedUsersCountController = async (req, res) => {
   try {
     // start of the day
@@ -1741,6 +1741,175 @@ const updateWalkinClientDataController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Client updated successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get total patients count controller
+const getTotalPatientsCountController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const totalUsersCount = await User.countDocuments({
+      _id: { $ne: userId },
+      role: 0,
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Total number of patients found",
+      totalUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get total verified patients count controller
+const getTotalVerifiedPatientsCountController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const totalVerifiedUsersCount = await User.countDocuments({
+      isVerified: true,
+      _id: { $ne: userId },
+      role: 0,
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Successfully counted the verified patients",
+      totalVerifiedUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get total unverified patients count controller
+const getTotalUnverifiedPatientsCountController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const totalUnverifiedUsersCount = await User.countDocuments({
+      isVerified: false,
+      _id: { $ne: userId },
+      role: 0,
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Successfully counted the verified patients",
+      totalUnverifiedUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get today's total patients count controller
+const getTodayTotalPatientCountController = async (req, res) => {
+  try {
+    // start of the day
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // end of the day
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    const todayTotalUsersCount = await User.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      role: 0,
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Total number of users found for today",
+      todayTotalUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get today's total verifed patients count controller
+const getTodayTotalVerifiedPatientssCountController = async (req, res) => {
+  try {
+    // start of the day
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // end of the day
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    const todayTotalVerifiedUsersCount = await User.countDocuments({
+      isVerified: true,
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      role: 0,
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Total number of verified patients found for today",
+      todayTotalVerifiedUsersCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get today's total unverifed users count controller
+const getTodayTotalUnverifiedPatientsCountController = async (req, res) => {
+  try {
+    // start of the day
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // end of the day
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    const todayTotalUnverifiedUsersCount = await User.countDocuments({
+      isVerified: false,
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      role: 0,
+    });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Total number of unverified patients found for today",
+      todayTotalUnverifiedUsersCount,
     });
   } catch (err) {
     return res.status(500).json({

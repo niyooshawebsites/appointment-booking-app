@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const connection = require("./config/db");
 const apiRoutes = require("./routes/routes");
+const cronJob = require("./utils/cronJob");
 const app = express();
 
 // configuration

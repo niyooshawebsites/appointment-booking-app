@@ -773,7 +773,7 @@ const Highlights = () => {
 
             {/* Column 2 */}
             <div className="w-full flex flex-col mb-3 md:mb-0">
-              <h2 className="text-xl text-center mb-4">Today's Data</h2>
+              <h2 className="text-xl text-center mb-4">Today Data</h2>
               <table className="min-w-full bg-white border border-gray-200 shadow-md text-center">
                 <thead className="bg-pink-600 text-white">
                   <tr>
