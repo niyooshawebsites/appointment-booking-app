@@ -1064,9 +1064,9 @@ const fetchAParticularAppointmentController = async (req, res) => {
 
     const appointments = await Appointment.find({
       $or: [
-        { appointmentID: searchAppointment },
-        { patientID: searchAppointment },
-        { firstName: searchAppointment },
+        { appointmentID: { $regex: searchAppointment, $options: "i" } },
+        { patientID: { $regex: searchAppointment, $options: "i" } },
+        { firstName: { $regex: searchAppointment, $options: "i" } },
       ],
     });
 

@@ -9,9 +9,11 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 import { changeApponitmentStatusSliceActions } from "../store/slices/ChangeAppointmentStatusSlice";
 import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
 import { appointmentSliceActions } from "../store/slices/AppointmentSlice";
+import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import Pagination from "./Pagination";
 import { FaPrint } from "react-icons/fa";
 import { TbListDetails, TbReceiptRupee } from "react-icons/tb";
+import { GrPowerReset } from "react-icons/gr";
 import {
   RxCheckCircled,
   RxCrossCircled,
@@ -23,13 +25,15 @@ const DisplayInfo = () => {
   const dispatch = useDispatch();
   const { role, isAdmin, userId } = useSelector((state) => state.user_Slice);
   const { allUsers } = useSelector((state) => state.users_Data_Slice);
+
   const { allAppointments } = useSelector(
     (state) => state.appointments_Data_Slice
   );
   const [userDeleted, setUserDeleted] = useState(false);
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
-  const [isSearchAppoinment, setIsSearchAppointment] = useState(false);
+  const [isSearchAppointment, setIsSearchAppointment] = useState(false);
+  const [isReset, setIsReset] = useState(false);
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
 
   const handleDelete = async (id) => {
@@ -234,15 +238,43 @@ const DisplayInfo = () => {
         { withCredentials: true }
       );
 
-      if (res.data.status) {
+      if (res.data.success) {
         dispatch(
           appointmentsDataSliceActions.getAppointmentsData({
             allAppointments: res.data.appointments,
           })
         );
       }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
 
-      console.log(allAppointments);
+  // get and pass total-appointments-by-userId
+  const getAndPassAllAppointmentsByUserId = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-all-appointments-by-userId/${userId}/1`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all appointments for a specific user",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
+
+        dispatch(
+          appointmentsDataSliceActions.getAppointmentsData({
+            allAppointments: res.data.appointments,
+          })
+        );
+      }
     } catch (err) {
       toast.error(err.response.data.msg);
     }
@@ -367,29 +399,39 @@ const DisplayInfo = () => {
         <h1 className="mt-10 text-3xl text-center text-pink-600">
           Appointments
         </h1>
-        <form className="mt-5" onSubmit={handleSearch}>
-          <div className="flex">
-            <div className="w-10/12 mr-2">
-              <input
-                type="text"
-                autoComplete="on"
-                value={searchAppointment}
-                onChange={filterAppointments}
-                placeholder="Search patients via Appointment ID or Patient ID or Patient name"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
-              />
-            </div>
+        <div className="flex mt-5">
+          <form className="w-11/12" onSubmit={handleSearch}>
+            <div className="flex">
+              <div className="w-10/12 mr-2">
+                <input
+                  type="text"
+                  autoComplete="on"
+                  value={searchAppointment}
+                  onChange={filterAppointments}
+                  placeholder="Search patients via Appointment ID or Patient ID or Patient name"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                />
+              </div>
 
-            <div className="w-2/12">
-              <button
-                type="submit"
-                className="py-1.5 w-full bg-pink-600 rounded text-white"
-              >
-                Search
-              </button>
+              <div className="w-2/12 mr-2">
+                <button
+                  type="submit"
+                  className="py-1.5 w-full bg-pink-600 rounded text-white"
+                >
+                  Search
+                </button>
+              </div>
             </div>
+          </form>
+          <div className="w-1/12 mr-2">
+            <button
+              className="py-1.5 w-full bg-indigo-600 rounded text-white text-2xl flex justify-center items-center"
+              onClick={getAndPassAllAppointmentsByUserId}
+            >
+              <GrPowerReset />
+            </button>
           </div>
-        </form>
+        </div>
 
         <table className="w-12/12 min-w-full mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5 text-sm">
           <thead className="bg-pink-600 text-white border-b border-gray-300">
@@ -408,7 +450,7 @@ const DisplayInfo = () => {
             </tr>
           </thead>
           <tbody>
-            {isSearchAppoinment
+            {isSearchAppointment
               ? allAppointments.map((appointment, index) => {
                   return (
                     <tr
@@ -631,15 +673,6 @@ const DisplayInfo = () => {
         <h1 className="mt-10 text-3xl text-center text-pink-600">
           Appointments
         </h1>
-        <input
-          type="text"
-          autoComplete="on"
-          value={searchAppointment}
-          onChange={filterAppointments}
-          placeholder="Search user using business name or email..."
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 mt-5"
-        />
-
         <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5 text-sm">
           <thead className="bg-pink-600 text-white border-b border-gray-300">
             <tr>
@@ -655,59 +688,46 @@ const DisplayInfo = () => {
             </tr>
           </thead>
           <tbody>
-            {allAppointments
-              .filter(
-                (appointment) =>
-                  appointment.appointmentID
-                    .toLowerCase()
-                    .includes(searchAppointment) ||
-                  appointment.user.name
-                    .toLowerCase()
-                    .includes(searchAppointment) ||
-                  appointment.user.businessName
-                    .toLowerCase()
-                    .includes(searchAppointment)
-              )
-              .map((appointment, index) => {
-                return (
-                  <tr key={appointment._id}>
-                    <td className="py-2 px-4 text-gray-700">{index + 1}</td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.appointmentID}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.user.name}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.user.businessName}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.service}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.date.split("-").reverse().join("-")}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.time}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.appointmentStatus}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      <div className="flex justify-center items-center">
-                        <Link
-                          className="text-indigo-800"
-                          to={`http://localhost:5173/${appointment.user.username}`}
-                          title="View Profile"
-                          target="_blank"
-                        >
-                          <RxLink2 />
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+            {allAppointments.map((appointment, index) => {
+              return (
+                <tr key={appointment._id}>
+                  <td className="py-2 px-4 text-gray-700">{index + 1}</td>
+                  <td className="py-2 px-4 text-gray-700">
+                    {appointment.appointmentID}
+                  </td>
+                  <td className="py-2 px-4 text-gray-700">
+                    {appointment.user.name}
+                  </td>
+                  <td className="py-2 px-4 text-gray-700">
+                    {appointment.user.businessName}
+                  </td>
+                  <td className="py-2 px-4 text-gray-700">
+                    {appointment.service}
+                  </td>
+                  <td className="py-2 px-4 text-gray-700">
+                    {appointment.date.split("-").reverse().join("-")}
+                  </td>
+                  <td className="py-2 px-4 text-gray-700">
+                    {appointment.time}
+                  </td>
+                  <td className="py-2 px-4 text-gray-700">
+                    {appointment.appointmentStatus}
+                  </td>
+                  <td className="py-2 px-4 text-gray-700">
+                    <div className="flex justify-center items-center">
+                      <Link
+                        className="text-indigo-800 text-xl"
+                        to={`http://localhost:5173/${appointment.user.username}`}
+                        title="View Profile"
+                        target="_blank"
+                      >
+                        <RxLink2 />
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
         <Pagination />
