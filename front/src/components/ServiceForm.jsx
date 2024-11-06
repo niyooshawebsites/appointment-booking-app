@@ -105,7 +105,7 @@ const ServiceForm = () => {
         className="bg-white shadow-md rounded-lg p-6 mb-6"
         onSubmit={handleSubmit}
       >
-        <div className="flex flex-col md:flex-row md:space-x-4 mb-4">
+        <div className="flex flex-col md:flex-row md:space-x-4">
           <input
             type="text"
             name="serviceName"
@@ -140,7 +140,7 @@ const ServiceForm = () => {
               <th className="py-2 px-3">#</th>
               <th className="py-2 px-3">Service</th>
               <th className="py-2 px-3">Fee</th>
-              <th className="py-2 px-3">Delete</th>
+              <th className="py-2 px-3 text-center">Delete</th>
             </tr>
           </thead>
 

@@ -222,10 +222,10 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
   // if the client is logged in
   if (customerDashboard) {
     return (
-      <div className="mx-auto">
+      <div className="mt-10 mx-auto p-5">
         <label
           htmlFor="specialization"
-          className="block text-sm font-medium text-gray-700 mt-3"
+          className="block font-medium text-gray-700 mt-3 text-center text-lg"
         >
           Select Specialization
         </label>
@@ -262,8 +262,8 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
               <thead className="bg-pink-600 border-b border-gray-300 text-white">
                 <tr>
                   <th className="py-2 px-4 text-left">#</th>
-                  <th className="py-2 px-4 text-left">DR. Name</th>
-                  <th className="py-2 px-4 text-left">Clinic Name</th>
+                  <th className="py-2 px-4 text-left">Doctor</th>
+                  <th className="py-2 px-4 text-left">Center</th>
                   <th className="py-2 px-4 text-left">Profile</th>
                   <th className="py-2 px-4 text-left">Book</th>
                 </tr>
@@ -285,48 +285,52 @@ const AppointmentForm = ({ serviceProvider, customerDashboard }) => {
                         {user.businessName}
                       </td>
                       <td className="py-2 px-4 text-left text-gray-600">
-                        <Link
-                          className="text-indigo-600"
-                          to={`http://localhost:5173/${user.username}`}
-                          target="_blank"
-                        >
-                          <RxLink2 />
-                        </Link>
+                        <div className="flex justify-center items-center">
+                          <Link
+                            className="text-indigo-600 hover:text-indigo-700 text-lg"
+                            to={`http://localhost:5173/${user.username}`}
+                            target="_blank"
+                          >
+                            <RxLink2 />
+                          </Link>
+                        </div>
                       </td>
                       <td className="py-2 px-4 text-left text-gray-600">
-                        <Link
-                          className="text-indigo-600"
-                          customerDashboard={customerDashboard}
-                          onClick={() => {
-                            dispatch(
-                              appointmentSliceActions.appointmentDetails({
-                                username: user.username,
-                              })
-                            );
+                        <div className="flex justify-center items-center">
+                          <Link
+                            className="text-indigo-600 hover:text-indigo-700"
+                            customerDashboard={customerDashboard}
+                            onClick={() => {
+                              dispatch(
+                                appointmentSliceActions.appointmentDetails({
+                                  username: user.username,
+                                })
+                              );
 
-                            dispatch(
-                              dashboardOptionsSliceActions.toggleDashboardOptions(
-                                {
-                                  showHighlights: false,
-                                  showInfo: false,
-                                  showServices: false,
-                                  showProfile: false,
-                                  showAbout: false,
-                                  showContact: false,
-                                  showAppointmentDetails: false,
-                                  showBookAppointment: true,
-                                  loginBooking: true,
-                                  showLetterHead: false,
-                                  showInvoice: false,
-                                  showQaulifications: false,
-                                  showTimings: false,
-                                }
-                              )
-                            );
-                          }}
-                        >
-                          <RxBookmarkFilled />
-                        </Link>
+                              dispatch(
+                                dashboardOptionsSliceActions.toggleDashboardOptions(
+                                  {
+                                    showHighlights: false,
+                                    showInfo: false,
+                                    showServices: false,
+                                    showProfile: false,
+                                    showAbout: false,
+                                    showContact: false,
+                                    showAppointmentDetails: false,
+                                    showBookAppointment: true,
+                                    loginBooking: true,
+                                    showLetterHead: false,
+                                    showInvoice: false,
+                                    showQaulifications: false,
+                                    showTimings: false,
+                                  }
+                                )
+                              );
+                            }}
+                          >
+                            <RxBookmarkFilled />
+                          </Link>
+                        </div>
                       </td>
                     </tr>
                   );

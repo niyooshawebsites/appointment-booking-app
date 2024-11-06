@@ -252,6 +252,7 @@ const Walkin = () => {
         <div
           id="modal"
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          style={{ zIndex: 400 }}
         >
           <div className="bg-white rounded-lg shadow-lg w-11/12 md:w-6/12 p-6 border">
             <form onSubmit={handleSearchAndPopulate}>
@@ -279,10 +280,10 @@ const Walkin = () => {
             </form>
 
             <form
-              className="max-w-4xl mx-auto my-4 h-[600px] p-6 border rounded-lg shadow-md bg-white"
+              className="max-w-4xl mx-auto my-4 h-auto p-6 border rounded-lg shadow-md bg-white"
               onSubmit={handleSubmit}
             >
-              <div className="space-y-2 h-full flex flex-col justify-start">
+              <div className="space-y-2 flex flex-col justify-center">
                 {/* Appointment Details */}
                 <div className="pb-4">
                   <h2 className="text-lg font-semibold mb-2 text-pink-600">

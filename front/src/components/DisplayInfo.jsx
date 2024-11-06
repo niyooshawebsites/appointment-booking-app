@@ -254,7 +254,7 @@ const DisplayInfo = () => {
               <th className="py-2 px-4 text-left text-white">DOJ</th>
               <th className="py-2 px-4 text-left text-white">Apps</th>
               <th className="py-2 px-4 text-left text-white">Verified</th>
-              <th className="py-2 px-4 text-left text-white">Action</th>
+              <th className="py-2 px-4 text-left text-white">Delete</th>
               <th className="py-2 px-4 text-left text-white">Profile</th>
             </tr>
           </thead>
@@ -286,11 +286,11 @@ const DisplayInfo = () => {
                     <td className="py-2 px-4 text-gray-700">
                       <div className="flex justify-center items-center">
                         {user.isVerified ? (
-                          <span className="text-green-500">
+                          <span className="text-green-700 text-lg">
                             <RxCheckCircled />
                           </span>
                         ) : (
-                          <span className="text-red-500">
+                          <span className="text-red-700 text-lg">
                             <RxCrossCircled />
                           </span>
                         )}
@@ -303,7 +303,7 @@ const DisplayInfo = () => {
                             handleDelete(user._id);
                           }}
                           title="Delete"
-                          className="text-red-500"
+                          className="text-red-700 text-lg"
                         >
                           <RxCross2 />
                         </button>
@@ -315,7 +315,7 @@ const DisplayInfo = () => {
                           to={`http://localhost:5173/${user.username}`}
                           target="_blank"
                           title="View Profile"
-                          className="text-blue-500"
+                          className="text-indigo-700 text-lg"
                         >
                           <RxLink2 />
                         </Link>
@@ -355,16 +355,16 @@ const DisplayInfo = () => {
           <thead className="bg-pink-600 text-white border-b border-gray-300">
             <tr>
               <th className="py-2 px-4 text-left">#</th>
-              <th className="py-2 px-4 text-left">AID</th>
-              <th className="py-2 px-4 text-left">PID</th>
+              <th className="py-2 px-4 text-center">AID</th>
+              <th className="py-2 px-4 text-center">PID</th>
               <th className="py-2 px-4 text-left">Name</th>
-              <th className="py-2 px-4 text-left">Contact</th>
-              <th className="py-2 px-4 text-left">Date</th>
+              <th className="py-2 px-4 text-center">Contact</th>
+              <th className="py-2 px-4 text-center">Date</th>
               <th className="py-2 px-4 text-left">Time</th>
               <th className="py-2 px-4 text-left">Details</th>
               <th className="py-2 px-4 text-left">Status</th>
               <th className="py-2 px-4 text-left">Actions</th>
-              <th className="py-2 px-4 text-left">Print</th>
+              <th className="py-2 px-4 text-center">Print</th>
             </tr>
           </thead>
           <tbody>
@@ -407,19 +407,21 @@ const DisplayInfo = () => {
                       {appointment.time}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      <Link
-                        className="text-indigo-800"
-                        title="More details"
-                        onClick={() => handleDetails(appointment._id)}
-                      >
-                        <TbListDetails />
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800 text-lg"
+                          title="More details"
+                          onClick={() => handleDetails(appointment._id)}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
                     </td>
                     <td className="py-2 px-4 text-gray-700">
                       {appointment.appointmentStatus}
                     </td>
                     <td className="py-2 px-4 text-gray-700">
-                      <div className="flex flex-">
+                      <div className="flex justify-center">
                         <button
                           className={
                             appointment.appointmentStatus != "Pending"
@@ -450,11 +452,13 @@ const DisplayInfo = () => {
                           Accept
                         </button>
                         <p
-                          className={
-                            appointment.appointmentStatus != "Pending"
-                              ? `block`
-                              : `hidden`
-                          }
+                          className={`
+                            ${
+                              appointment.appointmentStatus != "Pending"
+                                ? `block`
+                                : `hidden`
+                            }
+                          `}
                         >
                           N/A
                         </p>

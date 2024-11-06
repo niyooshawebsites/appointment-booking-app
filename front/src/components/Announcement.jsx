@@ -40,8 +40,9 @@ const Announcement = () => {
       <div
         id="modal"
         className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        style={{ zIndex: 300 }}
       >
-        <div className="bg-white rounded-lg shadow-lg w-6/12 p-6">
+        <div className="bg-white rounded-lg shadow-lg w-10/12 md:w-6/12 p-6">
           <h2 className="text-lg font-bold mb-4 text-pink-600">
             New Announcement
           </h2>

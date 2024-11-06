@@ -199,10 +199,10 @@ const LoginAppointmentForm = ({ customerDashboard }) => {
   return (
     <>
       <form
-        className="max-w-4xl mx-auto my-4 h-[600px] p-6 border rounded-lg shadow-md bg-white"
+        className="max-w-4xl mx-auto my-10 h-fit p-6 rounded-lg shadow-md bg-white"
         onSubmit={handleSubmit}
       >
-        <div className="space-y-2 h-full flex flex-col justify-start">
+        <div className="space-y-2 flex flex-col justify-start ">
           {/* Appointment Details */}
           <div className="border-b pb-4">
             <h2 className="text-lg font-semibold mb-2 text-pink-600">

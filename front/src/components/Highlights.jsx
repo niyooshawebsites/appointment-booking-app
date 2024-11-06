@@ -677,7 +677,7 @@ const Highlights = () => {
     return (
       <>
         <div className="w-full flex flex-col border">
-          <h1 className="text-center text-3xl mt-10 text-pink-600">
+          <h1 className="mt-10 text-center text-3xl text-pink-600">
             Highlights
           </h1>
           <div className="flex flex-col md:flex-row md:space-x-8 p-8 mx-auto md:w-6/12">
@@ -689,11 +689,11 @@ const Highlights = () => {
                   <tr>
                     <th className="text-left py-2 px-4 border-b">Doctors</th>
                     <th className="py-2 px-4 border-b text-center">Entries</th>
-                    <th className="text-left py-2 px-4 border-b">View</th>
+                    <th className="text-center py-2 px-4 border-b">View</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr className="bg-gray-200">
                     <td className="text-left py-2 px-4 border-b">Total</td>
                     <td className="py-2 px-4 border-b">
                       {totalNumOfUsers < 10
@@ -703,7 +703,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
                         <Link
-                          className="text-indigo-800"
+                          className="text-indigo-800 text-lg"
                           title="More details"
                           onClick={getAndPassAllUsers}
                         >
@@ -722,7 +722,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
                         <Link
-                          className="text-indigo-800"
+                          className="text-indigo-800 text-lg"
                           title="More details"
                           onClick={getAndPassAllVerifiedUsers}
                         >
@@ -731,7 +731,7 @@ const Highlights = () => {
                       </div>
                     </td>
                   </tr>
-                  <tr>
+                  <tr className="bg-gray-200">
                     <td className="text-left py-2 px-4 border-b">Unverified</td>
                     <td className="py-2 px-4 border-b">
                       {totalNumOfUnverifiedUsers < 10
@@ -741,7 +741,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
                         <Link
-                          className="text-indigo-800"
+                          className="text-indigo-800 text-lg"
                           title="More details"
                           onClick={getAndPassAllUnverifiedUsers}
                         >
@@ -761,7 +761,7 @@ const Highlights = () => {
                     </td>
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
-                        <Link className="text-indigo-800">
+                        <Link className="text-indigo-800 text-lg">
                           <TbListDetails />
                         </Link>
                       </div>
@@ -783,7 +783,7 @@ const Highlights = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr className="bg-gray-200">
                     <td className="text-left py-2 px-4 border-b">Total</td>
                     <td className="py-2 px-4 border-b">
                       {todayTotalNumOfUsers < 10
@@ -793,7 +793,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
                         <Link
-                          className="text-indigo-800"
+                          className="text-indigo-800 text-lg"
                           title="More details"
                           onClick={getAndPassTodayUsers}
                         >
@@ -812,7 +812,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
                         <Link
-                          className="text-indigo-800"
+                          className="text-indigo-800 text-lg"
                           title="More details"
                           onClick={getAndPassTodayVerifiedUsers}
                         >
@@ -821,7 +821,7 @@ const Highlights = () => {
                       </div>
                     </td>
                   </tr>
-                  <tr>
+                  <tr className="bg-gray-200">
                     <td className="text-left py-2 px-4 border-b">Unverified</td>
                     <td className="py-2 px-4 border-b">
                       {todayTotalNumOfUnverifiedUsers < 10
@@ -831,7 +831,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
                         <Link
-                          className="text-indigo-800"
+                          className="text-indigo-800 text-lg"
                           title="More details"
                           onClick={getAndPassTodayUnverifiedUsers}
                         >
@@ -851,7 +851,7 @@ const Highlights = () => {
                     </td>
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
-                        <Link className="text-indigo-800">
+                        <Link className="text-indigo-800 text-lg">
                           <TbListDetails />
                         </Link>
                       </div>
@@ -869,8 +869,8 @@ const Highlights = () => {
   // show highlights for service providers
   if (role == 1 && isAdmin == false) {
     return (
-      <div className="w-full flex flex-col border">
-        <h1 className="text-center text-3xl my-3 text-pink-500">Highlights</h1>
+      <div className="w-full flex flex-col borde">
+        <h1 className="mt-10 text-center text-3xl text-pink-500">Highlights</h1>
         <div className="w-10/12 flex flex-col md:flex-row md:space-x-8 md:p-8 mx-auto md:w-6/12">
           {/* Column 1 */}
           <div className="w-10/12 md:w-1/2 my-8 md:my-0">
@@ -892,7 +892,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b text-center">
                     <div className="flex justify-center items-center">
                       <Link
-                        className="text-indigo-500"
+                        className="text-indigo-500 text-lg"
                         title="More details"
                         onClick={getAndPassAllAppointmentsByUserId}
                       >
@@ -925,7 +925,7 @@ const Highlights = () => {
                   <td className="py-2 px-4 border-b">
                     <div className="flex justify-center items-center">
                       <Link
-                        className="text-indigo-500"
+                        className="text-indigo-500 text-lg"
                         title="More details"
                         onClick={getAndPassTodaysAppointmentsByUserId}
                       >
@@ -947,7 +947,7 @@ const Highlights = () => {
     return (
       <>
         <div className="w-full flex flex-col border">
-          <h1 className="text-center text-3xl my-3 text-pink-500">
+          <h1 className="mt-10 text-center text-3xl my-3 text-pink-500">
             Highlights
           </h1>
           <div className="flex space-x-8 p-8 mx-auto w-10/12 md:w-6/12">
@@ -975,7 +975,7 @@ const Highlights = () => {
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
                         <Link
-                          className="text-indigo-800"
+                          className="text-indigo-800 text-lg"
                           title="More details"
                           onClick={getAndAllPassApponitmentsForClient}
                         >
