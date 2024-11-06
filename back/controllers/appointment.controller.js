@@ -1051,6 +1051,46 @@ const changeAppointmentStausController = async (req, res) => {
   }
 };
 
+const fetchAParticularAppointmentController = async (req, res) => {
+  try {
+    const { searchAppointment } = req.params;
+
+    if (!searchAppointment) {
+      return res.status(400).json({
+        success: false,
+        msg: "No search parameter",
+      });
+    }
+
+    const appointments = await Appointment.find({
+      $or: [
+        { appointmentID: searchAppointment },
+        { patientID: searchAppointment },
+        { firstName: searchAppointment },
+      ],
+    });
+
+    if (appointments.length == 0) {
+      return res.status(404).json({
+        success: false,
+        msg: "No appointment found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Appointment found successfully",
+      appointments,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
 module.exports = {
   // bookAppointmnentController,
   bookAppointmnentByLoginController,
@@ -1067,4 +1107,5 @@ module.exports = {
   getNoOfAppointmentsPerUserController,
   bookApponitmentForWalkinClientsController,
   changeAppointmentStausController,
+  fetchAParticularAppointmentController,
 };

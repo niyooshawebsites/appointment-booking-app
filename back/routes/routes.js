@@ -62,6 +62,7 @@ const {
   getNoOfAppointmentsPerUserController,
   bookApponitmentForWalkinClientsController,
   changeAppointmentStausController,
+  fetchAParticularAppointmentController,
 } = require("../controllers/appointment.controller");
 
 const isServiceProvider = require("../middlewares/isServiceProvider.middleware");
@@ -419,11 +420,20 @@ router.patch(
   updateWalkinClientDataController
 );
 
+// change appointment status
 router.patch(
   "/change-appointment-status/:appId",
   auth,
   isServiceProvider,
   changeAppointmentStausController
+);
+
+// fetch a particular appointment
+router.get(
+  "/fetch-a-particular-appointment/:searchAppointment",
+  auth,
+  isServiceProvider,
+  fetchAParticularAppointmentController
 );
 
 module.exports = router;

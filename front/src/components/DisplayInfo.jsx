@@ -29,6 +29,7 @@ const DisplayInfo = () => {
   const [userDeleted, setUserDeleted] = useState(false);
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
+  const [isSearchAppoinment, setIsSearchAppointment] = useState(false);
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
 
   const handleDelete = async (id) => {
@@ -61,6 +62,7 @@ const DisplayInfo = () => {
 
   const filterAppointments = (e) => {
     setSearchAppointment(() => e.target.value.toUpperCase());
+    setIsSearchAppointment((prevState) => !prevState);
   };
 
   // get a particular appointment details
@@ -223,11 +225,34 @@ const DisplayInfo = () => {
     }
   };
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/fetch-a-particular-appointment/${searchAppointment}`,
+        { withCredentials: true }
+      );
+
+      if (res.data.status) {
+        dispatch(
+          appointmentsDataSliceActions.getAppointmentsData({
+            allAppointments: res.data.appointments,
+          })
+        );
+      }
+
+      console.log(allAppointments);
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
   useEffect(() => {
     if (role == 1 && isAdmin && allUsers.length > 0) {
       fetchAppointmentsCount();
     }
-  }, [allUsers.length, userDeleted]);
+  }, [allUsers.length, userDeleted, allAppointments]);
 
   // show admin info...
   if (role == 1 && isAdmin) {
@@ -342,14 +367,29 @@ const DisplayInfo = () => {
         <h1 className="mt-10 text-3xl text-center text-pink-600">
           Appointments
         </h1>
-        <input
-          type="text"
-          autoComplete="on"
-          value={searchAppointment}
-          onChange={filterAppointments}
-          placeholder="Search patients via Appointment ID or Patient ID or Patient name"
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 mt-5"
-        />
+        <form className="mt-5" onSubmit={handleSearch}>
+          <div className="flex">
+            <div className="w-10/12 mr-2">
+              <input
+                type="text"
+                autoComplete="on"
+                value={searchAppointment}
+                onChange={filterAppointments}
+                placeholder="Search patients via Appointment ID or Patient ID or Patient name"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+              />
+            </div>
+
+            <div className="w-2/12">
+              <button
+                type="submit"
+                className="py-1.5 w-full bg-pink-600 rounded text-white"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
 
         <table className="w-12/12 min-w-full mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5 text-sm">
           <thead className="bg-pink-600 text-white border-b border-gray-300">
@@ -368,121 +408,211 @@ const DisplayInfo = () => {
             </tr>
           </thead>
           <tbody>
-            {allAppointments
-              .filter(
-                (appointment) =>
-                  appointment.appointmentID
-                    .toUpperCase()
-                    .includes(searchAppointment) ||
-                  appointment.patientID
-                    .toUpperCase()
-                    .includes(searchAppointment) ||
-                  appointment.firstName
-                    .toUpperCase()
-                    .includes(searchAppointment)
-              )
-              .map((appointment, index) => {
-                return (
-                  <tr
-                    key={appointment._id}
-                    className="odd:bg-gray-200 even:bg-white"
-                  >
-                    <td className="py-2 px-4 text-gray-700">{index + 1}</td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.appointmentID}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.patientID}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.firstName}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.contactNo}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.date.split("-").reverse().join("-")}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.time}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      <div className="flex justify-center items-center">
-                        <Link
-                          className="text-indigo-800 text-lg"
-                          title="More details"
-                          onClick={() => handleDetails(appointment._id)}
-                        >
-                          <TbListDetails />
-                        </Link>
-                      </div>
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {appointment.appointmentStatus}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      <div className="flex justify-center">
-                        <button
-                          className={
-                            appointment.appointmentStatus != "Pending"
-                              ? `hidden`
-                              : `bg-red-500 px-2 py-1 text-white rounded mr-2 hover:bg-red-600`
-                          }
-                          onClick={() => {
-                            dispatch(
-                              changeApponitmentStatusSliceActions.changeAppointmentStatus(
-                                {
-                                  appointmentId: appointment._id,
-                                  appointmentStatus: true,
-                                }
-                              )
-                            );
-                          }}
-                        >
-                          Reject
-                        </button>{" "}
-                        <button
-                          className={
-                            appointment.appointmentStatus != "Pending"
-                              ? `hidden`
-                              : `bg-green-500 px-2 py-1 text-white rounded mr-2 hover:bg-green-600`
-                          }
-                          onClick={() => changeStatus(appointment._id)}
-                        >
-                          Accept
-                        </button>
-                        <p
-                          className={`
+            {isSearchAppoinment
+              ? allAppointments.map((appointment, index) => {
+                  return (
+                    <tr
+                      key={appointment._id}
+                      className="odd:bg-gray-200 even:bg-white"
+                    >
+                      <td className="py-2 px-4 text-gray-700">{index + 1}</td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.appointmentID}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.patientID}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.firstName}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.contactNo}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.date.split("-").reverse().join("-")}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.time}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        <div className="flex justify-center items-center">
+                          <Link
+                            className="text-indigo-800 text-lg"
+                            title="More details"
+                            onClick={() => handleDetails(appointment._id)}
+                          >
+                            <TbListDetails />
+                          </Link>
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.appointmentStatus}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        <div className="flex justify-center">
+                          <button
+                            className={
+                              appointment.appointmentStatus != "Pending"
+                                ? `hidden`
+                                : `bg-red-500 px-2 py-1 text-white rounded mr-2 hover:bg-red-600`
+                            }
+                            onClick={() => {
+                              dispatch(
+                                changeApponitmentStatusSliceActions.changeAppointmentStatus(
+                                  {
+                                    appointmentId: appointment._id,
+                                    appointmentStatus: true,
+                                  }
+                                )
+                              );
+                            }}
+                          >
+                            Reject
+                          </button>{" "}
+                          <button
+                            className={
+                              appointment.appointmentStatus != "Pending"
+                                ? `hidden`
+                                : `bg-green-500 px-2 py-1 text-white rounded mr-2 hover:bg-green-600`
+                            }
+                            onClick={() => changeStatus(appointment._id)}
+                          >
+                            Accept
+                          </button>
+                          <p
+                            className={`
                             ${
                               appointment.appointmentStatus != "Pending"
                                 ? `block`
                                 : `hidden`
                             }
                           `}
+                          >
+                            N/A
+                          </p>
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-gray-700 flex">
+                        <Link
+                          className="text-slate-800 mr-4 text-lg"
+                          title="Letterhead"
+                          onClick={() => printLetterHead(appointment._id)}
                         >
-                          N/A
-                        </p>
-                      </div>
-                    </td>
-                    <td className="py-2 px-4 text-gray-700 flex">
-                      <Link
-                        className="text-slate-800 mr-4 text-lg"
-                        title="Letterhead"
-                        onClick={() => printLetterHead(appointment._id)}
-                      >
-                        <FaPrint />
-                      </Link>
-                      <Link
-                        className="text-slate-800 text-xl"
-                        title="Invoice"
-                        onClick={() => printInvoice(appointment._id)}
-                      >
-                        <TbReceiptRupee />
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
+                          <FaPrint />
+                        </Link>
+                        <Link
+                          className="text-slate-800 text-xl"
+                          title="Invoice"
+                          onClick={() => printInvoice(appointment._id)}
+                        >
+                          <TbReceiptRupee />
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })
+              : allAppointments.map((appointment, index) => {
+                  return (
+                    <tr
+                      key={appointment._id}
+                      className="odd:bg-gray-200 even:bg-white"
+                    >
+                      <td className="py-2 px-4 text-gray-700">{index + 1}</td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.appointmentID}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.patientID}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.firstName}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.contactNo}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.date.split("-").reverse().join("-")}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.time}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        <div className="flex justify-center items-center">
+                          <Link
+                            className="text-indigo-800 text-lg"
+                            title="More details"
+                            onClick={() => handleDetails(appointment._id)}
+                          >
+                            <TbListDetails />
+                          </Link>
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {appointment.appointmentStatus}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        <div className="flex justify-center">
+                          <button
+                            className={
+                              appointment.appointmentStatus != "Pending"
+                                ? `hidden`
+                                : `bg-red-500 px-2 py-1 text-white rounded mr-2 hover:bg-red-600`
+                            }
+                            onClick={() => {
+                              dispatch(
+                                changeApponitmentStatusSliceActions.changeAppointmentStatus(
+                                  {
+                                    appointmentId: appointment._id,
+                                    appointmentStatus: true,
+                                  }
+                                )
+                              );
+                            }}
+                          >
+                            Reject
+                          </button>{" "}
+                          <button
+                            className={
+                              appointment.appointmentStatus != "Pending"
+                                ? `hidden`
+                                : `bg-green-500 px-2 py-1 text-white rounded mr-2 hover:bg-green-600`
+                            }
+                            onClick={() => changeStatus(appointment._id)}
+                          >
+                            Accept
+                          </button>
+                          <p
+                            className={`
+                              ${
+                                appointment.appointmentStatus != "Pending"
+                                  ? `block`
+                                  : `hidden`
+                              }
+                            `}
+                          >
+                            N/A
+                          </p>
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-gray-700 flex">
+                        <Link
+                          className="text-slate-800 mr-4 text-lg"
+                          title="Letterhead"
+                          onClick={() => printLetterHead(appointment._id)}
+                        >
+                          <FaPrint />
+                        </Link>
+                        <Link
+                          className="text-slate-800 text-xl"
+                          title="Invoice"
+                          onClick={() => printInvoice(appointment._id)}
+                        >
+                          <TbReceiptRupee />
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
           </tbody>
         </table>
         <Pagination />
