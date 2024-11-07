@@ -52,6 +52,7 @@ const Invoice = () => {
     city,
     state,
     pinCode,
+    appointmentStatus,
   } = useSelector((state) => state.appointment_Slice);
 
   const { username } = useSelector((state) => state.user_Slice);
@@ -129,7 +130,7 @@ const Invoice = () => {
     height: "297mm",
   };
 
-  return (
+  return appointmentStatus == "Accepted" ? (
     <div
       className="m-1"
       style={{ transform: "scale(0.5)", margin: "-300px 0" }}
@@ -315,6 +316,39 @@ const Invoice = () => {
             Kindly book your appointments online.
           </div>
         </footer>
+      </div>
+    </div>
+  ) : (
+    <div
+      className="m-1 w-8/12"
+      style={{ transform: "scale(0.5)", margin: "-300px 0" }}
+    >
+      <div className="flex justify-between">
+        <button
+          onClick={goback}
+          className=" text-3xl bg-pink-600 px-4 py-2 rounded text-white m-2 hover:bg-pink-700"
+        >
+          Back
+        </button>
+        <button
+          onClick={reactToPrintFn}
+          className=" text-3xl bg-pink-600 px-4 py-2 rounded text-white m-2 hover:bg-pink-700"
+        >
+          Print
+        </button>
+      </div>
+      <div
+        className="flex flex-col justify-between border border-slate-500 p-5"
+        ref={contentRef}
+        style={myStyle}
+      >
+        <div>
+          <section>
+            <h1 className="mt-3 text-center text-2xl underline">
+              Invoice not generated
+            </h1>
+          </section>
+        </div>
       </div>
     </div>
   );

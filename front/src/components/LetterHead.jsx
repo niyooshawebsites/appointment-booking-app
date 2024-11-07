@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 const LetterHead = () => {
   const contentRef = useRef();
   const dispatch = useDispatch();
+
   // const [clientID, setClientID] = useState("");
   const [serviceProviderDetails, setServiceProviderDetails] = useState(() => {
     return {
@@ -46,6 +47,7 @@ const LetterHead = () => {
     city,
     state,
     pinCode,
+    appointmentStatus,
   } = useSelector((state) => state.appointment_Slice);
 
   const { username } = useSelector((state) => state.user_Slice);
@@ -84,22 +86,6 @@ const LetterHead = () => {
     }
   };
 
-  // // get a particular client for printing by email
-  // const getAParticularClientForPrinting = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       `http://localhost:8000/api/v1/get-particular-user-by-email/${email}`,
-  //       { withCredentials: true }
-  //     );
-
-  //     if (res.data.success) {
-  //       setClientID(res.data.userID);
-  //     }
-  //   } catch (err) {
-  //     toast.error(err.response.data.msg);
-  //   }
-  // };
-
   // go back function
   const goback = () => {
     dispatch(
@@ -134,7 +120,7 @@ const LetterHead = () => {
     height: "297mm",
   };
 
-  return (
+  return appointmentStatus == "Accepted" ? (
     <div
       className="m-1"
       style={{ transform: "scale(0.5)", margin: "-300px 0" }}
@@ -266,6 +252,39 @@ const LetterHead = () => {
             Kindly book your appointments online.
           </div>
         </footer>
+      </div>
+    </div>
+  ) : (
+    <div
+      className="m-1 w-8/12"
+      style={{ transform: "scale(0.5)", margin: "-300px 0" }}
+    >
+      <div className="flex justify-between">
+        <button
+          onClick={goback}
+          className=" text-3xl bg-pink-600 px-4 py-2 rounded text-white m-2 hover:bg-pink-700"
+        >
+          Back
+        </button>
+        <button
+          onClick={reactToPrintFn}
+          className=" text-3xl bg-pink-600 px-4 py-2 rounded text-white m-2 hover:bg-pink-700"
+        >
+          Print
+        </button>
+      </div>
+      <div
+        className="flex flex-col justify-between border border-slate-500 p-5"
+        ref={contentRef}
+        style={myStyle}
+      >
+        <div>
+          <section>
+            <h1 className="mt-3 text-center text-2xl underline">
+              Letterhead not generated
+            </h1>
+          </section>
+        </div>
       </div>
     </div>
   );

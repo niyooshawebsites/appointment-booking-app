@@ -230,6 +230,8 @@ const TodayData = () => {
                                 city: appointment.city,
                                 state: appointment.state,
                                 pinCode: appointment.pinCode,
+                                appointmentStatus:
+                                  appointment.appointmentStatus,
                               })
                             );
                           }}

@@ -38,6 +38,18 @@ const {
   checkWalkinClientAvailabilityController,
   getParticularClientDataByContactNoContoller,
   updateWalkinClientDataController,
+  getTotalPatientsCountController,
+  getTotalVerifiedPatientsCountController,
+  getTotalUnverifiedPatientsCountController,
+  getTodayTotalPatientCountController,
+  getTodayTotalVerifiedPatientssCountController,
+  getTodayTotalUnverifiedPatientsCountController,
+  getAllPatientsController,
+  getAllVerifiedPatientsController,
+  getAllUnverifiedPatientsController,
+  getPatientsByDateController,
+  getTodayVerifiedPatientsController,
+  getTodayUnverifiedPatientsController,
 } = require("../controllers/user.controller");
 
 const {
@@ -434,6 +446,104 @@ router.get(
   auth,
   isServiceProvider,
   fetchAParticularAppointmentController
+);
+
+// PAtients routes...........................
+
+// get total patient count route
+router.get(
+  "/get-total-patients-count/:userId",
+  auth,
+  isAdmin,
+  getTotalPatientsCountController
+);
+
+// get total verified patients count
+router.get(
+  "/get-total-verified-patients-count/:userId",
+  auth,
+  isAdmin,
+  getTotalVerifiedPatientsCountController
+);
+
+// get total unverified patients count
+router.get(
+  "/get-total-unverified-patients-count/:userId",
+  auth,
+  isAdmin,
+  getTotalUnverifiedPatientsCountController
+);
+
+// get today total patients count
+router.get(
+  "/get-today-total-patients-count",
+  auth,
+  isAdmin,
+  getTodayTotalPatientCountController
+);
+
+// get today total verified patients count
+router.get(
+  "/get-today-total-verified-patients-count",
+  auth,
+  isAdmin,
+  getTodayTotalVerifiedPatientssCountController
+);
+
+// get today total unverified patients count
+router.get(
+  "/get-today-total-unverified-patients-count",
+  auth,
+  isAdmin,
+  getTodayTotalUnverifiedPatientsCountController
+);
+
+// get all patients
+router.get(
+  "/get-all-patients/:currentPage",
+  auth,
+  isAdmin,
+  getAllPatientsController
+);
+
+// get all verified patients
+router.get(
+  "/get-all-verified-patients/:userId/:currentPage",
+  auth,
+  isAdmin,
+  getAllVerifiedPatientsController
+);
+
+// get all unverified patients
+router.get(
+  "/get-all-unverified-patients/:currentPage",
+  auth,
+  isAdmin,
+  getAllUnverifiedPatientsController
+);
+
+// get all today's patients
+router.get(
+  "/get-today-patients/:currentPage",
+  auth,
+  isAdmin,
+  getPatientsByDateController
+);
+
+// get all today's verified patients
+router.get(
+  "/get-today-verified-patients/:currentPage",
+  auth,
+  isAdmin,
+  getTodayVerifiedPatientsController
+);
+
+// get all today's unverified patients
+router.get(
+  "/get-today-unverified-patients/:currentPage",
+  auth,
+  isAdmin,
+  getTodayUnverifiedPatientsController
 );
 
 module.exports = router;

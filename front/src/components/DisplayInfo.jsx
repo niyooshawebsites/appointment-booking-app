@@ -29,6 +29,7 @@ const DisplayInfo = () => {
   const { allAppointments } = useSelector(
     (state) => state.appointments_Data_Slice
   );
+
   const [userDeleted, setUserDeleted] = useState(false);
   const [searchUser, setSearchUser] = useState(() => "");
   const [searchAppointment, setSearchAppointment] = useState(() => "");
@@ -98,6 +99,7 @@ const DisplayInfo = () => {
             city: res.data.appointment.city,
             state: res.data.appointment.state,
             pinCode: res.data.appointment.pinCode,
+            appointmentStatus: res.data.appointment.appointmentStatus,
           })
         );
       }
@@ -289,15 +291,40 @@ const DisplayInfo = () => {
   if (role == 1 && isAdmin) {
     return allUsers.length > 0 ? (
       <div className="overflow-x-auto mx-auto px-5">
-        <h1 className="mt-10 text-3xl text-center text-pink-600">Users</h1>
-        <input
-          type="text"
-          autoComplete="on"
-          value={searchUser}
-          onChange={filterUsers}
-          placeholder="Search user using business name or email..."
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3 mt-5"
-        />
+        <h1 className="mt-10 text-3xl text-center text-pink-600">Details</h1>
+        <div className="flex mt-5">
+          <form className="w-11/12" onSubmit={handleSearch}>
+            <div className="flex">
+              <div className="w-10/12 mr-2">
+                <input
+                  type="text"
+                  autoComplete="on"
+                  value={searchAppointment}
+                  onChange={filterAppointments}
+                  placeholder="Search patients via Appointment ID or Patient ID or Patient name"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
+                />
+              </div>
+
+              <div className="w-2/12 mr-2">
+                <button
+                  type="submit"
+                  className="py-1.5 w-full bg-pink-600 rounded text-white"
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+          <div className="w-1/12 mr-2">
+            <button
+              className="py-1.5 w-full bg-indigo-600 rounded text-white text-2xl flex justify-center items-center"
+              onClick={getAndPassAllAppointmentsByUserId}
+            >
+              <GrPowerReset />
+            </button>
+          </div>
+        </div>
 
         <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5 text-sm">
           <thead className="bg-pink-600 border-b border-gray-300">

@@ -13,12 +13,24 @@ const Highlights = () => {
   const [totalNumOfUsers, setTotalNumOfUsers] = useState(0);
   const [totalNumOfVerifiedUsers, setTotalNumOfVerifiedUsers] = useState(0);
   const [totalNumOfUnverifiedUsers, setTotalNumOfUnverifiedUsers] = useState(0);
+  const [totalNumOfPatients, setTotalNumOfPatients] = useState(0);
+  const [totalNumOfVerifiedPatients, setTotalNumOfVerifiedPatients] =
+    useState(0);
+  const [totalNumOfUnverifiedPatients, setTotalNumOfUnverifiedPatients] =
+    useState(0);
   const [totalNumOfAppointments, setTotalNumOfApponintments] = useState(0);
   const [todayTotalNumOfUsers, setTodayTotalNumOfUsers] = useState(0);
   const [todayTotalNumOfVerifiedUsers, setTodayTotalNumOfVerifiedUsers] =
     useState(0);
   const [todayTotalNumOfUnverifiedUsers, setTodayTotalNumOfUnverifiedUsers] =
     useState(0);
+  const [todayTotalNumOfPatients, setTodayTotalNumOfPatients] = useState(0);
+  const [todayTotalNumOfVerifiedPatients, setTodayTotalNumOfVerifiedPatients] =
+    useState(0);
+  const [
+    todayTotalNumOfUnverifiedPatients,
+    setTodayTotalNumOfUnverifiedPatients,
+  ] = useState(0);
   const [todayTotalNumOfAppointments, setTodayTotalNumOfApponintments] =
     useState(0);
   const [
@@ -102,6 +114,57 @@ const Highlights = () => {
 
       if (res.data.success) {
         setTotalNumOfApponintments(res.data.totalAppointmentsCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getTotalNumOfPatients = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-total-patients-count/${userId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setTotalNumOfPatients(res.data.totalPatientsCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getTotalNumOfVerifiedPatients = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-total-verified-patients-count/${userId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setTotalNumOfVerifiedPatients(res.data.totalVerifiedPatientsCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getTotalNumOfUnverifiedPatients = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-total-unverified-patients-count/${userId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setTotalNumOfUnverifiedPatients(res.data.totalUnverifiedPatientsCount);
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -247,6 +310,144 @@ const Highlights = () => {
     }
   };
 
+  const getAndPassAllPatients = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-all-patients/1`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
+
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.patients,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showInvoice: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getAndPassAllVerifiedPatients = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-all-verified-patients/${userId}/1`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all verified users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
+
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.patients,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showInvoice: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getAndPassAllUnverifiedPatients = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-all-unverified-patients/1`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all unverified users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
+
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.patients,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showInvoice: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
   // get today total number...
   const getTodayTotalNumOfUsers = async () => {
     try {
@@ -312,6 +513,61 @@ const Highlights = () => {
 
       if (res.data.success) {
         setTodayTotalNumOfApponintments(res.data.todayTotalAppointmentsCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getTodayTotalNumOfPatients = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8000/api/v1/get-today-total-patients-count",
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setTodayTotalNumOfPatients(res.data.todayTotalPatientsCount);
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getTodayTotalNumOfVerifiedPatients = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8000/api/v1/get-today-total-verified-patients-count",
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setTodayTotalNumOfVerifiedPatients(
+          res.data.todayTotalVerifiedPatientsCount
+        );
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getTodayTotalNumOfUnverifiedPatients = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8000/api/v1/get-today-total-unverified-patients-count",
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        setTodayTotalNumOfUnverifiedPatients(
+          res.data.todayTotalUnverifiedPatientsCount
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -432,6 +688,144 @@ const Highlights = () => {
         dispatch(
           usersDataSliceActions.getUsersData({
             allUsers: res.data.users,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showInvoice: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getAndPassTodayPatients = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-today-patients/1`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "today's all users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
+
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.patients,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showInvoice: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getAndPassTodayVerifiedPatients = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-today-verified-patients/1`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "today's all verified users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
+
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.patients,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showInvoice: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getAndPassTodayUnverifiedPatients = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-today-unverified-patients/1`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "today's all unverified users",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
+
+        dispatch(
+          usersDataSliceActions.getUsersData({
+            allUsers: res.data.patients,
           })
         );
 
@@ -662,6 +1056,12 @@ const Highlights = () => {
       getTodayTotalNumOfVerifiedUsers();
       getTodayTotalNumOfUnverifiedUsers();
       getTodayTotalNumOfApponintments();
+      getTotalNumOfPatients();
+      getTotalNumOfVerifiedPatients();
+      getTotalNumOfUnverifiedPatients();
+      getTodayTotalNumOfPatients();
+      getTodayTotalNumOfVerifiedPatients();
+      getTodayTotalNumOfUnverifiedPatients();
     } else if (role === 1 && isAdmin === false) {
       // Service provider specific function calls
       getTodayAppointmentsCountFilterByUsername();
@@ -680,21 +1080,25 @@ const Highlights = () => {
           <h1 className="mt-10 text-center text-3xl text-pink-600">
             Highlights
           </h1>
-          <div className="flex flex-col md:flex-row md:space-x-8 p-8 mx-auto md:w-6/12">
+          <div className="flex flex-col md:flex-row md:space-x-8 p-8 mx-auto md:w-8/12">
             {/* Column 1 */}
             <div className="w-full flex flex-col mb-3 md:mb-0">
               <h2 className="text-xl text-center mb-4">All Data</h2>
               <table className="min-w-full bg-white border border-gray-200 shadow-md text-center">
                 <thead className="bg-pink-600 text-white">
                   <tr>
-                    <th className="text-left py-2 px-4 border-b">Doctors</th>
+                    <th className="text-left py-2 px-4 border-b">
+                      Particulars
+                    </th>
                     <th className="py-2 px-4 border-b text-center">Entries</th>
                     <th className="text-center py-2 px-4 border-b">View</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="bg-gray-200">
-                    <td className="text-left py-2 px-4 border-b">Total</td>
+                    <td className="text-left py-2 px-4 border-b">
+                      Total Doctors
+                    </td>
                     <td className="py-2 px-4 border-b">
                       {totalNumOfUsers < 10
                         ? `0${totalNumOfUsers}`
@@ -713,7 +1117,9 @@ const Highlights = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="text-left py-2 px-4 border-b">Verified</td>
+                    <td className="text-left py-2 px-4 border-b">
+                      Verified Doctors
+                    </td>
                     <td className="py-2 px-4 border-b">
                       {totalNumOfVerifiedUsers < 10
                         ? `0${totalNumOfVerifiedUsers}`
@@ -732,7 +1138,9 @@ const Highlights = () => {
                     </td>
                   </tr>
                   <tr className="bg-gray-200">
-                    <td className="text-left py-2 px-4 border-b">Unverified</td>
+                    <td className="text-left py-2 px-4 border-b">
+                      Unverified Doctors
+                    </td>
                     <td className="py-2 px-4 border-b">
                       {totalNumOfUnverifiedUsers < 10
                         ? `0${totalNumOfUnverifiedUsers}`
@@ -752,7 +1160,70 @@ const Highlights = () => {
                   </tr>
                   <tr>
                     <td className="text-left py-2 px-4 border-b">
-                      Appointments
+                      Total Patients
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {totalNumOfPatients < 10
+                        ? `0${totalNumOfPatients}`
+                        : totalNumOfPatients}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800 text-lg"
+                          title="More details"
+                          onClick={getAndPassAllPatients}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-200">
+                    <td className="text-left py-2 px-4 border-b">
+                      Verified Patients
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {totalNumOfVerifiedPatients < 10
+                        ? `0${totalNumOfVerifiedPatients}`
+                        : totalNumOfVerifiedPatients}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800 text-lg"
+                          title="More details"
+                          onClick={getAndPassAllVerifiedPatients}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-left py-2 px-4 border-b">
+                      Unverified Patients
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {totalNumOfUnverifiedPatients < 10
+                        ? `0${totalNumOfUnverifiedPatients}`
+                        : totalNumOfUnverifiedPatients}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800 text-lg"
+                          title="More details"
+                          onClick={getAndPassAllUnverifiedPatients}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-200">
+                    <td className="text-left py-2 px-4 border-b">
+                      Total Appointments
                     </td>
                     <td className="py-2 px-4 border-b">
                       {totalNumOfAppointments < 10
@@ -777,14 +1248,18 @@ const Highlights = () => {
               <table className="min-w-full bg-white border border-gray-200 shadow-md text-center">
                 <thead className="bg-pink-600 text-white">
                   <tr>
-                    <th className="text-left py-2 px-4 border-b">Doctors</th>
+                    <th className="text-left py-2 px-4 border-b">
+                      Particulars
+                    </th>
                     <th className="py-2 px-4 border-b">Entries</th>
                     <th className="py-2 px-4 border-b text-center">View</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="bg-gray-200">
-                    <td className="text-left py-2 px-4 border-b">Total</td>
+                    <td className="text-left py-2 px-4 border-b">
+                      Total Doctors
+                    </td>
                     <td className="py-2 px-4 border-b">
                       {todayTotalNumOfUsers < 10
                         ? `0${todayTotalNumOfUsers}`
@@ -803,7 +1278,9 @@ const Highlights = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="text-left py-2 px-4 border-b">Verified</td>
+                    <td className="text-left py-2 px-4 border-b">
+                      Verified Doctors
+                    </td>
                     <td className="py-2 px-4 border-b">
                       {todayTotalNumOfVerifiedUsers < 10
                         ? `0${todayTotalNumOfVerifiedUsers}`
@@ -822,7 +1299,9 @@ const Highlights = () => {
                     </td>
                   </tr>
                   <tr className="bg-gray-200">
-                    <td className="text-left py-2 px-4 border-b">Unverified</td>
+                    <td className="text-left py-2 px-4 border-b">
+                      Unverified Doctors
+                    </td>
                     <td className="py-2 px-4 border-b">
                       {todayTotalNumOfUnverifiedUsers < 10
                         ? `0${todayTotalNumOfUnverifiedUsers}`
@@ -842,7 +1321,70 @@ const Highlights = () => {
                   </tr>
                   <tr>
                     <td className="text-left py-2 px-4 border-b">
-                      Appointments
+                      Total Patients
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {todayTotalNumOfPatients < 10
+                        ? `0${todayTotalNumOfPatients}`
+                        : todayTotalNumOfPatients}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800 text-lg"
+                          title="More details"
+                          onClick={getAndPassTodayPatients}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-200">
+                    <td className="text-left py-2 px-4 border-b">
+                      Verified Patients
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {todayTotalNumOfVerifiedPatients < 10
+                        ? `0${todayTotalNumOfVerifiedPatients}`
+                        : todayTotalNumOfVerifiedPatients}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800 text-lg"
+                          title="More details"
+                          onClick={getAndPassTodayVerifiedPatients}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-left py-2 px-4 border-b">
+                      Unverified Patients
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {todayTotalNumOfUnverifiedPatients < 10
+                        ? `0${todayTotalNumOfUnverifiedPatients}`
+                        : todayTotalNumOfUnverifiedPatients}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <div className="flex justify-center items-center">
+                        <Link
+                          className="text-indigo-800 text-lg"
+                          title="More details"
+                          onClick={getAndPassTodayUnverifiedPatients}
+                        >
+                          <TbListDetails />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-200">
+                    <td className="text-left py-2 px-4 border-b">
+                      Total Appointments
                     </td>
                     <td className="py-2 px-4 border-b">
                       {todayTotalNumOfAppointments < 10

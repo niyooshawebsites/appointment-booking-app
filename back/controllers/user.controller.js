@@ -1756,7 +1756,7 @@ const getTotalPatientsCountController = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const totalUsersCount = await User.countDocuments({
+    const totalPatientsCount = await User.countDocuments({
       _id: { $ne: userId },
       role: 0,
     });
@@ -1764,7 +1764,7 @@ const getTotalPatientsCountController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Total number of patients found",
-      totalUsersCount,
+      totalPatientsCount,
     });
   } catch (err) {
     return res.status(500).json({
@@ -1780,7 +1780,7 @@ const getTotalVerifiedPatientsCountController = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const totalVerifiedUsersCount = await User.countDocuments({
+    const totalVerifiedPatientsCount = await User.countDocuments({
       isVerified: true,
       _id: { $ne: userId },
       role: 0,
@@ -1789,7 +1789,7 @@ const getTotalVerifiedPatientsCountController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Successfully counted the verified patients",
-      totalVerifiedUsersCount,
+      totalVerifiedPatientsCount,
     });
   } catch (err) {
     return res.status(500).json({
@@ -1805,7 +1805,7 @@ const getTotalUnverifiedPatientsCountController = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const totalUnverifiedUsersCount = await User.countDocuments({
+    const totalUnverifiedPatientsCount = await User.countDocuments({
       isVerified: false,
       _id: { $ne: userId },
       role: 0,
@@ -1814,7 +1814,7 @@ const getTotalUnverifiedPatientsCountController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Successfully counted the verified patients",
-      totalUnverifiedUsersCount,
+      totalUnverifiedPatientsCount,
     });
   } catch (err) {
     return res.status(500).json({
@@ -1834,7 +1834,7 @@ const getTodayTotalPatientCountController = async (req, res) => {
     // end of the day
     const endOfDay = moment().endOf("day").toDate().toISOString();
 
-    const todayTotalUsersCount = await User.countDocuments({
+    const todayTotalPatientsCount = await User.countDocuments({
       createdAt: {
         $gte: startOfDay,
         $lte: endOfDay,
@@ -1845,7 +1845,7 @@ const getTodayTotalPatientCountController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Total number of users found for today",
-      todayTotalUsersCount,
+      todayTotalPatientsCount,
     });
   } catch (err) {
     return res.status(500).json({
@@ -1865,7 +1865,7 @@ const getTodayTotalVerifiedPatientssCountController = async (req, res) => {
     // end of the day
     const endOfDay = moment().endOf("day").toDate().toISOString();
 
-    const todayTotalVerifiedUsersCount = await User.countDocuments({
+    const todayTotalVerifiedPatientsCount = await User.countDocuments({
       isVerified: true,
       createdAt: {
         $gte: startOfDay,
@@ -1877,7 +1877,7 @@ const getTodayTotalVerifiedPatientssCountController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Total number of verified patients found for today",
-      todayTotalVerifiedUsersCount,
+      todayTotalVerifiedPatientsCount,
     });
   } catch (err) {
     return res.status(500).json({
@@ -1897,7 +1897,7 @@ const getTodayTotalUnverifiedPatientsCountController = async (req, res) => {
     // end of the day
     const endOfDay = moment().endOf("day").toDate().toISOString();
 
-    const todayTotalUnverifiedUsersCount = await User.countDocuments({
+    const todayTotalUnverifiedPatientsCount = await User.countDocuments({
       isVerified: false,
       createdAt: {
         $gte: startOfDay,
@@ -1909,7 +1909,329 @@ const getTodayTotalUnverifiedPatientsCountController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Total number of unverified patients found for today",
-      todayTotalUnverifiedUsersCount,
+      todayTotalUnverifiedPatientsCount,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get all patients controller...
+const getAllPatientsController = async (req, res) => {
+  try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
+    // find all users whose username is not equal to abs
+    const patients = await User.find({ username: { $ne: "abs" }, role: 0 })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total users to find total number of pages (total users/limit)
+    const totalPatients = await User.countDocuments({
+      username: { $ne: "abs" },
+      role: 0,
+    });
+
+    if (!patients) {
+      return res.status(404).json({
+        success: false,
+        msg: "No patients found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "All patients found",
+      patients,
+      totalPages: Math.ceil(totalPatients / limit),
+      currentPageNo,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get all verified patients controller...
+const getAllVerifiedPatientsController = async (req, res) => {
+  try {
+    const { currentPage, userId } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
+    const patients = await User.find({
+      isVerified: true,
+      _id: { $ne: userId },
+      role: 0,
+    })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total patients to find total number of pages (total patients/limit)
+    const totalPatients = await User.countDocuments({
+      username: { $ne: "abs" },
+      isVerified: true,
+      role: 0,
+    });
+
+    if (!patients) {
+      return res.status(404).json({
+        success: true,
+        msg: "No verified patients",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Verified patients fetched successfully",
+      patients,
+      totalPages: Math.ceil(totalPatients / limit),
+      currentPageNo,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get all unverified patients controller...
+const getAllUnverifiedPatientsController = async (req, res) => {
+  try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
+    const patients = await User.find({ isVerified: false, role: 0 })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total patients to find total number of pages (total patients/limit)
+    const totalPatients = await User.countDocuments({
+      isVerified: false,
+      role: 0,
+    });
+
+    if (!patients) {
+      return res.status(404).json({
+        success: true,
+        msg: "No unverified patients",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Unverified patients fetched successfully",
+      patients,
+      totalPages: Math.ceil(totalPatients / limit),
+      currentPageNo,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get todays patients controller
+const getPatientsByDateController = async (req, res) => {
+  try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
+    // getting todays start time using moment js
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // getting todays end time using moment js
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    // querying on the basis of createdAt
+    const patients = await User.find({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      role: 0,
+    })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total patients to find total number of pages (total patients/limit)
+    const totalPatients = await User.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      role: 0,
+    });
+
+    if (!patients) {
+      return res.status(404).json({
+        success: false,
+        msg: "No patients registered today",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's patients found successfully",
+      patients,
+      totalPages: Math.ceil(totalPatients / limit),
+      currentPageNo,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get today's verified patients controller
+const getTodayVerifiedPatientsController = async (req, res) => {
+  try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
+    // getting todays start time using moment js
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // getting todays end time using moment js
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    // querying on the basis of createdAt
+    const patients = await User.find({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      isVerified: true,
+      role: 0,
+    })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total patients to find total number of pages (total patients/limit)
+    const totalPatients = await User.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      isVerified: true,
+      role: 0,
+    });
+
+    if (!patients) {
+      return res.status(404).json({
+        success: false,
+        msg: "No patients registered today",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's patients found successfully",
+      patients,
+      totalPages: Math.ceil(totalPatients / limit),
+      currentPageNo,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+      err: err.message,
+    });
+  }
+};
+
+// get today's unverified patients controller
+const getTodayUnverifiedPatientsController = async (req, res) => {
+  try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
+    // getting todays start time using moment js
+    const startOfDay = moment().startOf("day").toDate().toISOString();
+
+    // getting todays end time using moment js
+    const endOfDay = moment().endOf("day").toDate().toISOString();
+
+    // querying on the basis of createdAt
+    const patients = await User.find({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      isVerified: false,
+      role: 0,
+    })
+      .select(
+        "-password -about -building -district -floor -gst -isAdmin -locality -office -role -services -state -street -updatedAt -pincode"
+      )
+      .skip(skip)
+      .limit(limit);
+
+    // calc total users to find total number of pages (total users/limit)
+    const totalPatients = await User.countDocuments({
+      createdAt: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+      isVerified: false,
+      role: 0,
+    });
+
+    if (!patients) {
+      return res.status(404).json({
+        success: false,
+        msg: "No patients registered today",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's patients found successfully",
+      patients,
+      totalPages: Math.ceil(totalPatients / limit),
+      currentPageNo,
     });
   } catch (err) {
     return res.status(500).json({
@@ -1959,4 +2281,16 @@ module.exports = {
   checkWalkinClientAvailabilityController,
   getParticularClientDataByContactNoContoller,
   updateWalkinClientDataController,
+  getTotalPatientsCountController,
+  getTotalVerifiedPatientsCountController,
+  getTotalUnverifiedPatientsCountController,
+  getTodayTotalPatientCountController,
+  getTodayTotalVerifiedPatientssCountController,
+  getTodayTotalUnverifiedPatientsCountController,
+  getAllPatientsController,
+  getAllVerifiedPatientsController,
+  getAllUnverifiedPatientsController,
+  getPatientsByDateController,
+  getTodayVerifiedPatientsController,
+  getTodayUnverifiedPatientsController,
 };

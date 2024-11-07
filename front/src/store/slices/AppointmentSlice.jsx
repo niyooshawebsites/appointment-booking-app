@@ -21,6 +21,7 @@ const appointmentSlice = createSlice({
     city: "",
     state: "",
     pinCode: "",
+    appointmentStatus: "",
   },
   reducers: {
     appointmentDetails: (state, action) => {
@@ -42,6 +43,7 @@ const appointmentSlice = createSlice({
       state.city = action.payload.city;
       state.state = action.payload.state;
       state.pinCode = action.payload.pinCode;
+      state.appointmentStatus = action.payload.appointmentStatus;
     },
   },
 });
