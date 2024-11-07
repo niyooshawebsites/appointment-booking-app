@@ -301,7 +301,7 @@ const DisplayInfo = () => {
                   autoComplete="on"
                   value={searchAppointment}
                   onChange={filterAppointments}
-                  placeholder="Search patients via Appointment ID or Patient ID or Patient name"
+                  placeholder="Search by UID or email..."
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
               </div>
@@ -330,7 +330,7 @@ const DisplayInfo = () => {
           <thead className="bg-pink-600 border-b border-gray-300">
             <tr>
               <th className="py-2 px-4 text-left text-white">#</th>
-              <th className="py-2 px-4 text-left text-white">Username</th>
+              <th className="py-2 px-4 text-left text-white">UID</th>
               <th className="py-2 px-4 text-left text-white">B Name</th>
               <th className="py-2 px-4 text-left text-white">Email</th>
               <th className="py-2 px-4 text-left text-white">Contact</th>
@@ -352,7 +352,7 @@ const DisplayInfo = () => {
                 return (
                   <tr key={user._id} className="odd:bg-gray-200 even:bg-white">
                     <td className="py-2 px-4 text-gray-700">{index + 1}</td>
-                    <td className="py-2 px-4 text-gray-700">{user.username}</td>
+                    <td className="py-2 px-4 text-gray-700">{user.userID}</td>
                     <td className="py-2 px-4 text-gray-700">
                       {user.businessName ? user.businessName : "N/A"}
                     </td>
