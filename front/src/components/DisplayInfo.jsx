@@ -31,7 +31,8 @@ const DisplayInfo = () => {
   );
 
   const [userDeleted, setUserDeleted] = useState(false);
-  const [searchUser, setSearchUser] = useState(() => "");
+  const [searchParameter, setSearchParameter] = useState(() => "");
+  const [isSearchParameter, setIsSearchParameter] = useState(false);
   const [searchAppointment, setSearchAppointment] = useState(() => "");
   const [isSearchAppointment, setIsSearchAppointment] = useState(false);
   const [appointmentsCountPerUser, setAppointmentsCountPerUser] = useState({});
@@ -60,10 +61,13 @@ const DisplayInfo = () => {
     }
   };
 
-  const filterUsers = (e) => {
-    setSearchUser(() => e.target.value);
+  // for admin search
+  const filterParameter = (e) => {
+    setSearchParameter(() => e.target.value.toUpperCase());
+    setIsSearchParameter((prevState) => !prevState);
   };
 
+  // for doctor search
   const filterAppointments = (e) => {
     setSearchAppointment(() => e.target.value.toUpperCase());
     setIsSearchAppointment((prevState) => !prevState);
@@ -232,22 +236,42 @@ const DisplayInfo = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
-    try {
-      const res = await axios.get(
-        `http://localhost:8000/api/v1/fetch-a-particular-appointment/${searchAppointment}`,
-        { withCredentials: true }
-      );
-
-      if (res.data.success) {
-        dispatch(
-          appointmentsDataSliceActions.getAppointmentsData({
-            allAppointments: res.data.appointments,
-          })
+    if (role == 1 && isAdmin) {
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/api/v1/fetch-a-particular-user/${searchParameter}`,
+          { withCredentials: true }
         );
+
+        if (res.data.success) {
+          dispatch(
+            usersDataSliceActions.getUsersData({
+              allUsers: res.data.user,
+            })
+          );
+        }
+      } catch (err) {
+        toast.error(err.response.data.msg);
       }
-    } catch (err) {
-      toast.error(err.response.data.msg);
+    }
+
+    if (role == 1 && !isAdmin) {
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/api/v1/fetch-a-particular-appointment/${searchAppointment}`,
+          { withCredentials: true }
+        );
+
+        if (res.data.success) {
+          dispatch(
+            appointmentsDataSliceActions.getAppointmentsData({
+              allAppointments: res.data.appointments,
+            })
+          );
+        }
+      } catch (err) {
+        toast.error(err.response.data.msg);
+      }
     }
   };
 
@@ -299,8 +323,8 @@ const DisplayInfo = () => {
                 <input
                   type="text"
                   autoComplete="on"
-                  value={searchAppointment}
-                  onChange={filterAppointments}
+                  value={searchParameter}
+                  onChange={filterParameter}
                   placeholder="Search by UID or email..."
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-3"
                 />
@@ -342,71 +366,131 @@ const DisplayInfo = () => {
             </tr>
           </thead>
           <tbody>
-            {allUsers
-              .filter(
-                (user) =>
-                  user.email.toLowerCase().includes(searchUser) ||
-                  user.businessName.toLowerCase().includes(searchUser)
-              )
-              .map((user, index) => {
-                return (
-                  <tr key={user._id} className="odd:bg-gray-200 even:bg-white">
-                    <td className="py-2 px-4 text-gray-700">{index + 1}</td>
-                    <td className="py-2 px-4 text-gray-700">{user.userID}</td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {user.businessName ? user.businessName : "N/A"}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">{user.email}</td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {user.contactNo.length > 10 ? "N/A" : user.contactNo}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      {moment(user.createdAt).format("DD-MM-YYYY")}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700 text-center">
-                      {appointmentsCountPerUser[user._id] || 0}
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      <div className="flex justify-center items-center">
-                        {user.isVerified ? (
-                          <span className="text-green-700 text-lg">
-                            <RxCheckCircled />
-                          </span>
-                        ) : (
-                          <span className="text-red-700 text-lg">
-                            <RxCrossCircled />
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      <div className="flex justify-center items-center">
-                        <button
-                          onClick={() => {
-                            handleDelete(user._id);
-                          }}
-                          title="Delete"
-                          className="text-red-700 text-lg"
-                        >
-                          <RxCross2 />
-                        </button>
-                      </div>
-                    </td>
-                    <td className="py-2 px-4 text-gray-700">
-                      <div className="flex justify-center items-center">
-                        <Link
-                          to={`http://localhost:5173/${user.username}`}
-                          target="_blank"
-                          title="View Profile"
-                          className="text-indigo-700 text-lg"
-                        >
-                          <RxLink2 />
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+            {isSearchParameter
+              ? allUsers.map((user, index) => {
+                  return (
+                    <tr
+                      key={user._id}
+                      className="odd:bg-gray-200 even:bg-white"
+                    >
+                      <td className="py-2 px-4 text-gray-700">{index + 1}</td>
+                      <td className="py-2 px-4 text-gray-700">{user.userID}</td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {user.businessName ? user.businessName : "N/A"}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">{user.email}</td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {user.contactNo.length > 10 ? "N/A" : user.contactNo}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {moment(user.createdAt).format("DD-MM-YYYY")}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700 text-center">
+                        {appointmentsCountPerUser[user._id] || 0}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        <div className="flex justify-center items-center">
+                          {user.isVerified ? (
+                            <span className="text-green-700 text-lg">
+                              <RxCheckCircled />
+                            </span>
+                          ) : (
+                            <span className="text-red-700 text-lg">
+                              <RxCrossCircled />
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        <div className="flex justify-center items-center">
+                          <button
+                            onClick={() => {
+                              handleDelete(user._id);
+                            }}
+                            title="Delete"
+                            className="text-red-700 text-lg"
+                          >
+                            <RxCross2 />
+                          </button>
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        <div className="flex justify-center items-center">
+                          <Link
+                            to={`http://localhost:5173/${user.username}`}
+                            target="_blank"
+                            title="View Profile"
+                            className="text-indigo-700 text-lg"
+                          >
+                            <RxLink2 />
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              : allUsers.map((user, index) => {
+                  return (
+                    <tr
+                      key={user._id}
+                      className="odd:bg-gray-200 even:bg-white"
+                    >
+                      <td className="py-2 px-4 text-gray-700">{index + 1}</td>
+                      <td className="py-2 px-4 text-gray-700">{user.userID}</td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {user.businessName ? user.businessName : "N/A"}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">{user.email}</td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {user.contactNo.length > 10 ? "N/A" : user.contactNo}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        {moment(user.createdAt).format("DD-MM-YYYY")}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700 text-center">
+                        {appointmentsCountPerUser[user._id] || 0}
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        <div className="flex justify-center items-center">
+                          {user.isVerified ? (
+                            <span className="text-green-700 text-lg">
+                              <RxCheckCircled />
+                            </span>
+                          ) : (
+                            <span className="text-red-700 text-lg">
+                              <RxCrossCircled />
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        <div className="flex justify-center items-center">
+                          <button
+                            onClick={() => {
+                              handleDelete(user._id);
+                            }}
+                            title="Delete"
+                            className="text-red-700 text-lg"
+                          >
+                            <RxCross2 />
+                          </button>
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 text-gray-700">
+                        <div className="flex justify-center items-center">
+                          <Link
+                            to={`http://localhost:5173/${user.username}`}
+                            target="_blank"
+                            title="View Profile"
+                            className="text-indigo-700 text-lg"
+                          >
+                            <RxLink2 />
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
           </tbody>
         </table>
         <Pagination />

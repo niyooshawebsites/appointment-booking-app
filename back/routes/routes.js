@@ -50,6 +50,7 @@ const {
   getPatientsByDateController,
   getTodayVerifiedPatientsController,
   getTodayUnverifiedPatientsController,
+  fetchAParticularUserController,
 } = require("../controllers/user.controller");
 
 const {
@@ -544,6 +545,14 @@ router.get(
   auth,
   isAdmin,
   getTodayUnverifiedPatientsController
+);
+
+// fetch a particular user
+router.get(
+  "/fetch-a-particular-user/:searchParameter",
+  auth,
+  isAdmin,
+  fetchAParticularUserController
 );
 
 module.exports = router;

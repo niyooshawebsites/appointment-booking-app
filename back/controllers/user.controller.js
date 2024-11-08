@@ -2242,6 +2242,40 @@ const getTodayUnverifiedPatientsController = async (req, res) => {
   }
 };
 
+const fetchAParticularUserController = async (req, res) => {
+  try {
+    const { searchParameter } = req.params;
+    if (!searchParameter) {
+      return res.status(400).json({
+        success: false,
+        msg: "No search parameter",
+      });
+    }
+
+    const user = await User.find({
+      $or: [{ userID: searchParameter }, { email: searchParameter }],
+    }).select("-password");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "No user found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "user found successfully",
+      user,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   registerController,
   loginController,
@@ -2293,4 +2327,5 @@ module.exports = {
   getPatientsByDateController,
   getTodayVerifiedPatientsController,
   getTodayUnverifiedPatientsController,
+  fetchAParticularUserController,
 };
