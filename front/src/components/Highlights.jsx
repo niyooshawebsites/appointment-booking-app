@@ -4,6 +4,7 @@ import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSl
 import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
 import { resetFuncAdminDashboardSliceActions } from "../store/slices/ResetFuncAdminDashboardSlice";
+import { contentToDisplaySliceActions } from "../store/slices/ContentToDisplaySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
@@ -219,6 +220,12 @@ const Highlights = () => {
             dataSource: res.data.users,
           })
         );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -270,6 +277,12 @@ const Highlights = () => {
           resetFuncAdminDashboardSliceActions.dataProvider({
             dataType: "getAndPassAllVerifiedUsers",
             dataSource: res.data.users,
+          })
+        );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
           })
         );
       }
@@ -325,6 +338,12 @@ const Highlights = () => {
             dataSource: res.data.users,
           })
         );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -376,6 +395,12 @@ const Highlights = () => {
           resetFuncAdminDashboardSliceActions.dataProvider({
             dataType: "getAndPassAllPatients",
             dataSource: res.data.patients,
+          })
+        );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
           })
         );
       }
@@ -431,6 +456,12 @@ const Highlights = () => {
             dataSource: res.data.patients,
           })
         );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -484,6 +515,12 @@ const Highlights = () => {
             dataSource: res.data.patients,
           })
         );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -492,6 +529,56 @@ const Highlights = () => {
 
   const getAndPassAllAppointments = async () => {
     try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-all-appointments-for-admin/1`,
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all appointments",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
+
+        dispatch(
+          appointmentsDataSliceActions.getAppointmentsData({
+            allAppointments: res.data.appointments,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showInvoice: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassAllAppointments",
+            dataSource: res.data.appointments,
+          })
+        );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "appointments",
+          })
+        );
+      }
     } catch (err) {
       toast.error(err.response.data.msg);
     }
@@ -671,6 +758,12 @@ const Highlights = () => {
             dataSource: res.data.users,
           })
         );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -722,6 +815,12 @@ const Highlights = () => {
           resetFuncAdminDashboardSliceActions.dataProvider({
             dataType: "getAndPassTodayVerifiedUsers",
             dataSource: res.data.users,
+          })
+        );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
           })
         );
       }
@@ -777,6 +876,12 @@ const Highlights = () => {
             dataSource: res.data.users,
           })
         );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -828,6 +933,12 @@ const Highlights = () => {
           resetFuncAdminDashboardSliceActions.dataProvider({
             dataType: "getAndPassTodayPatients",
             dataSource: res.data.patients,
+          })
+        );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
           })
         );
       }
@@ -883,6 +994,12 @@ const Highlights = () => {
             dataSource: res.data.patients,
           })
         );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -936,6 +1053,12 @@ const Highlights = () => {
             dataSource: res.data.patients,
           })
         );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "users",
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -944,6 +1067,56 @@ const Highlights = () => {
 
   const getAndPassTodayAppointments = async () => {
     try {
+      const res = await axios.get(
+        `http://localhost:8000/api/v1/get-today-appointments-for-admin/1`,
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        dispatch(
+          paginationSliceActions.setPaginationDetails({
+            dataToDisplay: "all appointments",
+            currentPageNo: res.data.currentPageNo,
+            totalPages: res.data.totalPages,
+          })
+        );
+
+        dispatch(
+          appointmentsDataSliceActions.getAppointmentsData({
+            allAppointments: res.data.appointments,
+          })
+        );
+
+        dispatch(
+          dashboardOptionsSliceActions.toggleDashboardOptions({
+            showHighlights: false,
+            showInfo: true,
+            showServices: false,
+            showProfile: false,
+            showAbout: false,
+            showContact: false,
+            showAppointmentDetails: false,
+            showBookAppointment: false,
+            showLetterHead: false,
+            showInvoice: false,
+            showQaulifications: false,
+            showTimings: false,
+          })
+        );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassTodayAppointments",
+            dataSource: res.data.appointments,
+          })
+        );
+
+        dispatch(
+          contentToDisplaySliceActions.changeContentType({
+            contentType: "appointments",
+          })
+        );
+      }
     } catch (err) {
       toast.error(err.response.data.msg);
     }
@@ -1330,7 +1503,10 @@ const Highlights = () => {
                     </td>
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
-                        <Link className="text-indigo-800 text-lg">
+                        <Link
+                          className="text-indigo-800 text-lg"
+                          onClick={getAndPassAllAppointments}
+                        >
                           <TbListDetails />
                         </Link>
                       </div>
@@ -1491,7 +1667,10 @@ const Highlights = () => {
                     </td>
                     <td className="py-2 px-4 border-b">
                       <div className="flex justify-center items-center">
-                        <Link className="text-indigo-800 text-lg">
+                        <Link
+                          className="text-indigo-800 text-lg"
+                          onClick={getAndPassTodayAppointments}
+                        >
                           <TbListDetails />
                         </Link>
                       </div>

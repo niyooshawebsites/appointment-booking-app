@@ -11,6 +11,7 @@ import announcementSliceReducers from "./slices/AnnouncementSlice";
 import walkinSliceReducers from "./slices/WalkinSlice";
 import changeApponitmentStatusSliceReducers from "./slices/ChangeAppointmentStatusSlice";
 import resetFuncAdminDashboardSliceReducers from "./slices/ResetFuncAdminDashboardSlice";
+import contentToDisplaySliceReducers from "./slices/ContentToDisplaySlice";
 
 const GlobalStore = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ const GlobalStore = configureStore({
     walkin_Slice: walkinSliceReducers,
     change_Appointment_Status_Slice: changeApponitmentStatusSliceReducers,
     reset_Func_Admin_Dashboard_Slice: resetFuncAdminDashboardSliceReducers,
+    content_To_Display_Slice: contentToDisplaySliceReducers,
   },
 });
 

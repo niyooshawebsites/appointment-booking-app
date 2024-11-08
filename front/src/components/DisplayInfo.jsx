@@ -25,11 +25,17 @@ const DisplayInfo = () => {
   const dispatch = useDispatch();
   const { role, isAdmin, userId } = useSelector((state) => state.user_Slice);
   const { allUsers } = useSelector((state) => state.users_Data_Slice);
+
   const { dataType, dataSource } = useSelector(
     (state) => state.reset_Func_Admin_Dashboard_Slice
   );
+
   const { allAppointments } = useSelector(
     (state) => state.appointments_Data_Slice
+  );
+
+  const { contentType } = useSelector(
+    (state) => state.content_To_Display_Slice
   );
 
   const [userDeleted, setUserDeleted] = useState(false);
@@ -238,7 +244,8 @@ const DisplayInfo = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (role == 1 && isAdmin) {
+
+    if (role == 1 && isAdmin && contentType == "users") {
       try {
         const res = await axios.get(
           `http://localhost:8000/api/v1/fetch-a-particular-user/${searchParameter}`,
@@ -249,6 +256,25 @@ const DisplayInfo = () => {
           dispatch(
             usersDataSliceActions.getUsersData({
               allUsers: res.data.user,
+            })
+          );
+        }
+      } catch (err) {
+        toast.error(err.response.data.msg);
+      }
+    }
+
+    if (role == 1 && isAdmin && contentType == "appointments") {
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/api/v1/fetch-a-particular-appointment/${searchParameter}`,
+          { withCredentials: true }
+        );
+
+        if (res.data.success) {
+          dispatch(
+            appointmentsDataSliceActions.getAppointmentsData({
+              allAppointments: res.data.appointments,
             })
           );
         }
@@ -404,6 +430,22 @@ const DisplayInfo = () => {
         })
       );
     }
+
+    if (dataType == "getAndPassAllAppointments") {
+      dispatch(
+        appointmentsDataSliceActions.getAppointmentsData({
+          allAppointments: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassTodayAppointments") {
+      dispatch(
+        appointmentsDataSliceActions.getAppointmentsData({
+          allAppointments: dataSource,
+        })
+      );
+    }
   };
 
   useEffect(() => {
@@ -451,150 +493,280 @@ const DisplayInfo = () => {
           </div>
         </div>
 
-        <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5 text-sm">
-          <thead className="bg-pink-600 border-b border-gray-300">
-            <tr>
-              <th className="py-2 px-4 text-left text-white">#</th>
-              <th className="py-2 px-4 text-left text-white">UID</th>
-              <th className="py-2 px-4 text-left text-white">B Name</th>
-              <th className="py-2 px-4 text-left text-white">Email</th>
-              <th className="py-2 px-4 text-left text-white">Contact</th>
-              <th className="py-2 px-4 text-left text-white">DOJ</th>
-              <th className="py-2 px-4 text-left text-white">Apps</th>
-              <th className="py-2 px-4 text-left text-white">Verified</th>
-              <th className="py-2 px-4 text-left text-white">Delete</th>
-              <th className="py-2 px-4 text-left text-white">Profile</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isSearchParameter
-              ? allUsers.map((user, index) => {
-                  return (
-                    <tr
-                      key={user._id}
-                      className="odd:bg-gray-200 even:bg-white"
-                    >
-                      <td className="py-2 px-4 text-gray-700">{index + 1}</td>
-                      <td className="py-2 px-4 text-gray-700">{user.userID}</td>
-                      <td className="py-2 px-4 text-gray-700">
-                        {user.businessName ? user.businessName : "N/A"}
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">{user.email}</td>
-                      <td className="py-2 px-4 text-gray-700">
-                        {user.contactNo.length > 10 ? "N/A" : user.contactNo}
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">
-                        {moment(user.createdAt).format("DD-MM-YYYY")}
-                      </td>
-                      <td className="py-2 px-4 text-gray-700 text-center">
-                        {appointmentsCountPerUser[user._id] || 0}
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">
-                        <div className="flex justify-center items-center">
-                          {user.isVerified ? (
-                            <span className="text-green-700 text-lg">
-                              <RxCheckCircled />
-                            </span>
-                          ) : (
-                            <span className="text-red-700 text-lg">
-                              <RxCrossCircled />
-                            </span>
-                          )}
-                        </div>
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">
-                        <div className="flex justify-center items-center">
-                          <button
-                            onClick={() => {
-                              handleDelete(user._id);
-                            }}
-                            title="Delete"
-                            className="text-red-700 text-lg"
-                          >
-                            <RxCross2 />
-                          </button>
-                        </div>
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">
-                        <div className="flex justify-center items-center">
-                          <Link
-                            to={`http://localhost:5173/${user.username}`}
-                            target="_blank"
-                            title="View Profile"
-                            className="text-indigo-700 text-lg"
-                          >
-                            <RxLink2 />
-                          </Link>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
-              : allUsers.map((user, index) => {
-                  return (
-                    <tr
-                      key={user._id}
-                      className="odd:bg-gray-200 even:bg-white"
-                    >
-                      <td className="py-2 px-4 text-gray-700">{index + 1}</td>
-                      <td className="py-2 px-4 text-gray-700">{user.userID}</td>
-                      <td className="py-2 px-4 text-gray-700">
-                        {user.businessName ? user.businessName : "N/A"}
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">{user.email}</td>
-                      <td className="py-2 px-4 text-gray-700">
-                        {user.contactNo.length > 10 ? "N/A" : user.contactNo}
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">
-                        {moment(user.createdAt).format("DD-MM-YYYY")}
-                      </td>
-                      <td className="py-2 px-4 text-gray-700 text-center">
-                        {appointmentsCountPerUser[user._id] || 0}
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">
-                        <div className="flex justify-center items-center">
-                          {user.isVerified ? (
-                            <span className="text-green-700 text-lg">
-                              <RxCheckCircled />
-                            </span>
-                          ) : (
-                            <span className="text-red-700 text-lg">
-                              <RxCrossCircled />
-                            </span>
-                          )}
-                        </div>
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">
-                        <div className="flex justify-center items-center">
-                          <button
-                            onClick={() => {
-                              handleDelete(user._id);
-                            }}
-                            title="Delete"
-                            className="text-red-700 text-lg"
-                          >
-                            <RxCross2 />
-                          </button>
-                        </div>
-                      </td>
-                      <td className="py-2 px-4 text-gray-700">
-                        <div className="flex justify-center items-center">
-                          <Link
-                            to={`http://localhost:5173/${user.username}`}
-                            target="_blank"
-                            title="View Profile"
-                            className="text-indigo-700 text-lg"
-                          >
-                            <RxLink2 />
-                          </Link>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-          </tbody>
-        </table>
-        <Pagination />
+        {contentType == "users" ? (
+          <>
+            <table className="w-12/12 mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5 text-sm">
+              <thead className="bg-pink-600 border-b border-gray-300">
+                <tr>
+                  <th className="py-2 px-4 text-left text-white">#</th>
+                  <th className="py-2 px-4 text-left text-white">UID</th>
+                  <th className="py-2 px-4 text-left text-white">B Name</th>
+                  <th className="py-2 px-4 text-left text-white">Email</th>
+                  <th className="py-2 px-4 text-left text-white">Contact</th>
+                  <th className="py-2 px-4 text-left text-white">DOJ</th>
+                  <th className="py-2 px-4 text-left text-white">Apps</th>
+                  <th className="py-2 px-4 text-left text-white">Verified</th>
+                  <th className="py-2 px-4 text-left text-white">Delete</th>
+                  <th className="py-2 px-4 text-left text-white">Profile</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isSearchParameter
+                  ? allUsers.map((user, index) => {
+                      return (
+                        <tr
+                          key={user._id}
+                          className="odd:bg-gray-200 even:bg-white"
+                        >
+                          <td className="py-2 px-4 text-gray-700">
+                            {index + 1}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {user.userID}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {user.businessName ? user.businessName : "N/A"}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {user.email}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {user.contactNo.length > 10
+                              ? "N/A"
+                              : user.contactNo}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {moment(user.createdAt).format("DD-MM-YYYY")}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700 text-center">
+                            {appointmentsCountPerUser[user._id] || 0}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            <div className="flex justify-center items-center">
+                              {user.isVerified ? (
+                                <span className="text-green-700 text-lg">
+                                  <RxCheckCircled />
+                                </span>
+                              ) : (
+                                <span className="text-red-700 text-lg">
+                                  <RxCrossCircled />
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            <div className="flex justify-center items-center">
+                              <button
+                                onClick={() => {
+                                  handleDelete(user._id);
+                                }}
+                                title="Delete"
+                                className="text-red-700 text-lg"
+                              >
+                                <RxCross2 />
+                              </button>
+                            </div>
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            <div className="flex justify-center items-center">
+                              <Link
+                                to={`http://localhost:5173/${user.username}`}
+                                target="_blank"
+                                title="View Profile"
+                                className="text-indigo-700 text-lg"
+                              >
+                                <RxLink2 />
+                              </Link>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : allUsers.map((user, index) => {
+                      return (
+                        <tr
+                          key={user._id}
+                          className="odd:bg-gray-200 even:bg-white"
+                        >
+                          <td className="py-2 px-4 text-gray-700">
+                            {index + 1}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {user.userID}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {user.businessName ? user.businessName : "N/A"}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {user.email}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {user.contactNo.length > 10
+                              ? "N/A"
+                              : user.contactNo}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {moment(user.createdAt).format("DD-MM-YYYY")}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700 text-center">
+                            {appointmentsCountPerUser[user._id] || 0}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            <div className="flex justify-center items-center">
+                              {user.isVerified ? (
+                                <span className="text-green-700 text-lg">
+                                  <RxCheckCircled />
+                                </span>
+                              ) : (
+                                <span className="text-red-700 text-lg">
+                                  <RxCrossCircled />
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            <div className="flex justify-center items-center">
+                              <button
+                                onClick={() => {
+                                  handleDelete(user._id);
+                                }}
+                                title="Delete"
+                                className="text-red-700 text-lg"
+                              >
+                                <RxCross2 />
+                              </button>
+                            </div>
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            <div className="flex justify-center items-center">
+                              <Link
+                                to={`http://localhost:5173/${user.username}`}
+                                target="_blank"
+                                title="View Profile"
+                                className="text-indigo-700 text-lg"
+                              >
+                                <RxLink2 />
+                              </Link>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+              </tbody>
+            </table>
+            <Pagination />
+          </>
+        ) : (
+          <>
+            <table className="w-12/12 min-w-full mx-auto bg-white border border-gray-300 rounded-lg shadow-md mt-5 text-sm">
+              <thead className="bg-pink-600 text-white border-b border-gray-300">
+                <tr>
+                  <th className="py-2 px-4 text-left">#</th>
+                  <th className="py-2 px-4 text-center">AID</th>
+                  <th className="py-2 px-4 text-center">PID</th>
+                  <th className="py-2 px-4 text-left">Name</th>
+                  <th className="py-2 px-4 text-center">Contact</th>
+                  <th className="py-2 px-4 text-center">Date</th>
+                  <th className="py-2 px-4 text-left">Time</th>
+                  <th className="py-2 px-4 text-left">Details</th>
+                  <th className="py-2 px-4 text-left">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isSearchParameter
+                  ? allAppointments.map((appointment, index) => {
+                      return (
+                        <tr
+                          key={appointment._id}
+                          className="odd:bg-gray-200 even:bg-white"
+                        >
+                          <td className="py-2 px-4 text-gray-700">
+                            {index + 1}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.appointmentID}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.patientID}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.firstName}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.contactNo}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.date.split("-").reverse().join("-")}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.time}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            <div className="flex justify-center items-center">
+                              <Link
+                                className="text-indigo-800 text-lg"
+                                title="More details"
+                                onClick={() => handleDetails(appointment._id)}
+                              >
+                                <TbListDetails />
+                              </Link>
+                            </div>
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.appointmentStatus}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : allAppointments.map((appointment, index) => {
+                      return (
+                        <tr
+                          key={appointment._id}
+                          className="odd:bg-gray-200 even:bg-white"
+                        >
+                          <td className="py-2 px-4 text-gray-700">
+                            {index + 1}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.appointmentID}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.patientID}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.firstName}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.contactNo}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.date.split("-").reverse().join("-")}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.time}
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            <div className="flex justify-center items-center">
+                              <Link
+                                className="text-indigo-800 text-lg"
+                                title="More details"
+                                onClick={() => handleDetails(appointment._id)}
+                              >
+                                <TbListDetails />
+                              </Link>
+                            </div>
+                          </td>
+                          <td className="py-2 px-4 text-gray-700">
+                            {appointment.appointmentStatus}
+                          </td>
+                        </tr>
+                      );
+                    })}
+              </tbody>
+            </table>
+            <Pagination />
+          </>
+        )}
       </div>
     ) : (
       <div className="w-6/12 py-5 mx-auto">

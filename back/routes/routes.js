@@ -76,6 +76,8 @@ const {
   bookApponitmentForWalkinClientsController,
   changeAppointmentStausController,
   fetchAParticularAppointmentController,
+  getAllAppointmentsForAdminController,
+  getTodayAppointmentsForAdminController,
 } = require("../controllers/appointment.controller");
 
 const isServiceProvider = require("../middlewares/isServiceProvider.middleware");
@@ -553,6 +555,22 @@ router.get(
   auth,
   isAdmin,
   fetchAParticularUserController
+);
+
+// get all appointments for admin
+router.get(
+  "/get-all-appointments-for-admin/:currentPage",
+  auth,
+  isAdmin,
+  getAllAppointmentsForAdminController
+);
+
+// get all appointments for admin
+router.get(
+  "/get-today-appointments-for-admin/:currentPage",
+  auth,
+  isAdmin,
+  getTodayAppointmentsForAdminController
 );
 
 module.exports = router;

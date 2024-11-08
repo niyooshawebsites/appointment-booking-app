@@ -238,6 +238,7 @@ const {
 // };
 
 // book appointment controller
+
 const bookAppointmnentByLoginController = async (req, res) => {
   try {
     const { username } = req.params;
@@ -562,15 +563,15 @@ const getTodayAppointmentsByUsernameController = async (req, res) => {
       (appointment) => appointment.user._id == userId
     );
 
-    // calc total users to find total number of pages (total appointments/limit)
-    const totalPages = appointments.length;
-
     if (!appointments) {
       return res.status(204).json({
         success: false,
         msg: "No appointments for today",
       });
     }
+
+    // calc total users to find total number of pages (total appointments/limit)
+    const totalPages = Math.ceil(appointments / limit);
 
     return res.status(200).json({
       success: true,
@@ -1095,6 +1096,37 @@ const fetchAParticularAppointmentController = async (req, res) => {
 // get all appointments for admin
 const getAllAppointmentsForAdminController = async (req, res) => {
   try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
+    const appointments = await Appointment.find()
+      .skip(skip)
+      .limit(limit)
+      .sort({ date: -1, time: -1 });
+
+    // calc total users to find total number of pages (total appointments/limit)
+    const totalAppointments = await Appointment.countDocuments();
+
+    // fetching unsuccessful
+    if (appointments.length == 0) {
+      return res.status(404).json({
+        success: false,
+        msg: "Appointments fetching falied",
+      });
+    }
+
+    // fetching successful
+    if (appointments) {
+      return res.status(200).json({
+        success: true,
+        msg: "Appointments fetched successfully",
+        appointments,
+        currentPageNo,
+        totalPages: Math.ceil(totalAppointments / limit),
+      });
+    }
   } catch (err) {
     return res.status(500).json({
       success: true,
@@ -1106,6 +1138,39 @@ const getAllAppointmentsForAdminController = async (req, res) => {
 // get today's appointments for admin
 const getTodayAppointmentsForAdminController = async (req, res) => {
   try {
+    const { currentPage } = req.params;
+    const limit = 10;
+    const currentPageNo = parseInt(currentPage) || 1;
+    const skip = (currentPageNo - 1) * limit;
+
+    // getting today's date
+    const todayDate = moment(Date.now()).format("YYYY-MM-DD");
+
+    const filteredAppointments = await Appointment.find({
+      date: todayDate,
+    })
+      .skip(skip)
+      .limit(limit)
+      .sort({ date: -1, time: -1 })
+      .populate("user");
+
+    if (!filteredAppointments) {
+      return res.status(204).json({
+        success: false,
+        msg: "No appointments for today",
+      });
+    }
+
+    // calc total users to find total number of pages (total appointments/limit)
+    const totalPages = Math.ceil(filteredAppointments / limit);
+
+    return res.status(200).json({
+      success: true,
+      msg: "Today's appointments found successfully",
+      appointments,
+      totalPages,
+      currentPageNo,
+    });
   } catch (err) {
     return res.status(500).json({
       success: true,
