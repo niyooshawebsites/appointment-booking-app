@@ -1051,6 +1051,7 @@ const changeAppointmentStausController = async (req, res) => {
   }
 };
 
+// fetch a particular appointment controller
 const fetchAParticularAppointmentController = async (req, res) => {
   try {
     const { searchAppointment } = req.params;
@@ -1091,6 +1092,28 @@ const fetchAParticularAppointmentController = async (req, res) => {
   }
 };
 
+// get all appointments for admin
+const getAllAppointmentsForAdminController = async (req, res) => {
+  try {
+  } catch (err) {
+    return res.status(500).json({
+      success: true,
+      msg: "Internal server error",
+    });
+  }
+};
+
+// get today's appointments for admin
+const getTodayAppointmentsForAdminController = async (req, res) => {
+  try {
+  } catch (err) {
+    return res.status(500).json({
+      success: true,
+      msg: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   // bookAppointmnentController,
   bookAppointmnentByLoginController,
@@ -1108,4 +1131,6 @@ module.exports = {
   bookApponitmentForWalkinClientsController,
   changeAppointmentStausController,
   fetchAParticularAppointmentController,
+  getAllAppointmentsForAdminController,
+  getTodayAppointmentsForAdminController,
 };

@@ -3,6 +3,7 @@ import { usersDataSliceActions } from "../store/slices/UsersDataSlice";
 import { dashboardOptionsSliceActions } from "../store/slices/DashboardOptionsSlice";
 import { appointmentsDataSliceActions } from "../store/slices/AppintmentsDataSlice";
 import { paginationSliceActions } from "../store/slices/PaginationDataSlice";
+import { resetFuncAdminDashboardSliceActions } from "../store/slices/ResetFuncAdminDashboardSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
@@ -51,7 +52,6 @@ const Highlights = () => {
   const dispatch = useDispatch();
 
   // ADMIN APIS.....
-  // get total number....
   const getTotalNumOfUsers = async () => {
     try {
       const res = await axios.get(
@@ -212,6 +212,13 @@ const Highlights = () => {
             showTimings: false,
           })
         );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassAllUsers",
+            dataSource: res.data.users,
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -256,6 +263,13 @@ const Highlights = () => {
             showInvoice: false,
             showQaulifications: false,
             showTimings: false,
+          })
+        );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassAllVerifiedUsers",
+            dataSource: res.data.users,
           })
         );
       }
@@ -304,6 +318,13 @@ const Highlights = () => {
             showTimings: false,
           })
         );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassAllUnverifiedUsers",
+            dataSource: res.data.users,
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -348,6 +369,13 @@ const Highlights = () => {
             showInvoice: false,
             showQaulifications: false,
             showTimings: false,
+          })
+        );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassAllPatients",
+            dataSource: res.data.patients,
           })
         );
       }
@@ -396,6 +424,13 @@ const Highlights = () => {
             showTimings: false,
           })
         );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassAllVerifiedPatients",
+            dataSource: res.data.patients,
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -442,7 +477,21 @@ const Highlights = () => {
             showTimings: false,
           })
         );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassAllUnverifiedPatients",
+            dataSource: res.data.patients,
+          })
+        );
       }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getAndPassAllAppointments = async () => {
+    try {
     } catch (err) {
       toast.error(err.response.data.msg);
     }
@@ -615,6 +664,13 @@ const Highlights = () => {
             showTimings: false,
           })
         );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassTodayUsers",
+            dataSource: res.data.users,
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -659,6 +715,13 @@ const Highlights = () => {
             showInvoice: false,
             showQaulifications: false,
             showTimings: false,
+          })
+        );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassTodayVerifiedUsers",
+            dataSource: res.data.users,
           })
         );
       }
@@ -707,6 +770,13 @@ const Highlights = () => {
             showTimings: false,
           })
         );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassTodayUnverifiedUsers",
+            dataSource: res.data.users,
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -751,6 +821,13 @@ const Highlights = () => {
             showInvoice: false,
             showQaulifications: false,
             showTimings: false,
+          })
+        );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassTodayPatients",
+            dataSource: res.data.patients,
           })
         );
       }
@@ -799,6 +876,13 @@ const Highlights = () => {
             showTimings: false,
           })
         );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassTodayVerifiedPatients",
+            dataSource: res.data.patients,
+          })
+        );
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -845,7 +929,21 @@ const Highlights = () => {
             showTimings: false,
           })
         );
+
+        dispatch(
+          resetFuncAdminDashboardSliceActions.dataProvider({
+            dataType: "getAndPassTodayUnverifiedPatients",
+            dataSource: res.data.patients,
+          })
+        );
       }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const getAndPassTodayAppointments = async () => {
+    try {
     } catch (err) {
       toast.error(err.response.data.msg);
     }

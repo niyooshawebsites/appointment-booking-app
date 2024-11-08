@@ -25,7 +25,9 @@ const DisplayInfo = () => {
   const dispatch = useDispatch();
   const { role, isAdmin, userId } = useSelector((state) => state.user_Slice);
   const { allUsers } = useSelector((state) => state.users_Data_Slice);
-
+  const { dataType, dataSource } = useSelector(
+    (state) => state.reset_Func_Admin_Dashboard_Slice
+  );
   const { allAppointments } = useSelector(
     (state) => state.appointments_Data_Slice
   );
@@ -305,6 +307,105 @@ const DisplayInfo = () => {
     }
   };
 
+  // change data source dynamically after reset for admin
+  const changeDataSourceAfterReset = () => {
+    if (dataType == "getAndPassAllUsers") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassTodayUsers") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassAllVerifiedUsers") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassTodayVerifiedUsers") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassAllUnverifiedUsers") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassTodayUnverifiedUsers") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassAllPatients") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassTodayPatients") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassAllVerifiedPatients") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassTodayVerifiedPatients") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassAllUnverifiedPatients") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+
+    if (dataType == "getAndPassTodayUnverifiedPatients") {
+      dispatch(
+        usersDataSliceActions.getUsersData({
+          allUsers: dataSource,
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     if (role == 1 && isAdmin && allUsers.length > 0) {
       fetchAppointmentsCount();
@@ -343,7 +444,7 @@ const DisplayInfo = () => {
           <div className="w-1/12 mr-2">
             <button
               className="py-1.5 w-full bg-indigo-600 rounded text-white text-2xl flex justify-center items-center"
-              onClick={getAndPassAllAppointmentsByUserId}
+              onClick={changeDataSourceAfterReset}
             >
               <GrPowerReset />
             </button>
