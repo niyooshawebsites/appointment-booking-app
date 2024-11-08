@@ -1,4 +1,3 @@
-import { lazy, Suspense } from "react";
 import AppointmentDetails from "../components/AppointmentDetails";
 import Profile from "../components/Profile";
 import Sidebar from "../components/Sidebar";
@@ -7,8 +6,7 @@ import AboutForm from "../components/AboutForm";
 import ContactForm from "../components/ContactForm";
 import ServiceForm from "../components/ServiceForm";
 import Highlights from "../components/Highlights";
-// import DisplayInfo from "../components/DisplayInfo";
-const DisplayInfo = lazy(() => import("../components/DisplayInfo"));
+import DisplayInfo from "../components/DisplayInfo";
 import { useSelector } from "react-redux";
 import AppointmentForm from "../components/AppointmentForm";
 import LoginAppointmentForm from "../components/LoginAppointmentForm";
@@ -20,7 +18,6 @@ import Announcement from "../components/Announcement";
 import RejectionReason from "../components/RejectionReason";
 import Walkin from "../components/Walkin";
 import Invoice from "../components/Invoice";
-import Loader from "../components/Loader";
 
 const Dashboard = () => {
   const {
@@ -59,9 +56,7 @@ const Dashboard = () => {
       <Layout>
         <div className="w-full min-h-screen flex bg-gray-100">
           <Sidebar />
-          <Suspense fallback={<Loader />}>
-            <DisplayInfo />
-          </Suspense>
+          <DisplayInfo />
           <Announcement />
           <Walkin />
           <RejectionReason />
