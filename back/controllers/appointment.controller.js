@@ -1167,7 +1167,7 @@ const getTodayAppointmentsForAdminController = async (req, res) => {
     return res.status(200).json({
       success: true,
       msg: "Today's appointments found successfully",
-      appointments,
+      appointments: filteredAppointments,
       totalPages,
       currentPageNo,
     });

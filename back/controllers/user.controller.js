@@ -2253,7 +2253,10 @@ const fetchAParticularUserController = async (req, res) => {
     }
 
     const user = await User.find({
-      $or: [{ userID: searchParameter }, { email: searchParameter }],
+      $or: [
+        { userID: { $regex: searchParameter, $options: "i" } },
+        { email: { $regex: searchParameter, $options: "i" } },
+      ],
     }).select("-password");
 
     if (!user) {
