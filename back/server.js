@@ -10,7 +10,7 @@ const cronJob = require("./utils/cronJob");
 const app = express();
 
 // configuration
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: "./.env" });
 const PORT = process.env.PORT || 8080;
 
 // start the connection
