@@ -573,4 +573,11 @@ router.get(
   getTodayAppointmentsForAdminController
 );
 
+router.get("/test", (req, res) => {
+  res.status(200).json({
+    success: true,
+    msg: "testing",
+  });
+});
+
 module.exports = router;
