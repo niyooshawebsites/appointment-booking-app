@@ -5,19 +5,6 @@ const VerificationOutcome = ({ outCome }) => {
   const path = window.location.pathname;
   let username = path.split("/")[2];
 
-  // if (
-  //   username == "register" ||
-  //   username == "login" ||
-  //   username == "about" ||
-  //   username == "contact" ||
-  //   username == "verify-email" ||
-  //   username == "forgot-password" ||
-  //   username == "reset-password" ||
-  //   username == ""
-  // ) {
-  //   username = "abs";
-  // }
-
   return (
     <>
       {outCome ? (
