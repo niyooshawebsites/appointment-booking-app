@@ -3,20 +3,20 @@ import { Link } from "react-router-dom";
 const VerificationOutcome = ({ outCome }) => {
   // getting the username from url
   const path = window.location.pathname;
-  let username = path.split("/")[1];
+  let username = path.split("/")[2];
 
-  if (
-    username == "register" ||
-    username == "login" ||
-    username == "about" ||
-    username == "contact" ||
-    username == "verify-email" ||
-    username == "forgot-password" ||
-    username == "reset-password" ||
-    username == ""
-  ) {
-    username = "abs";
-  }
+  // if (
+  //   username == "register" ||
+  //   username == "login" ||
+  //   username == "about" ||
+  //   username == "contact" ||
+  //   username == "verify-email" ||
+  //   username == "forgot-password" ||
+  //   username == "reset-password" ||
+  //   username == ""
+  // ) {
+  //   username = "abs";
+  // }
 
   return (
     <>
@@ -26,11 +26,11 @@ const VerificationOutcome = ({ outCome }) => {
             <h2 className="text-2xl font-bold mb-6 text-center text-pink-600">
               Email verfication successful
             </h2>
-            <Link to={username != "abs" ? `/${username}/login` : "/login"}>
+            <a href={username == "abs" ? "/login" : `/${username}`}>
               <button className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 text-center">
-                Check your site & Log In
+                Login now
               </button>
-            </Link>
+            </a>
           </div>
         </div>
       ) : (

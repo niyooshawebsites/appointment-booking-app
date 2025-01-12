@@ -91,7 +91,7 @@ const ContactForm = () => {
                 name="businessName"
                 type="text"
                 autoComplete="on"
-                placeholder="Business Name"
+                placeholder="Healthcare center name"
                 value={contactDetails.businessName}
                 onChange={handleChange}
                 required

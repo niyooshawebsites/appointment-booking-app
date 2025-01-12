@@ -23,6 +23,7 @@ const App = () => {
   // getting the username from url
   const path = window.location.pathname;
   let username = path.split("/")[1];
+  let initiatorUser = path.split("/")[2] || "";
 
   if (
     username == "register" ||
@@ -76,7 +77,6 @@ const App = () => {
                 element={
                   serviceProvider ? (
                     <Suspense fallback={<Loader />}>
-                      {/* <Appointment serviceProvider={serviceProvider} /> */}
                       <Home />
                     </Suspense>
                   ) : (
@@ -215,7 +215,9 @@ const App = () => {
           />
           <Route
             path={
-              username != "abs" ? `/${username}/verify-email` : "/verify-email"
+              username != "abs"
+                ? `/${username}/${initiatorUser}/verify-email`
+                : "/verify-email"
             }
             element={
               <Suspense fallback={<Loader />}>

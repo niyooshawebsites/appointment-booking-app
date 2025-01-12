@@ -21,8 +21,30 @@ const RegisterForm = () => {
       username: "",
       email: "",
       password: "",
+      initiatorUser: null,
     };
   });
+
+  if (!username) {
+    // getting the username from url
+    const path = window.location.pathname;
+    let userName = path.split("/")[1];
+
+    if (
+      userName == "register" ||
+      userName == "login" ||
+      userName == "about" ||
+      userName == "contact" ||
+      userName == "verify-email" ||
+      userName == "forgot-password" ||
+      userName == "reset-password" ||
+      userName == ""
+    ) {
+      userName = "abs";
+    }
+
+    return <Navigate to={userName != "abs" ? `/${userName}` : "/"} />;
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,10 +62,11 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:8000/api/v1/register",
-        registrationDetails
-      );
+      const res = await axios.post("http://localhost:8000/api/v1/register", {
+        ...registrationDetails,
+        role: username !== "abs" ? "0" : registrationDetails.role,
+        initiatorUser: username,
+      });
 
       if (res.data.success) {
         toast.success(res.data.msg);
@@ -66,27 +89,6 @@ const RegisterForm = () => {
   const togglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
-
-  if (!username) {
-    // getting the username from url
-    const path = window.location.pathname;
-    let userName = path.split("/")[1];
-
-    if (
-      userName == "register" ||
-      userName == "login" ||
-      userName == "about" ||
-      userName == "contact" ||
-      userName == "verify-email" ||
-      userName == "forgot-password" ||
-      userName == "reset-password" ||
-      userName == ""
-    ) {
-      userName = "abs";
-    }
-
-    return <Navigate to={userName != "abs" ? `/${userName}` : "/"} />;
-  }
 
   if (!isVerified) {
     return <Unverified />;

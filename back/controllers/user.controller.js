@@ -12,9 +12,10 @@ const { generateUniqueUserID } = require("../utils/uniqueID");
 
 // register controller...
 const registerController = async (req, res) => {
-  const { role, specialization, username, email, password } = req.body;
-
   try {
+    const { role, specialization, username, email, password, initiatorUser } =
+      req.body;
+
     // check for all the details:
     if (!role) {
       return res.status(400).json({
@@ -51,6 +52,13 @@ const registerController = async (req, res) => {
       });
     }
 
+    if (!initiatorUser) {
+      return res.status(400).json({
+        success: false,
+        msg: "Initiator user is required",
+      });
+    }
+
     // try of find existing user
     const existingUser = await User.findOne({ username, email });
 
@@ -71,18 +79,20 @@ const registerController = async (req, res) => {
         email,
         password: await encryptPassword(password),
         userID: await generateUniqueUserID(),
+        initiatorUser,
       }).save();
 
       // generate verification token
       const verficationToken = await generateAuthToken(
         {
           email: newUser.email,
+          initiatorUser: newUser.initiatorUser,
         },
         2 * 24 * 60 * 60
       );
 
       // generate the email verification link
-      const verficationURI = `http://localhost:5173/${username}/verify-email?token=${verficationToken}`;
+      const verficationURI = `http://localhost:5173/${username}/${initiatorUser}/verify-email?token=${verficationToken}`;
 
       // Send the verfication link to customer email account
       await sendverificationEmail(

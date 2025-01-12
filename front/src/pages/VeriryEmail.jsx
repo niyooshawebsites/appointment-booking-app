@@ -30,11 +30,7 @@ const VeriryEmail = () => {
     emailVerification();
   }, []);
 
-  return (
-    <Layout>
-      <EmailVerificationMsg outCome={outCome} loading={loading} />
-    </Layout>
-  );
+  return <EmailVerificationMsg outCome={outCome} loading={loading} />;
 };
 
 export default VeriryEmail;

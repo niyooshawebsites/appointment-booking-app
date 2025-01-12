@@ -315,6 +315,11 @@ const userSchema = new mongoose.Schema(
         },
       },
     },
+    // initiator
+    initiatorUser: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,
