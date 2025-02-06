@@ -1100,7 +1100,7 @@ const DisplayInfo = () => {
                     <div className="flex justify-center items-center">
                       <Link
                         className="text-indigo-800 text-xl"
-                        to={`http://localhost:5173/${appointment.user.username}`}
+                        to={`http://localhost:5173/${appointment.user.username}/about`}
                         title="View Profile"
                         target="_blank"
                       >

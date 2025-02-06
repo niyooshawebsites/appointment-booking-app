@@ -92,7 +92,9 @@ const registerController = async (req, res) => {
       );
 
       // generate the email verification link
-      const verficationURI = `http://localhost:5173/${username}/${initiatorUser}/verify-email?token=${verficationToken}`;
+      const verficationURI = `http://localhost:5173/${username}/${
+        role == 1 ? username : initiatorUser
+      }/verify-email?token=${verficationToken}`;
 
       // Send the verfication link to customer email account
       await sendverificationEmail(
